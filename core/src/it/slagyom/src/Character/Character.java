@@ -22,7 +22,8 @@ public class Character extends DynamicObjects implements ICollidable {
 	public float health;
 	public float power;
 	public int coins;
-	public boolean collideDoor=false;
+	public boolean collideDoor = false;
+
 	public Character(String name) {
 		super();
 		this.name = name;
@@ -31,7 +32,8 @@ public class Character extends DynamicObjects implements ICollidable {
 		health = 100;
 		power = 100;
 		coins = 0;
-		while(!positionCharacter());
+		while (!positionCharacter())
+			;
 		velocity = 100;
 
 		currentState = StateDynamicObject.STANDING;
@@ -46,7 +48,7 @@ public class Character extends DynamicObjects implements ICollidable {
 		x = rand;
 		rand = (int) (Math.random() * 960);
 		y = rand;
-		if (collide(this)){
+		if (collide(this)) {
 			return false;
 		}
 		return true;
@@ -142,6 +144,62 @@ public class Character extends DynamicObjects implements ICollidable {
 		setState(StateDynamicObject.RUNNINGLEFT);
 	}
 
+	public void movesNorthEast(float dt) {
+
+		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
+			y += (velocity * dt);
+			x += (velocity * dt) / 2;
+			if (collide(this)) {
+				y -= (velocity * dt);
+				x -= (velocity * dt) / 2;
+
+			}
+		}
+		setState(StateDynamicObject.RUNNINGUP);
+	}
+
+	public void movesNorthWest(float dt) {
+
+		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
+			y += (velocity * dt);
+			x -= (velocity * dt) / 2;
+			if (collide(this)) {
+				y -= (velocity * dt);
+				x += (velocity * dt) / 2;
+
+			}
+		}
+		setState(StateDynamicObject.RUNNINGUP);
+	}
+
+	public void movesSouthWest(float dt) {
+
+		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
+			y -= (velocity * dt);
+			x -= (velocity * dt) / 2;
+			if (collide(this)) {
+				y += (velocity * dt);
+				x += (velocity * dt) / 2;
+
+			}
+		}
+		setState(StateDynamicObject.RUNNINGDOWN);
+	}
+
+	public void movesSouthEast(float dt) {
+
+		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
+			y -= (velocity * dt);
+			x += (velocity * dt) / 2;
+			if (collide(this)) {
+				y += (velocity * dt);
+				x -= (velocity * dt) / 2;
+
+			}
+		}
+		setState(StateDynamicObject.RUNNINGDOWN);
+	}
+
 	public void movesUp(float dt) {
 
 		if (y < GameConfig.HEIGHT - height - 5) {
@@ -220,8 +278,8 @@ public class Character extends DynamicObjects implements ICollidable {
 					if (((Tile) ob).collide(this)) {
 						if (((Tile) ob).getElement() == Element.TABLE)
 							PlayScreen.hud.setDialogText(((Tile) ob).getInfo());
-						else if(((Tile) ob).getElement() == Element.HOME)
-							if(((Tile) ob).collideDoor(this))
+						else if (((Tile) ob).getElement() == Element.HOME)
+							if (((Tile) ob).collideDoor(this))
 								collideDoor = true;
 						return true;
 					}
@@ -272,6 +330,18 @@ public class Character extends DynamicObjects implements ICollidable {
 
 	public Weapon getWeapon() {
 		return primary_weapon;
+	}
+
+	public void moves(float dt) {
+		if (getCurrentState() == StateDynamicObject.RUNNINGDOWN)
+			movesDown(dt);
+		else if (getCurrentState() == StateDynamicObject.RUNNINGUP)
+			movesUp(dt);
+		else if (getCurrentState() == StateDynamicObject.RUNNINGRIGHT)
+			movesRight(dt);
+		else if (getCurrentState() == StateDynamicObject.RUNNINGLEFT)
+			movesLeft(dt);
+
 	}
 
 }

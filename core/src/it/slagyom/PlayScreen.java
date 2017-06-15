@@ -30,7 +30,7 @@ import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.Tile;
 
-public class PlayScreen implements Screen, ControllerListener{
+public class PlayScreen implements Screen, ControllerListener {
 
 	public OrthographicCamera gamecam;
 	public Viewport gamePort;
@@ -40,7 +40,8 @@ public class PlayScreen implements Screen, ControllerListener{
 	private static float textTimer;
 	private boolean stop = false;
 	public int i = 0;
-	Controllers controller;
+	PovDirection directionGamepad;
+	boolean movesGamePad = false;
 
 	public PlayScreen(GameSlagyom game, String name) {
 
@@ -49,10 +50,12 @@ public class PlayScreen implements Screen, ControllerListener{
 		new LoadingImage();
 		gamecam = new OrthographicCamera();
 		gamePort = new ScreenViewport(gamecam);
-		controller = new Controllers();
+
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
 		hud = new Hud(game.batch);
+		// controller = new Controllers();
+		// controller.addListener(this);
 		Controllers.addListener(this);
 	}
 
@@ -74,7 +77,7 @@ public class PlayScreen implements Screen, ControllerListener{
 	@Override
 	public void render(float delta) {
 		update(delta);
-		
+
 		hud.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -136,9 +139,31 @@ public class PlayScreen implements Screen, ControllerListener{
 	}
 
 	private void moveCharacter(float dt) {
+
 		try {
 			if (!stop) {
-				if (Gdx.input.isKeyPressed(Keys.Z)) {
+				if (movesGamePad) {
+					if (directionGamepad == PovDirection.east)
+						Game.character.movesRight(dt);
+					else if (directionGamepad == PovDirection.north)
+						Game.character.movesUp(dt);
+					else if (directionGamepad == PovDirection.west)
+						Game.character.movesLeft(dt);
+					else if (directionGamepad == PovDirection.south)
+						Game.character.movesDown(dt);
+					else if (directionGamepad == PovDirection.northEast) 
+						Game.character.movesNorthEast(dt);
+					else if (directionGamepad == PovDirection.northWest) 
+						Game.character.movesNorthWest(dt);
+					else if (directionGamepad == PovDirection.southEast) 
+						Game.character.movesSouthEast(dt);
+					else if (directionGamepad == PovDirection.southWest) 
+						Game.character.movesSouthWest(dt);
+					
+
+				}
+
+				else if (Gdx.input.isKeyPressed(Keys.Z)) {
 					Game.character.setVelocity(150f);
 					LoadingImage.setFrameDurationCharacter(0.1f);
 				} else {
@@ -179,8 +204,8 @@ public class PlayScreen implements Screen, ControllerListener{
 					game.swapScreen(it.slagyom.GameSlagyom.State.BATTLE);
 				} else if (Gdx.input.isKeyJustPressed(Keys.B)) {
 					Game.world.nextLevel();
-				} else
-					Game.character.setState(StateDynamicObject.STANDING);
+				} // else
+					// Game.character.setState(StateDynamicObject.STANDING);
 			}
 		} catch (InterruptedException e) {
 
@@ -270,44 +295,69 @@ public class PlayScreen implements Screen, ControllerListener{
 	@Override
 	public void connected(Controller controller) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void disconnected(Controller controller) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("qui");
 	}
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
-		 if (buttonCode == Ouya.BUTTON_R1) {
-			 Game.character.movesRight(0.1f);
-         }
- return false;
+		System.out.println("button" + buttonCode);
+		return false;
 	}
 
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
 		// TODO Auto-generated method stub
+
 		return false;
 	}
 
 	@Override
 	public boolean axisMoved(Controller controller, int axisCode, float value) {
 		// TODO Auto-generated method stub
+		System.out.println(axisCode);
 		return false;
 	}
 
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		// TODO Auto-generated method stub
+		if (value == PovDirection.east) {
+			movesGamePad = true;
+			directionGamepad = value;
+			return true;
+		} else if (value == PovDirection.north) {
+			movesGamePad = true;
+			directionGamepad = value;
+			return true;
+		} else if (value == PovDirection.south) {
+			movesGamePad = true;
+			directionGamepad = value;
+			return true;
+		} else if (value == PovDirection.west) {
+			movesGamePad = true;
+			directionGamepad = value;
+			return true;
+		} else if (value == PovDirection.northEast || value == PovDirection.northWest
+				|| value == PovDirection.southWest || value == PovDirection.southEast) {
+			movesGamePad = true;
+			directionGamepad = value;
+			return true;
+		}
+		movesGamePad = false;
+
 		return false;
 	}
 
 	@Override
 	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
 		// TODO Auto-generated method stub
+		System.out.println("qui1234567");
 		return false;
 	}
 
@@ -320,6 +370,7 @@ public class PlayScreen implements Screen, ControllerListener{
 	@Override
 	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
 		// TODO Auto-generated method stub
+		System.out.println("qui09876");
 		return false;
 	}
 

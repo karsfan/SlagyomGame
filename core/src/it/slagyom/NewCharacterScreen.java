@@ -2,6 +2,7 @@ package it.slagyom;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -125,6 +126,7 @@ public class NewCharacterScreen implements Screen {
 		mainTable.add(returnButton).pad(20).center();
 
 		stage.addActor(mainTable);
+		Controllers.addListener(new MenuControllerListener(mainTable));
 	}
 
 	@Override

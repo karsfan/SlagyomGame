@@ -3,6 +3,7 @@ package it.slagyom;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -128,9 +129,9 @@ public class MenuScreen implements Screen {
 		mainTable.row();
 		mainTable.add(exitButton).pad(5);
 
-
 		// Add table to stage
 		stage.addActor(mainTable);
+		Controllers.addListener(new MenuControllerListener(mainTable));
 	}
 
 	@Override

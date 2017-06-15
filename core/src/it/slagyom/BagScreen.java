@@ -2,6 +2,7 @@ package it.slagyom;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -292,6 +293,12 @@ public class BagScreen implements Screen {
 		stage.addActor(weaponsTable);
 		stage.addActor(parchmentsTable);
 		stage.addActor(optionsTable);
+		
+		Controllers.addListener(new MenuControllerListener(potionsTable));
+		Controllers.addListener(new MenuControllerListener(weaponsTable));
+		Controllers.addListener(new MenuControllerListener(parchmentsTable));
+		Controllers.addListener(new MenuControllerListener(optionsTable));
+		Gdx.input.setInputProcessor(stage);
 
 	}
 

@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -30,7 +31,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.World.Game;
 
-public class PauseScreen implements Screen, ControllerListener {
+public class PauseScreen implements Screen{
 
 	private GameSlagyom game;
 	protected Stage stage;
@@ -68,7 +69,7 @@ public class PauseScreen implements Screen, ControllerListener {
 		TextButton optionsButton = new TextButton("Options", MenuScreen.skin);
 		TextButton exitButton = new TextButton("Exit", MenuScreen.skin);
 		TextButton menuButton = new TextButton("Menu", MenuScreen.skin);
-
+	
 		// Add listeners to buttons
 		saveGame.addListener(new ClickListener() {
 			@SuppressWarnings("static-access")
@@ -159,8 +160,8 @@ public class PauseScreen implements Screen, ControllerListener {
 		helpTable.add(arrow);//.padLeft(Gdx.graphics.getWidth()/2); 
 		helpTable.add(run);
 		helpTable.add(action);
-		Controllers.addListener(this);
 		stage.addActor(helpTable);
+		Controllers.addListener(new MenuControllerListener(mainTable));
 	}
 
 	@Override
@@ -222,7 +223,7 @@ public class PauseScreen implements Screen, ControllerListener {
 		MenuScreen.atlas.dispose();
 	}
 
-	@Override
+	/*@Override
 	public void connected(Controller controller) {
 		// TODO Auto-generated method stub
 		
@@ -297,6 +298,6 @@ public class PauseScreen implements Screen, ControllerListener {
 	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
 		// TODO Auto-generated method stub
 		return false;
-	}
+	}*/
 
 }

@@ -18,9 +18,7 @@ public class ThreadWorld extends Thread {
 			while (true) {
 				long attuale = System.currentTimeMillis();
 				float dt = (float) (attuale - start);
-			
 				world.update((float) dt / 1000);
-			
 				start = attuale;
 			}
 	}

@@ -10,7 +10,6 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
-import com.badlogic.gdx.controllers.mappings.Ouya;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,7 +23,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.Character.DynamicObjects;
-import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.World.Game;
@@ -45,6 +43,10 @@ public class PlayScreen implements Screen, ControllerListener {
 	private boolean stop = false;
 	public int i = 0;
 	PovDirection directionGamepad;
+	public static  Item obj;
+	public  static float drawx;
+	public static float drawy;
+
 	boolean movesGamePad = false;
 
 	public PlayScreen(GameSlagyom game, String name) {
@@ -58,8 +60,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
 		hud = new Hud(game.batch);
-		// controller = new Controllers();
-		// controller.addListener(this);
+		
 		Controllers.addListener(this);
 	}
 
@@ -75,6 +76,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
 		stop = true;
+		Controllers.addListener(this);
 	}
 
 	@SuppressWarnings({})
@@ -120,15 +122,12 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	}
 
-	public static Item obj;
-	public static float drawx;
-	public static float drawy;
-
-	public static void pickAnimation(Item ob, float x, int y) {
+	
+	public static  void pickAnimation(Item ob, float x, int y) {
 		drawAnimation = true;
+		obj = new Item();
+		
 		obj = ob;
-		drawx = x;
-		drawy = y;
 	}
 
 	public static void drawDialog(final String text) {
@@ -166,8 +165,14 @@ public class PlayScreen implements Screen, ControllerListener {
 				if (movesGamePad) {
 					if (directionGamepad == PovDirection.east)
 						Game.character.movesRight(dt);
-					else if (directionGamepad == PovDirection.north)
+					else if (directionGamepad == PovDirection.north){
 						Game.character.movesUp(dt);
+						if (Game.character.collideDoor) {
+							game.swapScreen(State.SHOP);
+							Game.world.semaphore.acquire();
+							Game.character.collideDoor = false;
+						}
+					}
 					else if (directionGamepad == PovDirection.west)
 						Game.character.movesLeft(dt);
 					else if (directionGamepad == PovDirection.south)
@@ -269,11 +274,13 @@ public class PlayScreen implements Screen, ControllerListener {
 		// game.batch.draw(LoadingImage.woman1Stand, 500, 500, 160,160);
 
 		if (drawAnimation) {
-			game.batch.draw(LoadingImage.getTileImage(obj), (float) ((StaticObject) obj).shape.getX() + (j * 2),
-					(float) ((StaticObject) obj).shape.getY() + j, (float) ((StaticObject) obj).shape.getWidth(),
+			obj.setX((int) (obj.getX()+j));
+			obj.setY((int) (obj.getY()+j));
+			game.batch.draw(LoadingImage.getTileImage(obj), (float) ((StaticObject) obj).shape.getX(),
+					(float) ((StaticObject) obj).shape.getY() , (float) ((StaticObject) obj).shape.getWidth(),
 					(float) ((StaticObject) obj).shape.getHeight());
-			if ((float) ((StaticObject) obj).shape.getX() + (j * 2) == Gdx.graphics.getHeight()
-					|| (float) ((StaticObject) obj).shape.getY() + j == Gdx.graphics.getWidth())
+			if ((float) ((StaticObject) obj).shape.getX() == Gdx.graphics.getHeight()
+					|| (float) ((StaticObject) obj).shape.getY()  == Gdx.graphics.getWidth())
 				drawAnimation = false;
 		}
 	}
@@ -331,22 +338,14 @@ public class PlayScreen implements Screen, ControllerListener {
 	@Override
 	public void disconnected(Controller controller) {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
 		System.out.println("qui");
-=======
 
->>>>>>> 95db316c1fabd5683b7cada083a985b76598e05d
 	}
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
-<<<<<<< HEAD
+
 		System.out.println("button" + buttonCode);
-=======
-		if (buttonCode == Ouya.BUTTON_R1) {
-			Game.character.movesRight(0.1f);
-		}
->>>>>>> 95db316c1fabd5683b7cada083a985b76598e05d
 		return false;
 	}
 

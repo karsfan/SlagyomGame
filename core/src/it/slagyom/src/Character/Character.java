@@ -160,7 +160,7 @@ public class Character extends DynamicObjects implements ICollidable {
 
 	public void movesNorthWest(float dt) {
 
-		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
+		if (y < GameConfig.HEIGHT - height - 5 && x > 5) {
 			y += (velocity * dt);
 			x -= (velocity * dt) / 2;
 			if (collide(this)) {
@@ -174,7 +174,7 @@ public class Character extends DynamicObjects implements ICollidable {
 
 	public void movesSouthWest(float dt) {
 
-		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
+		if (y > 0 - height - 5 && x > 5) {
 			y -= (velocity * dt);
 			x -= (velocity * dt) / 2;
 			if (collide(this)) {
@@ -188,7 +188,7 @@ public class Character extends DynamicObjects implements ICollidable {
 
 	public void movesSouthEast(float dt) {
 
-		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
+		if (y > 0 && x < GameConfig.WIDTH - width / 2) {
 			y -= (velocity * dt);
 			x += (velocity * dt) / 2;
 			if (collide(this)) {
@@ -254,12 +254,13 @@ public class Character extends DynamicObjects implements ICollidable {
 	}
 
 	boolean pickItem(Item item) {
-		if (item.getElement() != Element.COIN) {
+		if (item.getElement() != Element.COIN && !item.picked) {
 			if (bag.addTool(item)) {
 				item.setPicked(true);
 				return true;
 			}
 		} else {
+			if(!item.picked)
 			coins++;
 			item.setPicked(true);
 			return true;
@@ -293,7 +294,7 @@ public class Character extends DynamicObjects implements ICollidable {
 			if (ob instanceof Item) {
 				if (((Item) ob).collide(this)) {
 					if (pickItem((Item) ob)) {
-						PlayScreen.pickAnimation((Item) ob, ((Item) ob).getX(), ((Item) ob).getY());
+						//PlayScreen.pickAnimation((Item) ob, ((Item) ob).getX(), ((Item) ob).getY());
 						it2.remove();
 						return false;
 					} else {

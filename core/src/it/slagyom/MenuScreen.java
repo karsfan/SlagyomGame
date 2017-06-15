@@ -15,13 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.levels.editor.Editor;
 import it.slagyom.GameSlagyom.State;
 
 public class MenuScreen implements Screen {
 	 GameSlagyom game;
+	 final TextButton playButton;
 	
 	protected Stage stage;
 	private Viewport viewport;
@@ -52,7 +52,7 @@ public class MenuScreen implements Screen {
 		//viewport = new StretchViewport(640, 480, camera);
 		viewport = new ExtendViewport(854, 480, camera);
 		viewport.apply();
-
+		
 		background = new Texture("res/background.png");
 		backgroundSprite = new Sprite(background);
 
@@ -71,7 +71,7 @@ public class MenuScreen implements Screen {
 		mainTable.top();
 
 		// Create buttons
-		TextButton playButton = new TextButton("New Game", skin);
+		playButton = new TextButton("New Game", skin);
 		TextButton continueButton = new TextButton("Continue game", skin);
 		TextButton editorButton = new TextButton("Level editor", skin);
 		TextButton optionsButton = new TextButton("Options", skin);
@@ -81,6 +81,8 @@ public class MenuScreen implements Screen {
 		playButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				System.out.println(playButton.isChecked());
+				
 				game.swapScreen(State.NEWGAME);
 				
 			}
@@ -138,9 +140,9 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		//System.out.println(playButton.isOver());
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();

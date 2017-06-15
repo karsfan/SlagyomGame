@@ -18,7 +18,7 @@ public class World {
 	private ThreadWorld thread;
 	public Semaphore semaphore;
 	int level;
-	float timerItem=0;
+	float timerItem = 0;
 	public boolean remove = false;
 
 	public World() {
@@ -27,7 +27,7 @@ public class World {
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
 		maps[0] = new Map("res/map/map", true, "Village one");
-		maps[1] = new Map("res/map/newMap", false ,"Village two");
+		maps[1] = new Map("res/map/newMap", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
 
@@ -75,7 +75,7 @@ public class World {
 	}
 
 	public void update(float dt) {
-		timerItem+=dt;
+		timerItem += dt;
 		try {
 			semaphore.acquire();
 		} catch (InterruptedException e) {
@@ -89,15 +89,14 @@ public class World {
 				((Man) ob).update(dt);
 			}
 		}
+	
 
 		semaphore.release();
-		if(timerItem>=60)
-		{
+		if (timerItem >= 60) {
 			Item item = new Item();
 			getMap().getListItems().add(item);
 			timerItem = 0;
 		}
-		
 
 	}
 
@@ -116,7 +115,6 @@ public class World {
 
 	public void nextLevel() throws InterruptedException {
 
-
 		if (level < 1) {
 			level++;
 
@@ -125,7 +123,8 @@ public class World {
 			getMap().setCurrent(false);
 			maps[level].setCurrent(true);
 			people.add(Game.character);
-			while(!addDynamicObject());
+			while (!addDynamicObject())
+				;
 			addItems();
 			semaphore.release();
 		}

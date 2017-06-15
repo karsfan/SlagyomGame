@@ -71,6 +71,7 @@ public class Map {
 		IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("read");
 	}
 
 	public static Point getXY(String line) {

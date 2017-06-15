@@ -113,7 +113,7 @@ public class GameSlagyom extends Game {
 			try {
 				it.slagyom.src.World.Game.world.semaphore.acquire();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			Gdx.input.setInputProcessor(pauseScreen.stage);

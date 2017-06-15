@@ -15,7 +15,7 @@ public class Item extends StaticObject {
 	}
 
 	public boolean picked;
-
+	float x, y;
 	public String info;
 	public static float stateTimer;
 	public Level level;
@@ -23,6 +23,8 @@ public class Item extends StaticObject {
 	public Item(float x, float y, Element element, Level level) {
 		switch (element) {
 		case COIN:
+			this.x = x;
+			this.y = y;
 			shape = new Rectangle((int) x, (int) y, 14, 14);
 			break;
 		case POTION:
@@ -112,19 +114,19 @@ public class Item extends StaticObject {
 	}
 
 	public float getX() {
-		return shape.x;
+		return x;
 	}
 
-	public void setX(int x) {
-		this.shape.x = (int) x;
+	public void setX(float f) {
+		this.x = f;
 	}
 
-	public int getY() {
-		return shape.y;
+	public float getY() {
+		return y;
 	}
 
-	public void setY(int y) {
-		this.shape.y = y;
+	public void setY(float f) {
+		this.y =  f;
 	}
 
 	public int getWidth() {

@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.World.Game;
+import it.slagyom.src.World.GameConfig;
 
 public class PauseScreen implements Screen {
 
@@ -55,12 +56,9 @@ public class PauseScreen implements Screen {
 		TextButton bagButton = new TextButton("Bag", MenuScreen.skin);
 		TextButton returnButton = new TextButton("Return", MenuScreen.skin);
 		TextButton saveGame = new TextButton("Save game", MenuScreen.skin);
-		TextButton loadGame = new TextButton("Load game", MenuScreen.skin);
+		TextButton optionsButton = new TextButton("Options", MenuScreen.skin);
 		TextButton exitButton = new TextButton("Exit", MenuScreen.skin);
 		TextButton menuButton = new TextButton("Menu", MenuScreen.skin);
-		
-		
-		//final Drawable noDialog = null;
 
 		// Add listeners to buttons
 		saveGame.addListener(new ClickListener() {
@@ -75,13 +73,10 @@ public class PauseScreen implements Screen {
 			}
 		});
 
-		loadGame.addListener(new ClickListener() {
+		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//System.out.println("CARICATO");
-				game.loadGame();
-				game.swapScreen(State.CONTINUEGAME);
-				PlayScreen.hud.setDialogText("Game loaded!");
+				game.swapScreen(State.OPTIONMENU);
 
 			}
 		});
@@ -118,6 +113,7 @@ public class PauseScreen implements Screen {
 				Gdx.app.exit();
 			}
 		});
+		
 		// Add buttons to table
 		mainTable.add(pauseLabel).pad(30);
 		mainTable.row();
@@ -126,15 +122,14 @@ public class PauseScreen implements Screen {
 		mainTable.add(saveGame).pad(5);
 		mainTable.row().pad(15);
 		
-		mainTable.add(loadGame).pad(5);
+		mainTable.add(optionsButton).pad(5);
 		mainTable.row();
 		mainTable.add(returnButton).pad(5);
 		mainTable.row();
 		mainTable.add(menuButton).pad(5);
 		mainTable.row();
 		mainTable.add(exitButton).pad(20);
-		mainTable.row();
-
+		mainTable.row(); 
 		stage.addActor(mainTable);
 			
 		

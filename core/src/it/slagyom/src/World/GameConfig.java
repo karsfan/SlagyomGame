@@ -8,5 +8,5 @@ public class GameConfig {
 	public static int numMan = 20;
 	public static int numWoman;
 	public static int numItems = 25;
-	
+	public static boolean fullscreen = false;
 }

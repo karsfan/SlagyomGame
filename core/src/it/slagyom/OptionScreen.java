@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
+import it.slagyom.src.World.GameConfig;
 
 public class OptionScreen implements Screen {
 
@@ -26,15 +27,14 @@ public class OptionScreen implements Screen {
 	private Sprite backgroundSprite;
 
 	public boolean activeMusic;
-	public boolean fullscreen = false; 
 
 	public OptionScreen(final GameSlagyom game) {
 		this.game = game;
-		
+
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(500, 500, camera);
 		viewport.apply();
-		
+
 		activeMusic = true;
 		background = new Texture("res/background.png");
 		backgroundSprite = new Sprite(background);
@@ -61,32 +61,29 @@ public class OptionScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				activeMusic = !activeMusic;
-				if (!activeMusic){
+				if (!activeMusic) {
 					game.menuScreen.music.pause();
 					musicButton.setText("Music OFF");
-				}
-				else{	
+				} else {
 					game.menuScreen.music.play();
 					musicButton.setText("Music ON");
 				}
 			}
 		});
-		
+
 		fullscreenButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				fullscreen = !fullscreen;
-				if (!fullscreen){
-					Gdx.graphics.setWindowedMode(854,480);
+				GameConfig.fullscreen = !GameConfig.fullscreen;
+				if (!GameConfig.fullscreen) {
+					Gdx.graphics.setWindowedMode(854, 480);
 					fullscreenButton.setText("Fullscreen OFF");
-				}
-				else{	
+				} else {
 					Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 					fullscreenButton.setText("Fullscreen ON");
 				}
 			}
 		});
-
 
 		returnButton.addListener(new ClickListener() {
 			@Override
@@ -107,7 +104,7 @@ public class OptionScreen implements Screen {
 
 	@Override
 	public void show() {
-		
+
 	}
 
 	@Override

@@ -15,8 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.Item.Level;
@@ -319,7 +317,7 @@ public class ShopScreen implements Screen {
 	}
 
 	private void showInfo(ImageButton icon) {
-		icon.setPosition(141, 43);
+		icon.setPosition(149, 43);
 		optionsTable.removeActor(icon);
 		optionsTable.add(icon);
 		LoadingImage.emptyShopIcon.setVisible(false);

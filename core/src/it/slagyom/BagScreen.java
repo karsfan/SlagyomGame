@@ -2,7 +2,6 @@ package it.slagyom;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -15,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.src.Map.Item;
@@ -56,7 +56,7 @@ public class BagScreen implements Screen {
 		this.game = game;
 		itemSelected = new Item();
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(640, 480);
+		viewport = new ExtendViewport(854, 480, camera);
 		selection = false;
 		viewport.apply();
 		background = new Texture("res/bag/bagBackground.png");
@@ -99,16 +99,16 @@ public class BagScreen implements Screen {
 			}
 		});
 
-		LoadingImage.emptyBagIcon.setPosition(41, 43);
-		LoadingImage.rightArrow.setPosition(183, 254);
-		LoadingImage.leftArrow.setPosition(15, 254);
+		LoadingImage.emptyBagIcon.setPosition(141, 43);
+		LoadingImage.rightArrow.setPosition(283, 254);
+		LoadingImage.leftArrow.setPosition(115, 254);
 		LoadingImage.emptyBagIcon.setVisible(true);
 
-		use.setPosition(473, 110);
+		use.setPosition(573, 110);
 		use.setVisible(false);
-		delete.setPosition(473, 70);
+		delete.setPosition(573, 70);
 		delete.setVisible(false);
-		exit.setPosition(473, 30);
+		exit.setPosition(573, 30);
 		exit.setVisible(false);
 
 		optionsTable.add(LoadingImage.emptyBagIcon);
@@ -188,16 +188,16 @@ public class BagScreen implements Screen {
 			}
 		});
 
-		potionsLabel.setPosition(49, 425);
+		potionsLabel.setPosition(149, 425);
 		potionsTable.add(potionsLabel);
 
-		potions[0].setPosition(250, 420);
+		potions[0].setPosition(350, 420);
 		potionsTable.add(potions[0]);
 
-		potions[1].setPosition(250, 370);
+		potions[1].setPosition(350, 370);
 		potionsTable.add(potions[1]);
 
-		potions[2].setPosition(250, 320);
+		potions[2].setPosition(350, 320);
 		potionsTable.add(potions[2]);
 		// END POTIONS TABLE
 
@@ -238,16 +238,16 @@ public class BagScreen implements Screen {
 			}
 		});
 
-		weaponsLabel.setPosition(40, 425);
+		weaponsLabel.setPosition(140, 425);
 		weaponsTable.add(weaponsLabel);
 
-		weapons[0].setPosition(250, 420);
+		weapons[0].setPosition(350, 420);
 		weaponsTable.add(weapons[0]);
 
-		weapons[1].setPosition(250, 370);
+		weapons[1].setPosition(350, 370);
 		weaponsTable.add(weapons[1]);
 
-		weapons[2].setPosition(250, 320);
+		weapons[2].setPosition(350, 320);
 		weaponsTable.add(weapons[2]);
 		// END WEAPONS TABLE
 
@@ -278,13 +278,13 @@ public class BagScreen implements Screen {
 			}
 		});
 
-		parchmentsLabel.setPosition(20, 425);
+		parchmentsLabel.setPosition(120, 425);
 		parchmentsTable.add(parchmentsLabel);
 
-		parchments[0].setPosition(250, 420);
+		parchments[0].setPosition(350, 420);
 		parchmentsTable.add(parchments[0]);
 
-		parchments[1].setPosition(250, 370);
+		parchments[1].setPosition(350, 370);
 		parchmentsTable.add(parchments[1]);
 
 		// END PARCHMENTS TABLE
@@ -297,7 +297,7 @@ public class BagScreen implements Screen {
 	}
 
 	private void showInfo(ImageButton icon) {
-		icon.setPosition(41, 43);
+		icon.setPosition(149, 43);
 		// optionsTable.add(LoadingImage.emptyBagIcon);
 		optionsTable.removeActor(icon);
 		optionsTable.add(icon);

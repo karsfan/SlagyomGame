@@ -10,7 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.src.World.Game;
 
@@ -30,8 +33,9 @@ public class Hud {
 	Integer health;
 	public Hud(SpriteBatch sb) {
 		spriteBatch = sb;
-		viewport = new FitViewport(1200, 1200, new OrthographicCamera());
-		
+		viewport = new FitViewport(1920, 1080);
+		//viewport = new StretchViewport(1920, 1080, new OrthographicCamera());
+	//	viewport = new ExtendViewport(2000, 1125, new OrthographicCamera());
 		stage = new Stage(viewport, sb);
 
 		Table table = new Table();
@@ -50,8 +54,7 @@ public class Hud {
 		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/hudBg.png")));
 		
 		table.setBackground(hudBG);
-		
-		textTable.setX(Gdx.graphics.getHeight()/2);
+		textTable.setX(Gdx.graphics.getWidth() - 236);
 		textTable.setY(15);
 		
 		stage.addActor(table);

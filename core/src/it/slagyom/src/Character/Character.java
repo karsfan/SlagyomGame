@@ -235,6 +235,7 @@ public class Character extends DynamicObjects implements ICollidable {
 			if (ob instanceof Item) {
 				if (((Item) ob).collide(this)) {
 					if (pickItem((Item) ob)) {
+						PlayScreen.pickAnimation((Item) ob, ((Item) ob).getX(), ((Item) ob).getY());
 						it2.remove();
 						return false;
 					} else {

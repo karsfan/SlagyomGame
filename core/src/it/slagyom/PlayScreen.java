@@ -30,7 +30,7 @@ import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.Tile;
 
-public class PlayScreen implements Screen, ControllerListener{
+public class PlayScreen implements Screen, ControllerListener {
 
 	public OrthographicCamera gamecam;
 	public Viewport gamePort;
@@ -38,6 +38,10 @@ public class PlayScreen implements Screen, ControllerListener{
 	public static Hud hud;
 	private static Drawable noDialog = null;
 	private static float textTimer;
+
+	public static boolean drawAnimation = false;
+	public int j = 0;
+
 	private boolean stop = false;
 	public int i = 0;
 	Controllers controller;
@@ -74,7 +78,7 @@ public class PlayScreen implements Screen, ControllerListener{
 	@Override
 	public void render(float delta) {
 		update(delta);
-		
+
 		hud.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -82,10 +86,10 @@ public class PlayScreen implements Screen, ControllerListener{
 
 		game.batch.begin();
 		draw();
-
 		game.batch.end();
-		hud.stage.draw();
 
+		hud.stage.draw();
+		// TEXT TABLE RENDERING
 		textTimer += delta;
 		if (hud.showDialog)
 			if (textTimer > 0.08f) {
@@ -104,7 +108,24 @@ public class PlayScreen implements Screen, ControllerListener{
 			hideDialog();
 			i = 0;
 		}
+		// END TEXT TABLE RENDERING
 
+		if (drawAnimation)
+			j += 2;
+		else
+			j = 0;
+
+	}
+
+	public static Item obj;
+	public static float drawx;
+	public static float drawy;
+
+	public static void pickAnimation(Item ob, float x, int y) {
+		drawAnimation = true;
+		obj = ob;
+		drawx = x;
+		drawy = y;
 	}
 
 	public static void drawDialog(final String text) {
@@ -221,6 +242,15 @@ public class PlayScreen implements Screen, ControllerListener{
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
 		}
 		// game.batch.draw(LoadingImage.woman1Stand, 500, 500, 160,160);
+
+		if (drawAnimation) {
+			game.batch.draw(LoadingImage.getTileImage(obj), (float) ((StaticObject) obj).shape.getX() + (j * 2),
+					(float) ((StaticObject) obj).shape.getY() + j, (float) ((StaticObject) obj).shape.getWidth(),
+					(float) ((StaticObject) obj).shape.getHeight());
+			if ((float) ((StaticObject) obj).shape.getX() + (j * 2) == Gdx.graphics.getHeight()
+					|| (float) ((StaticObject) obj).shape.getY() + j == Gdx.graphics.getWidth())
+				drawAnimation = false;
+		}
 	}
 
 	@Override
@@ -270,21 +300,21 @@ public class PlayScreen implements Screen, ControllerListener{
 	@Override
 	public void connected(Controller controller) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void disconnected(Controller controller) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
-		 if (buttonCode == Ouya.BUTTON_R1) {
-			 Game.character.movesRight(0.1f);
-         }
- return false;
+		if (buttonCode == Ouya.BUTTON_R1) {
+			Game.character.movesRight(0.1f);
+		}
+		return false;
 	}
 
 	@Override

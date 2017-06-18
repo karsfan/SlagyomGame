@@ -92,7 +92,7 @@ public class Map {
 	public void addTile(String element, Point point) {
 		Tile tile = new Tile(element, point);
 		tile.setPoint(
-				new Point((int) tile.shape.getX(), (int) (tile.shape.getY() - (tile.shape.getHeight() / 32) + 1)));
+				new Point((int) tile.shape.getX(), (int) Math.abs(tile.shape.getY()-tile.shape.height/32 +1)));
 		listTile.add(tile);
 	}
 

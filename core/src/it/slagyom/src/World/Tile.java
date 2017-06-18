@@ -109,7 +109,6 @@ public class Tile extends StaticObject implements ICollidable {
 		shape.y = point.y * 32;
 		if (element == Element.HOME) {
 			door = new Rectangle((int) point.getX() * 32, (int) point.getY() * 32, 8, 5);
-			info = "In questa casa c'è sto cazzo";
 		}
 	}
 
@@ -119,7 +118,7 @@ public class Tile extends StaticObject implements ICollidable {
 					|| ((Character) e).getX() > door.x  + door.width + shape.getWidth() / 4)
 					|| (door.y  > ((Character) e).getY() + ((Character) e).getHeight() / 2
 							|| ((Character) e).getY() > door.y + door.height))) {
-				System.out.println("porta");
+				//System.out.println("porta");
 				return true;
 			}
 		}

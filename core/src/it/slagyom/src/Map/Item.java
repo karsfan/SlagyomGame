@@ -6,6 +6,7 @@ import java.util.Random;
 
 import it.slagyom.src.Character.Character;
 import it.slagyom.src.World.Game;
+import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.Tile;
 
 public class Item extends StaticObject {
@@ -83,9 +84,9 @@ public class Item extends StaticObject {
 
 	private void positionItem() {
 		Random rand = new Random();
-		int r = rand.nextInt(1440);
+		int r = rand.nextInt((int) GameConfig.WIDTH);
 		shape.x = r;
-		r = rand.nextInt(960);
+		r = rand.nextInt((int) GameConfig.HEIGHT);
 		shape.y = r;
 		if (collide(this))
 			positionItem();

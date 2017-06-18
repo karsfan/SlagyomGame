@@ -43,9 +43,9 @@ public class Woman extends DynamicObjects implements ICollidable{
 	}
 
 	public void positionMan() {
-		int rand = (int) (Math.random() * 1440);
+		int rand = (int) (Math.random() * GameConfig.WIDTH);
 		x = rand;
-		rand = (int) (Math.random() * 960);
+		rand = (int) (Math.random() * GameConfig.HEIGHT);
 		y = rand;
 		if (collide(this))
 			positionMan();

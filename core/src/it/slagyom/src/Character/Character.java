@@ -32,8 +32,10 @@ public class Character extends DynamicObjects implements ICollidable {
 		health = 100;
 		power = 100;
 		coins = 0;
-		while (!positionCharacter())
-			;
+		//while (!positionCharacter())
+			//;
+		x = 720;
+		y = 480;
 		velocity = 100;
 
 		currentState = StateDynamicObject.STANDING;
@@ -44,9 +46,9 @@ public class Character extends DynamicObjects implements ICollidable {
 	}
 
 	public boolean positionCharacter() {
-		int rand = (int) (Math.random() * 1440);
+		int rand = (int) (Math.random() * GameConfig.WIDTH);
 		x = rand;
-		rand = (int) (Math.random() * 960);
+		rand = (int) (Math.random() * GameConfig.HEIGHT);
 		y = rand;
 		if (collide(this)) {
 			return false;

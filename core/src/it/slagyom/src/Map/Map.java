@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.Tile;
 
 public class Map {
@@ -71,7 +72,6 @@ public class Map {
 		IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("read");
 	}
 
 	public static Point getXY(String line) {
@@ -85,14 +85,14 @@ public class Map {
 		for (i = i + 1; line.charAt(i) != ';'; i++) {
 			y = y * 10 + java.lang.Character.getNumericValue(line.charAt(i));
 		}
-		y = Math.abs(y - 29);
+		y = (int) Math.abs(y - GameConfig.HEIGHT/32);
 		return new Point(x, y);
 	}
 
 	public void addTile(String element, Point point) {
 		Tile tile = new Tile(element, point);
 		tile.setPoint(
-				new Point((int) tile.shape.getX(), (int) (tile.shape.getY() - (tile.shape.getHeight() / 32) + 1)));
+				new Point((int) tile.shape.getX(), (int) Math.abs(tile.shape.getY() - (tile.shape.getHeight() / 32))));
 		listTile.add(tile);
 	}
 

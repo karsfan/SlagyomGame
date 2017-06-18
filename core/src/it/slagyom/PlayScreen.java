@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
@@ -26,6 +27,7 @@ import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.World.Game;
+import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.Tile;
 
 public class PlayScreen implements Screen, ControllerListener {
@@ -55,8 +57,9 @@ public class PlayScreen implements Screen, ControllerListener {
 		new Game(name);
 		new LoadingImage();
 		gamecam = new OrthographicCamera();
+		//gamePort = new ExtendViewport(840, 480,gamecam);
 		gamePort = new ScreenViewport(gamecam);
-
+		gamePort.apply();
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
 		hud = new Hud(game.batch);
@@ -148,12 +151,13 @@ public class PlayScreen implements Screen, ControllerListener {
 	public void update(float dt) {
 		moveCharacter(dt);
 		if ((Game.character.getX() - Gdx.graphics.getWidth() / 2 > 0
-				&& Game.character.getX() + Gdx.graphics.getWidth() / 2 < 1440))
+				&& Game.character.getX() + Gdx.graphics.getWidth() / 2 < GameConfig.WIDTH))
 			gamecam.position.x = Game.character.getX();
 
 		if (Game.character.getY() - Gdx.graphics.getHeight() / 2 > 0
-				&& Game.character.getY() + Gdx.graphics.getHeight() / 2 < 960)
+				&& Game.character.getY() + Gdx.graphics.getHeight() / 2 < GameConfig.HEIGHT)
 			gamecam.position.y = Game.character.getY();
+			
 		gamecam.update();
 
 	}
@@ -288,20 +292,21 @@ public class PlayScreen implements Screen, ControllerListener {
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
-		gamePort.setScreenSize(width, height);
+		//gamePort.setScreenSize(width, height);
 		// controlli per la posizione della camera
-		if (Gdx.graphics.getWidth() + Game.character.getX() - 1440 > 0
+		if (Gdx.graphics.getWidth()/2 + Game.character.getX() - GameConfig.WIDTH > 0
 				&& !(Game.character.getX() - Gdx.graphics.getWidth() / 2 < 0)) {
-			gamecam.position.x = 1440 - Gdx.graphics.getWidth() + Gdx.graphics.getWidth() / 2;
+			gamecam.position.x = GameConfig.WIDTH - Gdx.graphics.getWidth()/2 + Gdx.graphics.getWidth() / 2;
 		} else if (Game.character.getX() - Gdx.graphics.getWidth() / 2 < 0) {
 			gamecam.position.x = Gdx.graphics.getWidth() / 2;
 		} else
 			gamecam.position.x = Game.character.getX();
-		if (Gdx.graphics.getHeight() + Game.character.getY() - 960 > 0) {
-			gamecam.position.y = 960 - Gdx.graphics.getHeight() + Gdx.graphics.getHeight() / 2;
+		if (Gdx.graphics.getHeight() + Game.character.getY() - GameConfig.HEIGHT> 0) {
+			gamecam.position.y = GameConfig.HEIGHT - Gdx.graphics.getHeight() + Gdx.graphics.getHeight() / 2;
 		} else if (Game.character.getY() - Gdx.graphics.getHeight() / 2 < 0) {
 			gamecam.position.y = Gdx.graphics.getHeight() / 2;
 		}
+	
 
 	}
 

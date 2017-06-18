@@ -298,8 +298,8 @@ public class BagScreen implements Screen {
 		Controllers.addListener(new MenuControllerListener(weaponsTable));
 		Controllers.addListener(new MenuControllerListener(parchmentsTable));
 		Controllers.addListener(new MenuControllerListener(optionsTable));
-		Gdx.input.setInputProcessor(stage);
-
+		
+		
 	}
 
 	private void showInfo(ImageButton icon) {

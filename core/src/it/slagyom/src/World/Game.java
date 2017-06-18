@@ -11,7 +11,7 @@ public class Game {
 
 		world = new World();
 		character = new Character(name);
-		System.out.println("game");
+
 		world.getListDynamicObjects().add(character);
 		while(!world.addDynamicObject());
 		while(!world.addItems());

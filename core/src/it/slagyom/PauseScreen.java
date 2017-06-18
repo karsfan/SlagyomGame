@@ -172,17 +172,13 @@ public class PauseScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
-		//System.out.println(Game.world.semaphore.getQueueLength()+"pausa");
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();
-		stage.setKeyboardFocus(mainTable);
-		stage.getKeyboardFocus().getCaptureListeners().toString();
-		stage.keyDown(0);
-		System.out.println(stage.keyDown(0));
+		
 		stage.act();
 		
 		stage.draw();

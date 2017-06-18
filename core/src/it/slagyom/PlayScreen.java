@@ -59,13 +59,13 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam = new OrthographicCamera();
 		//gamePort = new ExtendViewport(840, 480,gamecam);
 		gamePort = new ScreenViewport(gamecam);
-<<<<<<< HEAD
+
 		gamePort.apply();
-=======
+
 		//gamePort = new ExtendViewport(854, 480, gamecam); 
 
 
->>>>>>> 6c9bdacbb1111571239a84724d364b49ff014445
+
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
 		hud = new Hud(game.batch);
@@ -161,29 +161,16 @@ public class PlayScreen implements Screen, ControllerListener {
 		//gamecam.position.x = Game.character.getX();
 		//gamecam.position.y = Game.character.getY();
 		if ((Game.character.getX() - Gdx.graphics.getWidth() / 2 > 0
-<<<<<<< HEAD
 				&& Game.character.getX() + Gdx.graphics.getWidth() / 2 < GameConfig.WIDTH))
 			gamecam.position.x = Game.character.getX();
 
 		if (Game.character.getY() - Gdx.graphics.getHeight() / 2 > 0
 				&& Game.character.getY() + Gdx.graphics.getHeight() / 2 < GameConfig.HEIGHT)
 			gamecam.position.y = Game.character.getY();
-			
-=======
-				|| Game.character.getX() + Gdx.graphics.getWidth() / 2 < (1440)))
-			gamecam.position.x = Game.character.getX();
 
-		if (Game.character.getY() - Gdx.graphics.getHeight() / 2 > 0
-				&& Game.character.getY() + Gdx.graphics.getHeight() / 2 < (960))
-			gamecam.position.y = Game.character.getY();
+			
+
 		
-		
-		
-		
-		
-		//System.out.println(Game.character.x + " " + Gdx.graphics.getWidth());
-		
->>>>>>> 6c9bdacbb1111571239a84724d364b49ff014445
 		gamecam.update();
 
 	}
@@ -319,41 +306,20 @@ public class PlayScreen implements Screen, ControllerListener {
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
 		//gamePort.setScreenSize(width, height);
-<<<<<<< HEAD
 		// controlli per la posizione della camera
 		if (Gdx.graphics.getWidth()/2 + Game.character.getX() - GameConfig.WIDTH > 0
-				&& !(Game.character.getX() - Gdx.graphics.getWidth() / 2 < 0)) {
+				&& !(Game.character.getX() - Gdx.graphics.getWidth() / 2 < 0)) 
 			gamecam.position.x = GameConfig.WIDTH - Gdx.graphics.getWidth()/2 + Gdx.graphics.getWidth() / 2;
-=======
-		if (Gdx.graphics.getWidth()/2  + Game.character.getX() - (1440) > 0) {
-			System.out.println("qui");
-			 
-			gamecam.position.x = Gdx.graphics.getWidth()/2;
-			//gamecam.position.x = (1440) - Gdx.graphics.getWidth() + Gdx.graphics.getWidth()/2;
->>>>>>> 6c9bdacbb1111571239a84724d364b49ff014445
-		} else if (Game.character.getX() - Gdx.graphics.getWidth() / 2 < 0) {
-			//System.out.println("qui1");
-			gamecam.position.x = Gdx.graphics.getWidth() / 2;
-		} 
-		else 
-			gamecam.position.x = Game.character.getX();
-<<<<<<< HEAD
-		if (Gdx.graphics.getHeight() + Game.character.getY() - GameConfig.HEIGHT> 0) {
-			gamecam.position.y = GameConfig.HEIGHT - Gdx.graphics.getHeight() + Gdx.graphics.getHeight() / 2;
-=======
-		if (Gdx.graphics.getHeight()+ Game.character.getY() - (960) > 0) {
-			//System.out.println("qui2");
-			gamecam.position.y = (960) - Gdx.graphics.getHeight() + Gdx.graphics.getHeight() / 2;
->>>>>>> 6c9bdacbb1111571239a84724d364b49ff014445
-		} else if (Game.character.getY() - Gdx.graphics.getHeight() / 2 < 0) {
-			gamecam.position.y = Gdx.graphics.getHeight() / 2;
-			//System.out.println("qui3");
-		}
-<<<<<<< HEAD
+		 else if (Game.character.getX() - Gdx.graphics.getWidth() / 2 < 0) {
 	
-=======
-		// controlli per la posizione della camera
->>>>>>> 6c9bdacbb1111571239a84724d364b49ff014445
+			gamecam.position.x = Gdx.graphics.getWidth() / 2;
+		}
+		if (Gdx.graphics.getHeight() + Game.character.getY() - GameConfig.HEIGHT> 0) 
+			gamecam.position.y = GameConfig.HEIGHT - Gdx.graphics.getHeight() + Gdx.graphics.getHeight() / 2;
+		else if (Game.character.getY() - Gdx.graphics.getHeight() / 2 < 0) {
+			gamecam.position.y = Gdx.graphics.getHeight() / 2;
+		}
+	
 
 	
 	}

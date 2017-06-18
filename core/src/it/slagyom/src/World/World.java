@@ -39,11 +39,7 @@ public class World {
 		people = new ArrayList<DynamicObjects>();
 
 		maps = new Map[2];
-<<<<<<< HEAD
 		maps[0] = new Map(path, true, "Village one");
-=======
-		maps[0] = new Map("C:/Users/franc/Desktop/map", true, "Village one");
->>>>>>> 6c9bdacbb1111571239a84724d364b49ff014445
 		maps[1] = new Map("res/map/Map1", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));

@@ -79,7 +79,7 @@ public class World {
 		try {
 			semaphore.acquire();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		Iterator<DynamicObjects> it1 = people.iterator();

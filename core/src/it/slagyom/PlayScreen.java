@@ -45,8 +45,8 @@ public class PlayScreen implements Screen, ControllerListener {
 	private boolean stop = false;
 	public int i = 0;
 	PovDirection directionGamepad;
-	public static  Item obj;
-	public  static float drawx;
+	public static Item obj;
+	public static float drawx;
 	public static float drawy;
 
 	boolean movesGamePad = false;
@@ -57,19 +57,16 @@ public class PlayScreen implements Screen, ControllerListener {
 		new Game(name);
 		new LoadingImage();
 		gamecam = new OrthographicCamera();
-		//gamePort = new ExtendViewport(840, 480,gamecam);
-		gamePort = new ScreenViewport(gamecam);
+		gamePort = new ExtendViewport(840, 480, gamecam);
+		// gamePort = new ScreenViewport(gamecam);
 
 		gamePort.apply();
 
-		//gamePort = new ExtendViewport(854, 480, gamecam); 
-
-
-
+		// gamePort = new ExtendViewport(854, 480, gamecam);
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
 		hud = new Hud(game.batch);
-		
+
 		Controllers.addListener(this);
 	}
 
@@ -80,7 +77,8 @@ public class PlayScreen implements Screen, ControllerListener {
 		hud = new Hud(game.batch);
 
 		gamecam = new OrthographicCamera();
-		gamePort = new ScreenViewport(gamecam);
+		gamePort = new ExtendViewport(840, 480, gamecam);
+		//gamePort = new ScreenViewport(gamecam);
 
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
@@ -128,15 +126,13 @@ public class PlayScreen implements Screen, ControllerListener {
 			j += 2;
 		else
 			j = 0;
-		
 
 	}
 
-	
-	public static  void pickAnimation(Item ob, float x, int y) {
+	public static void pickAnimation(Item ob, float x, int y) {
 		drawAnimation = true;
 		obj = new Item();
-		
+
 		obj = ob;
 	}
 
@@ -157,20 +153,18 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	public void update(float dt) {
 		moveCharacter(dt);
-		
-		//gamecam.position.x = Game.character.getX();
-		//gamecam.position.y = Game.character.getY();
-		if ((Game.character.getX() - Gdx.graphics.getWidth() / 2 > 0
-				&& Game.character.getX() + Gdx.graphics.getWidth() / 2 < GameConfig.WIDTH))
+
+		// gamecam.position.x = Game.character.getX();
+		// gamecam.position.y = Game.character.getY();
+		System.out.println(Game.character.getX() + " " + Gdx.graphics.getWidth() / 2);
+		if ((Game.character.getX() - gamePort.getWorldWidth() / 2 > 0
+				&& Game.character.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
 			gamecam.position.x = Game.character.getX();
 
-		if (Game.character.getY() - Gdx.graphics.getHeight() / 2 > 0
-				&& Game.character.getY() + Gdx.graphics.getHeight() / 2 < GameConfig.HEIGHT)
+		if (Game.character.getY() - gamePort.getWorldHeight() / 2 > 0
+				&& Game.character.getY() + gamePort.getWorldHeight() / 2 < GameConfig.HEIGHT)
 			gamecam.position.y = Game.character.getY();
 
-			
-
-		
 		gamecam.update();
 
 	}
@@ -182,27 +176,25 @@ public class PlayScreen implements Screen, ControllerListener {
 				if (movesGamePad) {
 					if (directionGamepad == PovDirection.east)
 						Game.character.movesRight(dt);
-					else if (directionGamepad == PovDirection.north){
+					else if (directionGamepad == PovDirection.north) {
 						Game.character.movesUp(dt);
 						if (Game.character.collideDoor) {
 							game.swapScreen(State.SHOP);
 							Game.world.semaphore.acquire();
 							Game.character.collideDoor = false;
 						}
-					}
-					else if (directionGamepad == PovDirection.west)
+					} else if (directionGamepad == PovDirection.west)
 						Game.character.movesLeft(dt);
 					else if (directionGamepad == PovDirection.south)
 						Game.character.movesDown(dt);
-					else if (directionGamepad == PovDirection.northEast) 
+					else if (directionGamepad == PovDirection.northEast)
 						Game.character.movesNorthEast(dt);
-					else if (directionGamepad == PovDirection.northWest) 
+					else if (directionGamepad == PovDirection.northWest)
 						Game.character.movesNorthWest(dt);
-					else if (directionGamepad == PovDirection.southEast) 
+					else if (directionGamepad == PovDirection.southEast)
 						Game.character.movesSouthEast(dt);
-					else if (directionGamepad == PovDirection.southWest) 
+					else if (directionGamepad == PovDirection.southWest)
 						Game.character.movesSouthWest(dt);
-					
 
 				}
 
@@ -291,13 +283,13 @@ public class PlayScreen implements Screen, ControllerListener {
 		// game.batch.draw(LoadingImage.woman1Stand, 500, 500, 160,160);
 
 		if (drawAnimation) {
-			obj.setX((int) (obj.getX()+j));
-			obj.setY((int) (obj.getY()+j));
+			obj.setX((int) (obj.getX() + j));
+			obj.setY((int) (obj.getY() + j));
 			game.batch.draw(LoadingImage.getTileImage(obj), (float) ((StaticObject) obj).shape.getX(),
-					(float) ((StaticObject) obj).shape.getY() , (float) ((StaticObject) obj).shape.getWidth(),
+					(float) ((StaticObject) obj).shape.getY(), (float) ((StaticObject) obj).shape.getWidth(),
 					(float) ((StaticObject) obj).shape.getHeight());
 			if ((float) ((StaticObject) obj).shape.getX() == Gdx.graphics.getHeight()
-					|| (float) ((StaticObject) obj).shape.getY()  == Gdx.graphics.getWidth())
+					|| (float) ((StaticObject) obj).shape.getY() == Gdx.graphics.getWidth())
 				drawAnimation = false;
 		}
 	}
@@ -305,23 +297,21 @@ public class PlayScreen implements Screen, ControllerListener {
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
-		//gamePort.setScreenSize(width, height);
+		// gamePort.setScreenSize(width, height);
 		// controlli per la posizione della camera
-		if (Gdx.graphics.getWidth()/2 + Game.character.getX() - GameConfig.WIDTH > 0
-				&& !(Game.character.getX() - Gdx.graphics.getWidth() / 2 < 0)) 
-			gamecam.position.x = GameConfig.WIDTH - Gdx.graphics.getWidth()/2 + Gdx.graphics.getWidth() / 2;
-		 else if (Game.character.getX() - Gdx.graphics.getWidth() / 2 < 0) {
-	
-			gamecam.position.x = Gdx.graphics.getWidth() / 2;
-		}
-		if (Gdx.graphics.getHeight() + Game.character.getY() - GameConfig.HEIGHT> 0) 
-			gamecam.position.y = GameConfig.HEIGHT - Gdx.graphics.getHeight() + Gdx.graphics.getHeight() / 2;
-		else if (Game.character.getY() - Gdx.graphics.getHeight() / 2 < 0) {
-			gamecam.position.y = Gdx.graphics.getHeight() / 2;
-		}
-	
+		if (gamePort.getWorldWidth() / 2 + Game.character.getX() - GameConfig.WIDTH > 0
+				&& !(Game.character.getX() - gamePort.getWorldWidth() / 2 < 0))
+			gamecam.position.x = GameConfig.WIDTH - gamePort.getWorldWidth() / 2;
+		else if (Game.character.getX() - gamePort.getWorldWidth() / 2 < 0) {
 
-	
+			gamecam.position.x = gamePort.getWorldWidth() / 2;
+		}
+		if (gamePort.getWorldHeight() / 2 + Game.character.getY() - GameConfig.HEIGHT > 0)
+			gamecam.position.y = GameConfig.HEIGHT - gamePort.getWorldHeight()/2;
+		else if (Game.character.getY() - gamePort.getWorldHeight()/2 < 0) {
+			gamecam.position.y = gamePort.getWorldHeight()/2;
+		}
+
 	}
 
 	@Override
@@ -401,8 +391,8 @@ public class PlayScreen implements Screen, ControllerListener {
 			movesGamePad = true;
 			directionGamepad = value;
 			return true;
-		} else if (value == PovDirection.northEast || value == PovDirection.northWest
-				|| value == PovDirection.southWest || value == PovDirection.southEast) {
+		} else if (value == PovDirection.northEast || value == PovDirection.northWest || value == PovDirection.southWest
+				|| value == PovDirection.southEast) {
 			movesGamePad = true;
 			directionGamepad = value;
 			return true;

@@ -203,7 +203,7 @@ public class Character extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesUp(float dt) {
-
+		System.out.println(y);
 		if (y < GameConfig.HEIGHT - height - 5) {
 			y += (velocity * dt);
 			if (collide(this)) {
@@ -214,7 +214,7 @@ public class Character extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesDown(float dt) {
-
+		System.out.println(y);
 		if (y > 0) {
 			y -= (velocity * dt);
 			if (collide(this))

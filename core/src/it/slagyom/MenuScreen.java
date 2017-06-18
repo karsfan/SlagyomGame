@@ -82,7 +82,8 @@ public class MenuScreen implements Screen {
 		playButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println(playButton.isChecked());
+
+
 				
 				game.swapScreen(State.NEWGAME);
 				
@@ -141,7 +142,7 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		//System.out.println(playButton.isOver());
+		
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();

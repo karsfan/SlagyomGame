@@ -107,6 +107,8 @@ public class Tile extends StaticObject implements ICollidable {
 	public void setPoint(Point point) {
 		shape.x = point.x * 32;
 		shape.y = point.y * 32;
+		if(element == Element.FOREST2)
+		System.out.println(shape.y);
 		if (element == Element.HOME) {
 			door = new Rectangle((int) point.getX() * 32, (int) point.getY() * 32, 8, 5);
 		}

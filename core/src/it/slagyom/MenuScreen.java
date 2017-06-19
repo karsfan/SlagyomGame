@@ -21,8 +21,8 @@ import com.levels.editor.Editor;
 import it.slagyom.GameSlagyom.State;
 
 public class MenuScreen implements Screen {
-	 GameSlagyom game;
-	 final TextButton playButton;
+    GameSlagyom game;
+	final TextButton playButton;
 	
 	protected Stage stage;
 	private Viewport viewport;
@@ -30,7 +30,6 @@ public class MenuScreen implements Screen {
 
 	private Texture background;
 	private Sprite backgroundSprite;
-	public Music music;
 	
 	static TextureAtlas atlas;
 	protected static Skin skin;
@@ -38,13 +37,13 @@ public class MenuScreen implements Screen {
 
 	public TextButton musicButton;
 	public TextButton returnButton;
-	
+	Music menuMusic;
 	public MenuScreen(final GameSlagyom game) {
 		this.game = game;
 		atlas = new TextureAtlas("menu/vhs/vhs-ui.atlas");
 		skin = new Skin(Gdx.files.internal("menu/vhs/vhs-ui.json"), atlas);
-		music = Gdx.audio.newMusic(Gdx.files.internal("res/menuMusic.mp3"));
-	//	music.play();
+		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
+		menuMusic.play();
 
 		musicButton = new TextButton("Music", skin);
 		returnButton = new TextButton("Return", skin);
@@ -60,7 +59,6 @@ public class MenuScreen implements Screen {
 		camera.update();
 
 		stage = new Stage(viewport, game.batch);
-		// Stage should controll input:
 		Gdx.input.setInputProcessor(stage);
 
 		// Create Table
@@ -92,7 +90,7 @@ public class MenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {		
 				game.loadGame();
-				music.stop();
+				menuMusic.stop();
 				game.swapScreen(State.CONTINUEGAME);
 				PlayScreen.hud.textTable.clear();
 				PlayScreen.hud.textDialog = "Game loaded!";

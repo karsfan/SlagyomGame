@@ -92,7 +92,7 @@ public class GameSlagyom extends Game {
 			Gdx.input.setInputProcessor(menuScreen.stage);
 		} else if (currentState == State.PLAYING) {
 			setScreen(playScreen);
-			menuScreen.music.stop();
+			menuScreen.menuMusic.stop();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.OPTIONMENU) {
 			setScreen(optionScreen);

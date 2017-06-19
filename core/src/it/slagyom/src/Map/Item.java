@@ -63,7 +63,7 @@ public class Item extends StaticObject {
 			shape.height = 14;
 			positionItem();
 			r = rand.nextInt(3);
-			if(r == 0)
+			if (r == 0)
 				level = Level.FIRST;
 			if (r == 1)
 				level = Level.SECOND;
@@ -92,8 +92,6 @@ public class Item extends StaticObject {
 			positionItem();
 	}
 
-	
-	
 	public String getInfo() {
 		return info;
 	}
@@ -127,7 +125,7 @@ public class Item extends StaticObject {
 	}
 
 	public void setY(float f) {
-		this.y =  f;
+		this.y = f;
 	}
 
 	public int getWidth() {
@@ -168,10 +166,12 @@ public class Item extends StaticObject {
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof Tile) {
-				if (((Tile) ob).getElement() != Element.GROUND && ((Tile) ob).getElement() != Element.ROAD)
-					if (!((shape.x > ((Tile) ob).getX() + ((Tile) ob).getWidth() 
+				if (((Tile) ob).getElement() != Element.GROUND && ((Tile) ob).getElement() != Element.ROAD)/*
+						&& ((Tile) ob).getElement() != Element.FLOOR && ((Tile) ob).getElement() != Element.FLOOR2
+						&& ((Tile) ob).getElement() != Element.FLOOR3)*/
+					if (!((shape.x > ((Tile) ob).getX() + ((Tile) ob).getWidth()
 							|| ((Tile) ob).getX() > shape.x + shape.width)
-							|| (shape.y > ((Tile) ob).getY() + ((Tile) ob).getHeight() 
+							|| (shape.y > ((Tile) ob).getY() + ((Tile) ob).getHeight()
 									|| ((Tile) ob).getY() > shape.y + shape.height))) {
 						return true;
 					}

@@ -11,6 +11,7 @@ public class Shop extends StaticObject {
 	ArrayList<Weapon> weapons; 
 	ArrayList<Pack> packs; 
 	
-	public Shop(){		
+	public Shop(){	
+		
 	}
 }

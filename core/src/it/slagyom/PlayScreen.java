@@ -20,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.Character.DynamicObjects;
@@ -59,7 +58,10 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
 		// gamePort = new ScreenViewport(gamecam);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 39c70f2c90345765fb7bd5ba53e342f56ee7a59d
 		gamePort = new ExtendViewport(840, 480, gamecam);
 		gamePort.apply();
 
@@ -167,6 +169,10 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	public void update(float dt) {
 		moveCharacter(dt);
+<<<<<<< HEAD
+=======
+		System.out.println(gamePort.getWorldWidth() / 2  + " "+Gdx.graphics.getWidth()/2);
+>>>>>>> 39c70f2c90345765fb7bd5ba53e342f56ee7a59d
 
 		// gamecam.position.x = Game.character.getX();
 		// gamecam.position.y = Game.character.getY();

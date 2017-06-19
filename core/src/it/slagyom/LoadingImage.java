@@ -90,7 +90,6 @@ public class LoadingImage {
 	public static Sound coinSound;
 	public static Sound itemSound;
 
-	
 	@SuppressWarnings("unchecked")
 	public LoadingImage() {
 		// TILES IMAGES
@@ -164,7 +163,7 @@ public class LoadingImage {
 
 		texture = new Texture("assets/lancia.png");
 		createBattleFrame(texture, enemyAnimation, enemyStand);
-		
+
 		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
 		backgroundSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/backgroundAudio.ogg"));
 		tickSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/tick.ogg"));
@@ -385,13 +384,15 @@ public class LoadingImage {
 	public static Texture getTileImage(Object ob) {
 
 		Texture texture = null;
-<<<<<<< HEAD
 		if (ob instanceof StaticObject) {
 
 			Element element = ((StaticObject) ob).getElement();
 			switch (element) {
 			case HOME:
 				texture = homeImage;
+				break;
+			case SHOP:
+				texture = shopImage;
 				break;
 			case THREE:
 				texture = threeImage;
@@ -417,11 +418,20 @@ public class LoadingImage {
 			case FLOOR:
 				texture = floorImage;
 				break;
+			case FLOOR2:
+				texture = floor2Image;
+				break;
+			case FLOOR3:
+				texture = floor3Image;
+				break;
+			case PREENEMYHOME:
+				texture = preEnemyHomeImage;
+				break;
+			case STRAW:
+				texture = strawImage;
+				break;
 			case BIGHOME:
 				texture = bigHomeImage;
-				break;
-			case SHOP:
-				texture = null;
 				break;
 			case TABLE:
 				texture = tableImage;
@@ -445,78 +455,8 @@ public class LoadingImage {
 			default:
 				break;
 			}
-=======
-		switch (element) {
-		case HOME:
-			texture = homeImage;
-			break;
-		case SHOP:
-			texture = shopImage;
-			break;
-		case THREE:
-			texture = threeImage;
-			break;
-		case FOREST1:
-			texture = forest1Image;
-			break;
-		case FOREST2:
-			texture = forest2Image;
-			break;
-		case GROUND:
-			texture = groundImage;
-			break;
-		case BUILDING:
-			texture = buildingImage;
-			break;
-		case WATER:
-			texture = waterImage;
-			break;
-		case ROCK:
-			texture = rockImage;
-			break;
-		case FLOOR:
-			texture = floorImage;
-			break;
-		case FLOOR2:
-			texture = floor2Image;
-			break;
-		case FLOOR3:
-			texture = floor3Image;
-			break;
-		case PREENEMYHOME:
-			texture = preEnemyHomeImage;
-			break;
-		case STRAW:
-			texture = strawImage;
-			break;
-		case BIGHOME:
-			texture = bigHomeImage;
-			break;
-		case TABLE:
-			texture = tableImage;
-			break;
-		case ROAD:
-			texture = roadImage;
-			break;
-		case COIN:
+		} else
 			texture = coinImage;
-			break;
-		case PARCHMENT:
-			break;
-		case POTION:
-			if (((Item) ob).getLevel() == Level.FIRST)
-				texture = bluPotionImage;
-			if (((Item) ob).getLevel() == Level.SECOND)
-				texture = greenPotionImage;
-			if (((Item) ob).getLevel() == Level.THIRD)
-				texture = redPotionImage;
-			break;
-		default:
-			break;
->>>>>>> 87c6deae0d82496b19172b842265cf34b4575d3c
-		}
-	else 
-		texture = coinImage;
 		return texture;
 	}
 }

@@ -117,7 +117,7 @@ public class PlayScreen implements Screen, ControllerListener {
 						hud.textTable.row();
 					if (i % 75 == 0) {
 						hud.textTable.clear();
-						LoadingImage.tickSound.play(0.1f);					
+						LoadingImage.tickSound.play(0.8f);					
 					}
 					drawDialog(String.valueOf(hud.textDialog.charAt(i)));
 					i++;

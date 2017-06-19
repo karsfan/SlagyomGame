@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
+import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 
 public class OptionScreen implements Screen {
@@ -22,6 +23,7 @@ public class OptionScreen implements Screen {
 	protected Stage stage;
 	private Viewport viewport;
 	private OrthographicCamera camera;
+	public static boolean fromPause;
 
 	private Texture background;
 	private Sprite backgroundSprite;
@@ -43,7 +45,7 @@ public class OptionScreen implements Screen {
 		camera.update();
 
 		stage = new Stage(viewport, game.batch);
-
+		fromPause = false;
 		// Create Table
 		Table mainTable = new Table();
 		mainTable.setFillParent(true);
@@ -88,7 +90,12 @@ public class OptionScreen implements Screen {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.swapScreen(State.MENU);
+				if (fromPause) {
+					Game.world.semaphore.release();					
+					game.swapScreen(State.PLAYING);
+				}
+				else
+					game.swapScreen(State.MENU);
 			}
 		});
 		// Add buttons to table
@@ -118,7 +125,6 @@ public class OptionScreen implements Screen {
 
 		stage.act();
 		stage.draw();
-
 	}
 
 	@Override

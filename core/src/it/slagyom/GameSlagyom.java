@@ -8,11 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameSlagyom extends Game {
 
 	public static enum State {
-		MENU, NEWGAME, CONTINUEGAME, OPTIONMENU, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP
+		MENU, NEWGAME, CONTINUEGAME, OPTIONMENU, MULTIPLAYER, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP
 	};
 
 	private static State currentState;
-
+	
 	static MenuScreen menuScreen;
 	static NewCharacterScreen newCharacterScreen;
 	static InitializerScreen initializerScreen;
@@ -22,6 +22,7 @@ public class GameSlagyom extends Game {
 	static PlayScreen playScreen;
 	static BagScreen bagScreen;
 	static ShopScreen shopScreen;
+	//static MultiplayerScreen multiplayerScreen;
 
 
 	public static Preferences prefs;
@@ -42,7 +43,6 @@ public class GameSlagyom extends Game {
 		setScreen(menuScreen);
 
 		prefs = Gdx.app.getPreferences("My saved game");
-
 	}
 
 	public static void saveGame() {
@@ -84,7 +84,6 @@ public class GameSlagyom extends Game {
 	}
 
 	public void swapScreen(State newState) {
-
 		setState(newState);
 
 		if (currentState == State.MENU) {

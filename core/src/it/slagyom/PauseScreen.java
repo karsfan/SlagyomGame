@@ -81,6 +81,7 @@ public class PauseScreen implements Screen{
 		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				OptionScreen.fromPause = true;
 				game.swapScreen(State.OPTIONMENU);
 
 			}

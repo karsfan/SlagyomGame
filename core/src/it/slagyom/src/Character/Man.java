@@ -254,7 +254,7 @@ public class Man extends DynamicObjects implements ICollidable {
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof Tile) {
-				if (((Tile) ob).getElement() != Element.GROUND && ((Tile) ob).getElement() != Element.ROAD)
+				if (((Tile) ob).getElement() != Element.GROUND && ((Tile) ob).getElement() != Element.ROAD)// &&  ((Tile) ob).getElement() != Element.FLOOR && ((Tile) ob).getElement() != Element.FLOOR2 && ((Tile) ob).getElement() != Element.FLOOR3)
 					if (((Tile) ob).collide(this)) {
 						collision = true;
 						return true;

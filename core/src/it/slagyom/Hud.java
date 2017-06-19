@@ -30,8 +30,6 @@ public class Hud {
 	public Hud(SpriteBatch sb) {
 		spriteBatch = sb;
 		viewport = new FitViewport(1920, 1080);
-		//viewport = new StretchViewport(1920, 1080, new OrthographicCamera());
-	//	viewport = new ExtendViewport(2000, 1125, new OrthographicCamera());
 		stage = new Stage(viewport, sb);
 
 		Table table = new Table();

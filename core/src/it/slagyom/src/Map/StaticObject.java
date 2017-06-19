@@ -7,7 +7,7 @@ import it.slagyom.src.World.ICollidable;
 public class StaticObject implements ICollidable {
 
 	public enum Element {
-		HOME, THREE, FOREST1, FOREST2, GROUND, BUILDING, WATER, ROCK, FLOOR, ROAD, BIGHOME, SHOP, TABLE, POTION, PARCHMENT, COIN
+		HOME, THREE, FOREST1, FOREST2, GROUND, BUILDING, WATER, ROCK, FLOOR, ROAD, BIGHOME, SHOP, TABLE, POTION, PARCHMENT, COIN, FLOOR2, PREENEMYHOME, FLOOR3, STRAW
 	};
 
 	protected Element element;

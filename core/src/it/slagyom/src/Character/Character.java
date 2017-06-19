@@ -10,6 +10,7 @@ import it.slagyom.src.World.Tile;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
+import it.slagyom.LoadingImage;
 import it.slagyom.PlayScreen;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.StaticObject.Element;
@@ -32,8 +33,8 @@ public class Character extends DynamicObjects implements ICollidable {
 		health = 100;
 		power = 100;
 		coins = 0;
-		//while (!positionCharacter())
-			//;
+		// while (!positionCharacter())
+		// ;
 		x = 720;
 		y = 480;
 		velocity = 100;
@@ -258,12 +259,16 @@ public class Character extends DynamicObjects implements ICollidable {
 	boolean pickItem(Item item) {
 		if (item.getElement() != Element.COIN && !item.picked) {
 			if (bag.addTool(item)) {
+				LoadingImage.itemSound.play(1.0f);
 				item.setPicked(true);
 				return true;
 			}
 		} else {
-			if(!item.picked)
-			coins++;
+			if (!item.picked) {
+				PlayScreen.obj = item;
+				coins++;
+				LoadingImage.coinSound.play(0.5f);
+			}
 			item.setPicked(true);
 			return true;
 		}
@@ -281,7 +286,7 @@ public class Character extends DynamicObjects implements ICollidable {
 					if (((Tile) ob).collide(this)) {
 						if (((Tile) ob).getElement() == Element.TABLE)
 							PlayScreen.hud.setDialogText(((Tile) ob).getInfo());
-						else if (((Tile) ob).getElement() == Element.HOME)
+						else if (((Tile) ob).getElement() == Element.SHOP)
 							if (((Tile) ob).collideDoor(this))
 								collideDoor = true;
 						return true;
@@ -296,7 +301,8 @@ public class Character extends DynamicObjects implements ICollidable {
 			if (ob instanceof Item) {
 				if (((Item) ob).collide(this)) {
 					if (pickItem((Item) ob)) {
-						//PlayScreen.pickAnimation((Item) ob, ((Item) ob).getX(), ((Item) ob).getY());
+						// PlayScreen.pickAnimation((Item) ob, ((Item)
+						// ob).getX(), ((Item) ob).getY());
 						it2.remove();
 						return false;
 					} else {

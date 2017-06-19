@@ -51,9 +51,30 @@ public class Tile extends StaticObject implements ICollidable {
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 128, 96);
 			break;
 		case "FLOOR":
-			this.element = Element.FLOOR;
+			this.element = Element.GROUND;
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 32, 32);
 			break;
+		case "FLOOR2":
+			this.element = Element.GROUND;
+			shape = new Rectangle((int) point.getX(), (int) point.getY(), 32, 32);
+			break;
+		case "FLOOR3":
+			this.element = Element.GROUND;
+			shape = new Rectangle((int) point.getX(), (int) point.getY(), 32, 32);
+			break;
+		case "SHOP":
+			this.element = Element.SHOP;
+			shape = new Rectangle((int) point.getX(), (int) point.getY(), 64, 64);
+			break;
+		case "PREENEMYHOME":
+			this.element = Element.PREENEMYHOME;
+			shape = new Rectangle((int) point.getX(), (int) point.getY(), 96, 96);
+			break;
+		case "STRAW":
+			this.element = Element.STRAW;
+			shape = new Rectangle((int) point.getX(), (int) point.getY(), 64, 64);
+			break;
+
 		case "ROAD":
 			this.element = Element.ROAD;
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 32, 32);
@@ -69,7 +90,7 @@ public class Tile extends StaticObject implements ICollidable {
 		case "TABLE":
 			this.element = Element.TABLE;
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 16, 16);
-			info = "ABC";
+			info = "Questa e' una tabella informativa! Qui troverai informazioni riguardanti il nemico.";
 			break;
 		default:
 			break;
@@ -107,40 +128,39 @@ public class Tile extends StaticObject implements ICollidable {
 	public void setPoint(Point point) {
 		shape.x = point.x * 32;
 		shape.y = point.y * 32;
-		if(element == Element.FOREST2)
-		System.out.println(shape.y);
-		if (element == Element.HOME) {
-			door = new Rectangle((int) point.getX() * 32, (int) point.getY() * 32, 8, 5);
+		// if(element == Element.FOREST2)
+		// System.out.println(shape.y);
+		if (element == Element.SHOP) {
+			door = new Rectangle((int) point.getX() * 32, (int) point.getY() * 32, 10, 5);
 		}
 	}
 
 	public boolean collideDoor(Object e) {
-		if (this.getElement() == Element.HOME && e instanceof Character) {
-			if (!((door.x  + shape.getWidth() / 4 > ((Character) e).getX() + ((Character) e).getWidth() / 2 - 5
-					|| ((Character) e).getX() > door.x  + door.width + shape.getWidth() / 4)
-					|| (door.y  > ((Character) e).getY() + ((Character) e).getHeight() / 2
+		if (this.getElement() == Element.SHOP && e instanceof Character) {
+			if (!((door.x + shape.getWidth() / 4  > ((Character) e).getX() + ((Character) e).getWidth() / 2 - 5
+					|| ((Character) e).getX() > door.x + door.width + shape.getWidth() / 4)
+					|| (door.y > ((Character) e).getY() + ((Character) e).getHeight() / 2
 							|| ((Character) e).getY() > door.y + door.height))) {
-				//System.out.println("porta");
 				return true;
 			}
+		
+			
 		}
 		return false;
 	}
 
 	@Override
 	public boolean collide(Object e) {
-	
 		if (e instanceof Character) {
-			if (!((shape.x  > ((Character) e).getX() + ((Character) e).getWidth() / 2 
-					|| ((Character) e).getX() > shape.x  + shape.width)
+			if (!((shape.x > ((Character) e).getX() + ((Character) e).getWidth() / 2
+					|| ((Character) e).getX() > shape.x + shape.width)
 					|| (shape.y > ((Character) e).getY() + ((Character) e).getHeight() / 2
 							|| ((Character) e).getY() > shape.y + shape.height))) {
 				return true;
 			}
 		}
 		if (e instanceof Man) {
-			if (!((shape.x > ((Man) e).getX() + ((Man) e).getWidth() / 2 
-					|| ((Man) e).getX() > shape.x + shape.width)
+			if (!((shape.x > ((Man) e).getX() + ((Man) e).getWidth() / 2 || ((Man) e).getX() > shape.x + shape.width)
 					|| (shape.y > ((Man) e).getY() + ((Man) e).getHeight() / 2
 							|| ((Man) e).getY() > shape.y + shape.height)))
 				return true;

@@ -1,5 +1,9 @@
 package it.slagyom;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -23,6 +27,11 @@ public class LoadingImage {
 	private static Texture threeImage;
 	private static Texture groundImage;
 	private static Texture floorImage;
+	private static Texture floor2Image;
+	private static Texture floor3Image;
+	private static Texture strawImage;
+	private static Texture preEnemyHomeImage;
+	private static Texture shopImage;
 	private static Texture roadImage;
 	private static Texture buildingImage;
 	private static Texture waterImage;
@@ -74,6 +83,14 @@ public class LoadingImage {
 	public static ImageButton leftArrow;
 	public static ImageButton rightArrow;
 
+	// AUDIO & MUSIC
+	public static Music mainMusic;
+	public static Sound backgroundSound;
+	public static Sound tickSound;
+	public static Sound coinSound;
+	public static Sound itemSound;
+
+	
 	@SuppressWarnings("unchecked")
 	public LoadingImage() {
 		// TILES IMAGES
@@ -82,6 +99,11 @@ public class LoadingImage {
 		threeImage = new Texture("res/three.png");
 		groundImage = new Texture("res/ground.png");
 		floorImage = new Texture("res/floor.png");
+		floor2Image = new Texture("res/floor3.png");
+		floor3Image = new Texture("res/floor3.png");
+		strawImage = new Texture("res/straw.png");
+		preEnemyHomeImage = new Texture("res/preEnemyHome.png");
+		shopImage = new Texture("res/shop.png");
 		roadImage = new Texture("res/road.png");
 		buildingImage = new Texture("res/building.png");
 		waterImage = new Texture("res/water.png");
@@ -142,6 +164,12 @@ public class LoadingImage {
 
 		texture = new Texture("assets/lancia.png");
 		createBattleFrame(texture, enemyAnimation, enemyStand);
+		
+		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
+		backgroundSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/backgroundAudio.ogg"));
+		tickSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/tick.ogg"));
+		coinSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/coin.ogg"));
+		itemSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/item.ogg"));
 	}
 
 	private void createBattleFrame(Texture texture, Animation<TextureRegion>[] arrayAnimation, TextureRegion stand) {
@@ -357,6 +385,7 @@ public class LoadingImage {
 	public static Texture getTileImage(Object ob) {
 
 		Texture texture = null;
+<<<<<<< HEAD
 		if (ob instanceof StaticObject) {
 
 			Element element = ((StaticObject) ob).getElement();
@@ -416,6 +445,75 @@ public class LoadingImage {
 			default:
 				break;
 			}
+=======
+		switch (element) {
+		case HOME:
+			texture = homeImage;
+			break;
+		case SHOP:
+			texture = shopImage;
+			break;
+		case THREE:
+			texture = threeImage;
+			break;
+		case FOREST1:
+			texture = forest1Image;
+			break;
+		case FOREST2:
+			texture = forest2Image;
+			break;
+		case GROUND:
+			texture = groundImage;
+			break;
+		case BUILDING:
+			texture = buildingImage;
+			break;
+		case WATER:
+			texture = waterImage;
+			break;
+		case ROCK:
+			texture = rockImage;
+			break;
+		case FLOOR:
+			texture = floorImage;
+			break;
+		case FLOOR2:
+			texture = floor2Image;
+			break;
+		case FLOOR3:
+			texture = floor3Image;
+			break;
+		case PREENEMYHOME:
+			texture = preEnemyHomeImage;
+			break;
+		case STRAW:
+			texture = strawImage;
+			break;
+		case BIGHOME:
+			texture = bigHomeImage;
+			break;
+		case TABLE:
+			texture = tableImage;
+			break;
+		case ROAD:
+			texture = roadImage;
+			break;
+		case COIN:
+			texture = coinImage;
+			break;
+		case PARCHMENT:
+			break;
+		case POTION:
+			if (((Item) ob).getLevel() == Level.FIRST)
+				texture = bluPotionImage;
+			if (((Item) ob).getLevel() == Level.SECOND)
+				texture = greenPotionImage;
+			if (((Item) ob).getLevel() == Level.THIRD)
+				texture = redPotionImage;
+			break;
+		default:
+			break;
+>>>>>>> 87c6deae0d82496b19172b842265cf34b4575d3c
 		}
 	else 
 		texture = coinImage;

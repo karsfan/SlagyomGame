@@ -57,17 +57,24 @@ public class PlayScreen implements Screen, ControllerListener {
 		new Game(name);
 		new LoadingImage();
 		gamecam = new OrthographicCamera();
+<<<<<<< HEAD
 		gamePort = new ExtendViewport(854, 480, gamecam);
 		// gamePort = new ScreenViewport(gamecam);
 
+=======
+		gamePort = new ExtendViewport(840, 480, gamecam);
+>>>>>>> 87c6deae0d82496b19172b842265cf34b4575d3c
 		gamePort.apply();
 
-		// gamePort = new ExtendViewport(854, 480, gamecam);
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
 		hud = new Hud(game.batch);
 
 		Controllers.addListener(this);
+		//LoadingImage.mainMusic.setVolume(0.5f);
+		//LoadingImage.mainMusic.play();
+		LoadingImage.backgroundSound.loop(1f);
+
 	}
 
 	public PlayScreen(GameSlagyom game, String path, String name) {
@@ -77,13 +84,23 @@ public class PlayScreen implements Screen, ControllerListener {
 		hud = new Hud(game.batch);
 
 		gamecam = new OrthographicCamera();
+<<<<<<< HEAD
 		gamePort = new ExtendViewport(854, 480, gamecam);
 		//gamePort = new ScreenViewport(gamecam);
+=======
+		gamePort = new ExtendViewport(840, 480, gamecam);
+>>>>>>> 87c6deae0d82496b19172b842265cf34b4575d3c
 
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
 		stop = true;
 		Controllers.addListener(this);
+		//LoadingImage.mainMusic.setVolume(0.1f);
+
+		//LoadingImage.mainMusic.play();
+		LoadingImage.backgroundSound.loop(1f);
+
+
 	}
 
 	@SuppressWarnings({})
@@ -103,18 +120,21 @@ public class PlayScreen implements Screen, ControllerListener {
 		hud.stage.draw();
 		// TEXT TABLE RENDERING
 		textTimer += delta;
-		if (hud.showDialog)
+		if (hud.showDialog) {
 			if (textTimer > 0.08f) {
 				textTimer = 0;
 				if (i < hud.textDialog.length()) {
 					if (i % 25 == 0)
 						hud.textTable.row();
-					if (i % 75 == 0)
+					if (i % 75 == 0) {
 						hud.textTable.clear();
+						LoadingImage.tickSound.play(0.8f);					
+					}
 					drawDialog(String.valueOf(hud.textDialog.charAt(i)));
 					i++;
 				}
 			}
+		}
 
 		if (!hud.showDialog) {
 			hideDialog();
@@ -153,7 +173,14 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	public void update(float dt) {
 		moveCharacter(dt);
+<<<<<<< HEAD
 		System.out.println(gamePort.getWorldWidth() / 2  + " "+Gdx.graphics.getWidth()/2);
+=======
+
+		// gamecam.position.x = Game.character.getX();
+		// gamecam.position.y = Game.character.getY();
+		//System.out.println(Game.character.getX() + " " + Gdx.graphics.getWidth() / 2);
+>>>>>>> 87c6deae0d82496b19172b842265cf34b4575d3c
 		if ((Game.character.getX() - gamePort.getWorldWidth() / 2 > 0
 				&& Game.character.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
 			gamecam.position.x = Game.character.getX();
@@ -167,7 +194,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	}
 
 	private void moveCharacter(float dt) {
-
 		try {
 			if (!stop) {
 				if (movesGamePad) {
@@ -401,21 +427,16 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
-		// TODO Auto-generated method stub
-		System.out.println("qui1234567");
 		return false;
 	}
 
 	@Override
 	public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
-		// TODO Auto-generated method stub
-		System.out.println("qui09876");
 		return false;
 	}
 

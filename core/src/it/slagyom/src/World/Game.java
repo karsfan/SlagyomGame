@@ -2,9 +2,6 @@ package it.slagyom.src.World;
 
 import java.util.Iterator;
 
-import javax.swing.JTree;
-
-
 import it.slagyom.src.Character.Character;
 import it.slagyom.src.Character.DynamicObjects;
 

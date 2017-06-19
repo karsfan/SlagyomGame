@@ -165,7 +165,6 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	public void update(float dt) {
 		moveCharacter(dt);
-		System.out.println(gamePort.getWorldWidth() / 2  + " "+Gdx.graphics.getWidth()/2);
 
 		// gamecam.position.x = Game.character.getX();
 		// gamecam.position.y = Game.character.getY();

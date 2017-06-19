@@ -50,8 +50,7 @@ public class MenuScreen implements Screen {
 		returnButton = new TextButton("Return", skin);
 
 		camera = new OrthographicCamera();
-		//viewport = new StretchViewport(640, 480, camera);
-		viewport = new ExtendViewport(854, 480, camera);
+		viewport = new ExtendViewport(500, 500, camera);
 		viewport.apply();
 		
 		background = new Texture("res/background.png");

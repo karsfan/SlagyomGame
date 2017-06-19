@@ -265,6 +265,7 @@ public class Character extends DynamicObjects implements ICollidable {
 			}
 		} else {
 			if (!item.picked) {
+				PlayScreen.obj = item;
 				coins++;
 				LoadingImage.coinSound.play(0.5f);
 			}

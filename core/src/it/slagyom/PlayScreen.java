@@ -57,13 +57,10 @@ public class PlayScreen implements Screen, ControllerListener {
 		new Game(name);
 		new LoadingImage();
 		gamecam = new OrthographicCamera();
-<<<<<<< HEAD
 		gamePort = new ExtendViewport(854, 480, gamecam);
 		// gamePort = new ScreenViewport(gamecam);
 
-=======
 		gamePort = new ExtendViewport(840, 480, gamecam);
->>>>>>> 87c6deae0d82496b19172b842265cf34b4575d3c
 		gamePort.apply();
 
 		gamecam.position.x = Game.character.getX();
@@ -84,12 +81,9 @@ public class PlayScreen implements Screen, ControllerListener {
 		hud = new Hud(game.batch);
 
 		gamecam = new OrthographicCamera();
-<<<<<<< HEAD
 		gamePort = new ExtendViewport(854, 480, gamecam);
 		//gamePort = new ScreenViewport(gamecam);
-=======
 		gamePort = new ExtendViewport(840, 480, gamecam);
->>>>>>> 87c6deae0d82496b19172b842265cf34b4575d3c
 
 		gamecam.position.x = Game.character.getX();
 		gamecam.position.y = Game.character.getY();
@@ -173,14 +167,10 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	public void update(float dt) {
 		moveCharacter(dt);
-<<<<<<< HEAD
-		System.out.println(gamePort.getWorldWidth() / 2  + " "+Gdx.graphics.getWidth()/2);
-=======
 
 		// gamecam.position.x = Game.character.getX();
 		// gamecam.position.y = Game.character.getY();
 		//System.out.println(Game.character.getX() + " " + Gdx.graphics.getWidth() / 2);
->>>>>>> 87c6deae0d82496b19172b842265cf34b4575d3c
 		if ((Game.character.getX() - gamePort.getWorldWidth() / 2 > 0
 				&& Game.character.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
 			gamecam.position.x = Game.character.getX();

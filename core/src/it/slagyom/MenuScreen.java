@@ -21,7 +21,6 @@ import com.levels.editor.Editor;
 import it.slagyom.GameSlagyom.State;
 
 public class MenuScreen implements Screen {
-	//adfmskòldmaòf
 	GameSlagyom game;
 
 	protected Stage stage;

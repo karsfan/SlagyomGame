@@ -9,6 +9,7 @@ import it.slagyom.GameSlagyom;
 
 public class DesktopLauncher {
 	public static void main(String[] arg) {
+		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "SLAGYOM";
 		config.width = 854;

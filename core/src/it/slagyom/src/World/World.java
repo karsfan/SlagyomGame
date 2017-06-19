@@ -12,6 +12,7 @@ import it.slagyom.src.Map.Map;
 
 public class World {
 
+	
 	private ArrayList<DynamicObjects> people;
 	public Map[] maps;
 	public Battle battle;

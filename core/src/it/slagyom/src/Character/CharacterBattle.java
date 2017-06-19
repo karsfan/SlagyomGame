@@ -1,5 +1,7 @@
 package it.slagyom.src.Character;
 
+import java.util.Iterator;
+
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
@@ -17,6 +19,8 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	public boolean doubleJumping;
 	public float velocityY;
 	public float velocityX;
+	public int forza=100;
+	public boolean bomba = false;
 
 	public CharacterBattle(final Character character1) {
 		stateTimer = 0;
@@ -69,7 +73,7 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && character.y + velocityY * dt > 250) {
 			character.y += velocityY * dt;
-			
+
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING, dt);
 
@@ -83,6 +87,17 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 			doubleJumping = false;
 			character.y = 250;
 			velocityY = 0;
+		}
+		Iterator<Bomb> it1 = character.bag.bombe.iterator();
+		while (it1.hasNext()) {
+			Bomb ob = (Bomb) it1.next();
+			if (ob.lanciata == true) {
+				((Bomb) ob).update(dt);
+				if (ob.morta) {
+					it1.remove();
+					continue;
+				}
+			}
 		}
 
 	}
@@ -201,6 +216,10 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 
 	public void decreaseHealth(Weapon weapon) {
 		character.health -= weapon.getDamage();
+	}
+	public void caricaBomba(float dt) {
+		forza+=forza*dt;
+		System.out.println(forza);
 	}
 
 }

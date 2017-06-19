@@ -210,13 +210,13 @@ public class BagScreen implements Screen {
 		weaponsTable.setLayoutEnabled(false);
 
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
-		weapons = new TextButton[3];
+		weapons = new TextButton[4];
 
 		weapons[0] = new TextButton(Game.character.primary_weapon.getType().toString() + " "
 				+ Game.character.primary_weapon.getLevel().toString(), MenuScreen.skin);
-		weapons[1] = new TextButton("Sword  lev", MenuScreen.skin);
-		weapons[2] = new TextButton("Bow  lev", MenuScreen.skin);
-
+		weapons[1] = new TextButton("Bomb  lev1", MenuScreen.skin);
+		weapons[2] = new TextButton("Bomb  lev2", MenuScreen.skin);
+		weapons[3] = new TextButton("Bomb  lev3", MenuScreen.skin);
 		weapons[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -237,6 +237,13 @@ public class BagScreen implements Screen {
 				showInfo(LoadingImage.spear);
 			}
 		});
+		
+		weapons[3].addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showInfo(LoadingImage.spear);
+			}
+		});
 
 		weaponsLabel.setPosition(140, 425);
 		weaponsTable.add(weaponsLabel);
@@ -249,6 +256,9 @@ public class BagScreen implements Screen {
 
 		weapons[2].setPosition(350, 320);
 		weaponsTable.add(weapons[2]);
+		
+		weapons[3].setPosition(350, 270);
+		weaponsTable.add(weapons[3]);
 		// END WEAPONS TABLE
 
 		// PARCHMENTS TABLE

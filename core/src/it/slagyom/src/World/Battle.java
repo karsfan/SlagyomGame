@@ -35,7 +35,10 @@ public class Battle implements Runnable {
 	public Enemy getEnemy() {
 		return enemy;
 	}
-
+	public CharacterBattle getCharacter()
+	{
+		return character;
+	}
 	public void setEnemy(Enemy enemy) {
 		this.enemy = enemy;
 	}

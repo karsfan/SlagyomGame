@@ -355,65 +355,70 @@ public class LoadingImage {
 	}
 
 	public static Texture getTileImage(Object ob) {
-		Element element = ((StaticObject) ob).getElement();
+
 		Texture texture = null;
-		switch (element) {
-		case HOME:
-			texture = homeImage;
-			break;
-		case THREE:
-			texture = threeImage;
-			break;
-		case FOREST1:
-			texture = forest1Image;
-			break;
-		case FOREST2:
-			texture = forest2Image;
-			break;
-		case GROUND:
-			texture = groundImage;
-			break;
-		case BUILDING:
-			texture = buildingImage;
-			break;
-		case WATER:
-			texture = waterImage;
-			break;
-		case ROCK:
-			texture = rockImage;
-			break;
-		case FLOOR:
-			texture = floorImage;
-			break;
-		case BIGHOME:
-			texture = bigHomeImage;
-			break;
-		case SHOP:
-			texture = null;
-			break;
-		case TABLE:
-			texture = tableImage;
-			break;
-		case ROAD:
-			texture = roadImage;
-			break;
-		case COIN:
-			texture = coinImage;
-			break;
-		case PARCHMENT:
-			break;
-		case POTION:
-			if (((Item) ob).getLevel() == Level.FIRST)
-				texture = bluPotionImage;
-			if (((Item) ob).getLevel() == Level.SECOND)
-				texture = greenPotionImage;
-			if (((Item) ob).getLevel() == Level.THIRD)
-				texture = redPotionImage;
-			break;
-		default:
-			break;
+		if (ob instanceof StaticObject) {
+
+			Element element = ((StaticObject) ob).getElement();
+			switch (element) {
+			case HOME:
+				texture = homeImage;
+				break;
+			case THREE:
+				texture = threeImage;
+				break;
+			case FOREST1:
+				texture = forest1Image;
+				break;
+			case FOREST2:
+				texture = forest2Image;
+				break;
+			case GROUND:
+				texture = groundImage;
+				break;
+			case BUILDING:
+				texture = buildingImage;
+				break;
+			case WATER:
+				texture = waterImage;
+				break;
+			case ROCK:
+				texture = rockImage;
+				break;
+			case FLOOR:
+				texture = floorImage;
+				break;
+			case BIGHOME:
+				texture = bigHomeImage;
+				break;
+			case SHOP:
+				texture = null;
+				break;
+			case TABLE:
+				texture = tableImage;
+				break;
+			case ROAD:
+				texture = roadImage;
+				break;
+			case COIN:
+				texture = coinImage;
+				break;
+			case PARCHMENT:
+				break;
+			case POTION:
+				if (((Item) ob).getLevel() == Level.FIRST)
+					texture = bluPotionImage;
+				if (((Item) ob).getLevel() == Level.SECOND)
+					texture = greenPotionImage;
+				if (((Item) ob).getLevel() == Level.THIRD)
+					texture = redPotionImage;
+				break;
+			default:
+				break;
+			}
 		}
+	else 
+		texture = coinImage;
 		return texture;
 	}
-
 }

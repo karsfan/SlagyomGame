@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Weapon {
 	public enum Type {
-		Sword, Bow, Spear, Freccia
+		Sword, Bow, Spear, Freccia, Bomba
 	};
 
 	public enum Level {
@@ -12,10 +12,10 @@ public class Weapon {
 	};
 
 	float damage;
-	Level level;
+	public Level level;
 
 	Type type;
-
+	float height;
 	private float width;
 
 	public Weapon(Level level, Type type) {
@@ -35,6 +35,10 @@ public class Weapon {
 		case Freccia:
 			damage = 8;
 			setWidth(0);
+		case Bomba:
+			setWeapon(type, level);
+			setWidth(10);
+			setHeight(10);
 		default:
 			break;
 		}
@@ -57,9 +61,21 @@ public class Weapon {
 			type = Type.Bow;
 			setWeapon(type, level);
 			break;
+		case 3:
+			type = Type.Bomba;
+			setWeapon(type, level);
+			break;
 		default:
 			break;
 		}
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
 	}
 
 	public void setWeapon(Type type, Level level) {
@@ -117,6 +133,26 @@ public class Weapon {
 			default:
 				break;
 			}
+		case Bomba:
+			switch (level) {
+			case lev1:
+				damage = 8;
+				width = 10;
+				height = 10;
+				break;
+			case lev2:
+				damage = 20;
+				width = 13;
+				height = 13;
+				break;
+			case lev3:
+				damage = 35;
+				width = 15;
+				height = 15;
+				break;
+			default:
+				break;
+			}
 		default:
 			break;
 
@@ -129,6 +165,18 @@ public class Weapon {
 
 	public float getDamage() {
 		return damage;
+	}
+
+	public void setDamage(float damage) {
+		this.damage = damage;
+	}
+
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
 	}
 
 	public Type getType() {

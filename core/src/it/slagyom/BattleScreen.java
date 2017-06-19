@@ -1,5 +1,7 @@
 package it.slagyom;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
@@ -8,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
+import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.CharacterBattle;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Battle;
@@ -61,7 +64,14 @@ public class BattleScreen implements Screen {
 		Enemy tmp1 = battle.enemy;
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
 				tmp1.getHeight());
-
+		Iterator <Bomb> bombIterator = battle.character.character.bag.bombe.iterator();
+		while (bombIterator.hasNext()) {
+			Bomb searching = (Bomb) bombIterator.next();
+			if (searching.lanciata==true) {
+				gameslagyom.batch.draw(LoadingImage.getTileImage(searching), searching.getMainX(), searching.getMainY(), searching.getWidth()+10,
+						searching.getHeight()+10);
+			}
+		}
 	}
 
 	public void update(float dt) {
@@ -87,22 +97,32 @@ public class BattleScreen implements Screen {
 
 	private void moveCharacter(float dt) {
 
-		if (Gdx.input.isKeyJustPressed(Keys.S))
-			battle.character.setState(StateDynamicObject.DEFENDING, dt);
-		if (Gdx.input.isKeyJustPressed(Keys.UP)) {
-			battle.character.jump(dt);
-		} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			if (Gdx.input.isKeyJustPressed(Keys.A))
-				battle.character.fightLeft(dt);
-			else
-				battle.character.movesLeft(dt);
-		} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			if (Gdx.input.isKeyJustPressed(Keys.A))
-				battle.character.fightRight(dt);
-			else
-				battle.character.movesRight(dt);
+		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+			battle.character.caricaBomba(dt);
+			battle.character.bomba = true;
 		} else {
-			battle.character.stand();
+			if (battle.character.bomba)
+				battle.character.character.bag.lancia(battle.character.forza);
+			battle.character.bomba = false;
+			battle.character.forza = 100;
+			if (Gdx.input.isKeyJustPressed(Keys.S))
+				battle.character.setState(StateDynamicObject.DEFENDING, dt);
+			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
+				battle.character.jump(dt);
+			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+				if (Gdx.input.isKeyJustPressed(Keys.A))
+					battle.character.fightLeft(dt);
+				else
+					battle.character.movesLeft(dt);
+			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+				if (Gdx.input.isKeyJustPressed(Keys.A))
+					battle.character.fightRight(dt);
+				else
+					battle.character.movesRight(dt);
+			} else {
+
+				battle.character.stand();
+			}
 		}
 	}
 

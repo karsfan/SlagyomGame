@@ -181,6 +181,7 @@ public class PauseScreen implements Screen{
 		
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			Game.world.semaphore.release();
+			LoadingImage.backgroundSound.play();
 			game.swapScreen(State.PLAYING);
 		}
 		

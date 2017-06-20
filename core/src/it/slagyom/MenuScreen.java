@@ -43,7 +43,7 @@ public class MenuScreen implements Screen {
 		atlas = new TextureAtlas("menu/vhs/vhs-ui.atlas");
 		skin = new Skin(Gdx.files.internal("menu/vhs/vhs-ui.json"), atlas);
 		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
-		menuMusic.play();
+		//menuMusic.play();
 
 		musicButton = new TextButton("Music", skin);
 		returnButton = new TextButton("Return", skin);
@@ -68,6 +68,7 @@ public class MenuScreen implements Screen {
 		// Create buttons
 		TextButton playButton = new TextButton("New Game", skin);
 		TextButton continueButton = new TextButton("Continue game", skin);
+		TextButton multiplayerButton = new TextButton("Multiplayer", skin);
 		TextButton editorButton = new TextButton("Level editor", skin);
 		TextButton optionsButton = new TextButton("Options", skin);
 		TextButton exitButton = new TextButton("Exit", skin);
@@ -87,6 +88,12 @@ public class MenuScreen implements Screen {
 				game.swapScreen(State.CONTINUEGAME);
 				PlayScreen.hud.textTable.clear();
 				PlayScreen.hud.textDialog = "Game loaded!";
+			}
+		});
+		multiplayerButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.swapScreen(State.MULTIPLAYER);
 			}
 		});
 		editorButton.addListener(new ClickListener() {
@@ -113,6 +120,8 @@ public class MenuScreen implements Screen {
 		mainTable.add(playButton).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 5);
 		mainTable.row();
 		mainTable.add(continueButton).pad(5);
+		mainTable.row();
+		mainTable.add(multiplayerButton).pad(5);
 		mainTable.row();
 		mainTable.add(editorButton).pad(5);
 		mainTable.row();

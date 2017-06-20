@@ -22,7 +22,7 @@ public class GameSlagyom extends Game {
 	static PlayScreen playScreen;
 	static BagScreen bagScreen;
 	static ShopScreen shopScreen;
-	//static MultiplayerScreen multiplayerScreen;
+	static MultiplayerScreen multiplayerScreen;
 
 
 	public static Preferences prefs;
@@ -38,8 +38,9 @@ public class GameSlagyom extends Game {
 	
 		menuScreen = new MenuScreen(this);
 		optionScreen = new OptionScreen(this);
-		currentState = State.MENU;
 		pauseScreen = new PauseScreen(this);
+		multiplayerScreen = new MultiplayerScreen(this);
+		currentState = State.MENU;
 		setScreen(menuScreen);
 
 		prefs = Gdx.app.getPreferences("My saved game");
@@ -93,6 +94,9 @@ public class GameSlagyom extends Game {
 			setScreen(playScreen);
 			menuScreen.menuMusic.stop();
 			Gdx.input.setInputProcessor(null);
+		} else if (currentState == State.MULTIPLAYER) {
+			setScreen(multiplayerScreen);
+			Gdx.input.setInputProcessor(multiplayerScreen.stage);
 		} else if (currentState == State.OPTIONMENU) {
 			setScreen(optionScreen);
 			Gdx.input.setInputProcessor(optionScreen.stage);

@@ -68,7 +68,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		Controllers.addListener(this);
 		//LoadingImage.mainMusic.setVolume(0.5f);
 		//LoadingImage.mainMusic.play();
-		LoadingImage.backgroundSound.loop(1f);
+		LoadingImage.backgroundSound.loop(2f);
 
 	}
 
@@ -87,10 +87,8 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam.position.y = Game.character.getY();
 		stop = true;
 		Controllers.addListener(this);
-		//LoadingImage.mainMusic.setVolume(0.1f);
 
-		//LoadingImage.mainMusic.play();
-		LoadingImage.backgroundSound.loop(1f);
+		LoadingImage.backgroundSound.loop(2f);
 
 
 	}
@@ -166,9 +164,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	public void update(float dt) {
 		moveCharacter(dt);
 
-		// gamecam.position.x = Game.character.getX();
-		// gamecam.position.y = Game.character.getY();
-		//System.out.println(Game.character.getX() + " " + Gdx.graphics.getWidth() / 2);
 		if ((Game.character.getX() - gamePort.getWorldWidth() / 2 > 0
 				&& Game.character.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
 			gamecam.position.x = Game.character.getX();
@@ -241,8 +236,10 @@ public class PlayScreen implements Screen, ControllerListener {
 					gamecam.position.x = Game.character.getX();
 					gamecam.position.y = Game.character.getY();
 
-				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE))
+				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+					LoadingImage.backgroundSound.pause();
 					game.swapScreen(GameSlagyom.State.PAUSE);
+				}
 
 				else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
 					Game.world.createBattle();

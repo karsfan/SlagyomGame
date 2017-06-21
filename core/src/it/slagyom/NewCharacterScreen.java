@@ -38,7 +38,7 @@ public class NewCharacterScreen implements Screen {
 		this.game = game;
 
 		camera = new OrthographicCamera();
-		viewport = new ExtendViewport(500, 500, camera);
+		viewport = new ExtendViewport(854, 480, camera);
 		viewport.apply();
 
 		background = new Texture("res/background.png");
@@ -71,7 +71,8 @@ public class NewCharacterScreen implements Screen {
 			}
 		});
 		Drawable maleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/male.png")));
-		//Drawable maleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/maleok.png")));
+		// Drawable maleokDraw = new TextureRegionDrawable(new TextureRegion(new
+		// Texture("res/maleok.png")));
 
 		ImageButton male = new ImageButton(maleDraw);
 		male.addListener(new ClickListener() {
@@ -80,10 +81,10 @@ public class NewCharacterScreen implements Screen {
 				System.out.println("MALE");
 			}
 		});
-		
-		
+
 		Drawable femaleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/female.png")));
-		//Drawable femalokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/femaleok.png")));
+		// Drawable femalokDraw = new TextureRegionDrawable(new
+		// TextureRegion(new Texture("res/femaleok.png")));
 
 		ImageButton female = new ImageButton(femaleDraw);
 		female.addListener(new ClickListener() {
@@ -92,7 +93,6 @@ public class NewCharacterScreen implements Screen {
 				System.out.println("FEMALE");
 			}
 		});
-
 
 		TextButton continueButton = new TextButton("Continue", MenuScreen.skin);
 		continueButton.addListener(new ClickListener() {
@@ -113,7 +113,7 @@ public class NewCharacterScreen implements Screen {
 
 		// Add buttons to table
 		Table gender = new Table();
-		mainTable.add(name).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 4);
+		mainTable.add(name).pad(5).padTop(Gdx.graphics.getHeight() / 4);
 		mainTable.row();
 		male.setPosition(mainTable.getPadX(), mainTable.getPadY());
 		gender.pad(15);
@@ -150,7 +150,8 @@ public class NewCharacterScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		viewport.update(width, height);
+		stage.getViewport().setScreenSize(width, height);
+		// viewport.update(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
 	}

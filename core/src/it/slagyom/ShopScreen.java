@@ -86,10 +86,10 @@ public class ShopScreen implements Screen {
 		delete.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Game.character.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
-				potions[0].setText("Blue potion    x" + Game.character.bag.getNumberOf(Element.POTION, Level.FIRST));
-				potions[1].setText("Red potion    x" + Game.character.bag.getNumberOf(Element.POTION, Level.SECOND));
-				potions[2].setText("Green potion  x" + Game.character.bag.getNumberOf(Element.POTION, Level.THIRD));
+				Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+				potions[0].setText("Blue potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST));
+				potions[1].setText("Red potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND));
+				potions[2].setText("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD));
 			}
 		});
 
@@ -104,7 +104,7 @@ public class ShopScreen implements Screen {
 		LoadingImage.emptyShopIcon.setPosition(141, 43);
 		LoadingImage.rightArrow.setPosition(283, 274);
 		LoadingImage.leftArrow.setPosition(115, 274);
-		coins = new Label("" + Game.character.coins, MenuScreen.skin);
+		coins = new Label("" + Game.player.coins, MenuScreen.skin);
 		coins.setPosition(199, 274);
 		LoadingImage.emptyShopIcon.setVisible(true);
 

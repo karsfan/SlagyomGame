@@ -64,7 +64,7 @@ public class BattleScreen implements Screen {
 		Enemy tmp1 = battle.enemy;
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
 				tmp1.getHeight());
-		Iterator <Bomb> bombIterator = battle.character.character.bag.bombe.iterator();
+		Iterator <Bomb> bombIterator = battle.character.player.bag.bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.lanciata==true) {
@@ -102,7 +102,7 @@ public class BattleScreen implements Screen {
 			battle.character.bomba = true;
 		} else {
 			if (battle.character.bomba)
-				battle.character.character.bag.lancia(battle.character.forza);
+				battle.character.player.bag.lancia(battle.character.forza);
 			battle.character.bomba = false;
 			battle.character.forza = 100;
 			if (Gdx.input.isKeyJustPressed(Keys.S))

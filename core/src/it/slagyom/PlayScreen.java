@@ -51,45 +51,39 @@ public class PlayScreen implements Screen, ControllerListener {
 	boolean movesGamePad = false;
 
 	public PlayScreen(GameSlagyom game, String name) {
-
-		this.game = game;
-		new Game(name);
 		new LoadingImage();
+
+		new Game(name);
+		this.game = game;
+		
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
-		// gamePort = new ScreenViewport(gamecam);
-		gamePort = new ExtendViewport(840, 480, gamecam);
+				
 		gamePort.apply();
 
-		gamecam.position.x = Game.character.getX();
-		gamecam.position.y = Game.character.getY();
+		gamecam.position.x = Game.player.getX();
+		gamecam.position.y = Game.player.getY();
 		hud = new Hud(game.batch);
 
 		Controllers.addListener(this);
-		//LoadingImage.mainMusic.setVolume(0.5f);
-		//LoadingImage.mainMusic.play();
-		LoadingImage.backgroundSound.loop(2f);
 
 	}
 
 	public PlayScreen(GameSlagyom game, String path, String name) {
 		new LoadingImage();
+
 		new Game(path, name);
 		this.game = game;
-		hud = new Hud(game.batch);
 
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
-		//gamePort = new ScreenViewport(gamecam);
-		gamePort = new ExtendViewport(840, 480, gamecam);
+		
+		gamecam.position.x = Game.player.getX();
+		gamecam.position.y = Game.player.getY();
+		hud = new Hud(game.batch);
 
-		gamecam.position.x = Game.character.getX();
-		gamecam.position.y = Game.character.getY();
 		stop = true;
 		Controllers.addListener(this);
-
-		LoadingImage.backgroundSound.loop(2f);
-
 
 	}
 
@@ -118,7 +112,7 @@ public class PlayScreen implements Screen, ControllerListener {
 						hud.textTable.row();
 					if (i % 75 == 0) {
 						hud.textTable.clear();
-						LoadingImage.tickSound.play(0.8f);					
+						MusicManager.play("TICK");
 					}
 					drawDialog(String.valueOf(hud.textDialog.charAt(i)));
 					i++;
@@ -164,13 +158,13 @@ public class PlayScreen implements Screen, ControllerListener {
 	public void update(float dt) {
 		moveCharacter(dt);
 
-		if ((Game.character.getX() - gamePort.getWorldWidth() / 2 > 0
-				&& Game.character.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
-			gamecam.position.x = Game.character.getX();
+		if ((Game.player.getX() - gamePort.getWorldWidth() / 2 > 0
+				&& Game.player.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
+			gamecam.position.x = Game.player.getX();
 
-		if (Game.character.getY() - gamePort.getWorldHeight() / 2 > 0
-				&& Game.character.getY() + gamePort.getWorldHeight() / 2 < GameConfig.HEIGHT)
-			gamecam.position.y = Game.character.getY();
+		if (Game.player.getY() - gamePort.getWorldHeight() / 2 > 0
+				&& Game.player.getY() + gamePort.getWorldHeight() / 2 < GameConfig.HEIGHT)
+			gamecam.position.y = Game.player.getY();
 
 		gamecam.update();
 
@@ -181,67 +175,68 @@ public class PlayScreen implements Screen, ControllerListener {
 			if (!stop) {
 				if (movesGamePad) {
 					if (directionGamepad == PovDirection.east)
-						Game.character.movesRight(dt);
+						Game.player.movesRight(dt);
 					else if (directionGamepad == PovDirection.north) {
-						Game.character.movesUp(dt);
-						if (Game.character.collideDoor) {
+						Game.player.movesUp(dt);
+						if (Game.player.collideDoor) {
 							game.swapScreen(State.SHOP);
 							Game.world.semaphore.acquire();
-							Game.character.collideDoor = false;
+							Game.player.collideDoor = false;
 						}
 					} else if (directionGamepad == PovDirection.west)
-						Game.character.movesLeft(dt);
+						Game.player.movesLeft(dt);
 					else if (directionGamepad == PovDirection.south)
-						Game.character.movesDown(dt);
+						Game.player.movesDown(dt);
 					else if (directionGamepad == PovDirection.northEast)
-						Game.character.movesNorthEast(dt);
+						Game.player.movesNorthEast(dt);
 					else if (directionGamepad == PovDirection.northWest)
-						Game.character.movesNorthWest(dt);
+						Game.player.movesNorthWest(dt);
 					else if (directionGamepad == PovDirection.southEast)
-						Game.character.movesSouthEast(dt);
+						Game.player.movesSouthEast(dt);
 					else if (directionGamepad == PovDirection.southWest)
-						Game.character.movesSouthWest(dt);
+						Game.player.movesSouthWest(dt);
 
 				}
 
 				else if (Gdx.input.isKeyPressed(Keys.Z)) {
-					Game.character.setVelocity(150f);
+					Game.player.setVelocity(150f);
 					LoadingImage.setFrameDurationCharacter(0.1f);
 				} else {
-					Game.character.setVelocity(100);
+					Game.player.setVelocity(100);
 					LoadingImage.setFrameDurationCharacter(0.2f);
 				}
 				if (Gdx.input.isKeyPressed(Keys.LEFT))
-					Game.character.movesLeft(dt);
+					Game.player.movesLeft(dt);
 				else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-					Game.character.movesRight(dt);
+					Game.player.movesRight(dt);
 				else if (Gdx.input.isKeyPressed(Keys.UP)) {
-					Game.character.movesUp(dt);
-					if (Game.character.collideDoor) {
+					Game.player.movesUp(dt);
+					if (Game.player.collideDoor) {
 						game.swapScreen(State.SHOP);
 						Game.world.semaphore.acquire();
-						Game.character.collideDoor = false;
+						Game.player.collideDoor = false;
 					}
 
 				} else if (Gdx.input.isKeyPressed(Keys.DOWN))
-					Game.character.movesDown(dt);
+					Game.player.movesDown(dt);
 
 				else if (Gdx.input.isKeyJustPressed(Keys.C)) {
 					gamecam.zoom -= 0.2;
-					gamecam.position.x = Game.character.getX();
-					gamecam.position.y = Game.character.getY();
+					gamecam.position.x = Game.player.getX();
+					gamecam.position.y = Game.player.getY();
 
 				} else if (Gdx.input.isKeyJustPressed(Keys.V)) {
 					gamecam.zoom += 0.2;
-					gamecam.position.x = Game.character.getX();
-					gamecam.position.y = Game.character.getY();
+					gamecam.position.x = Game.player.getX();
+					gamecam.position.y = Game.player.getY();
 
 				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-					LoadingImage.backgroundSound.pause();
+					MusicManager.pause();
 					game.swapScreen(GameSlagyom.State.PAUSE);
 				}
 
 				else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
+
 					Game.world.createBattle();
 					Game.world.semaphore.acquire();
 					game.swapScreen(it.slagyom.GameSlagyom.State.BATTLE);
@@ -307,17 +302,17 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamePort.update(width, height);
 		// gamePort.setScreenSize(width, height);
 		// controlli per la posizione della camera
-		if (gamePort.getWorldWidth() / 2 + Game.character.getX() - GameConfig.WIDTH > 0
-				&& !(Game.character.getX() - gamePort.getWorldWidth() / 2 < 0))
+		if (gamePort.getWorldWidth() / 2 + Game.player.getX() - GameConfig.WIDTH > 0
+				&& !(Game.player.getX() - gamePort.getWorldWidth() / 2 < 0))
 			gamecam.position.x = GameConfig.WIDTH - gamePort.getWorldWidth() / 2;
-		else if (Game.character.getX() - gamePort.getWorldWidth() / 2 < 0) {
+		else if (Game.player.getX() - gamePort.getWorldWidth() / 2 < 0) {
 
 			gamecam.position.x = gamePort.getWorldWidth() / 2;
 		}
-		if (gamePort.getWorldHeight() / 2 + Game.character.getY() - GameConfig.HEIGHT > 0)
-			gamecam.position.y = GameConfig.HEIGHT - gamePort.getWorldHeight()/2;
-		else if (Game.character.getY() - gamePort.getWorldHeight()/2 < 0) {
-			gamecam.position.y = gamePort.getWorldHeight()/2;
+		if (gamePort.getWorldHeight() / 2 + Game.player.getY() - GameConfig.HEIGHT > 0)
+			gamecam.position.y = GameConfig.HEIGHT - gamePort.getWorldHeight() / 2;
+		else if (Game.player.getY() - gamePort.getWorldHeight() / 2 < 0) {
+			gamecam.position.y = gamePort.getWorldHeight() / 2;
 		}
 
 	}

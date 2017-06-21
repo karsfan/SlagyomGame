@@ -1,8 +1,5 @@
 package it.slagyom;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -83,11 +80,7 @@ public class LoadingImage {
 	public static ImageButton rightArrow;
 
 	// AUDIO & MUSIC
-	public static Music mainMusic;
-	public static Sound backgroundSound;
-	public static Sound tickSound;
-	public static Sound coinSound;
-	public static Sound itemSound;
+	
 
 	@SuppressWarnings("unchecked")
 	public LoadingImage() {
@@ -163,11 +156,6 @@ public class LoadingImage {
 		texture = new Texture("assets/lancia.png");
 		createBattleFrame(texture, enemyAnimation, enemyStand);
 
-		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
-		backgroundSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/backgroundAudio.ogg"));
-		tickSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/tick.ogg"));
-		coinSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/coin.ogg"));
-		itemSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/item.ogg"));
 	}
 
 	private void createBattleFrame(Texture texture, Animation<TextureRegion>[] arrayAnimation, TextureRegion stand) {
@@ -332,7 +320,7 @@ public class LoadingImage {
 		Class<? extends Object> a = ob.getClass();
 		Animation<TextureRegion>[] animation = null;
 		switch (a.getSimpleName()) {
-		case "Character":
+		case "Player":
 			animation = playerAnimation;
 			break;
 		case "Man":
@@ -358,7 +346,7 @@ public class LoadingImage {
 		Class<? extends Object> a = ob.getClass();
 		TextureRegion textureRegion = null;
 		switch (a.getSimpleName()) {
-		case "Character":
+		case "Player":
 			textureRegion = playerStand;
 			break;
 		case "Man":
@@ -458,4 +446,5 @@ public class LoadingImage {
 			texture = coinImage;
 		return texture;
 	}
+
 }

@@ -36,8 +36,8 @@ public class Hud {
 		table.top(); // la allinea sopra al centro
 		table.setFillParent(true);
 
-		nameLabel = new Label(Game.character.name, MenuScreen.skin);
-		healthLabel = new Label(String.format("%3d", Game.character.coins), MenuScreen.skin);
+		nameLabel = new Label(Game.player.name, MenuScreen.skin);
+		healthLabel = new Label(String.format("%3d", Game.player.coins), MenuScreen.skin);
 		villageLabel = new Label(String.format(Game.world.getMap().getNameVillage()), MenuScreen.skin);
 
 		table.add(nameLabel).expandX().pad(20);
@@ -56,7 +56,7 @@ public class Hud {
 	}
 	public void update(){
 		villageLabel.setText(String.format(Game.world.getMap().getNameVillage()));
-		healthLabel.setText(String.format("%03d", Game.character.coins));
+		healthLabel.setText(String.format("%03d", Game.player.coins));
 	}
 	public void setDialogText (String text) { 
 		showDialog = true;

@@ -35,7 +35,7 @@ public class BattleHud {
 		table.setFillParent(true);
 
 
-		nameCharacterLabel = new Label(Game.character.name, MenuScreen.skin);
+		nameCharacterLabel = new Label(Game.player.name, MenuScreen.skin);
 		healthCharacterLabel = new Label(String.format("%03d", healthCharacter), MenuScreen.skin);
 	
 		table.add(nameCharacterLabel).expandX().pad(20);

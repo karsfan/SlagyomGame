@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
 
-public class InitializerScreen implements Screen{
+public class InitializerScreen implements Screen {
 
 	private GameSlagyom game;
 	protected Stage stage;
@@ -29,12 +29,12 @@ public class InitializerScreen implements Screen{
 	private Texture background;
 	private Sprite backgroundSprite;
 
-	public InitializerScreen (final GameSlagyom game) {
+	public InitializerScreen(final GameSlagyom game) {
 		this.game = game;
 		camera = new OrthographicCamera();
-		viewport = new ExtendViewport(500, 500, camera);
+		viewport = new ExtendViewport(854, 480, camera);
 		viewport.apply();
-		
+
 		background = new Texture("res/background.png");
 		backgroundSprite = new Sprite(background);
 
@@ -47,10 +47,8 @@ public class InitializerScreen implements Screen{
 		Table mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
-		
-		
-		
-		Label name = new Label ("Welcome " + NewCharacterScreen.charName, MenuScreen.skin);
+
+		Label name = new Label("Welcome " + NewCharacterScreen.charName, MenuScreen.skin);
 		// Create buttons
 		TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
 		TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);
@@ -84,7 +82,7 @@ public class InitializerScreen implements Screen{
 				game.swapScreen(State.PLAYING);
 			}
 		});
-		
+
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -92,8 +90,7 @@ public class InitializerScreen implements Screen{
 			}
 		});
 		// Add buttons to table
-		
-		
+
 		mainTable.add(name).pad(30);
 		mainTable.row();
 		mainTable.add(defaultLevelButton).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 3);
@@ -101,13 +98,10 @@ public class InitializerScreen implements Screen{
 		mainTable.add(chooseLevelButton).pad(5);
 		mainTable.row();
 		mainTable.add(returnButton).pad(5);
-		mainTable.row();		
+		mainTable.row();
 
 		stage.addActor(mainTable);
-		
-		
-	
-		
+
 	}
 
 	@Override
@@ -131,7 +125,8 @@ public class InitializerScreen implements Screen{
 
 	@Override
 	public void resize(int width, int height) {
-		viewport.update(width, height);
+		// viewport.update(width, height);
+		stage.getViewport().setScreenSize(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
 	}
@@ -153,7 +148,7 @@ public class InitializerScreen implements Screen{
 
 	@Override
 	public void dispose() {
-		
+
 		MenuScreen.skin.dispose();
 		MenuScreen.atlas.dispose();
 	}

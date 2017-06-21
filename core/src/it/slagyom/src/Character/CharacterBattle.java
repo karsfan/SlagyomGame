@@ -9,7 +9,7 @@ import it.slagyom.src.World.Weapon;
 
 public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 
-	public Character character;
+	public Player player;
 
 	public float stateTimer;
 	public boolean fighting;
@@ -22,16 +22,16 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	public int forza=100;
 	public boolean bomba = false;
 
-	public CharacterBattle(final Character character1) {
+	public CharacterBattle(final Player character1) {
 		stateTimer = 0;
 
-		character = new Character(character1);
-		character.x = 100;
-		character.y = 250;
-		character.width = 120;
-		character.height = 120;
-		character.currentState = StateDynamicObject.STANDING;
-		character.previousState = null;
+		player = new Player(character1);
+		player.x = 100;
+		player.y = 250;
+		player.width = 120;
+		player.height = 150;
+		player.currentState = StateDynamicObject.STANDING;
+		player.previousState = null;
 		fighting = false;
 		fightingTimeCurrent = 0.0f;
 		fightingTime = 0.2f;
@@ -43,23 +43,23 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	}
 
 	public float getHealth() {
-		return character.getHealth();
+		return player.getHealth();
 	}
 
 	public float getX() {
-		return character.getX();
+		return player.getX();
 	}
 
 	public float getY() {
-		return character.getY();
+		return player.getY();
 	}
 
 	public float getHeight() {
-		return character.getHeight();
+		return player.getHeight();
 	}
 
 	public float getWidth() {
-		return character.getWidth();
+		return player.getWidth();
 	}
 
 	public void update(float dt) {
@@ -71,24 +71,24 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 			fightingTimeCurrent = 0;
 		}
 		dt = 0.35f;
-		if ((jumping || doubleJumping) && character.y + velocityY * dt > 250) {
-			character.y += velocityY * dt;
+		if ((jumping || doubleJumping) && player.y + velocityY * dt > 250) {
+			player.y += velocityY * dt;
 
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING, dt);
 
-			if (collide() && character.x < Game.world.battle.enemy.getX())
-				character.x = Game.world.battle.enemy.getX() - character.getWidth() / 2;
-			else if (collide() && character.x > Game.world.battle.enemy.getX())
-				character.x = Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2;
+			if (collide() && player.x < Game.world.battle.enemy.getX())
+				player.x = Game.world.battle.enemy.getX() - player.getWidth() / 2;
+			else if (collide() && player.x > Game.world.battle.enemy.getX())
+				player.x = Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2;
 
 		} else {
 			jumping = false;
 			doubleJumping = false;
-			character.y = 250;
+			player.y = 250;
 			velocityY = 0;
 		}
-		Iterator<Bomb> it1 = character.bag.bombe.iterator();
+		Iterator<Bomb> it1 = player.bag.bombe.iterator();
 		while (it1.hasNext()) {
 			Bomb ob = (Bomb) it1.next();
 			if (ob.lanciata == true) {
@@ -103,10 +103,10 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	}
 
 	public void fightRight(float dt) {
-		character.width += character.primary_weapon.getWidth();
+		player.width += player.primary_weapon.getWidth();
 		if (collide())
-			Game.world.battle.enemy.decreaseHealth(character.primary_weapon);
-		character.width -= character.primary_weapon.getWidth();
+			Game.world.battle.enemy.decreaseHealth(player.primary_weapon);
+		player.width -= player.primary_weapon.getWidth();
 
 		setState(StateDynamicObject.FIGHTINGRIGHT, dt);
 		fighting = true;
@@ -114,10 +114,10 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	}
 
 	public void fightLeft(float dt) {
-		character.x -= character.primary_weapon.getWidth();
+		player.x -= player.primary_weapon.getWidth();
 		if (collide())
-			Game.world.battle.enemy.decreaseHealth(character.primary_weapon);
-		character.x += character.primary_weapon.getWidth();
+			Game.world.battle.enemy.decreaseHealth(player.primary_weapon);
+		player.x += player.primary_weapon.getWidth();
 
 		setState(StateDynamicObject.FIGHTINGLEFT, dt);
 		fighting = true;
@@ -137,20 +137,20 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 
 	public void movesRight(float dt) {
 
-		if (character.x + character.velocity * dt + character.getWidth() < 1100)
-			character.x += character.velocity * dt;
+		if (player.x + player.velocity * dt + player.getWidth() < 1100)
+			player.x += player.velocity * dt;
 		if (collide())
-			character.x -= character.velocity * dt;
+			player.x -= player.velocity * dt;
 		if (!fighting)
 			setState(StateDynamicObject.RUNNINGRIGHT, dt);
 	}
 
 	public void movesLeft(float dt) {
 
-		if (character.x - character.width / 2 > 0)
-			character.x -= character.velocity * dt;
+		if (player.x - player.width / 2 > 0)
+			player.x -= player.velocity * dt;
 		if (collide())
-			character.x += character.velocity * dt;
+			player.x += player.velocity * dt;
 		if (!fighting)
 			setState(StateDynamicObject.RUNNINGLEFT, dt);
 	}
@@ -170,9 +170,9 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	}
 
 	public void setState(StateDynamicObject state, float dt) {
-		character.previousState = character.currentState;
-		character.currentState = state;
-		if (character.previousState == character.currentState && character.currentState != StateDynamicObject.STANDING)
+		player.previousState = player.currentState;
+		player.currentState = state;
+		if (player.previousState == player.currentState && player.currentState != StateDynamicObject.STANDING)
 			setStateTimer(getStateTimer() + dt);
 		else
 			setStateTimer(0);
@@ -190,16 +190,16 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	@Override
 	public boolean collide() {
 
-		if (!((character.x > Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2
-				|| Game.world.battle.enemy.getX() > character.x + character.width / 2)
-				|| (character.y > Game.world.battle.enemy.getY() + Game.world.battle.enemy.getHeight() / 2
-						|| Game.world.battle.enemy.getY() > character.y + character.height / 2)))
+		if (!((player.x > Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2
+				|| Game.world.battle.enemy.getX() > player.x + player.width / 2)
+				|| (player.y > Game.world.battle.enemy.getY() + Game.world.battle.enemy.getHeight() / 2
+						|| Game.world.battle.enemy.getY() > player.y + player.height / 2)))
 			return true;
 		return false;
 	}
 
 	public Weapon getWeapon() {
-		return character.getWeapon();
+		return player.getWeapon();
 	}
 
 	public float getStateTimer() {
@@ -207,15 +207,15 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	}
 
 	public StateDynamicObject getPreviousState() {
-		return character.previousState;
+		return player.previousState;
 	}
 
 	public StateDynamicObject getCurrentState() {
-		return character.currentState;
+		return player.currentState;
 	}
 
 	public void decreaseHealth(Weapon weapon) {
-		character.health -= weapon.getDamage();
+		player.health -= weapon.getDamage();
 	}
 	public void caricaBomba(float dt) {
 		forza+=forza*dt;

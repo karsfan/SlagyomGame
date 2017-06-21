@@ -43,13 +43,13 @@ public class MenuScreen implements Screen {
 		atlas = new TextureAtlas("menu/vhs/vhs-ui.atlas");
 		skin = new Skin(Gdx.files.internal("menu/vhs/vhs-ui.json"), atlas);
 		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
-		//menuMusic.play();
+		// menuMusic.play();
 
 		musicButton = new TextButton("Music", skin);
 		returnButton = new TextButton("Return", skin);
 
 		camera = new OrthographicCamera();
-		viewport = new ExtendViewport(500, 500, camera);
+		viewport = new ExtendViewport(854, 480, camera);
 		viewport.apply();
 
 		background = new Texture("res/background.png");
@@ -155,6 +155,7 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+
 		stage.getViewport().setScreenSize(width, height);
 		camera.update();
 	}

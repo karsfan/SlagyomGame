@@ -10,12 +10,12 @@ import it.slagyom.src.World.Tile;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
-import it.slagyom.LoadingImage;
+import it.slagyom.MusicManager;
 import it.slagyom.PlayScreen;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.StaticObject.Element;
 
-public class Character extends DynamicObjects implements ICollidable {
+public class Player extends DynamicObjects implements ICollidable {
 
 	public String name;
 	public Bag bag;
@@ -25,7 +25,7 @@ public class Character extends DynamicObjects implements ICollidable {
 	public int coins;
 	public boolean collideDoor = false;
 
-	public Character(String name) {
+	public Player(String name) {
 		super();
 		this.name = name;
 		bag = new Bag();
@@ -57,14 +57,14 @@ public class Character extends DynamicObjects implements ICollidable {
 		return true;
 	}
 
-	public Character(Character character) {
-		super(character.x, character.y, character.currentState, character.previousState, character.stateTimer,
-				character.width, character.height, character.velocity);
-		this.bag = character.bag;
-		this.primary_weapon = character.primary_weapon;
-		this.health = character.health;
-		this.power = character.power;
-		this.coins = character.coins;
+	public Player(Player player) {
+		super(player.x, player.y, player.currentState, player.previousState, player.stateTimer,
+				player.width, player.height, player.velocity);
+		this.bag = player.bag;
+		this.primary_weapon = player.primary_weapon;
+		this.health = player.health;
+		this.power = player.power;
+		this.coins = player.coins;
 	}
 
 	public float getHealth() {
@@ -259,7 +259,7 @@ public class Character extends DynamicObjects implements ICollidable {
 	boolean pickItem(Item item) {
 		if (item.getElement() != Element.COIN && !item.picked) {
 			if (bag.addTool(item)) {
-				LoadingImage.itemSound.play(1.0f);
+				MusicManager.play("ITEM");
 				item.setPicked(true);
 				return true;
 			}
@@ -267,7 +267,7 @@ public class Character extends DynamicObjects implements ICollidable {
 			if (!item.picked) {
 				PlayScreen.obj = item;
 				coins++;
-				LoadingImage.coinSound.play(0.5f);
+				MusicManager.play("COIN");
 			}
 			item.setPicked(true);
 			return true;

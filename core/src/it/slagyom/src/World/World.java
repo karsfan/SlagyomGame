@@ -107,7 +107,7 @@ public class World {
 
 	public void createBattle() {
 
-		battle = new Battle(Game.character, null);
+		battle = new Battle(Game.player, null);
 	}
 
 	public ArrayList<DynamicObjects> getListDynamicObjects() {
@@ -123,7 +123,7 @@ public class World {
 			people = new ArrayList<DynamicObjects>();
 			getMap().setCurrent(false);
 			maps[level].setCurrent(true);
-			people.add(Game.character);
+			people.add(Game.player);
 			while (!addDynamicObject())
 				;
 			addItems();

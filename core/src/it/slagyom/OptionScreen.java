@@ -34,7 +34,7 @@ public class OptionScreen implements Screen {
 		this.game = game;
 
 		camera = new OrthographicCamera();
-		viewport = new ExtendViewport(500, 500, camera);
+		viewport = new ExtendViewport(854, 480, camera);
 		viewport.apply();
 
 		activeMusic = true;
@@ -129,7 +129,8 @@ public class OptionScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		viewport.update(width, height);
+		stage.getViewport().setScreenSize(width, height);
+		//viewport.update(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
 	}

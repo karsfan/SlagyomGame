@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import it.slagyom.src.Character.Character;
+import it.slagyom.src.Character.Player;
 import it.slagyom.src.Character.Man;
 import it.slagyom.src.Map.StaticObject;
 
@@ -136,11 +136,11 @@ public class Tile extends StaticObject implements ICollidable {
 	}
 
 	public boolean collideDoor(Object e) {
-		if (this.getElement() == Element.SHOP && e instanceof Character) {
-			if (!((door.x + shape.getWidth() / 4  > ((Character) e).getX() + ((Character) e).getWidth() / 2 - 5
-					|| ((Character) e).getX() > door.x + door.width + shape.getWidth() / 4)
-					|| (door.y > ((Character) e).getY() + ((Character) e).getHeight() / 2
-							|| ((Character) e).getY() > door.y + door.height))) {
+		if (this.getElement() == Element.SHOP && e instanceof Player) {
+			if (!((door.x + shape.getWidth() / 4  > ((Player) e).getX() + ((Player) e).getWidth() / 2 - 5
+					|| ((Player) e).getX() > door.x + door.width + shape.getWidth() / 4)
+					|| (door.y > ((Player) e).getY() + ((Player) e).getHeight() / 2
+							|| ((Player) e).getY() > door.y + door.height))) {
 				return true;
 			}
 		
@@ -151,11 +151,11 @@ public class Tile extends StaticObject implements ICollidable {
 
 	@Override
 	public boolean collide(Object e) {
-		if (e instanceof Character) {
-			if (!((shape.x > ((Character) e).getX() + ((Character) e).getWidth() / 2
-					|| ((Character) e).getX() > shape.x + shape.width)
-					|| (shape.y > ((Character) e).getY() + ((Character) e).getHeight() / 2
-							|| ((Character) e).getY() > shape.y + shape.height))) {
+		if (e instanceof Player) {
+			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
+					|| ((Player) e).getX() > shape.x + shape.width)
+					|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight() / 2
+							|| ((Player) e).getY() > shape.y + shape.height))) {
 				return true;
 			}
 		}

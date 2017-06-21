@@ -263,7 +263,7 @@ public class Woman extends DynamicObjects implements ICollidable{
 						|| ((DynamicObjects) ob).getX() > x + width / 2)
 						|| (y > ((DynamicObjects) ob).getY() + ((DynamicObjects) ob).getHeight() / 2
 								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
-					if (ob instanceof Character)
+					if (ob instanceof Player)
 						collisionWithCharacter = true;
 					else
 						collision = true;

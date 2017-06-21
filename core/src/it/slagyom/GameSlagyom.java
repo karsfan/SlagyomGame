@@ -12,7 +12,7 @@ public class GameSlagyom extends Game {
 	};
 
 	private static State currentState;
-	
+
 	static MenuScreen menuScreen;
 	static NewCharacterScreen newCharacterScreen;
 	static InitializerScreen initializerScreen;
@@ -23,37 +23,39 @@ public class GameSlagyom extends Game {
 	static BagScreen bagScreen;
 	static ShopScreen shopScreen;
 	static MultiplayerScreen multiplayerScreen;
-
+	static MusicManager musicManager;
 
 	public static Preferences prefs;
 	SpriteBatch batch;
-	
+
 	public GameSlagyom() {
-		
+
 	}
 
 	@Override
 	public void create() {
+		new LoadingMusic();
+		new MusicManager();
 		batch = new SpriteBatch();
-	
+
 		menuScreen = new MenuScreen(this);
 		optionScreen = new OptionScreen(this);
 		pauseScreen = new PauseScreen(this);
 		multiplayerScreen = new MultiplayerScreen(this);
 		currentState = State.MENU;
-		setScreen(menuScreen);
-
+		swapScreen(State.MENU);
+		musicManager = new MusicManager();
 		prefs = Gdx.app.getPreferences("My saved game");
 	}
 
 	public static void saveGame() {
 		prefs.putString("map", it.slagyom.src.World.Game.world.getMap().getMapPath());
-		prefs.putString("name", it.slagyom.src.World.Game.character.name);
-		prefs.putFloat("xCharPosition", it.slagyom.src.World.Game.character.x);
-		prefs.putFloat("yCharPosition", it.slagyom.src.World.Game.character.y);
-		prefs.putFloat("health", it.slagyom.src.World.Game.character.health);
-		prefs.putFloat("power", it.slagyom.src.World.Game.character.power);
-		prefs.putInteger("coins", it.slagyom.src.World.Game.character.coins);
+		prefs.putString("name", it.slagyom.src.World.Game.player.name);
+		prefs.putFloat("xCharPosition", it.slagyom.src.World.Game.player.x);
+		prefs.putFloat("yCharPosition", it.slagyom.src.World.Game.player.y);
+		prefs.putFloat("health", it.slagyom.src.World.Game.player.health);
+		prefs.putFloat("power", it.slagyom.src.World.Game.player.power);
+		prefs.putInteger("coins", it.slagyom.src.World.Game.player.coins);
 
 		prefs.flush();
 	}
@@ -67,11 +69,11 @@ public class GameSlagyom extends Game {
 
 		playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
 
-		it.slagyom.src.World.Game.character.x = prefs.getFloat("xCharPosition");
-		it.slagyom.src.World.Game.character.y = prefs.getFloat("yCharPosition");
-		it.slagyom.src.World.Game.character.health = prefs.getFloat("health");
-		it.slagyom.src.World.Game.character.power = prefs.getFloat("power");
-		it.slagyom.src.World.Game.character.coins = prefs.getInteger("coins");
+		it.slagyom.src.World.Game.player.x = prefs.getFloat("xCharPosition");
+		it.slagyom.src.World.Game.player.y = prefs.getFloat("yCharPosition");
+		it.slagyom.src.World.Game.player.health = prefs.getFloat("health");
+		it.slagyom.src.World.Game.player.power = prefs.getFloat("power");
+		it.slagyom.src.World.Game.player.coins = prefs.getInteger("coins");
 
 	}
 
@@ -88,9 +90,12 @@ public class GameSlagyom extends Game {
 		setState(newState);
 
 		if (currentState == State.MENU) {
+			MusicManager.play("MAINMUSIC");
 			setScreen(menuScreen);
 			Gdx.input.setInputProcessor(menuScreen.stage);
 		} else if (currentState == State.PLAYING) {
+			MusicManager.pause();
+			MusicManager.play("BACKGROUND");
 			setScreen(playScreen);
 			menuScreen.menuMusic.stop();
 			Gdx.input.setInputProcessor(null);
@@ -112,11 +117,13 @@ public class GameSlagyom extends Game {
 			battlescreen = new BattleScreen(this, it.slagyom.src.World.Game.world.battle);
 			setScreen(battlescreen);
 		} else if (currentState == State.PAUSE) {
+			MusicManager.pause();
+			MusicManager.play("MAINMUSIC");
 			setScreen(pauseScreen);
 			try {
 				it.slagyom.src.World.Game.world.semaphore.acquire();
 			} catch (InterruptedException e) {
-				
+
 				e.printStackTrace();
 			}
 			Gdx.input.setInputProcessor(pauseScreen.stage);
@@ -129,6 +136,7 @@ public class GameSlagyom extends Game {
 			setScreen(shopScreen);
 			Gdx.input.setInputProcessor(shopScreen.stage);
 		} else if (currentState == State.CONTINUEGAME) {
+			MusicManager.pause();
 			setScreen(playScreen);
 			Gdx.input.setInputProcessor(null);
 		}

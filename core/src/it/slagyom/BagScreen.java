@@ -65,9 +65,6 @@ public class BagScreen implements Screen {
 		selectionBackground = new Texture("res/bag/bagSelectionBG.png");
 		selectionBackgroundSprite = new Sprite(selectionBackground);
 
-		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-		camera.update();
-
 		stage = new Stage(viewport, game.batch);
 
 		currentPocket = Pocket.POTIONS;
@@ -84,10 +81,10 @@ public class BagScreen implements Screen {
 		delete.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Game.character.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
-				potions[0].setText("Blue potion  x" + Game.character.bag.getNumberOf(Element.POTION, Level.FIRST));
-				potions[1].setText("Green potion  x" + Game.character.bag.getNumberOf(Element.POTION, Level.SECOND));
-				potions[2].setText("Red potion  x" + Game.character.bag.getNumberOf(Element.POTION, Level.THIRD));
+				Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+				potions[0].setText("Blue potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST));
+				potions[1].setText("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND));
+				potions[2].setText("Red potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD));
 			}
 		});
 
@@ -154,11 +151,11 @@ public class BagScreen implements Screen {
 
 		potionsLabel = new Label("Potions", MenuScreen.skin);
 		potions = new TextButton[3];
-		potions[0] = new TextButton("Blue potion    x" + Game.character.bag.getNumberOf(Element.POTION, Level.FIRST),
+		potions[0] = new TextButton("Blue potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST),
 				MenuScreen.skin);
-		potions[1] = new TextButton("Green potion    x" + Game.character.bag.getNumberOf(Element.POTION, Level.SECOND),
+		potions[1] = new TextButton("Green potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND),
 				MenuScreen.skin);
-		potions[2] = new TextButton("Red potion  x" + Game.character.bag.getNumberOf(Element.POTION, Level.THIRD),
+		potions[2] = new TextButton("Red potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD),
 				MenuScreen.skin);
 
 		potions[0].addListener(new ClickListener() {
@@ -212,8 +209,8 @@ public class BagScreen implements Screen {
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 		weapons = new TextButton[4];
 
-		weapons[0] = new TextButton(Game.character.primary_weapon.getType().toString() + " "
-				+ Game.character.primary_weapon.getLevel().toString(), MenuScreen.skin);
+		weapons[0] = new TextButton(Game.player.primary_weapon.getType().toString() + " "
+				+ Game.player.primary_weapon.getLevel().toString(), MenuScreen.skin);
 		weapons[1] = new TextButton("Bomb  lev1", MenuScreen.skin);
 		weapons[2] = new TextButton("Bomb  lev2", MenuScreen.skin);
 		weapons[3] = new TextButton("Bomb  lev3", MenuScreen.skin);

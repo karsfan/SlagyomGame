@@ -2,21 +2,21 @@ package it.slagyom.src.World;
 
 import java.util.Iterator;
 
-import it.slagyom.src.Character.Character;
+import it.slagyom.src.Character.Player;
 import it.slagyom.src.Character.DynamicObjects;
 
 public class Game {
 	
 	//ListenableGraph<Object, DefaultEdge> graph;
 	public static World world;
-	public static Character character;
+	public static Player player;
 	
 	public Game(String name) {
 
 		world = new World();
-		character = new Character(name);
+		player = new Player(name);
 		
-		world.getListDynamicObjects().add(character);
+		world.getListDynamicObjects().add(player);
 		while(!world.addDynamicObject());
 		while(!world.addItems());
 		world.getThread().start();
@@ -37,8 +37,8 @@ public class Game {
 	public Game(String path, String name) {
 
 		world = new World(path);
-		character = new Character(name);
-		world.getListDynamicObjects().add(character);
+		player = new Player(name);
+		world.getListDynamicObjects().add(player);
 		while(!world.addDynamicObject());
 		while(!world.addItems());
 

@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.Random;
 
-import it.slagyom.src.Character.Character;
+import it.slagyom.src.Character.Player;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.Tile;
@@ -178,11 +178,11 @@ public class Item extends StaticObject {
 			}
 		}
 
-		if (e instanceof Character) {
-			if (!((shape.x > ((Character) e).getX() + ((Character) e).getWidth() / 2
-					|| ((Character) e).getX() > shape.x + shape.width)
-					|| (shape.y > ((Character) e).getY() + ((Character) e).getHeight() / 2
-							|| ((Character) e).getY() > shape.y + shape.height))) {
+		if (e instanceof Player) {
+			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
+					|| ((Player) e).getX() > shape.x + shape.width)
+					|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight() / 2
+							|| ((Player) e).getY() > shape.y + shape.height))) {
 				return true;
 			}
 		}

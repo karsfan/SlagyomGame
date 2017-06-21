@@ -1,7 +1,5 @@
 package it.slagyom;
 
-
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controllers;
@@ -26,7 +24,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.World.Game;
 
-public class PauseScreen implements Screen{
+public class PauseScreen implements Screen {
 
 	private GameSlagyom game;
 	protected Stage stage;
@@ -35,15 +33,15 @@ public class PauseScreen implements Screen{
 
 	private Texture background;
 	private Sprite backgroundSprite;
-	//private boolean movesGamePad= false;
-	//private PovDirection directionGamepad;
+	// private boolean movesGamePad= false;
+	// private PovDirection directionGamepad;
 	Table mainTable = new Table();
-	
+
 	public PauseScreen(final GameSlagyom game) {
-		
+
 		this.game = game;
 		camera = new OrthographicCamera();
-		viewport = new ExtendViewport(500, 500, camera);
+		viewport = new ExtendViewport(854, 480, camera);
 		viewport.apply();
 
 		background = new Texture("res/background.png");
@@ -64,13 +62,13 @@ public class PauseScreen implements Screen{
 		TextButton optionsButton = new TextButton("Options", MenuScreen.skin);
 		TextButton exitButton = new TextButton("Exit", MenuScreen.skin);
 		TextButton menuButton = new TextButton("Menu", MenuScreen.skin);
-	
+
 		// Add listeners to buttons
 		saveGame.addListener(new ClickListener() {
 			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				//game.setScreen(game.playScreen);
+				// game.setScreen(game.playScreen);
 				game.saveGame();
 				game.swapScreen(State.PLAYING);
 				Game.world.semaphore.release();
@@ -103,12 +101,12 @@ public class PauseScreen implements Screen{
 				game.swapScreen(State.MENU);
 			}
 		});
-		
+
 		bagButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.swapScreen(State.BAG);
-			//	game.swapScreen(State.SHOP);
+				// game.swapScreen(State.SHOP);
 
 			}
 		});
@@ -119,7 +117,7 @@ public class PauseScreen implements Screen{
 				Gdx.app.exit();
 			}
 		});
-		
+
 		// Add buttons to table
 		mainTable.add(pauseLabel).pad(30);
 		mainTable.row();
@@ -127,7 +125,7 @@ public class PauseScreen implements Screen{
 		mainTable.row();
 		mainTable.add(saveGame).pad(5);
 		mainTable.row().pad(15);
-		
+
 		mainTable.add(optionsButton).pad(5);
 		mainTable.row();
 		mainTable.add(returnButton).pad(5);
@@ -135,25 +133,23 @@ public class PauseScreen implements Screen{
 		mainTable.add(menuButton).pad(5);
 		mainTable.row();
 		mainTable.add(exitButton).pad(20);
-		mainTable.row(); 
+		mainTable.row();
 		stage.addActor(mainTable);
-			
-		
-		Table helpTable = new Table(); 
+
+		Table helpTable = new Table();
 		helpTable.setFillParent(true);
 		helpTable.bottom();
-		
+
 		Drawable arrowDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/help/arrow.png")));
 		final ImageButton arrow = new ImageButton(arrowDraw);
-		
+
 		Drawable runDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/help/run.png")));
 		final ImageButton run = new ImageButton(runDraw);
-		
+
 		Drawable actionDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/help/action.png")));
 		final ImageButton action = new ImageButton(actionDraw);
-		
-		
-		helpTable.add(arrow);//.padLeft(Gdx.graphics.getWidth()/2); 
+
+		helpTable.add(arrow);// .padLeft(Gdx.graphics.getWidth()/2);
 		helpTable.add(run);
 		helpTable.add(action);
 		stage.addActor(helpTable);
@@ -165,7 +161,6 @@ public class PauseScreen implements Screen{
 
 	}
 
-
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
@@ -174,23 +169,22 @@ public class PauseScreen implements Screen{
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();
-		
+
 		stage.act();
-		
+
 		stage.draw();
-		
+
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			Game.world.semaphore.release();
-			LoadingImage.backgroundSound.play();
 			game.swapScreen(State.PLAYING);
 		}
-		
 
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		viewport.update(width, height);
+		stage.getViewport().setScreenSize(width, height);
+		// viewport.update(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
 	}
@@ -216,81 +210,50 @@ public class PauseScreen implements Screen{
 		MenuScreen.atlas.dispose();
 	}
 
-	/*@Override
-	public void connected(Controller controller) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void disconnected(Controller controller) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean buttonDown(Controller controller, int buttonCode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean buttonUp(Controller controller, int buttonCode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-		if (value == PovDirection.east) {
-			movesGamePad = true;
-			directionGamepad = value;
-			return true;
-		} else if (value == PovDirection.north) {
-			movesGamePad = true;
-			directionGamepad = value;
-			return true;
-		} else if (value == PovDirection.south) {
-			movesGamePad = true;
-			directionGamepad = value;
-			return true;
-		} else if (value == PovDirection.west) {
-			movesGamePad = true;
-			directionGamepad = value;
-			return true;
-		} else if (value == PovDirection.northEast || value == PovDirection.northWest
-				|| value == PovDirection.southWest || value == PovDirection.southEast) {
-			movesGamePad = true;
-			directionGamepad = value;
-			return true;
-		}
-		//stage.keyDown(povCode);
-		movesGamePad = false;
-		return false;
-	}
-
-	@Override
-	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
+	/*
+	 * @Override public void connected(Controller controller) { // TODO
+	 * Auto-generated method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void disconnected(Controller controller) { // TODO
+	 * Auto-generated method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public boolean buttonDown(Controller controller, int
+	 * buttonCode) { // TODO Auto-generated method stub return false; }
+	 * 
+	 * @Override public boolean buttonUp(Controller controller, int buttonCode)
+	 * { // TODO Auto-generated method stub return false; }
+	 * 
+	 * @Override public boolean axisMoved(Controller controller, int axisCode,
+	 * float value) { // TODO Auto-generated method stub return false; }
+	 * 
+	 * @Override public boolean povMoved(Controller controller, int povCode,
+	 * PovDirection value) { if (value == PovDirection.east) { movesGamePad =
+	 * true; directionGamepad = value; return true; } else if (value ==
+	 * PovDirection.north) { movesGamePad = true; directionGamepad = value;
+	 * return true; } else if (value == PovDirection.south) { movesGamePad =
+	 * true; directionGamepad = value; return true; } else if (value ==
+	 * PovDirection.west) { movesGamePad = true; directionGamepad = value;
+	 * return true; } else if (value == PovDirection.northEast || value ==
+	 * PovDirection.northWest || value == PovDirection.southWest || value ==
+	 * PovDirection.southEast) { movesGamePad = true; directionGamepad = value;
+	 * return true; } //stage.keyDown(povCode); movesGamePad = false; return
+	 * false; }
+	 * 
+	 * @Override public boolean xSliderMoved(Controller controller, int
+	 * sliderCode, boolean value) { // TODO Auto-generated method stub return
+	 * false; }
+	 * 
+	 * @Override public boolean ySliderMoved(Controller controller, int
+	 * sliderCode, boolean value) { // TODO Auto-generated method stub return
+	 * false; }
+	 * 
+	 * @Override public boolean accelerometerMoved(Controller controller, int
+	 * accelerometerCode, Vector3 value) { // TODO Auto-generated method stub
+	 * return false; }
+	 */
 
 }

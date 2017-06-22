@@ -5,16 +5,21 @@ import javax.swing.JFrame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.GameSlagyom.State;
@@ -28,6 +33,10 @@ public class InitializerScreen implements Screen {
 
 	private Texture background;
 	private Sprite backgroundSprite;
+	private BitmapFont bf_loadProgress;
+	private long progress = 0;
+	private long startTime = 0;
+	private ShapeRenderer mShapeRenderer;
 
 	public InitializerScreen(final GameSlagyom game) {
 		this.game = game;
@@ -101,6 +110,10 @@ public class InitializerScreen implements Screen {
 		mainTable.row();
 
 		stage.addActor(mainTable);
+		bf_loadProgress = new BitmapFont();
+
+		mShapeRenderer = new ShapeRenderer();
+		startTime = TimeUtils.nanoTime();
 
 	}
 
@@ -114,12 +127,33 @@ public class InitializerScreen implements Screen {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		game.batch.begin();
-		backgroundSprite.draw(game.batch);
-		game.batch.end();
+		//game.batch.begin();
+		showLoadProgress();
+		//backgroundSprite.draw(game.batch);
+		//game.batch.end();
 
 		stage.act();
 		stage.draw();
+
+	}
+	private void showLoadProgress() {
+		long currentTimeStamp = TimeUtils.nanoTime();
+		if (currentTimeStamp - startTime > TimeUtils.millisToNanos(500)) {
+			startTime = currentTimeStamp;
+			progress = progress + 10;
+		}
+		// Width of progress bar on screen relevant to Screen width
+		float progressBarWidth = ((viewport.getWorldWidth()/2) / 100) * progress;
+
+		game.batch.begin();
+		bf_loadProgress.draw(game.batch, "Loading " + progress + " / " + 100, 10, 40);
+		game.batch.end();
+
+		mShapeRenderer.setProjectionMatrix(camera.combined);
+		mShapeRenderer.begin(ShapeType.Filled);
+		mShapeRenderer.setColor(Color.YELLOW);
+		mShapeRenderer.rect(0, 10, progressBarWidth, 10);
+		mShapeRenderer.end();
 
 	}
 

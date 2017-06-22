@@ -49,6 +49,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	public static float drawy;
 
 	boolean movesGamePad = false;
+	
 
 	public PlayScreen(GameSlagyom game, String name) {
 		new LoadingImage();
@@ -92,14 +93,14 @@ public class PlayScreen implements Screen, ControllerListener {
 	public void render(float delta) {
 		update(delta);
 
-		hud.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(gamecam.combined);
 
 		game.batch.begin();
-		draw();
+		//draw();
 		game.batch.end();
+		hud.update();
 
 		hud.stage.draw();
 		// TEXT TABLE RENDERING

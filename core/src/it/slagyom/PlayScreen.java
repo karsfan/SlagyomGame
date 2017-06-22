@@ -98,7 +98,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		game.batch.setProjectionMatrix(gamecam.combined);
 
 		game.batch.begin();
-		//draw();
+		draw();
 		game.batch.end();
 		hud.update();
 

@@ -16,9 +16,6 @@ import it.slagyom.src.World.Game;
 public class GameServer extends Thread {
 	private ServerSocket server;
 
-	/*public static void main(String[] args) throws Exception {
-		new GameServer();
-	}*/
 
 	public GameServer(int port) throws Exception {
 		server = new ServerSocket(port);

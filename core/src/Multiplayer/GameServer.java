@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 import it.slagyom.MultiplayerScreen;
+import it.slagyom.src.World.Game;
 
 
 public class GameServer extends Thread {

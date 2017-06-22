@@ -17,6 +17,5 @@ public class LoadingMusic {
 		tickSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/tick.ogg"));
 		coinSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/coin.ogg"));
 		itemSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/item.ogg"));
-		System.out.println("ciao");
 	}
 }

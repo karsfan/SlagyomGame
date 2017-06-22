@@ -15,11 +15,10 @@ public class GameClient {
 		BufferedWriter outRo = null;
 	//	PrintStream out = null;
 		Socket socket = null;
-		String message;
+		String message = null;
 		
 		System.out.println("SONO IL CLIENT");
 		try {
-			
 			// open a socket connection
 			socket = new Socket("localhost", port);
 			// Apre i canali I/O

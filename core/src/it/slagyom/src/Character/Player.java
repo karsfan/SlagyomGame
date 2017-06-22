@@ -6,13 +6,15 @@ import com.badlogic.gdx.Gdx;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.ICollidable;
-import it.slagyom.src.World.Tile;
+import it.slagyom.src.World.Shop;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
 import it.slagyom.MusicManager;
 import it.slagyom.PlayScreen;
+import it.slagyom.src.Map.PreEnemyHouse;
 import it.slagyom.src.Map.Item;
+import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.Map.StaticObject.Element;
 
 public class Player extends DynamicObjects implements ICollidable {
@@ -23,7 +25,8 @@ public class Player extends DynamicObjects implements ICollidable {
 	public float health;
 	public float power;
 	public int coins;
-	public boolean collideDoor = false;
+	public boolean collideShop = false;
+	public boolean collideGym = false;
 
 	public Player(String name) {
 		super();
@@ -85,7 +88,6 @@ public class Player extends DynamicObjects implements ICollidable {
 
 	public void setName(String name) {
 		this.name = name;
-		System.out.println(name);
 	}
 
 	public void swapWeapon() {
@@ -131,8 +133,8 @@ public class Player extends DynamicObjects implements ICollidable {
 
 		if (x < GameConfig.WIDTH - width / 2) {
 			float velocityX = velocity;
-		//	if (collideGround())
-			//	velocityX -= 20;
+			// if (collideGround())
+			// velocityX -= 20;
 			x += (velocityX * dt);
 			if (collide(this))
 				x -= (velocityX * dt);
@@ -144,8 +146,8 @@ public class Player extends DynamicObjects implements ICollidable {
 
 		if (x > 5) {
 			float velocityX = velocity;
-			//if (collideGround())
-				//velocityX -= 20;
+			// if (collideGround())
+			// velocityX -= 20;
 			x -= (velocityX * dt);
 			if (collide(this))
 				x += (velocityX * dt);
@@ -211,11 +213,11 @@ public class Player extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesUp(float dt) {
-		
+
 		if (y < GameConfig.HEIGHT - height - 5) {
 			float velocityY = velocity;
-		//	if (collideGround())
-			//	velocityY -= 20;
+			// if (collideGround())
+			// velocityY -= 20;
 
 			y += (velocityY * dt);
 			if (collide(this)) {
@@ -228,8 +230,8 @@ public class Player extends DynamicObjects implements ICollidable {
 	public void movesDown(float dt) {
 		if (y > 0) {
 			float velocityY = velocity;
-			//if (collideGround())
-				//velocityY -= 20;
+			// if (collideGround())
+			// velocityY -= 20;
 			y -= (velocityY * dt);
 			if (collide(this))
 				y += (velocityY * dt);
@@ -289,33 +291,29 @@ public class Player extends DynamicObjects implements ICollidable {
 
 	}
 
-	private boolean collideGround() {
-		Iterator<Tile> it = Game.world.getListTile().iterator();
-		while (it.hasNext()) {
-			Object ob = (Object) it.next();
-			if (ob instanceof Tile) {
-				if (((Tile) ob).getElement() == Element.GROUND)
-					if (((Tile) ob).collide(this)) {
-						return true;
-					}
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public synchronized boolean collide(Object e) {
-		Iterator<Tile> it = Game.world.getListTile().iterator();
+		Iterator<StaticObject> it = Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
-			if (ob instanceof Tile) {
-				if (((Tile) ob).getElement() != Element.GROUND && ((Tile) ob).getElement() != Element.ROAD)
-					if (((Tile) ob).collide(this)) {
-						if (((Tile) ob).getElement() == Element.TABLE)
-							PlayScreen.hud.setDialogText(((Tile) ob).getInfo());
-						else if (((Tile) ob).getElement() == Element.SHOP)
-							if (((Tile) ob).collideDoor(this))
-								collideDoor = true;
+			if (ob instanceof StaticObject) {
+				if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)
+					if (((StaticObject) ob).collide(this)) {
+						if (((StaticObject) ob).getElement() == Element.TABLE)
+							PlayScreen.hud.setDialogText(((StaticObject) ob).getInfo());
+						else if (((StaticObject) ob).getElement() == Element.SHOP) {
+							if (((Shop) ob).collideDoor(this)) {
+								collideShop = true;
+								return true;
+							}
+						} else if (((StaticObject) ob).getElement() == Element.PREENEMYHOME) {
+							if (((PreEnemyHouse) ob).collideDoor(this)) {
+								collideGym = true;
+								Game.world.createBattle((PreEnemyHouse) ob);
+								return true;
+							}
+						}
 						return true;
 					}
 			}

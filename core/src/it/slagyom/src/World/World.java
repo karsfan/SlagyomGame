@@ -7,8 +7,10 @@ import java.util.concurrent.Semaphore;
 
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Man;
+import it.slagyom.src.Map.PreEnemyHouse;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.Map;
+import it.slagyom.src.Map.StaticObject;
 
 public class World {
 
@@ -101,13 +103,13 @@ public class World {
 
 	}
 
-	public LinkedList<Tile> getListTile() {
+	public LinkedList<StaticObject> getListTile() {
 		return getMap().getListTile();
 	}
 
-	public void createBattle() {
-
-		battle = new Battle(Game.player, null);
+	public void createBattle(PreEnemyHouse preEnemyHouse) {
+		
+		battle = new Battle(Game.player, preEnemyHouse.enemy);
 	}
 
 	public ArrayList<DynamicObjects> getListDynamicObjects() {

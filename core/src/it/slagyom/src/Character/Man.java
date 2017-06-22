@@ -5,7 +5,7 @@ import java.util.Iterator;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.ICollidable;
-import it.slagyom.src.World.Tile;
+import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.Map.StaticObject.Element;
 
 public class Man extends DynamicObjects implements ICollidable {
@@ -250,16 +250,14 @@ public class Man extends DynamicObjects implements ICollidable {
 	@Override
 	public boolean collide(Object e) {
 		
-		Iterator<Tile> it =  Game.world.getListTile().iterator();
+		Iterator<StaticObject> it =  Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
-			if (ob instanceof Tile) {
-				if (((Tile) ob).getElement() != Element.GROUND && ((Tile) ob).getElement() != Element.ROAD)// &&  ((Tile) ob).getElement() != Element.FLOOR && ((Tile) ob).getElement() != Element.FLOOR2 && ((Tile) ob).getElement() != Element.FLOOR3)
-					if (((Tile) ob).collide(this)) {
+				if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)// &&  ((Tile) ob).getElement() != Element.FLOOR && ((Tile) ob).getElement() != Element.FLOOR2 && ((Tile) ob).getElement() != Element.FLOOR3)
+					if (((StaticObject) ob).collide(this)) {
 						collision = true;
 						return true;
 					}
-			}
 		}
 		
 		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();

@@ -2,13 +2,14 @@ package it.slagyom.src.Character;
 
 import java.util.Iterator;
 
+import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.Map.StaticObject.Element;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.ICollidable;
 import it.slagyom.src.World.Tile;
 
-public class Woman extends DynamicObjects implements ICollidable{
+public class Woman extends DynamicObjects implements ICollidable {
 	public static enum ManType {
 		WOMAN1, WOMAN2, WOMAN3
 	};
@@ -24,6 +25,7 @@ public class Woman extends DynamicObjects implements ICollidable{
 	public boolean collision;
 	public boolean collisionWithCharacter;
 	int passi;
+
 	public Woman() {
 		super();
 		collision = false;
@@ -242,19 +244,19 @@ public class Woman extends DynamicObjects implements ICollidable{
 
 	@Override
 	public boolean collide(Object e) {
-		
-		Iterator<Tile> it =  Game.world.getListTile().iterator();
+
+		Iterator<StaticObject> it = Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
-			if (ob instanceof Tile) {
-				if (((Tile) ob).getElement() != Element.GROUND && ((Tile) ob).getElement() != Element.ROAD)
-					if (((Tile) ob).collide(this)) {
-						collision = true;
-						return true;
-					}
-			}
+
+			if (((Tile) ob).getElement() != Element.GROUND && ((Tile) ob).getElement() != Element.ROAD)
+				if (((Tile) ob).collide(this)) {
+					collision = true;
+					return true;
+				}
+
 		}
-		
+
 		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -342,7 +344,5 @@ public class Woman extends DynamicObjects implements ICollidable{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-
 
 }

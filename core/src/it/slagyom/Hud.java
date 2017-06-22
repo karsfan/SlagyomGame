@@ -62,7 +62,7 @@ public class Hud {
 		
 		 * barStyle = new ProgressBarStyle(MenuScreen.skin.newDrawable("white",
 		 * Color.DARK_GRAY), tmp); barStyle.knobBefore = barStyle.knob;
-		 * progressBar = new ProgressBar(0, 10, 0.5f, false, barStyle);
+		 * progressBar = new ProgressBar(0, 10, 0.5f, false, MenuScreen.skin);
 		 * progressBar.setPosition(10, 10); progressBar.setSize(290,
 		 * progressBar.getPrefHeight()); progressBar.setAnimateDuration(2);
 		 * stage.addActor(progressBar);

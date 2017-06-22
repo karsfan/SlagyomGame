@@ -9,12 +9,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-<<<<<<< HEAD
-=======
+
 import it.slagyom.MultiplayerScreen;
 import it.slagyom.src.World.Game;
 
->>>>>>> 59891a084f89614f141b235905c7d6cf492c1f77
 
 public class GameServer extends Thread {
 	private ServerSocket server;

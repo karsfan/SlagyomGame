@@ -6,11 +6,12 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import it.slagyom.src.World.Enemy.Level;
 import it.slagyom.src.World.GameConfig;
-import it.slagyom.src.World.Tile;
+import it.slagyom.src.World.Shop;
 
 public class Map {
-	private LinkedList<Tile> listTile;
+	private LinkedList<StaticObject> listStaticObjects;
 	private LinkedList<Item> listItems;
 	private String nameVillage;
 	public String mapPath;
@@ -19,7 +20,7 @@ public class Map {
 	public Map(String path, boolean bool, String nameVillage) {
 		this.nameVillage = nameVillage;
 		current = bool;
-		listTile = new LinkedList<Tile>();
+		listStaticObjects = new LinkedList<StaticObject>();
 		listItems = new LinkedList<Item>();
 		readMap(path);
 		setMapPath(path);
@@ -34,7 +35,7 @@ public class Map {
 	}
 
 	public Map() {
-		listTile = new LinkedList<Tile>();
+		listStaticObjects = new LinkedList<StaticObject>();
 		listItems = new LinkedList<Item>();
 	}
 
@@ -85,19 +86,47 @@ public class Map {
 		for (i = i + 1; line.charAt(i) != ';'; i++) {
 			y = y * 10 + java.lang.Character.getNumericValue(line.charAt(i));
 		}
-		y = (int) Math.abs(y - GameConfig.HEIGHT/32);
+		y = (int) Math.abs(y - GameConfig.HEIGHT / 32);
 		return new Point(x, y);
 	}
 
 	public void addTile(String element, Point point) {
-		Tile tile = new Tile(element, point);
-		tile.setPoint(
-				new Point((int) tile.shape.getX(), (int) Math.abs(tile.shape.getY() - (tile.shape.getHeight() / 32))));
-		listTile.add(tile);
+		StaticObject staticObject;
+		Point pointTable;
+		StaticObject table;
+		switch (element) {
+		case "SHOP":
+			staticObject = new Shop(point);
+			pointTable = new Point(((int) (point.getX() + 64 / 32)), (int) Math.abs((point.getY() - 64 / 32)));
+			table = new StaticObject("TABLE", point);
+			table.setPoint(pointTable);
+			table.setInfo("In questo shop potrai trovare tutto quello che ti serve per sconfiggere i tuoi nemici!!");
+			listStaticObjects.add(table);
+			break;
+		case "PREENEMYHOME":
+			staticObject = new PreEnemyHouse(Level.EASY);
+			pointTable = new Point(((int) (point.getX() + 96 / 32)), (int) Math.abs((point.getY() - 96 / 32)));
+			table = new StaticObject("TABLE", point);
+			table.setPoint(pointTable);
+			table.setInfo("In questa Pre-Enemy House c'e' un nemico di livello Easy");
+			listStaticObjects.add(table);
+
+			break;
+		default:
+			staticObject = new StaticObject(element, point);
+			break;
+		}
+		staticObject
+				.setPoint(new Point((int) point.x, (int) Math.abs(point.y - (staticObject.shape.getHeight() / 32))));
+		// Tile tile = new Tile(element, point);
+		// tile.setPoint(
+		// new Point((int) tile.shape.getX(), (int) Math.abs(tile.shape.getY() -
+		// (tile.shape.getHeight() / 32))));
+		listStaticObjects.add(staticObject);
 	}
 
-	public LinkedList<Tile> getListTile() {
-		return listTile;
+	public LinkedList<StaticObject> getListTile() {
+		return listStaticObjects;
 	}
 
 	public String getMapPath() {
@@ -114,7 +143,7 @@ public class Map {
 
 	public void set(String path, boolean bool) {
 		current = bool;
-		listTile = new LinkedList<Tile>();
+		listStaticObjects = new LinkedList<StaticObject>();
 		listItems = new LinkedList<Item>();
 		readMap(path);
 		setMapPath(path);

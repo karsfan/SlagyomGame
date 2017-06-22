@@ -127,10 +127,10 @@ public class InitializerScreen implements Screen {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		//game.batch.begin();
-		showLoadProgress();
-		//backgroundSprite.draw(game.batch);
-		//game.batch.end();
+		game.batch.begin();
+		//showLoadProgress();
+		backgroundSprite.draw(game.batch);
+		game.batch.end();
 
 		stage.act();
 		stage.draw();
@@ -145,9 +145,9 @@ public class InitializerScreen implements Screen {
 		// Width of progress bar on screen relevant to Screen width
 		float progressBarWidth = ((viewport.getWorldWidth()/2) / 100) * progress;
 
-		game.batch.begin();
+		//game.batch.begin();
 		bf_loadProgress.draw(game.batch, "Loading " + progress + " / " + 100, 10, 40);
-		game.batch.end();
+		//game.batch.end();
 
 		mShapeRenderer.setProjectionMatrix(camera.combined);
 		mShapeRenderer.begin(ShapeType.Filled);

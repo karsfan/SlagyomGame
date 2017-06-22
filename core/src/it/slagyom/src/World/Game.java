@@ -2,12 +2,15 @@ package it.slagyom.src.World;
 
 import java.util.Iterator;
 
+import org.jgrapht.ListenableGraph;
+import org.jgrapht.graph.DefaultEdge;
+
 import it.slagyom.src.Character.Player;
 import it.slagyom.src.Character.DynamicObjects;
 
 public class Game {
 	
-	//ListenableGraph<Object, DefaultEdge> graph;
+	ListenableGraph<Object, DefaultEdge> graph;
 	public static World world;
 	public static Player player;
 	
@@ -28,8 +31,7 @@ public class Game {
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
 			if (ob instanceof Enemy) {
-				//graph.addVertex(ob);
-				
+				graph.addVertex(ob);
 			}
 		}
 	}

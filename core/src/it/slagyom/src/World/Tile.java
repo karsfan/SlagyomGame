@@ -26,10 +26,6 @@ public class Tile extends StaticObject implements ICollidable {
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 64, 64);
 			info = "CASA";
 			break;
-		case "BUILDING":
-			this.element = Element.BUILDING;
-			shape = new Rectangle((int) point.getX(), (int) point.getY(), 96, 128);
-			break;
 		case "GROUND":
 			this.element = Element.GROUND;
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 32, 32);
@@ -74,7 +70,6 @@ public class Tile extends StaticObject implements ICollidable {
 			this.element = Element.STRAW;
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 64, 64);
 			break;
-
 		case "ROAD":
 			this.element = Element.ROAD;
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 32, 32);
@@ -128,26 +123,40 @@ public class Tile extends StaticObject implements ICollidable {
 	public void setPoint(Point point) {
 		shape.x = point.x * 32;
 		shape.y = point.y * 32;
-		// if(element == Element.FOREST2)
-		// System.out.println(shape.y);
+
 		if (element == Element.SHOP) {
-			door = new Rectangle((int) point.getX() * 32, (int) point.getY() * 32, 10, 5);
+			door = new Rectangle((int) (point.getX() * 32 + shape.getWidth() / 3 + 7), (int) point.getY() * 32, 15, 8);
 		}
+
+		if (element == Element.PREENEMYHOME) {
+			System.out.println("qui");
+			door = new Rectangle((int) (point.getX() * 32+shape.getWidth()/3), (int) point.getY() * 32, 15, 20);
+			System.out.println(point.getX() * 32 + shape.getWidth() / 3 + " " + point.getX() * 32);
+		}
+
 	}
 
 	public boolean collideDoor(Object e) {
 		if (this.getElement() == Element.SHOP && e instanceof Player) {
-			if (!((door.x + shape.getWidth() / 4  > ((Player) e).getX() + ((Player) e).getWidth() / 2 - 5
-					|| ((Player) e).getX() > door.x + door.width + shape.getWidth() / 4)
+			if (!((door.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
+					|| ((Player) e).getX() > door.x + door.width)
 					|| (door.y > ((Player) e).getY() + ((Player) e).getHeight() / 2
 							|| ((Player) e).getY() > door.y + door.height))) {
 				return true;
 			}
-		
-			
+		}
+		if (this.getElement() == Element.PREENEMYHOME && e instanceof Player) {
+			if (!((door.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
+					|| ((Player) e).getX() > door.x + door.width)
+					|| (door.y > ((Player) e).getY() + ((Player) e).getHeight() 
+							|| ((Player) e).getY() > door.y + door.height))) {
+				return true;
+			}
 		}
 		return false;
 	}
+
+	
 
 	@Override
 	public boolean collide(Object e) {
@@ -183,5 +192,6 @@ public class Tile extends StaticObject implements ICollidable {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 
 }

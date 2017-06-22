@@ -27,7 +27,6 @@ import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
-import it.slagyom.src.World.Tile;
 
 public class PlayScreen implements Screen, ControllerListener {
 
@@ -179,10 +178,10 @@ public class PlayScreen implements Screen, ControllerListener {
 						Game.player.movesRight(dt);
 					else if (directionGamepad == PovDirection.north) {
 						Game.player.movesUp(dt);
-						if (Game.player.collideDoor) {
+						if (Game.player.collideShop) {
 							game.swapScreen(State.SHOP);
 							Game.world.semaphore.acquire();
-							Game.player.collideDoor = false;
+							Game.player.collideShop = false;
 						}
 					} else if (directionGamepad == PovDirection.west)
 						Game.player.movesLeft(dt);
@@ -212,10 +211,15 @@ public class PlayScreen implements Screen, ControllerListener {
 					Game.player.movesRight(dt);
 				else if (Gdx.input.isKeyPressed(Keys.UP)) {
 					Game.player.movesUp(dt);
-					if (Game.player.collideDoor) {
+					if (Game.player.collideShop) {
 						game.swapScreen(State.SHOP);
 						Game.world.semaphore.acquire();
-						Game.player.collideDoor = false;
+						Game.player.collideShop = false;
+					}
+					if (Game.player.collideGym) {
+						game.swapScreen(State.BATTLE);
+						Game.world.semaphore.acquire();
+						Game.player.collideGym = false;
 					}
 
 				} else if (Gdx.input.isKeyPressed(Keys.DOWN))
@@ -238,7 +242,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 				else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
 
-					Game.world.createBattle();
+					//Game.world.createBattle();
 					Game.world.semaphore.acquire();
 					game.swapScreen(it.slagyom.GameSlagyom.State.BATTLE);
 				} else if (Gdx.input.isKeyJustPressed(Keys.B)) {
@@ -260,7 +264,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	}
 
 	public synchronized void draw() {
-		ListIterator<Tile> it = (ListIterator<Tile>) Game.world.getListTile().listIterator();
+		ListIterator<StaticObject> it = (ListIterator<StaticObject>) Game.world.getListTile().listIterator();
 
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();

@@ -33,7 +33,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		this.name = name;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
-		health = 100;
+		health = 300;
 		power = 100;
 		coins = 0;
 		while (!positionCharacter())

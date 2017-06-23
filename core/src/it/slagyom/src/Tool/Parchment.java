@@ -10,8 +10,6 @@ public class Parchment extends Tool {
 			super.setInfo("Pergamena di livello 1");
 		if (level == 2)
 			super.setInfo("Pergamena di livello 2");
-		if (level == 3)
-			super.setInfo("Pergamena di livello 3");
 		raccolta = false;
 	}
 

@@ -7,6 +7,7 @@ import java.util.concurrent.Semaphore;
 
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Man;
+import it.slagyom.src.Character.Woman;
 import it.slagyom.src.Map.PreEnemyHouse;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.Map;
@@ -14,7 +15,6 @@ import it.slagyom.src.Map.StaticObject;
 
 public class World {
 
-	
 	private ArrayList<DynamicObjects> people;
 	public Map[] maps;
 	public Battle battle;
@@ -62,6 +62,10 @@ public class World {
 			Man man = new Man();
 			people.add(man);
 		}
+		for (int i = 0; i < GameConfig.numWoman; i++) {
+			Woman woman = new Woman();
+			people.add(woman);
+		}
 		return true;
 	}
 
@@ -82,17 +86,18 @@ public class World {
 		try {
 			semaphore.acquire();
 		} catch (InterruptedException e) {
-			
+
 			e.printStackTrace();
 		}
 		Iterator<DynamicObjects> it1 = people.iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
-			if (ob instanceof Man) {
-				((Man) ob).update(dt);
+			if (ob instanceof Woman) {
+				((Woman) ob).update(dt);
 			}
+			if(ob instanceof Man)
+				((Man) ob).update(dt);
 		}
-	
 
 		semaphore.release();
 		if (timerItem >= 60) {
@@ -108,7 +113,7 @@ public class World {
 	}
 
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
-		
+
 		battle = new Battle(Game.player, preEnemyHouse.enemy);
 	}
 

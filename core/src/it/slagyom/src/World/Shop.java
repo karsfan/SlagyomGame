@@ -8,19 +8,47 @@ import it.slagyom.src.Character.Player;
 
 import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.Tool.Tool;
+import it.slagyom.src.World.Weapon.Level;
+import it.slagyom.src.World.Weapon.Type;
 
 public class Shop extends StaticObject {
 
-	ArrayList<Tool> tools;
 	ArrayList<Weapon> weapons;
 	ArrayList<Pack> packs;
 	private Rectangle door;
 
 	public Shop(Point point) {
+		weapons = new ArrayList<Weapon>();
+
+		Weapon weapon = new Weapon(Level.lev1, Type.Spear);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev2, Type.Spear);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev3, Type.Spear);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev1, Type.Sword);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev2, Type.Sword);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev3, Type.Sword);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev1, Type.Bomba);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev2, Type.Bomba);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev3, Type.Bomba);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev1, Type.Bow);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev2, Type.Bow);
+		weapons.add(weapon);
+		weapon = new Weapon(Level.lev3, Type.Bow);
+		weapons.add(weapon);
+
 		this.element = Element.SHOP;
 		shape = new Rectangle((int) point.getX(), (int) point.getY(), 64, 64);
 	}
-
+	
 	public boolean collideDoor(Object e) {
 		if (this.getElement() == Element.SHOP && e instanceof Player) {
 			if (!((door.x > ((Player) e).getX() + ((Player) e).getWidth() / 2

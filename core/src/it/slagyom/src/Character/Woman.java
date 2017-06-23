@@ -7,24 +7,20 @@ import it.slagyom.src.Map.StaticObject.Element;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.ICollidable;
-import it.slagyom.src.World.Tile;
 
 public class Woman extends DynamicObjects implements ICollidable {
-	public static enum ManType {
+	public static enum WomanType {
 		WOMAN1, WOMAN2, WOMAN3
 	};
 
-	private String name;
-	public int x;
-	public int y;
+	public String name;
 	public int mainX;
 	public int mainY;
-	public int velocity;
 	private String info;
-
 	public boolean collision;
 	public boolean collisionWithCharacter;
 	int passi;
+	public WomanType type;
 
 	public Woman() {
 		super();
@@ -33,6 +29,11 @@ public class Woman extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		width = 30;
 		height = 30;
+		int rand = (int) (Math.random() * 2);
+		if (rand == 1)
+			type = WomanType.WOMAN1;
+		else
+			type = WomanType.WOMAN2;
 		positionMan();
 
 		mainX = 100;
@@ -70,20 +71,22 @@ public class Woman extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesRight(float dt) {
-		if (dt > 0.017)
-			dt = (float) 0.0165;
+
 		if (x < GameConfig.WIDTH - width / 2) {
 			x += velocity * dt;
 			if (collide(this)) {
 				// collision = true;
 				x -= velocity * dt;
 			}
+		} else {
+
+			changeDirection(getCurrentState());
 		}
 		if (passi < 50000) {
 			passi++;
 			setState(StateDynamicObject.RUNNINGRIGHT, dt);
 		} else {
-			int rand = (int) (Math.random() * 10);
+			int rand = (int) (Math.random() * 7);
 
 			if (rand == 1) {
 				passi = 0;
@@ -106,20 +109,20 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 	public void movesLeft(float dt) {
 
-		if (dt > 0.017)
-			dt = (float) 0.0165;
 		if (x > 5) {
 			x -= velocity * dt;
 			if (collide(this)) {
-				// collision = true;
 				x += velocity * dt;
 			}
+		} else {
+
+			changeDirection(getCurrentState());
 		}
 		if (passi < 50000) {
 			passi++;
 			setState(StateDynamicObject.RUNNINGLEFT, dt);
 		} else {
-			int rand = (int) (Math.random() * 10);
+			int rand = (int) (Math.random() * 7);
 
 			if (rand == 1) {
 				passi = 0;
@@ -141,21 +144,22 @@ public class Woman extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesUp(float dt) {
-		if (dt > 0.017)
-			dt = (float) 0.0165;
+
 		if (y < GameConfig.HEIGHT - height - 5) {
 			y += velocity * dt;
 			if (collide(this)) {
 				y -= velocity * dt;
-				// collision = true;
 			}
+		} else {
+
+			changeDirection(getCurrentState());
 		}
 
 		if (passi < 50000) {
 			passi++;
 			setState(StateDynamicObject.RUNNINGUP, dt);
 		} else {
-			int rand = (int) (Math.random() * 10);
+			int rand = (int) (Math.random() * 7);
 
 			if (rand == 1) {
 				passi = 0;
@@ -177,20 +181,22 @@ public class Woman extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesDown(float dt) {
-		if (dt > 0.017)
-			dt = (float) 0.0165;
+
 		if (y > 0) {
 			y -= velocity * dt;
 			if (collide(this)) {
 				y += velocity * dt;
 				// collision = true;
 			}
+		} else {
+
+			changeDirection(getCurrentState());
 		}
 		if (passi < 50000) {
 			passi++;
 			setState(StateDynamicObject.RUNNINGDOWN, dt);
 		} else {
-			int rand = (int) (Math.random() * 10);
+			int rand = (int) (Math.random() * 7);
 
 			if (rand == 1) {
 				passi = 0;
@@ -248,13 +254,25 @@ public class Woman extends DynamicObjects implements ICollidable {
 		Iterator<StaticObject> it = Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
-
-			if (((Tile) ob).getElement() != Element.GROUND && ((Tile) ob).getElement() != Element.ROAD)
-				if (((Tile) ob).collide(this)) {
+			if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)// &&
+																														// ((Tile)
+																														// ob).getElement()
+																														// !=
+																														// Element.FLOOR
+																														// &&
+																														// ((Tile)
+																														// ob).getElement()
+																														// !=
+																														// Element.FLOOR2
+																														// &&
+																														// ((Tile)
+																														// ob).getElement()
+																														// !=
+																														// Element.FLOOR3)
+				if (((StaticObject) ob).collide(this)) {
 					collision = true;
 					return true;
 				}
-
 		}
 
 		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();

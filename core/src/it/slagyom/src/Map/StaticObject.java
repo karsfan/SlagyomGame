@@ -3,8 +3,7 @@ package it.slagyom.src.Map;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import it.slagyom.src.Character.Man;
-import it.slagyom.src.Character.Player;
+import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.World.ICollidable;
 
 public class StaticObject implements ICollidable {
@@ -132,7 +131,16 @@ public class StaticObject implements ICollidable {
 
 	@Override
 	public boolean collide(Object e) {
-		if (e instanceof Player) {
+		if(e instanceof DynamicObjects)
+		{
+			if (!((shape.x > ((DynamicObjects) e).getX() + ((DynamicObjects) e).getWidth() / 2
+					|| ((DynamicObjects) e).getX() > shape.x + shape.width)
+					|| (shape.y > ((DynamicObjects) e).getY() + ((DynamicObjects) e).getHeight() / 2
+							|| ((DynamicObjects) e).getY() > shape.y + shape.height))) {
+				return true;
+			}
+		}
+		/*if (e instanceof Player) {
 			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
 					|| ((Player) e).getX() > shape.x + shape.width)
 					|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight() / 2
@@ -145,7 +153,7 @@ public class StaticObject implements ICollidable {
 					|| (shape.y > ((Man) e).getY() + ((Man) e).getHeight() / 2
 							|| ((Man) e).getY() > shape.y + shape.height)))
 				return true;
-		}
+		}*/
 
 		return false;
 

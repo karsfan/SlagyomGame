@@ -13,7 +13,7 @@ public class Weapon {
 
 	float damage;
 	public Level level;
-
+	public int price;
 	Type type;
 	float height;
 	private float width;
@@ -35,10 +35,10 @@ public class Weapon {
 		case Freccia:
 			damage = 8;
 			setWidth(0);
+			break;
 		case Bomba:
 			setWeapon(type, level);
-			setWidth(10);
-			setHeight(10);
+			break;
 		default:
 			break;
 		}
@@ -85,14 +85,17 @@ public class Weapon {
 			case lev1:
 				damage = 10;
 				width = 10;
+				price = 10;
 				break;
 			case lev2:
 				damage = 17;
 				width = 14;
+				price = 40;
 				break;
 			case lev3:
 				damage = 30;
 				width = 18;
+				price = 80;
 				break;
 			default:
 				break;
@@ -103,14 +106,17 @@ public class Weapon {
 			case lev1:
 				damage = 8;
 				width = 35;
+				price = 10;
 				break;
 			case lev2:
 				damage = 14;
 				width = 39;
+				price = 35;
 				break;
 			case lev3:
 				damage = 22;
 				width = 45;
+				price = 70;
 				break;
 			default:
 				break;
@@ -121,14 +127,17 @@ public class Weapon {
 			case lev1:
 				damage = 8;
 				width = 15;
+				price = 10;
 				break;
 			case lev2:
 				damage = 14;
 				width = 15;
+				price = 40;
 				break;
 			case lev3:
 				damage = 21;
 				width = 15;
+				price = 70;
 				break;
 			default:
 				break;
@@ -139,16 +148,19 @@ public class Weapon {
 				damage = 8;
 				width = 10;
 				height = 10;
+				price = 2;
 				break;
 			case lev2:
 				damage = 20;
 				width = 13;
 				height = 13;
+				price = 5;
 				break;
 			case lev3:
 				damage = 35;
 				width = 15;
 				height = 15;
+				price = 15;
 				break;
 			default:
 				break;

@@ -47,7 +47,7 @@ public class ShopScreen implements Screen {
 	private Table optionsTable;
 	private TextButton buy;
 	
-	private TextButton exit;
+	private TextButton returnButton;
 	private Label coins;
 
 	public Item itemSelected;
@@ -77,10 +77,16 @@ public class ShopScreen implements Screen {
 		optionsTable.setFillParent(true);
 		optionsTable.top();
 		buy = new TextButton("Buy", MenuScreen.skin);
-		
-		exit = new TextButton("Return", MenuScreen.skin);
+		buy.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				
+				hideInfo();
+			}
+		});
+		returnButton = new TextButton("Return", MenuScreen.skin);
 
-		exit.addListener(new ClickListener() {
+		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.emptyShopIcon);
@@ -97,8 +103,8 @@ public class ShopScreen implements Screen {
 
 		buy.setPosition(573, 90);
 		buy.setVisible(false);
-		exit.setPosition(573, 50);
-		exit.setVisible(false);
+		returnButton.setPosition(573, 50);
+		returnButton.setVisible(false);
 
 		optionsTable.add(LoadingImage.emptyShopIcon);
 		optionsTable.add(LoadingImage.rightArrow);
@@ -108,7 +114,7 @@ public class ShopScreen implements Screen {
 		optionsTable.add(buy);
 		
 		optionsTable.add(coins);
-		optionsTable.add(exit);
+		optionsTable.add(returnButton);
 
 		LoadingImage.rightArrow.addListener(new ClickListener() {
 			@Override
@@ -312,7 +318,7 @@ public class ShopScreen implements Screen {
 
 		selection = true;
 		buy.setVisible(true);
-		exit.setVisible(true);
+		returnButton.setVisible(true);
 	}
 
 	private void hideInfo() {
@@ -321,7 +327,7 @@ public class ShopScreen implements Screen {
 		selection = false;
 		buy.setVisible(false);
 		
-		exit.setVisible(false);
+		returnButton.setVisible(false);
 	}
 
 	@Override

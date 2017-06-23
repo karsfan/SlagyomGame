@@ -1,12 +1,6 @@
 package it.slagyom.src.World;
 
-import java.util.Iterator;
-
-import org.jgrapht.ListenableGraph;
-import org.jgrapht.graph.DefaultEdge;
-
 import it.slagyom.src.Character.Player;
-import it.slagyom.src.Character.DynamicObjects;
 
 public class Game {
 	
@@ -17,16 +11,16 @@ public class Game {
 	public Game(String name) {
 
 		world = new World();
-		player = new Player(name);
 		
-		world.getListDynamicObjects().add(player);
 		while(!world.addDynamicObject());
 		while(!world.addItems());
+		player = new Player(name);
+		world.getListDynamicObjects().add(player);
 		world.getThread().start();
 		//graph = new ListenableDirectedGraph<>(DefaultEdge.class);
-		createStory();
+		//createStory();
 	}
-	public void createStory(){
+	/*public void createStory(){
 		Iterator<DynamicObjects> it1 = world.getListDynamicObjects().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -34,7 +28,7 @@ public class Game {
 		//		graph.addVertex(ob);
 		//	}
 		}
-	}
+	}*/
 
 	public Game(String path, String name) {
 

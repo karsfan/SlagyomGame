@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import it.slagyom.src.Character.CharacterBattle;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
+import it.slagyom.src.Character.Woman;
+import it.slagyom.src.Character.Woman.WomanType;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.Item.Level;
 import it.slagyom.src.Map.StaticObject;
@@ -62,8 +64,8 @@ public class LoadingImage {
 	public static TextureRegion woman1Stand;
 	public static Animation<TextureRegion>[] woman1Animation;
 
-	// private static TextureRegion woman2Stand;
-	public Animation<TextureRegion>[] woman2Animation;
+	private static TextureRegion woman2Stand;
+	public static Animation<TextureRegion>[] woman2Animation;
 
 	// private static TextureRegion woman3Stand;
 	public Animation<TextureRegion>[] woman3Animation;
@@ -80,7 +82,6 @@ public class LoadingImage {
 	public static ImageButton rightArrow;
 
 	// AUDIO & MUSIC
-	
 
 	@SuppressWarnings("unchecked")
 	public LoadingImage() {
@@ -139,16 +140,24 @@ public class LoadingImage {
 		woman3Animation = new Animation[4];
 
 		playerStand = new TextureRegion();
-		man1Stand = new TextureRegion();
 		battleCharacterStand = new TextureRegion();
-		enemyStand = new TextureRegion();
 		battleCharacterAnimation = new Animation[4];
+		enemyStand = new TextureRegion();
+		man1Stand = new TextureRegion();
+		woman1Stand = new TextureRegion();
+		woman2Stand = new TextureRegion();
 
 		texture = new Texture("assets/bpj.png");
 		createFrame(texture, playerAnimation, playerStand);
 
 		texture = new Texture("assets/notPlaying.png");
 		createFrame(texture, man1Animation, man1Stand);
+
+		texture = new Texture("assets/NotPlaying/woman1.png");
+		createFrame(texture, woman1Animation, woman1Stand);
+
+		texture = new Texture("assets/NotPlaying/woman2.png");
+		createFrame(texture, woman2Animation, woman2Stand);
 
 		texture = new Texture("assets/lancia.png");
 		createBattleFrame(texture, battleCharacterAnimation, battleCharacterStand);
@@ -327,7 +336,10 @@ public class LoadingImage {
 			animation = man1Animation;
 			break;
 		case "Woman":
-			animation = woman1Animation;
+			if (((Woman) ob).type == WomanType.WOMAN1)
+				animation = woman1Animation;
+			if (((Woman) ob).type == WomanType.WOMAN2)
+				animation = woman2Animation;
 			break;
 		case "CharacterBattle":
 			animation = battleCharacterAnimation;
@@ -353,7 +365,11 @@ public class LoadingImage {
 			textureRegion = man1Stand;
 			break;
 		case "Woman":
-			textureRegion = woman1Stand;
+			if (((Woman) ob).type == WomanType.WOMAN1)
+				textureRegion = woman1Stand;
+			if (((Woman) ob).type == WomanType.WOMAN2)
+				textureRegion = woman2Stand;
+
 			break;
 		case "CharacterBattle":
 			textureRegion = battleCharacterStand;

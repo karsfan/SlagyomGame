@@ -36,10 +36,9 @@ public class Player extends DynamicObjects implements ICollidable {
 		health = 100;
 		power = 100;
 		coins = 0;
-		// while (!positionCharacter())
-		// ;
-		x = 720;
-		y = 480;
+		while (!positionCharacter())
+		;
+		
 		velocity = 100;
 
 		currentState = StateDynamicObject.STANDING;

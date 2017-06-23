@@ -46,7 +46,7 @@ public class ShopScreen implements Screen {
 
 	private Table optionsTable;
 	private TextButton buy;
-	private TextButton delete;
+	
 	private TextButton exit;
 	private Label coins;
 
@@ -59,9 +59,6 @@ public class ShopScreen implements Screen {
 		camera = new OrthographicCamera();
 		
 		viewport = new ExtendViewport(854, 480, camera);
-		//viewport = new ScreenViewport(camera);
-		//viewport = new StretchViewport(854, 480, camera);
-		// viewport = new FitViewport(640, 480, camera);
 		selection = false;
 		viewport.apply();
 		background = new Texture("res/shop/shopBackground.png");
@@ -80,18 +77,8 @@ public class ShopScreen implements Screen {
 		optionsTable.setFillParent(true);
 		optionsTable.top();
 		buy = new TextButton("Buy", MenuScreen.skin);
-		delete = new TextButton("Delete", MenuScreen.skin);
+		
 		exit = new TextButton("Return", MenuScreen.skin);
-
-		delete.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
-				potions[0].setText("Blue potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST));
-				potions[1].setText("Red potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND));
-				potions[2].setText("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD));
-			}
-		});
 
 		exit.addListener(new ClickListener() {
 			@Override
@@ -108,11 +95,9 @@ public class ShopScreen implements Screen {
 		coins.setPosition(199, 274);
 		LoadingImage.emptyShopIcon.setVisible(true);
 
-		buy.setPosition(573, 110);
+		buy.setPosition(573, 90);
 		buy.setVisible(false);
-		delete.setPosition(573, 70);
-		delete.setVisible(false);
-		exit.setPosition(573, 30);
+		exit.setPosition(573, 50);
 		exit.setVisible(false);
 
 		optionsTable.add(LoadingImage.emptyShopIcon);
@@ -121,15 +106,18 @@ public class ShopScreen implements Screen {
 		optionsTable.add(LoadingImage.emptyShopIcon);
 
 		optionsTable.add(buy);
-		optionsTable.add(delete);
+		
 		optionsTable.add(coins);
 		optionsTable.add(exit);
 
 		LoadingImage.rightArrow.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (currentCategory == Category.POTIONS)
+				
+				if (currentCategory == Category.POTIONS){
 					currentCategory = Category.WEAPONS;
+					
+				}
 				else if (currentCategory == Category.WEAPONS)
 					currentCategory = Category.PARCHMENTS;
 				else if (currentCategory == Category.PARCHMENTS)
@@ -324,7 +312,6 @@ public class ShopScreen implements Screen {
 
 		selection = true;
 		buy.setVisible(true);
-		delete.setVisible(true);
 		exit.setVisible(true);
 	}
 
@@ -333,7 +320,7 @@ public class ShopScreen implements Screen {
 
 		selection = false;
 		buy.setVisible(false);
-		delete.setVisible(false);
+		
 		exit.setVisible(false);
 	}
 

@@ -19,7 +19,9 @@ public class Battle implements Runnable {
 		// this.enemy = enemy;
 		this.enemy = new Enemy(null, 100, 100, null, null, enemy.level);
 		WIDTH = 720;
+		System.out.println("qui");
 		HEIGHT = 480;
+	//	run();
 
 	}
 
@@ -59,8 +61,14 @@ public class Battle implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-
+		System.out.println("ciao");
+		long start = System.currentTimeMillis();
+		while (true) {
+			long attuale = System.currentTimeMillis();
+			float dt = (float) (attuale - start);
+			update((float) dt / 1000);
+			start = attuale;
+		}
 	}
 
 }

@@ -87,7 +87,7 @@ public class BattleScreen implements Screen {
 	}
 
 	private void handleInput(float dt) {
-
+		
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			// va messo in pausa e poi in caso bisogna ritornare nel playscreen
 			gameslagyom.swapScreen(State.PLAYING);
@@ -95,7 +95,7 @@ public class BattleScreen implements Screen {
 		}
 		moveCharacter(dt);
 	}
-
+	
 	private void moveCharacter(float dt) {
 		
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE))

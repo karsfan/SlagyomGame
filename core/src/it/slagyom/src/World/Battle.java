@@ -1,6 +1,7 @@
 package it.slagyom.src.World;
 
 import it.slagyom.src.Character.Player;
+import it.slagyom.src.World.Enemy.Level;
 import it.slagyom.src.Character.CharacterBattle;
 
 public class Battle implements Runnable {
@@ -18,7 +19,7 @@ public class Battle implements Runnable {
 	public Battle(Player player, Enemy enemy) {
 		this.character = new CharacterBattle(player);
 		// this.enemy = enemy;
-		this.enemy = new Enemy(null, 100, 100, null, null, null);
+		this.enemy = new Enemy(null, 100, 100, null, null, enemy.level);
 		WIDTH = 720;
 		HEIGHT = 480;
 

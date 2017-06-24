@@ -113,7 +113,6 @@ public class World {
 	}
 
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
-
 		battle = new Battle(Game.player, preEnemyHouse.enemy);
 	}
 

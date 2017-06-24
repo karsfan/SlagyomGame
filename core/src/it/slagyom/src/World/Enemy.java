@@ -74,9 +74,27 @@ public class Enemy extends DynamicObjects {
 	
 	public void update(float dt) {
 		if (!fighting && !jumping && !doubleJumping) {
-			int rand = (int) (Math.random() * 10);
-			if (rand == 1)
-				;//jump(dt);
+			int rand = (int) (Math.random() * 100);
+			if (Game.world.battle.character.fighting)
+			{
+				//System.out.println(level);
+				switch (level) {
+				case EASY:
+					if(rand < 5)
+						jump(dt);
+					break;
+				case MEDIUM:
+					if(rand < 15)
+						jump(dt);
+					break;
+				case HARD:
+					if(rand < 40)
+						jump(dt);
+					break;
+				default:
+					break;
+				}
+			}
 			else if (x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0)
 				fightLeft();
 			else if (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0)

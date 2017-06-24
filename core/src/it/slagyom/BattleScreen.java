@@ -9,12 +9,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import battle.Battle;
+import battle.CharacterBattle;
+import battle.Enemy;
 import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.Character.Bomb;
-import it.slagyom.src.Character.CharacterBattle;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
-import it.slagyom.src.World.Battle;
-import it.slagyom.src.World.Enemy;
 import it.slagyom.src.World.Game;
 
 public class BattleScreen implements Screen {
@@ -29,11 +30,11 @@ public class BattleScreen implements Screen {
 		this.gameslagyom = gameslagyom;
 		this.battle = battle;
 		gamecam = new OrthographicCamera();
-		gamePort = new ExtendViewport(500, 500, gamecam);
+		gamePort = new ExtendViewport(854, 480, gamecam);
 		gamePort.apply();
 		gamecam.position.x = battle.character.getX();
 		gamecam.position.y = battle.character.getY();
-		hud = new BattleHud(gameslagyom.batch);
+		hud = new BattleHud(gameslagyom.batch, gamePort);
 	}
 
 	@Override
@@ -96,7 +97,11 @@ public class BattleScreen implements Screen {
 	}
 
 	private void moveCharacter(float dt) {
-
+		
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE))
+		{
+			gameslagyom.swapScreen(GameSlagyom.State.PAUSE);
+		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			battle.character.caricaBomba(dt);
 			battle.character.bomba = true;
@@ -129,7 +134,7 @@ public class BattleScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
-		gamecam.position.set((float) gamecam.viewportWidth / 2, (float) gamecam.viewportHeight / 2, 0);
+		//gamecam.position.set((float) gamecam.viewportWidth / 2, (float) gamecam.viewportHeight / 2, 0);
 		gamecam.update();
 	}
 

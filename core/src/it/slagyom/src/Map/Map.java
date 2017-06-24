@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import it.slagyom.src.World.Enemy.Level;
+import battle.Enemy.Level;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.Shop;
 

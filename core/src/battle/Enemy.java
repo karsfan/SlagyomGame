@@ -1,7 +1,12 @@
-package it.slagyom.src.World;
+package battle;
 
 import com.badlogic.gdx.Gdx;
 import it.slagyom.src.Character.DynamicObjects;
+import it.slagyom.src.World.Game;
+import it.slagyom.src.World.GameConfig;
+import it.slagyom.src.World.Pack;
+import it.slagyom.src.World.Weapon;
+import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
 
 public class Enemy extends DynamicObjects {
@@ -11,7 +16,7 @@ public class Enemy extends DynamicObjects {
 	};
 
 	private String name;
-	float health;
+	public float health;
 	float power;
 	Weapon weapon;
 	Pack win_bonus;
@@ -30,7 +35,7 @@ public class Enemy extends DynamicObjects {
 
 		velocity = 60;
 		this.setName(name);
-		this.health = life;
+		this.health = 300;
 		this.power = power;
 		// this.weapon = weapon;
 		this.weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev1, Type.Spear);
@@ -40,7 +45,7 @@ public class Enemy extends DynamicObjects {
 		stateTimer = 0;
 		x = 700;
 		y = 250;
-		height = 120;
+		height = 150;
 		width = 120;
 		currentState = StateDynamicObject.STANDING;
 		previousState = null;
@@ -75,35 +80,54 @@ public class Enemy extends DynamicObjects {
 	public void update(float dt) {
 		if (!fighting && !jumping && !doubleJumping) {
 			int rand = (int) (Math.random() * 100);
-			if (Game.world.battle.character.fighting)
-			{
-				//System.out.println(level);
+			
+	
 				switch (level) {
 				case EASY:
-					if(rand < 5)
+					if(rand < 5 && Game.world.battle.character.fighting)
 						jump(dt);
+					else if(rand > 5 && rand < 20 && Game.world.battle.character.fighting)
+						setState(StateDynamicObject.DEFENDING);
+					else if(x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0 && rand < 40)
+						fightLeft();
+					else if (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0 && rand < 40)
+						fightRight();
 					break;
 				case MEDIUM:
-					if(rand < 15)
+					if(rand < 10 && Game.world.battle.character.fighting)
 						jump(dt);
+					else if(rand > 10 && rand < 25 && Game.world.battle.character.fighting)
+						setState(StateDynamicObject.DEFENDING);
+					else if(x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0 && rand < 55)
+						fightLeft();
+					else if (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0 && rand < 55)
+						fightRight();
 					break;
 				case HARD:
-					if(rand < 40)
+					if(rand < 15 && Game.world.battle.character.fighting)
 						jump(dt);
+					else if(rand > 15 && rand < 30 && Game.world.battle.character.fighting){
+						setState(StateDynamicObject.DEFENDING);
+						System.out.println("set");
+					}
+					else if(x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0 && rand < 90)
+						fightLeft();
+					else if (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0 && rand < 90)
+						fightRight();
 					break;
 				default:
 					break;
 				}
 			}
-			else if (x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0)
-				fightLeft();
+			/*if (x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0)
+			;//	fightLeft();
 			else if (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0)
-				fightRight();
-			else if (Game.world.battle.character.getX() > x)
+				fightRight();*/
+			if (Game.world.battle.character.getX() > x)
 				movesRight(dt);
 			else if (x > Game.world.battle.character.getX())
 				movesLeft(dt);
-		}
+		
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += 0.02;
 			setState(getCurrentState());
@@ -209,7 +233,14 @@ public class Enemy extends DynamicObjects {
 	}
 
 	public void decreaseHealth(Weapon weaponCharacter) {
-		health -= weaponCharacter.getDamage();
+		if(currentState == StateDynamicObject.DEFENDING)
+		{
+			System.out.println(health);
+			health -= weaponCharacter.getDamage()/2;
+			System.out.println(health);
+		}
+		else
+			health -= weaponCharacter.getDamage();
 	}
 
 	public String getName() {

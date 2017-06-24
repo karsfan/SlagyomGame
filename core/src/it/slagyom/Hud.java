@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -23,7 +22,7 @@ public class Hud {
 	public Stage stage;
 	private Viewport viewport;
 
-	private Label healthLabel;
+	private Label coinsLabel;
 	private Label nameLabel;
 	private Label villageLabel;
 
@@ -33,7 +32,6 @@ public class Hud {
 	static TextureAtlas atlasBar;
 	public static Skin skinBar;
 	ProgressBar barPlayer;
-	ProgressBar barEnemy;
 	Integer health;
 
 	public Hud(SpriteBatch sb) {
@@ -44,9 +42,7 @@ public class Hud {
 		stage = new Stage(viewport, sb);
 		
 		barPlayer = new ProgressBar(0.1f, 1f, 0.1f, false, skinBar);
-		barEnemy = new ProgressBar(0.1f,1,0.1f,false,skinBar);
 		barPlayer.setBounds(100, 500, 40, 15);
-		barEnemy.setBounds(300, 500, 40, 15);
 		//barPlayer.setPosition(100, 500);
 		//barEnemy.setPosition(300, 500);
 		Table table = new Table();
@@ -54,12 +50,12 @@ public class Hud {
 		table.setFillParent(true);
 
 		nameLabel = new Label(Game.player.name, MenuScreen.skin);
-		healthLabel = new Label(String.format("%3d", Game.player.coins), MenuScreen.skin);
+		coinsLabel = new Label(String.format("%3d", Game.player.coins), MenuScreen.skin);
 		villageLabel = new Label(String.format(Game.world.getMap().getNameVillage()), MenuScreen.skin);
 
 		table.add(nameLabel).expandX().pad(20);
 		table.add(villageLabel).expandX().pad(20);
-		table.add(healthLabel).expandX().pad(20);
+		table.add(coinsLabel).expandX().pad(20);
 		table.row(); // nuova colonna
 
 		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/hudBg.png")));
@@ -73,8 +69,8 @@ public class Hud {
 	}
 
 	public void update() {
-		villageLabel.setText(String.format(Game.world.getMap().getNameVillage()));
-		//healthLabel.setText(String.format("%03d", Game.player.coins));
+		villageLabel.setText(String.format(Game.world.getMap().getNameVillage()));	
+		coinsLabel.setText(String.format("%03d", Game.player.coins));
 	}
 
 	public void setDialogText(String text) {

@@ -2,8 +2,8 @@ package it.slagyom.src.World;
 
 import java.util.ArrayList;
 
+import battle.Enemy.Level;
 import it.slagyom.src.Map.Item;
-import it.slagyom.src.World.Enemy.Level;
 
 public class Pack {
 	Weapon weapon;

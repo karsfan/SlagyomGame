@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 
+import battle.Battle;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Man;
 import it.slagyom.src.Character.Woman;

@@ -12,6 +12,15 @@ public class GameSlagyom extends Game {
 	};
 
 	private static State currentState;
+	public static State getPrevoiusState() {
+		return prevoiusState;
+	}
+
+	public static void setPrevoiusState(State prevoiusState) {
+		GameSlagyom.prevoiusState = prevoiusState;
+	}
+
+	private static State prevoiusState;
 
 	static MenuScreen menuScreen;
 	static NewCharacterScreen newCharacterScreen;
@@ -87,6 +96,7 @@ public class GameSlagyom extends Game {
 	}
 
 	public void swapScreen(State newState) {
+		prevoiusState = currentState;
 		setState(newState);
 
 		if (currentState == State.MENU) {
@@ -118,6 +128,7 @@ public class GameSlagyom extends Game {
 			setScreen(battlescreen);
 		} else if (currentState == State.PAUSE) {
 			MusicManager.pause();
+			
 			MusicManager.play("MAINMUSIC");
 			setScreen(pauseScreen);
 			try {

@@ -1,8 +1,6 @@
-package it.slagyom.src.World;
+package battle;
 
 import it.slagyom.src.Character.Player;
-import it.slagyom.src.World.Enemy.Level;
-import it.slagyom.src.Character.CharacterBattle;
 
 public class Battle implements Runnable {
 
@@ -47,7 +45,7 @@ public class Battle implements Runnable {
 	public  boolean update(float dt) {
 		// moveEnemy(dt);
 		if (enemy.health <= 0){
-			System.out.println("Hai vinto");
+			System.out.println("Hai vinto"+ character.getHealth() );
 			return true;
 		}
 		if (character.getHealth() <= 0){

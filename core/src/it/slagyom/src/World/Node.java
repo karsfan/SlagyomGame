@@ -1,5 +1,7 @@
 package it.slagyom.src.World;
 
+import battle.Enemy;
+
 public class Node {
 	private String info;
 	private Enemy enemy;

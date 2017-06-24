@@ -178,9 +178,9 @@ public class Item extends StaticObject {
 		}
 
 		if (e instanceof Player) {
-			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
+			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() /2
 					|| ((Player) e).getX() > shape.x + shape.width)
-					|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight() / 2
+					|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight()
 							|| ((Player) e).getY() > shape.y + shape.height))) {
 				return true;
 			}

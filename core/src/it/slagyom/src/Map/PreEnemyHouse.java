@@ -3,9 +3,9 @@ package it.slagyom.src.Map;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import battle.Enemy;
+import battle.Enemy.Level;
 import it.slagyom.src.Character.Player;
-import it.slagyom.src.World.Enemy;
-import it.slagyom.src.World.Enemy.Level;
 
 public class PreEnemyHouse extends StaticObject {
 
@@ -14,7 +14,7 @@ public class PreEnemyHouse extends StaticObject {
 	
 	public PreEnemyHouse(Level levelEnemy) {
 		element = Element.PREENEMYHOME;
-		enemy = new Enemy(null, 100, 100, null, null, levelEnemy);
+		enemy = new Enemy(null, 100, 100, null, null, Level.HARD);
 	}
 
 	public boolean collideDoor(Object e) {

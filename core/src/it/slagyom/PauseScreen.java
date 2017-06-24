@@ -88,7 +88,7 @@ public class PauseScreen implements Screen {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.swapScreen(State.PLAYING);
+				game.swapScreen(game.getPrevoiusState());
 				Game.world.semaphore.release();
 			}
 		});

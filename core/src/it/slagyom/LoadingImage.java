@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import it.slagyom.src.Character.CharacterBattle;
+
+import battle.CharacterBattle;
+import battle.Enemy;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.Character.Woman;
@@ -15,7 +17,6 @@ import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.Item.Level;
 import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.Map.StaticObject.Element;
-import it.slagyom.src.World.Enemy;
 
 public class LoadingImage {
 

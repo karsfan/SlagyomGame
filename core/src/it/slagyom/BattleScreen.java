@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import battle.Battle;
 import battle.CharacterBattle;
 import battle.Enemy;
-import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Game;
@@ -80,7 +79,7 @@ public class BattleScreen implements Screen {
 		handleInput(dt);
 		hud.update(dt);
 		if (battle.update(dt)) {
-			gameslagyom.swapScreen(State.PLAYING);
+			gameslagyom.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 			Game.world.semaphore.release();
 		}
 
@@ -90,7 +89,7 @@ public class BattleScreen implements Screen {
 		
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			// va messo in pausa e poi in caso bisogna ritornare nel playscreen
-			gameslagyom.swapScreen(State.PLAYING);
+			gameslagyom.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 			Game.world.semaphore.release();
 		}
 		moveCharacter(dt);
@@ -100,7 +99,7 @@ public class BattleScreen implements Screen {
 		
 		if(Gdx.input.isKeyPressed(Keys.ESCAPE))
 		{
-			gameslagyom.swapScreen(GameSlagyom.State.PAUSE);
+			gameslagyom.screenManager.swapScreen(it.slagyom.ScreenManager.State.PAUSE);
 		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			battle.character.caricaBomba(dt);

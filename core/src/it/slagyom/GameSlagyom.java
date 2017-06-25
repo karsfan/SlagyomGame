@@ -21,6 +21,10 @@ public class GameSlagyom extends Game {
 	}
 
 	private static State prevoiusState;
+	ScreenManager screenManager;
+	public static MusicManager getMusicManager() {
+		return musicManager;
+	}
 
 	static MenuScreen menuScreen;
 	static NewCharacterScreen newCharacterScreen;
@@ -44,16 +48,16 @@ public class GameSlagyom extends Game {
 	@Override
 	public void create() {
 		new LoadingMusic();
-		new MusicManager();
+		musicManager = new MusicManager();
 		batch = new SpriteBatch();
 
-		menuScreen = new MenuScreen(this);
+		/*menuScreen = new MenuScreen(this);
 		optionScreen = new OptionScreen(this);
 		pauseScreen = new PauseScreen(this);
 		multiplayerScreen = new MultiplayerScreen(this);
 		currentState = State.MENU;
-		swapScreen(State.MENU);
-		musicManager = new MusicManager();
+		swapScreen(State.MENU);*/
+		screenManager = new ScreenManager(this);
 		prefs = Gdx.app.getPreferences("My saved game");
 	}
 
@@ -69,7 +73,7 @@ public class GameSlagyom extends Game {
 		prefs.flush();
 	}
 
-	@SuppressWarnings({ "deprecation" })
+	@SuppressWarnings({ "deprecation", "static-access" })
 	public void loadGame() {
 		prefs = Gdx.app.getPreferences("My saved game");
 
@@ -77,7 +81,7 @@ public class GameSlagyom extends Game {
 			it.slagyom.src.World.Game.world.getThread().stop();
 
 		playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
-
+		screenManager.setPlayScreen(new PlayScreen(this, prefs.getString("map"), prefs.getString("name")));
 		it.slagyom.src.World.Game.player.x = prefs.getFloat("xCharPosition");
 		it.slagyom.src.World.Game.player.y = prefs.getFloat("yCharPosition");
 		it.slagyom.src.World.Game.player.health = prefs.getFloat("health");
@@ -95,7 +99,7 @@ public class GameSlagyom extends Game {
 		currentState = newState;
 	}
 
-	public void swapScreen(State newState) {
+	/*public void swapScreen(State newState) {
 		prevoiusState = currentState;
 		setState(newState);
 
@@ -151,5 +155,5 @@ public class GameSlagyom extends Game {
 			setScreen(playScreen);
 			Gdx.input.setInputProcessor(null);
 		}
-	}
+	}*/
 }

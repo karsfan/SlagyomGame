@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 
@@ -92,10 +91,10 @@ public class OptionScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				if (fromPause) {
 					Game.world.semaphore.release();					
-					game.swapScreen(State.PLAYING);
+					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 				}
 				else
-					game.swapScreen(State.MENU);
+					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MENU);
 			}
 		});
 		// Add buttons to table

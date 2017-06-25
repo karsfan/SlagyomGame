@@ -1,6 +1,5 @@
 package it.slagyom.src.World;
 
-import java.util.Iterator;
 
 //import org.jgrapht.ListenableGraph;
 //import org.jgrapht.graph.DefaultEdge;

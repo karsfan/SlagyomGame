@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import it.slagyom.src.World.Game;
@@ -35,8 +34,8 @@ public class BattleHud {
 		spriteBatch = batch;
 		//viewport = new ExtendViewport(854, 480, new OrthographicCamera());
 		//this.viewport = viewport;
-		viewport = new FitViewport(1200,1200, new OrthographicCamera());
-		stage = new Stage(viewport, spriteBatch);
+		this.viewport = new FitViewport(1200,1200, new OrthographicCamera());
+		stage = new Stage(this.viewport, spriteBatch);
 
 		healthCharacter = (int) Game.world.battle.character.getHealth();
 		healthEnemy = (int) Game.world.battle.enemy.getHealth();
@@ -47,8 +46,8 @@ public class BattleHud {
 		barPlayer = new ProgressBar(0.1f, healthCharacter, 0.1f, false, skinBar);
 		barEnemy = new ProgressBar(0.1f,healthEnemy, 0.1f,false,skinBar);
 		
-		barPlayer.setBounds(viewport.getWorldWidth()/13, viewport.getWorldHeight()/1.1f, healthCharacter, 15);
-		barEnemy.setBounds(viewport.getWorldWidth()/1.2f, viewport.getWorldHeight()/1.1f, healthEnemy,15);
+		barPlayer.setBounds(this.viewport.getWorldWidth()/13, this.viewport.getWorldHeight()/1.1f, healthCharacter, 15);
+		barEnemy.setBounds(this.viewport.getWorldWidth()/1.2f, this.viewport.getWorldHeight()/1.1f, healthEnemy,15);
 		
 		stage.addActor(barEnemy);
 		stage.addActor(barPlayer);

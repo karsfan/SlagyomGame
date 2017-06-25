@@ -3,7 +3,6 @@ package battle;
 import java.util.Iterator;
 
 import it.slagyom.src.Character.Bomb;
-import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Player;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Game;

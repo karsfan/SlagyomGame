@@ -19,7 +19,7 @@ public class MusicManager {
 
 	}
 
-	public static void play(String sound) {
+	public void play(String sound) {
 		switch (sound) {
 		case "COIN":
 			coinSound.play(0.7f);
@@ -41,7 +41,7 @@ public class MusicManager {
 		}
 	}
 
-	public static void pause() {
+	public void pause() {
 		if (mainMusic.isPlaying())
 			mainMusic.pause();
 		backgroundSound.pause();

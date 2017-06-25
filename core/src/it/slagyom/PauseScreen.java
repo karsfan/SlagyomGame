@@ -21,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.World.Game;
 
 public class PauseScreen implements Screen {
@@ -70,7 +69,7 @@ public class PauseScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				// game.setScreen(game.playScreen);
 				game.saveGame();
-				game.swapScreen(State.PLAYING);
+				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 				Game.world.semaphore.release();
 				PlayScreen.hud.setDialogText("Game saved!");
 			}
@@ -80,7 +79,7 @@ public class PauseScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				OptionScreen.fromPause = true;
-				game.swapScreen(State.OPTIONMENU);
+				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.OPTIONMENU);
 
 			}
 		});
@@ -88,7 +87,7 @@ public class PauseScreen implements Screen {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.swapScreen(game.getPrevoiusState());
+				game.screenManager.swapScreen(game.screenManager.getPreviousState());
 				Game.world.semaphore.release();
 			}
 		});
@@ -98,14 +97,14 @@ public class PauseScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				Game.world.getThread().stop();
 				game.playScreen.dispose();
-				game.swapScreen(State.MENU);
+				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MENU);
 			}
 		});
 
 		bagButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.swapScreen(State.BAG);
+				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.BAG);
 				// game.swapScreen(State.SHOP);
 
 			}
@@ -176,7 +175,7 @@ public class PauseScreen implements Screen {
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			Game.world.semaphore.release();
-			game.swapScreen(State.PLAYING);
+			game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 		}
 
 	}

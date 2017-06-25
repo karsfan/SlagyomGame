@@ -6,7 +6,6 @@ import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.Pack;
 import it.slagyom.src.World.Weapon;
-import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
 
 public class Enemy extends DynamicObjects {

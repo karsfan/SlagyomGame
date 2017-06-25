@@ -21,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import it.slagyom.GameSlagyom.State;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.StaticObject;
@@ -87,7 +86,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	}
 
-	@SuppressWarnings({})
+	@SuppressWarnings({"static-access"})
 	@Override
 	public void render(float delta) {
 		update(delta);
@@ -112,7 +111,7 @@ public class PlayScreen implements Screen, ControllerListener {
 						hud.textTable.row();
 					if (i % 75 == 0) {
 						hud.textTable.clear();
-						MusicManager.play("TICK");
+						game.musicManager.play("TICK");
 					}
 					drawDialog(String.valueOf(hud.textDialog.charAt(i)));
 					i++;
@@ -170,6 +169,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	}
 
+	@SuppressWarnings("static-access")
 	private void moveCharacter(float dt) {
 		try {
 			if (!stop) {
@@ -179,7 +179,7 @@ public class PlayScreen implements Screen, ControllerListener {
 					else if (directionGamepad == PovDirection.north) {
 						Game.player.movesUp(dt);
 						if (Game.player.collideShop) {
-							game.swapScreen(State.SHOP);
+							game.screenManager.swapScreen(it.slagyom.ScreenManager.State.SHOP);
 							Game.world.semaphore.acquire();
 							Game.player.collideShop = false;
 						}
@@ -212,12 +212,12 @@ public class PlayScreen implements Screen, ControllerListener {
 				else if (Gdx.input.isKeyPressed(Keys.UP)) {
 					Game.player.movesUp(dt);
 					if (Game.player.collideShop) {
-						game.swapScreen(State.SHOP);
+						game.screenManager.swapScreen(it.slagyom.ScreenManager.State.SHOP);
 						Game.world.semaphore.acquire();
 						Game.player.collideShop = false;
 					}
 					if (Game.player.collideGym) {
-						game.swapScreen(State.BATTLE);
+						game.screenManager.swapScreen(it.slagyom.ScreenManager.State.BATTLE);
 						Game.world.semaphore.acquire();
 						Game.player.collideGym = false;
 					}
@@ -236,15 +236,15 @@ public class PlayScreen implements Screen, ControllerListener {
 					gamecam.position.y = Game.player.getY();
 
 				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-					MusicManager.pause();
-					game.swapScreen(GameSlagyom.State.PAUSE);
+					game.musicManager.pause();
+					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PAUSE);
 				}
 
 				else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
 
 					//Game.world.createBattle();
 					Game.world.semaphore.acquire();
-					game.swapScreen(it.slagyom.GameSlagyom.State.BATTLE);
+					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.BATTLE);
 				} else if (Gdx.input.isKeyJustPressed(Keys.B)) {
 					Game.world.nextLevel();
 				} // else

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import it.slagyom.src.Character.Player;
 
 import it.slagyom.src.Map.StaticObject;
-import it.slagyom.src.Tool.Tool;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
 

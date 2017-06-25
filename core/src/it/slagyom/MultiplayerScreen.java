@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import Multiplayer.GameClient;
 import Multiplayer.GameServer;
-import it.slagyom.GameSlagyom.State;
 
 public class MultiplayerScreen implements Screen {
 
@@ -104,7 +103,7 @@ public class MultiplayerScreen implements Screen {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.swapScreen(State.MENU);
+				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MENU);
 			}
 		});
 		

@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.levels.editor.Editor;
-import it.slagyom.GameSlagyom.State;
 
 public class MenuScreen implements Screen {
 	GameSlagyom game;
@@ -77,7 +76,7 @@ public class MenuScreen implements Screen {
 		playButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.swapScreen(State.NEWGAME);
+				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.NEWGAME);
 			}
 		});
 		continueButton.addListener(new ClickListener() {
@@ -85,7 +84,7 @@ public class MenuScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				game.loadGame();
 				menuMusic.stop();
-				game.swapScreen(State.CONTINUEGAME);
+				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.CONTINUEGAME);
 				PlayScreen.hud.textTable.clear();
 				PlayScreen.hud.textDialog = "Game loaded!";
 			}
@@ -93,7 +92,7 @@ public class MenuScreen implements Screen {
 		multiplayerButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.swapScreen(State.MULTIPLAYER);
+				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MULTIPLAYER);
 			}
 		});
 		editorButton.addListener(new ClickListener() {
@@ -105,7 +104,7 @@ public class MenuScreen implements Screen {
 		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.swapScreen(State.OPTIONMENU);
+				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.OPTIONMENU);
 
 			}
 		});

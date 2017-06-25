@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import it.slagyom.ScreenManager.State;
 import it.slagyom.src.Map.Item;
 import it.slagyom.src.Map.Item.Level;
 import it.slagyom.src.Map.StaticObject.Element;
@@ -352,7 +354,7 @@ public class ShopScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			game.swapScreen(GameSlagyom.State.PLAYING);
+			game.screenManager.swapScreen(State.PLAYING);
 			Game.world.semaphore.release();
 		}
 

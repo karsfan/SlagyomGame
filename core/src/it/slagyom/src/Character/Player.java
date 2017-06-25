@@ -10,7 +10,7 @@ import it.slagyom.src.World.Shop;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
-import it.slagyom.MusicManager;
+import it.slagyom.GameSlagyom;
 import it.slagyom.PlayScreen;
 import it.slagyom.src.Map.PreEnemyHouse;
 import it.slagyom.src.Map.Item;
@@ -273,7 +273,7 @@ public class Player extends DynamicObjects implements ICollidable {
 	boolean pickItem(Item item) {
 		if (item.getElement() != Element.COIN && !item.picked) {
 			if (bag.addTool(item)) {
-				MusicManager.play("ITEM");
+				GameSlagyom.getMusicManager().play("ITEM");
 				item.setPicked(true);
 				return true;
 			}
@@ -281,7 +281,7 @@ public class Player extends DynamicObjects implements ICollidable {
 			if (!item.picked) {
 				PlayScreen.obj = item;
 				coins++;
-				MusicManager.play("COIN");
+				GameSlagyom.getMusicManager().play("COIN");
 			}
 			item.setPicked(true);
 			return true;

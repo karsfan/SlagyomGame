@@ -1,4 +1,4 @@
-package it.slagyom.src.Map;
+package staticObjects;
 
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -14,7 +14,7 @@ public class PreEnemyHouse extends StaticObject {
 	
 	public PreEnemyHouse(Level levelEnemy) {
 		element = Element.PREENEMYHOME;
-		enemy = new Enemy(null, 100, 100, null, null, Level.HARD);
+		enemy = new Enemy(null, 100, null, null, Level.HARD);
 	}
 
 	public boolean collideDoor(Object e) {

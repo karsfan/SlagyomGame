@@ -1,4 +1,4 @@
-package it.slagyom;
+package hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import it.slagyom.MenuScreen;
 import it.slagyom.src.World.Game;
 
 public class Hud {

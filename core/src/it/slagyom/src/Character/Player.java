@@ -6,20 +6,19 @@ import com.badlogic.gdx.Gdx;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.ICollidable;
-import it.slagyom.src.World.Shop;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
+import staticObjects.Item;
+import staticObjects.PreEnemyHouse;
+import staticObjects.Shop;
+import staticObjects.StaticObject;
+import staticObjects.StaticObject.Element;
 import it.slagyom.GameSlagyom;
 import it.slagyom.PlayScreen;
-import it.slagyom.src.Map.PreEnemyHouse;
-import it.slagyom.src.Map.Item;
-import it.slagyom.src.Map.StaticObject;
-import it.slagyom.src.Map.StaticObject.Element;
 
 public class Player extends DynamicObjects implements ICollidable {
 
-	public String name;
 	public Bag bag;
 	public Weapon primary_weapon;
 	public float health;

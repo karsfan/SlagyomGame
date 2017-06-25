@@ -13,10 +13,10 @@ import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.Character.Woman;
 import it.slagyom.src.Character.Woman.WomanType;
-import it.slagyom.src.Map.Item;
-import it.slagyom.src.Map.Item.Level;
-import it.slagyom.src.Map.StaticObject;
-import it.slagyom.src.Map.StaticObject.Element;
+import staticObjects.Item;
+import staticObjects.StaticObject;
+import staticObjects.Item.Level;
+import staticObjects.StaticObject.Element;
 
 public class LoadingImage {
 

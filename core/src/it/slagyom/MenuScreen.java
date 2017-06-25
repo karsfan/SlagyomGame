@@ -30,7 +30,7 @@ public class MenuScreen implements Screen {
 	private Sprite backgroundSprite;
 
 	static TextureAtlas atlas;
-	protected static Skin skin;
+	public static Skin skin;
 	public Table mainTable;
 
 	public TextButton musicButton;

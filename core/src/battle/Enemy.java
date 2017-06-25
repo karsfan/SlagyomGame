@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
-import it.slagyom.src.World.Pack;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Type;
 
@@ -14,7 +13,7 @@ public class Enemy extends DynamicObjects {
 		EASY, MEDIUM, HARD
 	};
 
-	private String name;
+
 	public float health;
 	float power;
 	Weapon weapon;
@@ -30,17 +29,60 @@ public class Enemy extends DynamicObjects {
 	public float velocityY;
 	public float velocityX;
 
-	public Enemy(String name, float life, float power, Weapon weapon, Pack win_bonus, Level level) {
+	public Enemy(String name, float life, Weapon weapon, Pack win_bonus, Level level) {
 
 		velocity = 60;
 		this.setName(name);
 		this.health = 300;
-		this.power = power;
 		// this.weapon = weapon;
 		this.weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev1, Type.Spear);
 		this.win_bonus = win_bonus;
 		this.level = level;
 
+		stateTimer = 0;
+		x = 700;
+		y = 250;
+		height = 150;
+		width = 120;
+		currentState = StateDynamicObject.STANDING;
+		previousState = null;
+		fighting = false;
+		fightingTimeCurrent = 0;
+		fightingTime = 0.2f;
+
+		jumping = false;
+		doubleJumping = false;
+		velocityY = 0;
+		velocityX = 10;
+	}
+
+	public Enemy(Level level) {
+		this.level = level;
+		switch (level) {
+		case EASY:
+			name = "Bob";
+			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev1);
+			health = 100;
+			win_bonus = new Pack(Level.EASY);
+			velocity = 40;
+			break;
+		case MEDIUM:
+			name = "John";
+			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev2);
+			health = 250;
+			win_bonus = new Pack(Level.MEDIUM);
+			velocity = 60;
+			break;
+		case HARD:
+			name = "Ciccio";
+			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev3);
+			health = 400;
+			win_bonus = new Pack(Level.HARD);
+			velocity = 80;
+			break;
+		default:
+			break;
+		}
 		stateTimer = 0;
 		x = 700;
 		y = 250;
@@ -145,7 +187,7 @@ public class Enemy extends DynamicObjects {
 		int rand = (int) (Math.random() * 100);
 		if ((x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0)
 				|| (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0)) {
-			
+
 			if (rand < 10 && Game.world.battle.character.fighting)
 				jump(dt);
 			else if (rand > 10 && rand < 25 && Game.world.battle.character.fighting)
@@ -156,10 +198,10 @@ public class Enemy extends DynamicObjects {
 			else if (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0
 					&& rand < 55)
 				fightRight();
-		
+
 		} else if (Game.world.battle.character.getX() > x && rand < 70)
 			movesRight(dt);
-		
+
 		else if (x > Game.world.battle.character.getX() && rand < 70)
 			movesLeft(dt);
 	}

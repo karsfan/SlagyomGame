@@ -1,4 +1,4 @@
-package it.slagyom.src.Map;
+package staticObjects;
 
 import java.awt.Rectangle;
 import java.util.Iterator;

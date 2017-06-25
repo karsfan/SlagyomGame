@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import battle.Battle;
 import battle.CharacterBattle;
 import battle.Enemy;
+import hud.BattleHud;
 import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Game;

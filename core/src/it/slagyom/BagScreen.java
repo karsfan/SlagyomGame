@@ -17,10 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import it.slagyom.src.Map.Item;
-import it.slagyom.src.Map.Item.Level;
-import it.slagyom.src.Map.StaticObject.Element;
+
 import it.slagyom.src.World.Game;
+import staticObjects.Item;
+import staticObjects.Item.Level;
+import staticObjects.StaticObject.Element;
 
 public class BagScreen implements Screen {
 	private enum Pocket {

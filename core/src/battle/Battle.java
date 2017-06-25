@@ -17,7 +17,7 @@ public class Battle implements Runnable {
 	public Battle(Player player, Enemy enemy) {
 		this.character = new CharacterBattle(player);
 		// this.enemy = enemy;
-		this.enemy = new Enemy(null, 100, 100, null, null, enemy.level);
+		this.enemy = new Enemy(null, 100, null, null, enemy.level);
 		WIDTH = 720;
 		System.out.println("qui");
 		HEIGHT = 480;

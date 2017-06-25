@@ -21,11 +21,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import hud.Hud;
 import it.slagyom.src.Character.DynamicObjects;
-import it.slagyom.src.Map.Item;
-import it.slagyom.src.Map.StaticObject;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
+import staticObjects.Item;
+import staticObjects.StaticObject;
 
 public class PlayScreen implements Screen, ControllerListener {
 

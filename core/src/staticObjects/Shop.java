@@ -1,12 +1,12 @@
-package it.slagyom.src.World;
+package staticObjects;
 
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import battle.Pack;
 import it.slagyom.src.Character.Player;
-
-import it.slagyom.src.Map.StaticObject;
+import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
 

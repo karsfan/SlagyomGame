@@ -8,7 +8,10 @@ import java.util.Scanner;
 
 import battle.Enemy.Level;
 import it.slagyom.src.World.GameConfig;
-import it.slagyom.src.World.Shop;
+import staticObjects.Item;
+import staticObjects.PreEnemyHouse;
+import staticObjects.Shop;
+import staticObjects.StaticObject;
 
 public class Map {
 	private LinkedList<StaticObject> listStaticObjects;

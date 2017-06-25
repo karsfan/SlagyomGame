@@ -18,10 +18,10 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import it.slagyom.ScreenManager.State;
-import it.slagyom.src.Map.Item;
-import it.slagyom.src.Map.Item.Level;
-import it.slagyom.src.Map.StaticObject.Element;
 import it.slagyom.src.World.Game;
+import staticObjects.Item;
+import staticObjects.Item.Level;
+import staticObjects.StaticObject.Element;
 
 public class ShopScreen implements Screen {
 	private enum Category {

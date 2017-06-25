@@ -5,8 +5,8 @@ import java.util.Iterator;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.ICollidable;
-import it.slagyom.src.Map.StaticObject;
-import it.slagyom.src.Map.StaticObject.Element;
+import staticObjects.StaticObject;
+import staticObjects.StaticObject.Element;
 
 public class Man extends DynamicObjects implements ICollidable {
 

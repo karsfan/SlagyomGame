@@ -3,11 +3,11 @@ package it.slagyom.src.Character;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import it.slagyom.src.Map.Item;
-import it.slagyom.src.Map.Item.Level;
-import it.slagyom.src.Map.StaticObject.Element;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Type;
+import staticObjects.Item;
+import staticObjects.Item.Level;
+import staticObjects.StaticObject.Element;
 
 public class Bag {
 	int capacity;

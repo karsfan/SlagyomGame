@@ -9,10 +9,10 @@ import battle.Battle;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Man;
 import it.slagyom.src.Character.Woman;
-import it.slagyom.src.Map.PreEnemyHouse;
-import it.slagyom.src.Map.Item;
+import staticObjects.Item;
+import staticObjects.PreEnemyHouse;
+import staticObjects.StaticObject;
 import it.slagyom.src.Map.Map;
-import it.slagyom.src.Map.StaticObject;
 
 public class World {
 

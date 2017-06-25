@@ -2,11 +2,11 @@ package it.slagyom.src.Character;
 
 import java.util.Iterator;
 
-import it.slagyom.src.Map.StaticObject;
-import it.slagyom.src.Map.StaticObject.Element;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.ICollidable;
+import staticObjects.StaticObject;
+import staticObjects.StaticObject.Element;
 
 public class Woman extends DynamicObjects implements ICollidable {
 	public static enum WomanType {

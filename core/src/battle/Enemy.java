@@ -165,7 +165,6 @@ public class Enemy extends DynamicObjects {
 		if ((x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0)
 				|| (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0)) {
 
-			System.out.println(rand);
 			if (rand < 15 && Game.world.battle.character.fighting)
 				jump(dt);
 			if (rand > 15 && rand < 30 && Game.world.battle.character.fighting) {

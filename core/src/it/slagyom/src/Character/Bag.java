@@ -11,24 +11,37 @@ import staticObjects.StaticObject.Element;
 
 public class Bag {
 	int capacity;
-	public ArrayList<Item> bagItems; 
+	public ArrayList<Item> bagItems;
 	public Weapon secondary_weapon;
 	public ArrayList<Bomb> bombe;
-	public void lancia(int vel)
-	{
-		bombe.get(0).lanciata= true;
-		bombe.get(0).lancia(vel);
+
+	public void lancia(int vel) {
+		Iterator<Bomb> itBomb = bombe.iterator();
+		while (itBomb.hasNext()) {
+			Bomb bomba = (Bomb) itBomb.next();
+			if (!bomba.lanciata) {
+				bomba.lanciata = true;
+				bomba.lancia(vel);
+				break;
+			}
+		}
 	}
+
 	public Bag() {
 		capacity = 50;
 		secondary_weapon = null;
 		bagItems = new ArrayList<Item>();
 		bombe = new ArrayList<Bomb>();
 		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 	}
 
 	public boolean addTool(Item item) {
-		if (bagItems.size() +bombe.size()< capacity) {
+		if (bagItems.size() + bombe.size() < capacity) {
 			bagItems.add(item);
 			return true;
 		}
@@ -38,19 +51,20 @@ public class Bag {
 	public void addWeapon(Weapon weapon) {
 		secondary_weapon = weapon;
 	}
+
 	public boolean addBomb(Bomb bomb) {
-		if (bagItems.size() +bombe.size()< capacity) {		
+		if (bagItems.size() + bombe.size() < capacity) {
 			bombe.add(bomb);
 			return true;
 		}
 		return false;
 	}
-	
+
 	public void deleteParchments(Item item) {
 		Iterator<Item> itParchment = bagItems.iterator();
 		while (itParchment.hasNext()) {
 			Item it = (Item) itParchment.next();
-			if (it == item){
+			if (it == item) {
 				itParchment.remove();
 				continue;
 			}
@@ -58,7 +72,7 @@ public class Bag {
 	}
 
 	public boolean deletePotion(Item potion) {
-		Iterator <Item> itPotion = bagItems.iterator();
+		Iterator<Item> itPotion = bagItems.iterator();
 		while (itPotion.hasNext()) {
 			Item tool = (Item) itPotion.next();
 			if (tool == potion) {
@@ -68,10 +82,9 @@ public class Bag {
 		}
 		return false;
 	}
-	
-	public boolean deleteBomb(Bomb bomb)
-	{
-		Iterator <Bomb> itBomb = bombe.iterator();
+
+	public boolean deleteBomb(Bomb bomb) {
+		Iterator<Bomb> itBomb = bombe.iterator();
 		while (itBomb.hasNext()) {
 			Bomb bomba = (Bomb) itBomb.next();
 			if (bomba == bomb) {
@@ -81,10 +94,10 @@ public class Bag {
 		}
 		return false;
 	}
-	
+
 	public int getNumberOf(Element element, Level level) {
 		int numberOf = 0;
-		Iterator <Item> itemIterator = bagItems.iterator();
+		Iterator<Item> itemIterator = bagItems.iterator();
 		while (itemIterator.hasNext()) {
 			Item searching = (Item) itemIterator.next();
 			if (searching.getElement() == element && searching.level == level) {
@@ -93,9 +106,10 @@ public class Bag {
 		}
 		return numberOf;
 	}
+
 	public int getNumberOfBomb(it.slagyom.src.World.Weapon.Level level) {
 		int numberOf = 0;
-		Iterator <Bomb> bombIterator = bombe.iterator();
+		Iterator<Bomb> bombIterator = bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.level == level) {
@@ -104,9 +118,9 @@ public class Bag {
 		}
 		return numberOf;
 	}
-	
-	public void removeItem (Element element, Level level) {
-		Iterator <Item> itemIterator = bagItems.iterator();
+
+	public void removeItem(Element element, Level level) {
+		Iterator<Item> itemIterator = bagItems.iterator();
 		while (itemIterator.hasNext()) {
 			Item searching = (Item) itemIterator.next();
 			if (searching.getElement() == element && searching.level == level) {
@@ -115,9 +129,9 @@ public class Bag {
 			}
 		}
 	}
-	
-	public void removeBomb (it.slagyom.src.World.Weapon.Level level) {
-		Iterator <Bomb> bombIterator = bombe.iterator();
+
+	public void removeBomb(it.slagyom.src.World.Weapon.Level level) {
+		Iterator<Bomb> bombIterator = bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.level == level) {

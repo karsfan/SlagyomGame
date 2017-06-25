@@ -40,8 +40,8 @@ public class Bomb extends Weapon {
 	public void lancia(int velocity) {
 		mainX = ((int) Game.world.battle.getCharacter().getX());
 		mainY = ((int) Game.world.battle.getCharacter().getY());
-		velocityX = (int) (velocity * Math.cos(30));
-		velocityY = 100;
+		velocityX = (int) (velocity * Math.cos(30*(Math.PI/180)));
+		velocityY = (int) (velocity * Math.sin(90*(Math.PI/180)));;
 		System.out.println(velocityY);
 	}
 
@@ -56,7 +56,7 @@ public class Bomb extends Weapon {
 	public int getMainY() {
 		return mainY;
 	}
-
+	
 	public void setMainY(int mainY) {
 		this.mainY = mainY;
 	}
@@ -66,10 +66,18 @@ public class Bomb extends Weapon {
 	}
 
 	public void update(float dt) {
-		//System.out.println(mainX + " " + mainY);
+		
 		mainX += velocityX * dt;
 		mainY += velocityY * dt;
+		
 		velocityY -= GameConfig.gravity*dt;
+		if(mainY <= 250)
+			morta = true;
+		/*this.x += this.vx*this.deltaTime;
+	    this.y += this.vy*this.deltaTime;
+
+	    this.vx += this.ax*this.deltaTime;
+	    this.vy += this.ay*this.deltaTime;*/
 	}
 
 }

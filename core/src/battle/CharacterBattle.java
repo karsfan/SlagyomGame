@@ -21,7 +21,7 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	public boolean doubleJumping;
 	public float velocityY;
 	public float velocityX;
-	public int forza=100;
+	public int forza=50;
 	public boolean bomba = false;
 
 	public CharacterBattle(final Player character1) {
@@ -97,6 +97,7 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 				((Bomb) ob).update(dt);
 				if (ob.morta) {
 					it1.remove();
+					System.out.println("eliminata");
 					continue;
 				}
 			}
@@ -220,7 +221,7 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 		player.health -= weapon.getDamage();
 	}
 	public void caricaBomba(float dt) {
-		forza+=forza*dt;
+		forza+=100*dt;
 		System.out.println(forza);
 	}
 

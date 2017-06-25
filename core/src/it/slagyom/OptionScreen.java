@@ -63,10 +63,10 @@ public class OptionScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				activeMusic = !activeMusic;
 				if (!activeMusic) {
-					game.menuScreen.menuMusic.pause();
+					game.screenManager.menuScreen.menuMusic.pause();
 					musicButton.setText("Music OFF");
 				} else {
-					game.menuScreen.menuMusic.play();
+					game.screenManager.menuScreen.menuMusic.play();
 					musicButton.setText("Music ON");
 				}
 			}

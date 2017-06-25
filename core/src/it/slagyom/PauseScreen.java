@@ -96,7 +96,7 @@ public class PauseScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Game.world.getThread().stop();
-				game.playScreen.dispose();
+				game.screenManager.playScreen.dispose();
 				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MENU);
 			}
 		});

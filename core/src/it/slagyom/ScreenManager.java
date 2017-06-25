@@ -9,7 +9,7 @@ public class ScreenManager {
 		MENU, NEWGAME, CONTINUEGAME, OPTIONMENU, MULTIPLAYER, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP
 	};
 	
-	private State currentState;
+	State currentState;
 	private State previousState;
 	
 	static MenuScreen menuScreen;
@@ -18,7 +18,7 @@ public class ScreenManager {
 	static OptionScreen optionScreen;
 	static BattleScreen battlescreen;
 	static PauseScreen pauseScreen;
-	private static PlayScreen playScreen;
+	static PlayScreen playScreen;
 	static BagScreen bagScreen;
 	static ShopScreen shopScreen;
 	static MultiplayerScreen multiplayerScreen;

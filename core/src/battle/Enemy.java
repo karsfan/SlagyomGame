@@ -63,7 +63,7 @@ public class Enemy extends DynamicObjects {
 			name = "Bob";
 			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev1);
 			health = 100;
-			win_bonus = new Pack(Level.EASY);
+			//win_bonus = new Pack(Level.EASY);
 			velocity = 40;
 			break;
 		case MEDIUM:

@@ -81,6 +81,61 @@ public class Item extends StaticObject {
 		}
 	}
 
+	public Item(battle.Enemy.Level level) {
+		Random rand = new Random();
+		int r = rand.nextInt(2);
+		switch (r) {
+		case 0:
+			element = Element.COIN;
+			shape = new Rectangle();
+			shape.width = 11;
+			shape.height = 11;
+			break;
+		case 1:
+			element = Element.POTION;
+			shape = new Rectangle();
+			shape.width = 14;
+			shape.height = 14;
+			
+			switch (level) {
+			case EASY:
+				this.level = Level.FIRST;
+				break;
+			case MEDIUM:
+				this.level = Level.SECOND;
+				break;
+			case HARD:
+				this.level = Level.THIRD;
+				break;
+			default:
+				break;
+
+			}
+			break;
+		case 2:
+			element = Element.PARCHMENT;
+			shape = new Rectangle();
+			shape.width = 10;
+			shape.height = 10;
+			switch (level) {
+			case EASY:
+				this.level = Level.FIRST;
+				break;
+			case MEDIUM:
+				this.level = Level.SECOND;
+				break;
+			case HARD:
+				this.level = Level.THIRD;
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
 	private void positionItem() {
 		Random rand = new Random();
 		int r = rand.nextInt((int) GameConfig.WIDTH);
@@ -161,24 +216,36 @@ public class Item extends StaticObject {
 
 	@Override
 	public boolean collide(Object e) {
-		Iterator<StaticObject> it = Game.world.getListTile().iterator();
-		while (it.hasNext()) {
-			Object ob = (Object) it.next();
-			
-				if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)/*
-						&& ((Tile) ob).getElement() != Element.FLOOR && ((Tile) ob).getElement() != Element.FLOOR2
-						&& ((Tile) ob).getElement() != Element.FLOOR3)*/
+		if (!Game.world.getListTile().isEmpty()) {
+
+			Iterator<StaticObject> it = Game.world.getListTile().iterator();
+			while (it.hasNext()) {
+				Object ob = (Object) it.next();
+
+				if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob)
+						.getElement() != Element.ROAD)/*
+														 * && ((Tile)
+														 * ob).getElement() !=
+														 * Element.FLOOR &&
+														 * ((Tile)
+														 * ob).getElement() !=
+														 * Element.FLOOR2 &&
+														 * ((Tile)
+														 * ob).getElement() !=
+														 * Element.FLOOR3)
+														 */
 					if (!((shape.x > ((StaticObject) ob).getX() + ((StaticObject) ob).getWidth()
 							|| ((StaticObject) ob).getX() > shape.x + shape.width)
 							|| (shape.y > ((StaticObject) ob).getY() + ((StaticObject) ob).getHeight()
 									|| ((StaticObject) ob).getY() > shape.y + shape.height))) {
 						return true;
 					}
-			
+
+			}
 		}
 
 		if (e instanceof Player) {
-			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() /2
+			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
 					|| ((Player) e).getX() > shape.x + shape.width)
 					|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight()
 							|| ((Player) e).getY() > shape.y + shape.height))) {

@@ -7,7 +7,8 @@ public class EnemyHome extends StaticObject{
 	Enemy enemy;
 	
 	public EnemyHome(Level levelEnemy)
-	{
+	{	
+		element = Element.BIGHOME;
 		enemy = new Enemy(levelEnemy);
 	}
 }

@@ -16,21 +16,21 @@ public class Pack {
 		case EASY:
 			weapon = new Weapon(Weapon.Level.lev1);
 			for (int i = 0; i < 10; i++) {
-				Item item = new Item();
+				Item item = new Item(level);
 				items.add(item);
 			}
 
 		case MEDIUM:
 			weapon = new Weapon(Weapon.Level.lev2);
 			for (int i = 0; i < 15; i++) {
-				Item item = new Item();
+				Item item = new Item(level);
 				items.add(item);
 			}
 
 		case HARD:
 			weapon = new Weapon(Weapon.Level.lev3);
 			for (int i = 0; i < 30; i++) {
-				Item item = new Item();
+				Item item = new Item(level);
 				items.add(item);
 			}
 		default:

@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import battle.Enemy.Level;
 import it.slagyom.src.World.GameConfig;
+import staticObjects.HeadHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
@@ -106,6 +107,7 @@ public class Map {
 			table.setInfo("In questo shop potrai trovare tutto quello che ti serve per sconfiggere i tuoi nemici!!");
 			listStaticObjects.add(table);
 			break;
+		
 		case "PREENEMYHOME":
 			staticObject = new PreEnemyHouse(Level.EASY);
 			pointTable = new Point(((int) (point.getX() + 96 / 32)), (int) Math.abs((point.getY() - 96 / 32)));
@@ -113,8 +115,22 @@ public class Map {
 			table.setPoint(pointTable);
 			table.setInfo("In questa Pre-Enemy House c'e' un nemico di livello Easy");
 			listStaticObjects.add(table);
-
 			break;
+		
+		case "BIGHOME":
+			pointTable = new Point(((int) (point.getX() + 128 / 32)), (int) Math.abs((point.getY() - 96 / 32)));
+			table = new StaticObject("TABLE", point);
+			table.setPoint(pointTable);
+			listStaticObjects.add(table);
+			if (current == true) {
+				table.setInfo("In questa casa c'e' il capo del villaggio");
+				staticObject = new HeadHome(Level.MEDIUM);
+			} else {
+				table.setInfo("In questa casa c'e' il capo del villaggio");
+				staticObject = new HeadHome(Level.HARD);
+			}
+			break;
+		
 		default:
 			staticObject = new StaticObject(element, point);
 			break;

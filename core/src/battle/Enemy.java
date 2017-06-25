@@ -1,6 +1,10 @@
 package battle;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
+
+import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
@@ -13,10 +17,11 @@ public class Enemy extends DynamicObjects {
 		EASY, MEDIUM, HARD
 	};
 
-
 	public float health;
 	float power;
 	Weapon weapon;
+	public ArrayList<Bomb> bombe = new ArrayList<>();
+
 	Pack win_bonus;
 	public Level level;
 
@@ -28,6 +33,8 @@ public class Enemy extends DynamicObjects {
 	public boolean doubleJumping;
 	public float velocityY;
 	public float velocityX;
+	public boolean left = true;
+	public boolean right = false;
 
 	public Enemy(String name, float life, Weapon weapon, Pack win_bonus, Level level) {
 
@@ -63,8 +70,11 @@ public class Enemy extends DynamicObjects {
 			name = "Bob";
 			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev1);
 			health = 100;
-			//win_bonus = new Pack(Level.EASY);
+			// win_bonus = new Pack(Level.EASY);
 			velocity = 40;
+			bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+			bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+			bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 			break;
 		case MEDIUM:
 			name = "John";
@@ -72,6 +82,9 @@ public class Enemy extends DynamicObjects {
 			health = 250;
 			win_bonus = new Pack(Level.MEDIUM);
 			velocity = 60;
+			bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+			bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+			bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 			break;
 		case HARD:
 			name = "Ciccio";
@@ -79,6 +92,9 @@ public class Enemy extends DynamicObjects {
 			health = 400;
 			win_bonus = new Pack(Level.HARD);
 			velocity = 80;
+			bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+			bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+			bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 			break;
 		default:
 			break;
@@ -98,6 +114,11 @@ public class Enemy extends DynamicObjects {
 		doubleJumping = false;
 		velocityY = 0;
 		velocityX = 10;
+		Bomb bomb = new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba);
+		bombe.add(bomb);
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 	}
 
 	public float getHealth() {
@@ -118,6 +139,7 @@ public class Enemy extends DynamicObjects {
 	}
 
 	public void update(float dt) {
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 		if (!fighting && !jumping && !doubleJumping) {
 
 			switch (level) {
@@ -177,9 +199,29 @@ public class Enemy extends DynamicObjects {
 				fightRight();
 		} else if (Game.world.battle.character.getX() > x && rand < 90)
 			movesRight(dt);
-		else if (x > Game.world.battle.character.getX() && rand < 90)
+		else if (x > Game.world.battle.character.getX() && rand < 90) {
+			if(rand>70 && rand <80)
+				lanciaBomb(dt);
 			movesLeft(dt);
+		}
 
+	}
+
+	public void lanciaBomb(float dt) {
+		if (left) {
+			int velocityy = 10;
+			float xx = getX();
+			while (xx > Game.world.battle.character.getX()) {
+				int velocityXX = -(int) (velocityy * Math.cos(30 * (Math.PI / 180)));
+				int velocityYY = (int) (velocityy * Math.sin(90 * (Math.PI / 180)));
+				xx += velocityXX * dt;
+				y += velocityYY * dt;
+				velocityy++;
+				System.out.println(velocityy);
+			}
+			if(!bombe.isEmpty())
+				bombe.get(0).lancia(velocityy, this);
+		}
 	}
 
 	public void updateEnemyMedium(float dt) {

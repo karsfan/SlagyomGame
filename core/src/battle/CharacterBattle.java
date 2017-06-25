@@ -23,7 +23,9 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	public float velocityX;
 	public int forza=50;
 	public boolean bomba = false;
-
+	public boolean left = false;
+	public boolean right = true;
+	
 	public CharacterBattle(final Player character1) {
 		stateTimer = 0;
 
@@ -139,7 +141,8 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	}
 
 	public void movesRight(float dt) {
-
+		left = false;
+		right = true;
 		if (player.x + player.velocity * dt + player.getWidth() < 1100)
 			player.x += player.velocity * dt;
 		if (collide())
@@ -149,7 +152,8 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	}
 
 	public void movesLeft(float dt) {
-
+		left = true;
+		right = false;
 		if (player.x - player.width / 2 > 0)
 			player.x -= player.velocity * dt;
 		if (collide())

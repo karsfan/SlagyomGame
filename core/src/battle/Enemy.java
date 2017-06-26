@@ -193,18 +193,7 @@ public class Enemy extends Fighting {
 	public void lanciaBomb(float dt) {
 		if (left && !bombe.isEmpty()) {
 			int velocityy = 200;
-			float xx = getX();
-			float yy = getY();
-			while (xx > Game.world.battle.character.getX()) {
-//				int velocityYY = (int) (velocityy * Math.sin(90 * (Math.PI / 180)));
-	//			int velocityXX = (int) (velocityy * Math.cos(30 * (Math.PI / 180)));
-				// int velocityYY = (int) (velocityy * Math.sin(90 * (Math.PI /
-				// 180)));
-				
-				xx = (float) (2*velocityy*velocityy*Math.cos(30 * (Math.PI / 180))*Math.sin(90 * (Math.PI / 180)))/GameConfig.gravity;
-				velocityy--;
-				//System.out.println(xx +" "+ Game.world.battle.character.getX() );
-			}
+			//calcolo della gittata
 			velocityy = (int) Math.sqrt(((x-Game.world.battle.character.getX())*GameConfig.gravity)/((2*Math.cos(30 * (Math.PI / 180))*Math.sin(90 * (Math.PI / 180)))));
 			Iterator<Bomb> it1 = bombe.iterator();
 			while (it1.hasNext()) {

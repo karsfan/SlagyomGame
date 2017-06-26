@@ -26,7 +26,7 @@ public class Bomb extends Weapon implements ICollidable {
 		mainY = 1250;
 		switch (level) {
 		case lev1:
-			setDamage(100);
+			setDamage(10);
 			setWidth(10);
 			break;
 		case lev2:

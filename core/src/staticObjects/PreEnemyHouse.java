@@ -16,19 +16,9 @@ public class PreEnemyHouse extends StaticObject {
 	public PreEnemyHouse(Level levelEnemy) {
 		enemy = new ArrayList<>();
 		element = Element.PREENEMYHOME;
-<<<<<<< HEAD
 		enemy.add(new Enemy(Level.HARD));
 		enemy.add(new Enemy(levelEnemy));
 		enemy.add(new Enemy(levelEnemy));
-=======
-<<<<<<< HEAD
-		enemy = new Enemy(null, 100, null, null, Level.EASY);
-=======
-		enemy.add(new Enemy(Level.EASY));
-		enemy.add(new Enemy(Level.EASY));
-		enemy.add(new Enemy(Level.EASY));
->>>>>>> db0f26e02050e03ee228411e43dc9d5c002c8082
->>>>>>> 845166dbb09377098ce6d752ba92c2a623c1b424
 	}
 
 	public boolean collideDoor(Object e) {

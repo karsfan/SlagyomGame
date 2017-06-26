@@ -18,7 +18,14 @@ public class ThreadWorld extends Thread {
 			while (true) {
 				long attuale = System.currentTimeMillis();
 				float dt = (float) (attuale - start);
+				try {
+					semaphore.acquire();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				world.update((float) dt / 1000);
+				semaphore.release();
 				start = attuale;
 			}
 	}

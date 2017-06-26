@@ -201,6 +201,7 @@ public class Enemy extends Fighting {
 				if (!ob.lanciata) {
 					System.out.println(velocityy);
 					ob.lancia(velocityy, this);
+					ob.id = "Enemy";
 					System.out.println("lancia");
 					break;
 				}

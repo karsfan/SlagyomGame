@@ -17,6 +17,7 @@ public class Bomb extends Weapon implements ICollidable {
 	int velocityX;
 	int velocityY;
 	int velocity;
+	public String id;
 	public boolean lanciata = false;
 
 	public Bomb(Level level, Type type) {
@@ -49,11 +50,12 @@ public class Bomb extends Weapon implements ICollidable {
 
 		if (((Fighting) fighting).left)
 			velocityX -= (int) (velocity * Math.cos(30 * (Math.PI / 180)));
-			//velocityX = velocity;
-		else
+		// velocityX = velocity;
+		else if (((Fighting) fighting).right)
 			velocityX = (int) (velocity * Math.cos(30 * (Math.PI / 180)));
+		System.out.println(velocityX);
 		velocityY = (int) (velocity * Math.sin(90 * (Math.PI / 180)));
-		//velocityY = 100;
+
 	}
 
 	public int getMainX() {
@@ -97,21 +99,23 @@ public class Bomb extends Weapon implements ICollidable {
 	@Override
 	public boolean collide() {
 		Enemy enemy = Game.world.battle.enemy;
-		if (!((mainX > enemy.getX() + enemy.getWidth() / 2 || enemy.getX() > mainX + getWidth())
-				|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
-						|| enemy.getY() > mainY + getHeight()))) {
-			enemy.decreaseHealth(this);
-			System.out.println("collissione con il nemico");
-			return true;
-		}
+		if (id != "Enemy")
+			if (!((mainX > enemy.getX() + enemy.getWidth() / 2 || enemy.getX() > mainX + getWidth())
+					|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
+							|| enemy.getY() > mainY + getHeight()))) {
+				enemy.decreaseHealth(this);
+				System.out.println("collissione con il nemico");
+				return true;
+			}
 		CharacterBattle player = Game.world.battle.character;
-		if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
-				|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
-						|| player.getY() > mainY + getHeight()))) {
-			player.decreaseHealth(this);
-			System.out.println("collissione della bomba con il player");
-			return true;
-		}
+		if (id != "Player")
+			if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
+					|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
+							|| player.getY() > mainY + getHeight()))) {
+				player.decreaseHealth(this);
+				System.out.println("collissione della bomba con il player");
+				return true;
+			}
 
 		return false;
 	}

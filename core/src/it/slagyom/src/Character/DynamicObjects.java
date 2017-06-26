@@ -70,7 +70,7 @@ public class DynamicObjects {
 	}
 
 	public void movesLeft(float dt) {
-
+		
 	}
 
 	public void movesRight(float dt) {

@@ -90,7 +90,7 @@ public class OptionScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (fromPause) {
-					Game.world.semaphore.release();					
+					//Game.world.semaphore.release();					
 					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 				}
 				else

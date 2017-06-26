@@ -46,8 +46,9 @@ public class GameSlagyom extends Game {
 
 		if (screenManager.currentState == State.PAUSE)
 			it.slagyom.src.World.Game.world.getThread().stop();
-
-		screenManager.setPlayScreen(new PlayScreen(this, prefs.getString("map"), prefs.getString("name")));
+		screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
+		screenManager.swapScreen(State.PLAYING);
+		//screenManager.setPlayScreen(new PlayScreen(this, prefs.getString("map"), prefs.getString("name")));
 		it.slagyom.src.World.Game.player.x = prefs.getFloat("xCharPosition");
 		it.slagyom.src.World.Game.player.y = prefs.getFloat("yCharPosition");
 		it.slagyom.src.World.Game.player.health = prefs.getFloat("health");

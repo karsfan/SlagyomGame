@@ -1,5 +1,7 @@
 package it.slagyom;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controllers;
@@ -21,6 +23,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import it.slagyom.src.Character.DynamicObjects;
+import it.slagyom.src.Character.Man;
 import it.slagyom.src.World.Game;
 
 public class PauseScreen implements Screen {
@@ -70,11 +75,11 @@ public class PauseScreen implements Screen {
 				// game.setScreen(game.playScreen);
 				game.saveGame();
 				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
-				Game.world.semaphore.release();
+				//Game.world.semaphore.release();
 				PlayScreen.hud.setDialogText("Game saved!");
 			}
 		});
-		saveGame.addListener(new InputListener());
+	//	saveGame.addListener(new InputListener());
 		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -88,7 +93,7 @@ public class PauseScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.screenManager.swapScreen(game.screenManager.getPreviousState());
-				Game.world.semaphore.release();
+				//Game.world.semaphore.release();
 			}
 		});
 		menuButton.addListener(new ClickListener() {
@@ -164,7 +169,7 @@ public class PauseScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		System.out.println(Game.world.semaphore+ "ren");
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();
@@ -174,8 +179,8 @@ public class PauseScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			Game.world.semaphore.release();
 			game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
+			//Game.world.semaphore.release();
 		}
 
 	}

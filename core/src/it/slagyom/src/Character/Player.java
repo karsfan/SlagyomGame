@@ -214,8 +214,7 @@ public class Player extends DynamicObjects implements ICollidable {
 
 		if (y < GameConfig.HEIGHT - height - 5) {
 			float velocityY = velocity;
-			// if (collideGround())
-			// velocityY -= 20;
+			
 
 			y += (velocityY * dt);
 			if (collide(this)) {
@@ -228,8 +227,7 @@ public class Player extends DynamicObjects implements ICollidable {
 	public void movesDown(float dt) {
 		if (y > 0) {
 			float velocityY = velocity;
-			// if (collideGround())
-			// velocityY -= 20;
+			
 			y -= (velocityY * dt);
 			if (collide(this))
 				y += (velocityY * dt);

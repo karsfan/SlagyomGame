@@ -2,6 +2,7 @@ package staticObjects;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import battle.Enemy;
 import battle.Enemy.Level;
@@ -9,12 +10,19 @@ import it.slagyom.src.Character.Player;
 
 public class PreEnemyHouse extends StaticObject {
 
-	public Enemy enemy;
+	public ArrayList<Enemy> enemy;
 	private Rectangle door;
 	
 	public PreEnemyHouse(Level levelEnemy) {
+		enemy = new ArrayList<>();
 		element = Element.PREENEMYHOME;
+<<<<<<< HEAD
 		enemy = new Enemy(null, 100, null, null, Level.EASY);
+=======
+		enemy.add(new Enemy(Level.EASY));
+		enemy.add(new Enemy(Level.EASY));
+		enemy.add(new Enemy(Level.EASY));
+>>>>>>> db0f26e02050e03ee228411e43dc9d5c002c8082
 	}
 
 	public boolean collideDoor(Object e) {

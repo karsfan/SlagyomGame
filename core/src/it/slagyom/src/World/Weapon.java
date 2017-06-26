@@ -35,6 +35,7 @@ public class Weapon {
 		case Freccia:
 			damage = 8;
 			setWidth(0);
+			System.out.println("freccia");
 			break;
 		case Bomba:
 			setWeapon(type, level);
@@ -47,7 +48,7 @@ public class Weapon {
 	public Weapon(Level level) {
 		this.level = level;
 		Random rand = new Random();
-		int r = rand.nextInt(5);
+		int r = rand.nextInt(3);
 		switch (r) {
 		case 0:
 			type = Type.Sword;
@@ -61,11 +62,8 @@ public class Weapon {
 			type = Type.Bow;
 			setWeapon(type, level);
 			break;
-		case 3:
-			type = Type.Bomba;
-			setWeapon(type, level);
-			break;
 		default:
+			System.out.println("default in Weapon(level)");
 			break;
 		}
 	}

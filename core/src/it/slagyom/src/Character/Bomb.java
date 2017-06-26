@@ -1,10 +1,14 @@
 package it.slagyom.src.Character;
 
+import battle.Enemy;
+import battle.Fighting;
+import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
+import it.slagyom.src.World.ICollidable;
 import it.slagyom.src.World.Weapon;
 
-public class Bomb extends Weapon {
+public class Bomb extends Weapon implements ICollidable {
 
 	public boolean morta = false;
 	int mainX;
@@ -21,7 +25,7 @@ public class Bomb extends Weapon {
 		mainY = 1250;
 		switch (level) {
 		case lev1:
-			setDamage(8f);
+			setDamage(10);
 			setWidth(10);
 			break;
 		case lev2:
@@ -37,12 +41,18 @@ public class Bomb extends Weapon {
 		}
 	}
 
-	public void lancia(int velocity) {
-		mainX = ((int) Game.world.battle.getCharacter().getX());
-		mainY = ((int) Game.world.battle.getCharacter().getY());
-		velocityX = (int) (velocity * Math.cos(30*(Math.PI/180)));
-		velocityY = (int) (velocity * Math.sin(90*(Math.PI/180)));;
-		System.out.println(velocityY);
+	public void lancia(int velocity, Fighting fighting) {
+		lanciata = true;
+		mainX = ((int) ((Fighting) fighting).getX());
+		mainY = ((int) ((Fighting) fighting).getY());
+
+		if (((Fighting) fighting).left)
+			velocityX -= (int) (velocity * Math.cos(30 * (Math.PI / 180)));
+
+		else
+			velocityX = (int) (velocity * Math.cos(30 * (Math.PI / 180)));
+		velocityY = (int) (velocity * Math.sin(90 * (Math.PI / 180)));
+
 	}
 
 	public int getMainX() {
@@ -56,7 +66,7 @@ public class Bomb extends Weapon {
 	public int getMainY() {
 		return mainY;
 	}
-	
+
 	public void setMainY(int mainY) {
 		this.mainY = mainY;
 	}
@@ -66,18 +76,35 @@ public class Bomb extends Weapon {
 	}
 
 	public void update(float dt) {
-		
-		mainX += velocityX * dt;
-		mainY += velocityY * dt;
-		
-		velocityY -= GameConfig.gravity*dt;
-		if(mainY <= 250)
-			morta = true;
-		/*this.x += this.vx*this.deltaTime;
-	    this.y += this.vy*this.deltaTime;
 
-	    this.vx += this.ax*this.deltaTime;
-	    this.vy += this.ay*this.deltaTime;*/
+		mainX += velocityX * dt;
+		mainY += velocityY * dt - GameConfig.gravity * dt * dt;
+
+		velocityY -= GameConfig.gravity * dt;
+		if (mainY <= 250)
+			morta = true;
+		if (collide())
+			morta = true;
+	}
+
+	@Override
+	public boolean collide(Object e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean collide() {
+		Enemy enemy = Game.world.battle.enemy;
+		if (!((mainX > enemy.getX() + enemy.getWidth() / 2 || enemy.getX() > mainX + getWidth())
+				|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
+						|| enemy.getY() > mainY + getHeight()))) {
+			enemy.decreaseHealth(this);
+			System.out.println("collissione con il nemico");
+			return true;
+		}
+
+		return false;
 	}
 
 }

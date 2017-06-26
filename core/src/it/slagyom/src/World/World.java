@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.concurrent.Semaphore;
 
 import battle.Battle;
+import battle.Enemy;
+import it.slagyom.PlayScreen;
+import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Man;
 import it.slagyom.src.Character.Woman;
@@ -96,7 +99,7 @@ public class World {
 			if (ob instanceof Woman) {
 				((Woman) ob).update(dt);
 			}
-			if(ob instanceof Man)
+			if (ob instanceof Man)
 				((Man) ob).update(dt);
 		}
 
@@ -114,7 +117,20 @@ public class World {
 	}
 
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
-		battle = new Battle(Game.player, preEnemyHouse.enemy);
+		boolean creata = false;
+		Iterator<Enemy> it1 = preEnemyHouse.enemy.iterator();
+		while (it1.hasNext()) {
+			Enemy ob = (Enemy) it1.next();
+			if (!ob.morto) {
+				creata = true;
+				battle = new Battle(Game.player, ob);
+				break;
+			}
+		}
+		if(!creata){
+			Game.player.collideGym = false;
+			PlayScreen.hud.setDialogText("Non ci sono nemici in questa casa");
+		}
 	}
 
 	public ArrayList<DynamicObjects> getListDynamicObjects() {

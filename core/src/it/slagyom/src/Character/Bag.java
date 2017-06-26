@@ -3,6 +3,8 @@ package it.slagyom.src.Character;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import battle.Fighting;
+import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Type;
 import staticObjects.Item;
@@ -15,13 +17,13 @@ public class Bag {
 	public Weapon secondary_weapon;
 	public ArrayList<Bomb> bombe;
 
-	public void lancia(int vel) {
+	public void lancia(int vel, Fighting fighting) {
 		Iterator<Bomb> itBomb = bombe.iterator();
 		while (itBomb.hasNext()) {
 			Bomb bomba = (Bomb) itBomb.next();
 			if (!bomba.lanciata) {
 				bomba.lanciata = true;
-				bomba.lancia(vel);
+				bomba.lancia(vel, fighting);
 				break;
 			}
 		}

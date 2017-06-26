@@ -2,32 +2,22 @@ package battle;
 
 import it.slagyom.src.Character.Player;
 
-public class Battle implements Runnable {
+public class Battle{
 
 	public CharacterBattle character;
+	public Enemy enemyOri;
 	public Enemy enemy;
 	public static int WIDTH;
 	public static int HEIGHT;
 
-	public Battle() {
-		character = null;
-		enemy = null;
-	}
-
 	public Battle(Player player, Enemy enemy) {
 		this.character = new CharacterBattle(player);
-		// this.enemy = enemy;
-		this.enemy = new Enemy(null, 100, null, null, enemy.level);
+		enemyOri = enemy;
+		this.enemy = new Enemy(enemy);
 		WIDTH = 720;
-		System.out.println("qui");
 		HEIGHT = 480;
-	//	run();
-
 	}
 
-	public void moveEnemy(float dt) {
-		enemy.update(dt);
-	}
 
 	public void jumpEnemy() {
 
@@ -45,9 +35,10 @@ public class Battle implements Runnable {
 	}
 
 	public  boolean update(float dt) {
-		// moveEnemy(dt);
+	
 		if (enemy.health <= 0){
-			System.out.println("Hai vinto"+ character.getHealth() );
+			System.out.println("Hai vinto"+ character.getHealth());
+			enemyOri.morto = true;
 			return true;
 		}
 		if (character.getHealth() <= 0){
@@ -59,16 +50,5 @@ public class Battle implements Runnable {
 		return false;
 	}
 
-	@Override
-	public void run() {
-		System.out.println("ciao");
-		long start = System.currentTimeMillis();
-		while (true) {
-			long attuale = System.currentTimeMillis();
-			float dt = (float) (attuale - start);
-			update((float) dt / 1000);
-			start = attuale;
-		}
-	}
 
 }

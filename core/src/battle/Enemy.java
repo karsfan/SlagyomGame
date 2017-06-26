@@ -1,70 +1,65 @@
 package battle;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import com.badlogic.gdx.Gdx;
-import it.slagyom.src.Character.DynamicObjects;
+
+import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Type;
 
-public class Enemy extends DynamicObjects {
+public class Enemy extends Fighting {
 
 	public enum Level {
 		EASY, MEDIUM, HARD
 	};
 
-
 	public float health;
-	float power;
-	Weapon weapon;
+	public Weapon weapon;
+	public ArrayList<Bomb> bombe = new ArrayList<>();
+	public boolean morto = false;
 	Pack win_bonus;
 	public Level level;
+	
+	
 
-	public float stateTimer;
-	public boolean fighting;
-	public float fightingTimeCurrent;
-	public float fightingTime;
-	public boolean jumping;
-	public boolean doubleJumping;
-	public float velocityY;
-	public float velocityX;
-
-	public Enemy(String name, float life, Weapon weapon, Pack win_bonus, Level level) {
-
-		velocity = 60;
-		this.setName(name);
-		this.health = 300;
-		// this.weapon = weapon;
-		this.weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev1, Type.Spear);
-		this.win_bonus = win_bonus;
-		this.level = level;
-
-		stateTimer = 0;
+	public Enemy(Enemy enemy){
+		
 		x = 700;
 		y = 250;
+		weapon = enemy.weapon;
+		level = enemy.level;
+		name = enemy.name;
+		health = enemy.health;
+		velocity = enemy.velocity;
+		stateTimer = 0;
 		height = 150;
 		width = 120;
 		currentState = StateDynamicObject.STANDING;
 		previousState = null;
 		fighting = false;
 		fightingTimeCurrent = 0;
-		fightingTime = 0.2f;
-
+		fightingTime = 0.4f;
+		
 		jumping = false;
 		doubleJumping = false;
 		velocityY = 0;
 		velocityX = 10;
+		
 	}
-
 	public Enemy(Level level) {
+		super();
 		this.level = level;
 		switch (level) {
 		case EASY:
 			name = "Bob";
 			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev1);
 			health = 100;
-			//win_bonus = new Pack(Level.EASY);
-			velocity = 40;
+			win_bonus = new Pack(Level.EASY);
+			velocity = 40;		
 			break;
 		case MEDIUM:
 			name = "John";
@@ -86,18 +81,12 @@ public class Enemy extends DynamicObjects {
 		stateTimer = 0;
 		x = 700;
 		y = 250;
-		height = 150;
-		width = 120;
-		currentState = StateDynamicObject.STANDING;
-		previousState = null;
-		fighting = false;
-		fightingTimeCurrent = 0;
-		fightingTime = 0.2f;
-
-		jumping = false;
-		doubleJumping = false;
-		velocityY = 0;
-		velocityX = 10;
+		
+		Bomb bomb = new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba);
+		bombe.add(bomb);
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 	}
 
 	public float getHealth() {
@@ -118,6 +107,7 @@ public class Enemy extends DynamicObjects {
 	}
 
 	public void update(float dt) {
+		//bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 		if (!fighting && !jumping && !doubleJumping) {
 
 			switch (level) {
@@ -135,7 +125,7 @@ public class Enemy extends DynamicObjects {
 			}
 		}
 		if (fighting && fightingTimeCurrent < fightingTime) {
-			fightingTimeCurrent += 0.02;
+			fightingTimeCurrent += dt;
 			setState(getCurrentState());
 
 		} else if (fighting && fightingTimeCurrent > fightingTime) {
@@ -157,6 +147,18 @@ public class Enemy extends DynamicObjects {
 			y = 250;
 			velocityY = 0;
 		}
+		Iterator<Bomb> it1 = bombe.iterator();
+		while (it1.hasNext()) {
+			Bomb ob = (Bomb) it1.next();
+			if (ob.lanciata == true) {
+				((Bomb) ob).update(dt);
+				if (ob.morta) {
+					it1.remove();
+					System.out.println("Bomba enemy eliminata");
+					continue;
+				}
+			}
+		}
 
 	}
 
@@ -177,9 +179,29 @@ public class Enemy extends DynamicObjects {
 				fightRight();
 		} else if (Game.world.battle.character.getX() > x && rand < 90)
 			movesRight(dt);
-		else if (x > Game.world.battle.character.getX() && rand < 90)
+		else if (x > Game.world.battle.character.getX() && rand < 90) {
+			if(rand>75 && rand <80)
+				lanciaBomb(dt);
 			movesLeft(dt);
+		}
 
+	}
+
+	public void lanciaBomb(float dt) {
+		if (left && !bombe.isEmpty()) {
+			int velocityy = 10;
+			float xx = getX();
+			float yy = getY();
+			while (xx > Game.world.battle.character.getX() && yy <Game.world.battle.character.getY() ) {
+				int velocityYY = (int) (velocityy * Math.sin(90 * (Math.PI / 180)));
+				int velocityXX = -(int) (velocityy * Math.cos(30 * (Math.PI / 180)));
+				//int velocityYY = (int) (velocityy * Math.sin(90 * (Math.PI / 180)));
+				xx = velocityXX * dt;
+				yy = velocityYY * dt - GameConfig.gravity*dt*dt;
+				velocityy++;
+			}
+		
+		}
 	}
 
 	public void updateEnemyMedium(float dt) {
@@ -269,7 +291,6 @@ public class Enemy extends DynamicObjects {
 	}
 
 	public void movesLeft(float dt) {
-
 		if (x - width / 2 > 0)
 			x -= velocity * dt;
 		if (collide())
@@ -293,7 +314,7 @@ public class Enemy extends DynamicObjects {
 	}
 
 	public boolean collide() {
-
+		
 		if (!((x > Game.world.battle.character.getX() + Game.world.battle.character.getWidth() / 2
 				|| Game.world.battle.character.getX() > x + width / 2)
 				|| (y > Game.world.battle.character.getY() + Game.world.battle.character.getHeight() / 2

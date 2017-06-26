@@ -34,7 +34,7 @@ public class World {
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
 		maps[0] = new Map("res/map/mappaNUOVAOK", true, "Village one");
-		maps[1] = new Map("res/map/newMap", false, "Village two");
+		maps[1] = new Map("res/map/prova", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
 
@@ -47,7 +47,7 @@ public class World {
 
 		maps = new Map[2];
 		maps[0] = new Map(path, true, "Village one");
-		maps[1] = new Map("res/map/Map1", false, "Village two");
+		maps[1] = new Map("res/map/prova", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
 		getThread().start();

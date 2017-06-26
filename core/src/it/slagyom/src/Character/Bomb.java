@@ -1,5 +1,6 @@
 package it.slagyom.src.Character;
 
+import battle.CharacterBattle;
 import battle.Enemy;
 import battle.Fighting;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
@@ -25,7 +26,7 @@ public class Bomb extends Weapon implements ICollidable {
 		mainY = 1250;
 		switch (level) {
 		case lev1:
-			setDamage(10);
+			setDamage(100);
 			setWidth(10);
 			break;
 		case lev2:
@@ -48,11 +49,11 @@ public class Bomb extends Weapon implements ICollidable {
 
 		if (((Fighting) fighting).left)
 			velocityX -= (int) (velocity * Math.cos(30 * (Math.PI / 180)));
-
+			//velocityX = velocity;
 		else
 			velocityX = (int) (velocity * Math.cos(30 * (Math.PI / 180)));
 		velocityY = (int) (velocity * Math.sin(90 * (Math.PI / 180)));
-
+		//velocityY = 100;
 	}
 
 	public int getMainX() {
@@ -101,6 +102,14 @@ public class Bomb extends Weapon implements ICollidable {
 						|| enemy.getY() > mainY + getHeight()))) {
 			enemy.decreaseHealth(this);
 			System.out.println("collissione con il nemico");
+			return true;
+		}
+		CharacterBattle player = Game.world.battle.character;
+		if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
+				|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
+						|| player.getY() > mainY + getHeight()))) {
+			player.decreaseHealth(this);
+			System.out.println("collissione della bomba con il player");
 			return true;
 		}
 

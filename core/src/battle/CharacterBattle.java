@@ -123,6 +123,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 	}
 
 	public void movesRight(float dt) {
+		if (player.x + player.velocity * dt + player.getWidth() < 1920)
 		left = false;
 		right = true;
 		if (player.x + player.velocity * dt + player.getWidth() < 1100)

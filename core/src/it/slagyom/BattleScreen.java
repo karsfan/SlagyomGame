@@ -115,7 +115,7 @@ public class BattleScreen implements Screen {
 			battle.character.bomba = true;
 		} else {
 			if (battle.character.bomba)
-				battle.character.player.bag.lancia(battle.character.forza, battle.character.getCurrentState());
+				battle.character.player.bag.lancia(battle.character.forza, battle.character);
 			battle.character.bomba = false;
 			battle.character.forza = 50;
 			if (Gdx.input.isKeyJustPressed(Keys.S))

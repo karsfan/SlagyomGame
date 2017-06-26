@@ -9,24 +9,13 @@ import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.Weapon;
 
-public class CharacterBattle implements it.slagyom.src.World.ICollidable {
+public class CharacterBattle extends Fighting implements it.slagyom.src.World.ICollidable {
 
 	public Player player;
 
-	public float stateTimer;
-	public boolean fighting;
-	public float fightingTimeCurrent;
-	public float fightingTime;
-	public boolean jumping;
-	public boolean doubleJumping;
-	public float velocityY;
-	public float velocityX;
-	public int forza=50;
-	public boolean bomba = false;
-	public boolean left = false;
-	public boolean right = true;
 	
 	public CharacterBattle(final Player character1) {
+		super();
 		stateTimer = 0;
 
 		player = new Player(character1);
@@ -36,14 +25,7 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 		player.height = 150;
 		player.currentState = StateDynamicObject.STANDING;
 		player.previousState = null;
-		fighting = false;
-		fightingTimeCurrent = 0.0f;
-		fightingTime = 0.2f;
-
-		jumping = false;
-		doubleJumping = false;
-		velocityY = 0;
-		velocityX = 2;
+		
 	}
 
 	public float getHealth() {
@@ -99,7 +81,7 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 				((Bomb) ob).update(dt);
 				if (ob.morta) {
 					it1.remove();
-					System.out.println("eliminata");
+					System.out.println("Bomba player eliminata");
 					continue;
 				}
 			}
@@ -226,7 +208,6 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 	}
 	public void caricaBomba(float dt) {
 		forza+=100*dt;
-		System.out.println(forza);
 	}
 
 }

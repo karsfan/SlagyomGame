@@ -1,6 +1,7 @@
 package it.slagyom.src.Character;
 
 import battle.Enemy;
+import battle.Fighting;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
@@ -40,18 +41,18 @@ public class Bomb extends Weapon implements ICollidable {
 		}
 	}
 
-	public void lancia(int velocity, Object dynamicObjects) {
+	public void lancia(int velocity, Fighting fighting) {
 		lanciata = true;
-		mainX = ((int) ((DynamicObjects) dynamicObjects).getX());
-		mainY = ((int) ((DynamicObjects) dynamicObjects).getY());
-		if(dynamicObjects instanceof Enemy)
-			if(((Enemy) dynamicObjects).left){
-			velocityX -= (int) (velocity * Math.cos(30 * (Math.PI / 180)));			
-		}
+		mainX = ((int) ((Fighting) fighting).getX());
+		mainY = ((int) ((Fighting) fighting).getY());
+
+		if (((Fighting) fighting).left)
+			velocityX -= (int) (velocity * Math.cos(30 * (Math.PI / 180)));
+
 		else
-			velocityX = (int) (velocity * Math.cos(30 * (Math.PI / 180)));			
+			velocityX = (int) (velocity * Math.cos(30 * (Math.PI / 180)));
 		velocityY = (int) (velocity * Math.sin(90 * (Math.PI / 180)));
-		
+
 	}
 
 	public int getMainX() {
@@ -77,7 +78,7 @@ public class Bomb extends Weapon implements ICollidable {
 	public void update(float dt) {
 
 		mainX += velocityX * dt;
-		mainY += velocityY * dt;
+		mainY += velocityY * dt - GameConfig.gravity * dt * dt;
 
 		velocityY -= GameConfig.gravity * dt;
 		if (mainY <= 250)
@@ -96,7 +97,8 @@ public class Bomb extends Weapon implements ICollidable {
 	public boolean collide() {
 		Enemy enemy = Game.world.battle.enemy;
 		if (!((mainX > enemy.getX() + enemy.getWidth() / 2 || enemy.getX() > mainX + getWidth())
-				|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight()/4 || enemy.getY() > mainY + getHeight()))) {
+				|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
+						|| enemy.getY() > mainY + getHeight()))) {
 			enemy.decreaseHealth(this);
 			System.out.println("collissione con il nemico");
 			return true;

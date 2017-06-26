@@ -203,8 +203,8 @@ public class LoadingImage {
 		arrayAnimation[1] = left;
 		arrayAnimation[2] = fightingRight;
 		arrayAnimation[3] = fightingLeft;
-		arrayAnimation[2].setFrameDuration(0.02f);
-		arrayAnimation[3].setFrameDuration(0.02f);
+		arrayAnimation[2].setFrameDuration(0.04f);
+		arrayAnimation[3].setFrameDuration(0.04f);
 		stand.setRegion(arrayAnimation[0].getKeyFrame(0, true));
 
 	}

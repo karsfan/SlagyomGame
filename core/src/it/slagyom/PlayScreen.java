@@ -47,7 +47,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	public static Item obj;
 	public static float drawx;
 	public static float drawy;
-
 	boolean movesGamePad = false;
 	
 

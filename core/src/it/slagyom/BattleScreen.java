@@ -62,15 +62,17 @@ public class BattleScreen implements Screen {
 		CharacterBattle tmp = battle.character;
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp), tmp.getX(), tmp.getY(), tmp.getWidth(),
 				tmp.getHeight());
+
 		Enemy tmp1 = battle.enemy;
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
 				tmp1.getHeight());
-		Iterator <Bomb> bombIterator = battle.character.player.bag.bombe.iterator();
+
+		Iterator<Bomb> bombIterator = battle.character.player.bag.bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
-			if (searching.lanciata==true) {
-				gameslagyom.batch.draw(LoadingImage.getTileImage(searching), searching.getMainX(), searching.getMainY(), searching.getWidth()+10,
-						searching.getHeight()+10);
+			if (searching.lanciata == true) {
+				gameslagyom.batch.draw(LoadingImage.getTileImage(searching), searching.getMainX(), searching.getMainY(),
+						searching.getWidth() + 10, searching.getHeight() + 10);
 			}
 		}
 	}
@@ -87,7 +89,7 @@ public class BattleScreen implements Screen {
 	}
 
 	private void handleInput(float dt) {
-		
+
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			// va messo in pausa e poi in caso bisogna ritornare nel playscreen
 			gameslagyom.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
@@ -95,11 +97,10 @@ public class BattleScreen implements Screen {
 		}
 		moveCharacter(dt);
 	}
-	
+
 	private void moveCharacter(float dt) {
-		
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE))
-		{
+
+		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			gameslagyom.screenManager.swapScreen(it.slagyom.ScreenManager.State.PAUSE);
 		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
@@ -110,10 +111,13 @@ public class BattleScreen implements Screen {
 				battle.character.player.bag.lancia(battle.character.forza);
 			battle.character.bomba = false;
 			battle.character.forza = 50;
+			
 			if (Gdx.input.isKeyJustPressed(Keys.S))
 				battle.character.setState(StateDynamicObject.DEFENDING, dt);
+			
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				battle.character.jump(dt);
+				
 			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.A))
 					battle.character.fightLeft(dt);
@@ -125,7 +129,6 @@ public class BattleScreen implements Screen {
 				else
 					battle.character.movesRight(dt);
 			} else {
-
 				battle.character.stand();
 			}
 		}
@@ -134,7 +137,8 @@ public class BattleScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
-		//gamecam.position.set((float) gamecam.viewportWidth / 2, (float) gamecam.viewportHeight / 2, 0);
+		// gamecam.position.set((float) gamecam.viewportWidth / 2, (float)
+		// gamecam.viewportHeight / 2, 0);
 		gamecam.update();
 	}
 

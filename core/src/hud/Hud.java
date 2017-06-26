@@ -39,6 +39,7 @@ public class Hud {
 	public Hud(SpriteBatch sb) {
 		atlasBar = new TextureAtlas("menu/golden-spiral/golden-ui-skin.atlas");
 		skinBar = new Skin(Gdx.files.internal("menu/golden-spiral/golden-ui-skin.json"), atlasBar);
+		
 		spriteBatch = sb;
 		viewport = new FitViewport(1920, 1080);
 		stage = new Stage(viewport, sb);

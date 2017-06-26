@@ -2,13 +2,18 @@ package hud;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -16,27 +21,26 @@ import it.slagyom.MenuScreen;
 import it.slagyom.src.World.Game;
 
 public class BattleHud {
-	
+
 	public SpriteBatch spriteBatch;
 	public Stage stage;
 	private Viewport viewport;
-	
+
 	private Label nameCharacterLabel;
 	private Label nameEnemyLabel;
-	
+
 	Integer healthCharacter;
 	Integer healthEnemy;
 	static TextureAtlas atlasBar;
 	public static Skin skinBar;
 	ProgressBar barPlayer;
 	ProgressBar barEnemy;
-	
+
 	public BattleHud(SpriteBatch batch, Viewport viewport) {
-		
+
 		spriteBatch = batch;
-		//viewport = new ExtendViewport(854, 480, new OrthographicCamera());
-		//this.viewport = viewport;
-		this.viewport = new FitViewport(1200,1200, new OrthographicCamera());
+		this.viewport = new FitViewport(1920, 1080, new OrthographicCamera());
+
 		stage = new Stage(this.viewport, spriteBatch);
 
 		healthCharacter = (int) Game.world.battle.character.getHealth();
@@ -45,35 +49,43 @@ public class BattleHud {
 		atlasBar = new TextureAtlas("menu/glassy/glassy-ui.atlas");
 		skinBar = new Skin(Gdx.files.internal("menu/glassy/glassy-ui.json"), atlasBar);
 
-		barPlayer = new ProgressBar(0.1f, healthCharacter, 0.1f, false, skinBar);
-		barEnemy = new ProgressBar(0.1f,healthEnemy, 0.1f,false,skinBar);
-		
-		barPlayer.setBounds(this.viewport.getWorldWidth()/13, this.viewport.getWorldHeight()/1.1f, healthCharacter, 15);
-		barEnemy.setBounds(this.viewport.getWorldWidth()/1.2f, this.viewport.getWorldHeight()/1.1f, healthEnemy,15);
-		
-		stage.addActor(barEnemy);
-		stage.addActor(barPlayer);
-		
-		
+		barPlayer = new ProgressBar(0.1f, healthCharacter, 0.1f, false, MenuScreen.skin);
+		barEnemy = new ProgressBar(0.1f, healthEnemy, 0.1f, false, MenuScreen.skin);
+
+		/*barPlayer.setBounds(this.viewport.getWorldWidth() / 13, this.viewport.getWorldHeight() / 1.1f, healthCharacter,
+				15);
+		barEnemy.setBounds(this.viewport.getWorldWidth() / 1.2f, this.viewport.getWorldHeight() / 1.1f, healthEnemy,
+				15);*/
+
+
 		Table table = new Table();
 		table.top(); // la allinea sopra al centro
 		table.setFillParent(true);
-	
-		nameCharacterLabel = new Label(Game.player.name, MenuScreen.skin);
-		
-	
-		table.add(nameCharacterLabel).expandX().pad(20);
-		nameEnemyLabel = new Label(Game.world.battle.enemy.getName(), MenuScreen.skin);
-	
-		table.add(nameEnemyLabel).expandX().pad(20);
-		table.row(); // nuova colonna
 
+		Table bgTable = new Table();
+		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/BattleHudBg.png")));
+		bgTable.setBackground(hudBG);
+		bgTable.top(); // la allinea sopra al centro
+		bgTable.setFillParent(true);		
+		
+		nameCharacterLabel = new Label(Game.player.name, MenuScreen.skin);
+		table.add(nameCharacterLabel).expandX().pad(20);
+		table.row();
+		
+		table.add(barPlayer).expandX();
+		table.add(barEnemy).expandX().padLeft(this.viewport.getWorldHeight()/3);
+
+		nameEnemyLabel = new Label(Game.world.battle.enemy.getName(), MenuScreen.skin);
+		table.add(nameEnemyLabel).expandX().pad(20);
+
+		
+		stage.addActor(bgTable);
 		stage.addActor(table);
 
 	}
 
-	public void update(float dt){
-		
+	public void update(float dt) {
+
 		healthCharacter = (int) Game.world.battle.character.getHealth();
 		barPlayer.setValue(healthCharacter.intValue());
 		healthEnemy = (int) Game.world.battle.enemy.getHealth();

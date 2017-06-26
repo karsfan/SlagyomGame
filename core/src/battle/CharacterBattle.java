@@ -140,7 +140,7 @@ public class CharacterBattle implements it.slagyom.src.World.ICollidable {
 
 	public void movesRight(float dt) {
 
-		if (player.x + player.velocity * dt + player.getWidth() < 1100)
+		if (player.x + player.velocity * dt + player.getWidth() < 1920)
 			player.x += player.velocity * dt;
 		if (collide())
 			player.x -= player.velocity * dt;

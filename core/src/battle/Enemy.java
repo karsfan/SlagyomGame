@@ -260,7 +260,7 @@ public class Enemy extends DynamicObjects {
 
 	public void movesRight(float dt) {
 
-		if (x + velocity * dt + getWidth() < 1100)
+		if (x + velocity * dt + getWidth() < 1920)
 			x += velocity * dt;
 		if (collide())
 			x -= velocity * dt;

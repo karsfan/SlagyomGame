@@ -24,6 +24,7 @@ public class Bag {
 			if (!bomba.lanciata) {
 				bomba.lanciata = true;
 				bomba.lancia(vel, fighting);
+				bomba.id = "Player";
 				break;
 			}
 		}

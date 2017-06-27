@@ -3,6 +3,7 @@ package staticObjects;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import battle.Enemy;
 import battle.Enemy.Level;
 import it.slagyom.src.Character.Player;
 
@@ -26,5 +27,8 @@ public class HeadHome extends EnemyHome{
 	public void setPoint(Point point) {
 		shape = new Rectangle((int) point.getX() * 32, (int) (point.getY() - 96/32) * 32, 128, 96);
 		door = new Rectangle((int) (shape.getX() + shape.getWidth() / 3), (int) shape.getY(), 26, 8);
+	}
+	public Enemy getEnemy(){
+		return enemy;
 	}
 }

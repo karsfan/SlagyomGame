@@ -25,6 +25,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 		player.height = 150;
 		player.currentState = StateDynamicObject.STANDING;
 		player.previousState = null;
+		right = true;
 		
 	}
 
@@ -123,6 +124,8 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 	}
 
 	public void movesRight(float dt) {
+		right = true;
+		left = false;
 		if (player.x + player.velocity * dt + player.getWidth() < 1920)
 		left = false;
 		right = true;

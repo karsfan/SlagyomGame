@@ -21,7 +21,7 @@ public class Man extends DynamicObjects implements ICollidable {
 	public boolean collision;
 	public boolean collisionWithCharacter;
 	int passi;
-	
+
 	public Man() {
 		super();
 		collision = false;
@@ -66,16 +66,14 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesRight(float dt) {
-		
 		if (x < GameConfig.WIDTH - width / 2) {
 			x += velocity * dt;
 			if (collide(this)) {
 				// collision = true;
 				x -= velocity * dt;
 			}
-		}
-		else{
-			
+		} else {
+
 			changeDirection(getCurrentState());
 		}
 		if (passi < 50000) {
@@ -104,15 +102,13 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesLeft(float dt) {
-
 		if (x > 5) {
 			x -= velocity * dt;
 			if (collide(this)) {
 				x += velocity * dt;
 			}
-		}
-		else{
-			
+		} else {
+
 			changeDirection(getCurrentState());
 		}
 		if (passi < 50000) {
@@ -141,15 +137,13 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesUp(float dt) {
-		
 		if (y < GameConfig.HEIGHT - height - 5) {
 			y += velocity * dt;
 			if (collide(this)) {
 				y -= velocity * dt;
 			}
-		}
-		else{
-		
+		} else {
+
 			changeDirection(getCurrentState());
 		}
 
@@ -179,16 +173,14 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesDown(float dt) {
-		
 		if (y > 0) {
 			y -= velocity * dt;
 			if (collide(this)) {
 				y += velocity * dt;
 				// collision = true;
 			}
-		}
-		else{
-			
+		} else {
+
 			changeDirection(getCurrentState());
 		}
 		if (passi < 50000) {
@@ -249,17 +241,31 @@ public class Man extends DynamicObjects implements ICollidable {
 
 	@Override
 	public boolean collide(Object e) {
-		
-		Iterator<StaticObject> it =  Game.world.getListTile().iterator();
+
+		Iterator<StaticObject> it = Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
-				if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)// &&  ((Tile) ob).getElement() != Element.FLOOR && ((Tile) ob).getElement() != Element.FLOOR2 && ((Tile) ob).getElement() != Element.FLOOR3)
-					if (((StaticObject) ob).collide(this)) {
-						collision = true;
-						return true;
-					}
+			if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)// &&
+																														// ((Tile)
+																														// ob).getElement()
+																														// !=
+																														// Element.FLOOR
+																														// &&
+																														// ((Tile)
+																														// ob).getElement()
+																														// !=
+																														// Element.FLOOR2
+																														// &&
+																														// ((Tile)
+																														// ob).getElement()
+																														// !=
+																														// Element.FLOOR3)
+				if (((StaticObject) ob).collide(this)) {
+					collision = true;
+					return true;
+				}
 		}
-		
+
 		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -310,7 +316,6 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void update(float dt) {
-
 		if (collision || collisionWithCharacter)
 			changeDirection(getCurrentState());
 

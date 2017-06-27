@@ -70,7 +70,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 		return name;
 	}
 
-	public void movesRight(float dt) {
+	/*public void movesRight(float dt) {
 
 		if (x < GameConfig.WIDTH - width / 2) {
 			x += velocity * dt;
@@ -216,7 +216,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 			}
 		}
 	}
-
+	*/
 	private void setStateTimer(float f) {
 		stateTimer = f;
 	}

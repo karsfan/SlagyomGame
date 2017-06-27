@@ -23,11 +23,9 @@ public class Enemy extends Fighting {
 	public boolean morto = false;
 	Pack win_bonus;
 	public Level level;
-	
-	
 
-	public Enemy(Enemy enemy){
-		
+	public Enemy(Enemy enemy) {
+
 		x = 700;
 		y = 250;
 		weapon = enemy.weapon;
@@ -43,13 +41,17 @@ public class Enemy extends Fighting {
 		fighting = false;
 		fightingTimeCurrent = 0;
 		fightingTime = 0.4f;
-		
+
 		jumping = false;
 		doubleJumping = false;
 		velocityY = 0;
 		velocityX = 10;
-		
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		System.out.println(bombe.size());
 	}
+
 	public Enemy(Level level) {
 		super();
 		this.level = level;
@@ -59,7 +61,7 @@ public class Enemy extends Fighting {
 			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev1);
 			health = 100;
 			win_bonus = new Pack(Level.EASY);
-			velocity = 40;		
+			velocity = 40;
 			break;
 		case MEDIUM:
 			name = "John";
@@ -81,7 +83,7 @@ public class Enemy extends Fighting {
 		stateTimer = 0;
 		x = 700;
 		y = 250;
-		
+
 		Bomb bomb = new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba);
 		bombe.add(bomb);
 		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
@@ -107,7 +109,8 @@ public class Enemy extends Fighting {
 	}
 
 	public void update(float dt) {
-		//bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		// bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
+		// Type.Bomba));
 		if (!fighting && !jumping && !doubleJumping) {
 
 			switch (level) {
@@ -180,7 +183,7 @@ public class Enemy extends Fighting {
 		} else if (Game.world.battle.character.getX() > x && rand < 90)
 			movesRight(dt);
 		else if (x > Game.world.battle.character.getX() && rand < 90) {
-			if(rand>75 && rand <80)
+			if (rand > 75 && rand < 80)
 				lanciaBomb(dt);
 			movesLeft(dt);
 		}
@@ -189,18 +192,20 @@ public class Enemy extends Fighting {
 
 	public void lanciaBomb(float dt) {
 		if (left && !bombe.isEmpty()) {
-			int velocityy = 10;
-			float xx = getX();
-			float yy = getY();
-			while (xx > Game.world.battle.character.getX() && yy <Game.world.battle.character.getY() ) {
-				int velocityYY = (int) (velocityy * Math.sin(90 * (Math.PI / 180)));
-				int velocityXX = -(int) (velocityy * Math.cos(30 * (Math.PI / 180)));
-				//int velocityYY = (int) (velocityy * Math.sin(90 * (Math.PI / 180)));
-				xx = velocityXX * dt;
-				yy = velocityYY * dt - GameConfig.gravity*dt*dt;
-				velocityy++;
+			int velocityy = 200;
+			//calcolo della gittata
+			velocityy = (int) Math.sqrt(((x-Game.world.battle.character.getX())*GameConfig.gravity)/((2*Math.cos(30 * (Math.PI / 180))*Math.sin(90 * (Math.PI / 180)))));
+			Iterator<Bomb> it1 = bombe.iterator();
+			while (it1.hasNext()) {
+				Bomb ob = (Bomb) it1.next();
+				if (!ob.lanciata) {
+					System.out.println(velocityy);
+					ob.lancia(velocityy, this);
+					ob.id = "Enemy";
+					System.out.println("lancia");
+					break;
+				}
 			}
-		
 		}
 	}
 
@@ -291,6 +296,7 @@ public class Enemy extends Fighting {
 	}
 
 	public void movesLeft(float dt) {
+		left = true;
 		if (x - width / 2 > 0)
 			x -= velocity * dt;
 		if (collide())
@@ -314,7 +320,7 @@ public class Enemy extends Fighting {
 	}
 
 	public boolean collide() {
-		
+
 		if (!((x > Game.world.battle.character.getX() + Game.world.battle.character.getWidth() / 2
 				|| Game.world.battle.character.getX() > x + width / 2)
 				|| (y > Game.world.battle.character.getY() + Game.world.battle.character.getHeight() / 2

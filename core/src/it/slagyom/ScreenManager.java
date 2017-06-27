@@ -2,6 +2,8 @@ package it.slagyom;
 
 import com.badlogic.gdx.Gdx;
 
+import it.slagyom.src.World.Game;
+
 
 public class ScreenManager {
 	GameSlagyom gameSlagyom;
@@ -48,6 +50,7 @@ public class ScreenManager {
 			gameSlagyom.musicManager.play("BACKGROUND");
 			gameSlagyom.setScreen(getPlayScreen());
 			menuScreen.menuMusic.stop();
+			Game.world.semaphore.release();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.MULTIPLAYER) {
 			gameSlagyom.setScreen(multiplayerScreen);
@@ -68,15 +71,13 @@ public class ScreenManager {
 			gameSlagyom.setScreen(battlescreen);
 		} else if (currentState == State.PAUSE) {
 			gameSlagyom.musicManager.pause();
-			
 			gameSlagyom.musicManager.play("MAINMUSIC");
 			gameSlagyom.setScreen(pauseScreen);
-			try {
+			/*try {
 				it.slagyom.src.World.Game.world.semaphore.acquire();
 			} catch (InterruptedException e) {
-
 				e.printStackTrace();
-			}
+			}*/
 			Gdx.input.setInputProcessor(pauseScreen.stage);
 		} else if (currentState == State.BAG) {
 			bagScreen = new BagScreen(gameSlagyom);

@@ -9,6 +9,7 @@ import it.slagyom.src.World.ICollidable;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
+import staticObjects.HeadHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
@@ -36,8 +37,8 @@ public class Player extends DynamicObjects implements ICollidable {
 		power = 100;
 		coins = 0;
 		while (!positionCharacter())
-		;
-		
+			;
+
 		velocity = 100;
 
 		currentState = StateDynamicObject.STANDING;
@@ -214,7 +215,6 @@ public class Player extends DynamicObjects implements ICollidable {
 
 		if (y < GameConfig.HEIGHT - height - 5) {
 			float velocityY = velocity;
-			
 
 			y += (velocityY * dt);
 			if (collide(this)) {
@@ -227,7 +227,7 @@ public class Player extends DynamicObjects implements ICollidable {
 	public void movesDown(float dt) {
 		if (y > 0) {
 			float velocityY = velocity;
-			
+
 			y -= (velocityY * dt);
 			if (collide(this))
 				y += (velocityY * dt);
@@ -287,14 +287,14 @@ public class Player extends DynamicObjects implements ICollidable {
 
 	}
 
-
 	@Override
 	public synchronized boolean collide(Object e) {
 		Iterator<StaticObject> it = Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject) {
-				if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)
+				if (((StaticObject) ob).getElement() != Element.GROUND
+						&& ((StaticObject) ob).getElement() != Element.ROAD)
 					if (((StaticObject) ob).collide(this)) {
 						if (((StaticObject) ob).getElement() == Element.TABLE)
 							PlayScreen.hud.setDialogText(((StaticObject) ob).getInfo());
@@ -309,7 +309,12 @@ public class Player extends DynamicObjects implements ICollidable {
 								Game.world.createBattle((PreEnemyHouse) ob);
 								return true;
 							}
-						}
+						} else if (((StaticObject) ob).getElement() == Element.BIGHOME)
+							if (((HeadHome) ob).collideDoor(this)) {
+								collideGym = true;
+								Game.world.createBattle((HeadHome) ob);
+								return true;
+							}
 						return true;
 					}
 			}

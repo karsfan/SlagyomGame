@@ -91,7 +91,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	@Override
 	public void render(float delta) {
 		update(delta);
-
+		System.out.println(Game.world.semaphore.availablePermits());
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(gamecam.combined);
@@ -238,6 +238,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 					game.musicManager.pause();
+					Game.world.semaphore.acquire();
 					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PAUSE);
 				}
 
@@ -258,7 +259,8 @@ public class PlayScreen implements Screen, ControllerListener {
 			hud.showDialog = false;
 			hideDialog();
 			if (stop) {
-				Game.world.semaphore.release();
+				//Game.world.semaphore.release();
+				Game.world.getThread().start();
 				stop = false;
 			}
 		}

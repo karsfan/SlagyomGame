@@ -3,6 +3,7 @@ package it.slagyom.src.World;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import battle.Battle;
@@ -12,6 +13,7 @@ import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Man;
 import it.slagyom.src.Character.Woman;
+import staticObjects.HeadHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.StaticObject;
@@ -34,23 +36,23 @@ public class World {
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
 		maps[0] = new Map("res/map/mappaNUOVAOK", true, "Village one");
-		maps[1] = new Map("res/map/newMap", false, "Village two");
+		maps[1] = new Map("res/map/prova", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
-
+		//getThread().start();
 	}
 
 	public World(String path) {
 		level = 0;
-		semaphore = new Semaphore(0);
+		semaphore = new Semaphore(1);
 		people = new ArrayList<DynamicObjects>();
 
 		maps = new Map[2];
 		maps[0] = new Map(path, true, "Village one");
-		maps[1] = new Map("res/map/Map1", false, "Village two");
+		maps[1] = new Map("res/map/prova", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
-		getThread().start();
+		//getThread().start();
 
 	}
 
@@ -87,12 +89,12 @@ public class World {
 
 	public void update(float dt) {
 		timerItem += dt;
-		try {
+		/*try {
 			semaphore.acquire();
 		} catch (InterruptedException e) {
 
 			e.printStackTrace();
-		}
+		}*/
 		Iterator<DynamicObjects> it1 = people.iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -103,7 +105,7 @@ public class World {
 				((Man) ob).update(dt);
 		}
 
-		semaphore.release();
+		//semaphore.release();
 		if (timerItem >= 60) {
 			Item item = new Item();
 			getMap().getListItems().add(item);
@@ -127,7 +129,7 @@ public class World {
 				break;
 			}
 		}
-		if(!creata){
+		if (!creata) {
 			Game.player.collideGym = false;
 			PlayScreen.hud.setDialogText("Non ci sono nemici in questa casa");
 		}
@@ -161,6 +163,33 @@ public class World {
 
 	public void setThread(ThreadWorld thread) {
 		this.thread = thread;
+	}
+
+	public void createBattle(HeadHome headHome) {
+		boolean creata = true;
+		Iterator<StaticObject> it = getListTile().iterator();
+		while (it.hasNext()) {
+			StaticObject ob = (StaticObject) it.next();
+			if (ob instanceof PreEnemyHouse) {
+				Iterator<Enemy> it1 = ((PreEnemyHouse) ob).enemy.iterator();
+				while (it1.hasNext()) {
+					Enemy ob1 = (Enemy) it1.next();
+					if (!ob1.morto) {
+						creata = false;
+						break;
+					}
+					if (!creata)
+						break;
+				}
+			}
+		}
+		if (creata) {
+			battle = new Battle(Game.player, headHome.enemy);
+		} else{
+			Game.player.collideGym = false;
+			PlayScreen.hud.setDialogText("Non ci puoi accedere se prima non hai eliminati tutti i nemici");
+		}
+
 	}
 
 }

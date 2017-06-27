@@ -130,7 +130,7 @@ public class MenuScreen implements Screen {
 
 		// Add table to stage
 		stage.addActor(mainTable);
-		Controllers.addListener(new MenuControllerListener(mainTable));
+		//Controllers.addListener(new MenuControllerListener(mainTable));
 	}
 
 	@Override

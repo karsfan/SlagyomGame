@@ -36,12 +36,11 @@ public class BattleHud {
 	ProgressBar barPlayer;
 	ProgressBar barEnemy;
 
-	public BattleHud(SpriteBatch batch, Viewport viewport) {
+	public BattleHud(SpriteBatch sb) {
 
-		spriteBatch = batch;
-		this.viewport = new FitViewport(1920, 1080, new OrthographicCamera());
-
-		stage = new Stage(this.viewport, spriteBatch);
+		spriteBatch = sb;
+		viewport = new FitViewport(1700, 956);
+		stage = new Stage(viewport, sb);
 
 		healthCharacter = (int) Game.world.battle.character.getHealth();
 		healthEnemy = (int) Game.world.battle.enemy.getHealth();
@@ -62,24 +61,19 @@ public class BattleHud {
 		table.top(); // la allinea sopra al centro
 		table.setFillParent(true);
 
-		Table bgTable = new Table();
 		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/BattleHudBg.png")));
-		bgTable.setBackground(hudBG);
-		bgTable.top(); // la allinea sopra al centro
-		bgTable.setFillParent(true);		
+		table.setBackground(hudBG);
 		
 		nameCharacterLabel = new Label(Game.player.name, MenuScreen.skin);
-		table.add(nameCharacterLabel).expandX().pad(20);
-		table.row();
+		table.add(nameCharacterLabel).expandX().padTop(15);
+		nameEnemyLabel = new Label(Game.world.battle.enemy.getName(), MenuScreen.skin);
+		table.add(nameEnemyLabel).expandX().padLeft(this.viewport.getWorldHeight()/3);
+		
+		table.row().padTop(15);
 		
 		table.add(barPlayer).expandX();
 		table.add(barEnemy).expandX().padLeft(this.viewport.getWorldHeight()/3);
 
-		nameEnemyLabel = new Label(Game.world.battle.enemy.getName(), MenuScreen.skin);
-		table.add(nameEnemyLabel).expandX().pad(20);
-
-		
-		stage.addActor(bgTable);
 		stage.addActor(table);
 
 	}

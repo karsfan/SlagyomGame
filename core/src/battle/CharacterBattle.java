@@ -126,7 +126,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 		if (player.x + player.velocity * dt + player.getWidth() < 1920)
 		left = false;
 		right = true;
-		if (player.x + player.velocity * dt + player.getWidth() < 1100)
+		if (player.x + player.velocity * dt + player.getWidth() < 1920)
 			player.x += player.velocity * dt;
 		if (collide())
 			player.x -= player.velocity * dt;

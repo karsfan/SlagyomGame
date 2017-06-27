@@ -9,6 +9,7 @@ public class ThreadWorld extends Thread {
 	public ThreadWorld(World world, Semaphore semaphore) {
 		this.world = world;
 		this.semaphore = semaphore;
+	//	run();
 	}
 
 	@Override
@@ -18,12 +19,14 @@ public class ThreadWorld extends Thread {
 			while (true) {
 				long attuale = System.currentTimeMillis();
 				float dt = (float) (attuale - start);
+				//System.out.println("fuori");
 				try {
 					semaphore.acquire();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				System.out.println("dentro");
 				world.update((float) dt / 1000);
 				semaphore.release();
 				start = attuale;

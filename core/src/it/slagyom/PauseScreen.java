@@ -169,7 +169,7 @@ public class PauseScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		System.out.println(Game.world.semaphore+ "ren");
+	//	System.out.println(Game.world.semaphore+ "ren");
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();
@@ -179,6 +179,7 @@ public class PauseScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			System.out.println("esco dalla pausa");
 			game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 			//Game.world.semaphore.release();
 		}

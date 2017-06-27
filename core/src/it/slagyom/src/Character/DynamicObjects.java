@@ -18,7 +18,7 @@ public class DynamicObjects {
 	public DynamicObjects(float x, float y, StateDynamicObject currentState,
 			StateDynamicObject previousState, float stateTimer, float height, float width,
 			float velocity) {
-		super();
+		//super();
 		this.x = x;
 		this.y = y;
 		this.currentState = currentState;
@@ -70,7 +70,7 @@ public class DynamicObjects {
 	}
 
 	public void movesLeft(float dt) {
-		
+		System.out.println("movesLeftDyObj");
 	}
 
 	public void movesRight(float dt) {

@@ -276,7 +276,6 @@ public class Player extends DynamicObjects implements ICollidable {
 			}
 		} else {
 			if (!item.picked) {
-				PlayScreen.obj = item;
 				coins++;
 				GameSlagyom.getMusicManager().play("COIN");
 			}

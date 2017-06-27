@@ -355,7 +355,7 @@ public class ShopScreen implements Screen {
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			game.screenManager.swapScreen(State.PLAYING);
-			Game.world.semaphore.release();
+			//Game.world.semaphore.release();
 		}
 
 		if (currentCategory == Category.POTIONS) {

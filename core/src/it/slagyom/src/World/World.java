@@ -44,7 +44,7 @@ public class World {
 
 	public World(String path) {
 		level = 0;
-		semaphore = new Semaphore(1);
+		semaphore = new Semaphore(0);
 		people = new ArrayList<DynamicObjects>();
 
 		maps = new Map[2];
@@ -89,12 +89,7 @@ public class World {
 
 	public void update(float dt) {
 		timerItem += dt;
-		/*try {
-			semaphore.acquire();
-		} catch (InterruptedException e) {
-
-			e.printStackTrace();
-		}*/
+		
 		Iterator<DynamicObjects> it1 = people.iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -105,7 +100,7 @@ public class World {
 				((Man) ob).update(dt);
 		}
 
-		//semaphore.release();
+		
 		if (timerItem >= 60) {
 			Item item = new Item();
 			getMap().getListItems().add(item);

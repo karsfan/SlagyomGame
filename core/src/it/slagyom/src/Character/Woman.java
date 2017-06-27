@@ -70,9 +70,9 @@ public class Woman extends DynamicObjects implements ICollidable {
 		return name;
 	}
 
-	/*public void movesRight(float dt) {
+	public void movesRight(float dt) {
 
-		if (x < GameConfig.WIDTH - width / 2) {
+		if (x + velocity * dt < GameConfig.WIDTH - width / 2) {
 			x += velocity * dt;
 			if (collide(this)) {
 				// collision = true;
@@ -109,7 +109,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 	public void movesLeft(float dt) {
 
-		if (x > 5) {
+		if (x - velocity * dt > 5) {
 			x -= velocity * dt;
 			if (collide(this)) {
 				x += velocity * dt;
@@ -145,7 +145,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 	public void movesUp(float dt) {
 
-		if (y < GameConfig.HEIGHT - height - 5) {
+		if (y + velocity * dt < GameConfig.HEIGHT - height - 5) {
 			y += velocity * dt;
 			if (collide(this)) {
 				y -= velocity * dt;
@@ -182,7 +182,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 	public void movesDown(float dt) {
 
-		if (y > 0) {
+		if (y - velocity * dt > 0) {
 			y -= velocity * dt;
 			if (collide(this)) {
 				y += velocity * dt;
@@ -216,7 +216,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 			}
 		}
 	}
-	*/
+
 	private void setStateTimer(float f) {
 		stateTimer = f;
 	}

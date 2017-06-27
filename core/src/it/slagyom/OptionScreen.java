@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 
 public class OptionScreen implements Screen {

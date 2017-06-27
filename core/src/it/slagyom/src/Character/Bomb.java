@@ -3,7 +3,6 @@ package it.slagyom.src.Character;
 import battle.CharacterBattle;
 import battle.Enemy;
 import battle.Fighting;
-import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.ICollidable;

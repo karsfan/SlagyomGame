@@ -3,13 +3,11 @@ package it.slagyom.src.World;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import battle.Battle;
 import battle.Enemy;
 import it.slagyom.PlayScreen;
-import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Man;
 import it.slagyom.src.Character.Woman;

@@ -1,6 +1,5 @@
 package it.slagyom;
 
-import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,8 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import it.slagyom.src.Character.DynamicObjects;
-import it.slagyom.src.Character.Man;
 import it.slagyom.src.World.Game;
 
 public class PauseScreen implements Screen {
@@ -179,7 +175,6 @@ public class PauseScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			System.out.println("esco dalla pausa");
 			game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 			//Game.world.semaphore.release();
 		}

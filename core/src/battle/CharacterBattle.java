@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.Player;
-import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import it.slagyom.src.World.Weapon;

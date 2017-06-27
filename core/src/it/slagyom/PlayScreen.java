@@ -63,7 +63,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam.position.y = Game.player.getY();
 		hud = new Hud(game.batch);
 
-		Controllers.addListener(this);
+		//Controllers.addListener(this);
 
 	}
 

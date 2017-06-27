@@ -34,7 +34,7 @@ public class BattleScreen implements Screen {
 		gamePort.apply();
 		gamecam.position.x = battle.character.getX();
 		gamecam.position.y = battle.character.getY();
-		hud = new BattleHud(gameslagyom.batch, gamePort);
+		hud = new BattleHud(gameslagyom.batch);
 	}
 
 	@Override
@@ -53,12 +53,12 @@ public class BattleScreen implements Screen {
 		draw();
 		gameslagyom.batch.end();
 		hud.stage.draw();
-		gamePort.apply();
 	}
 
 	private void draw() {
 
 		gameslagyom.batch.draw(LoadingImage.getBattleBgImage(), 0, 0);
+		
 		CharacterBattle tmp = battle.character;
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp), tmp.getX(), tmp.getY(), tmp.getWidth(),
 				tmp.getHeight());

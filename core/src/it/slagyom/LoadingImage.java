@@ -104,7 +104,7 @@ public class LoadingImage {
 		forest1Image = new Texture("res/forest1.png");
 		forest2Image = new Texture("res/forest2.png");
 		tableImage = new Texture("res/table.png");
-		battleBackground = new Texture("res/battleBg.png");
+		battleBackground = new Texture("res/battleBg5.png");
 
 		// WORLD ITEM IMAGES
 		coinImage = new Texture("res/coin.png");

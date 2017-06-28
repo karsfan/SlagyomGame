@@ -173,7 +173,7 @@ public class PauseScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
+			game.screenManager.swapScreen(game.screenManager.getPreviousState());
 			//Game.world.semaphore.release();
 		}
 

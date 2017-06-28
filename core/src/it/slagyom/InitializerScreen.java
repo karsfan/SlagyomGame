@@ -126,7 +126,7 @@ public class InitializerScreen implements Screen {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.NEWGAME);
+				game.screenManager.swapScreen(game.screenManager.getPreviousState());
 			}
 		});
 		// Add buttons to table

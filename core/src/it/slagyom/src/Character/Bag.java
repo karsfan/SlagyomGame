@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import battle.Fighting;
-import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Type;
 import staticObjects.Item;

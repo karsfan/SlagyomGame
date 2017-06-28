@@ -3,13 +3,11 @@ package it.slagyom.src.World;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import battle.Battle;
 import battle.Enemy;
 import it.slagyom.PlayScreen;
-import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Man;
 import it.slagyom.src.Character.Woman;
@@ -44,7 +42,7 @@ public class World {
 
 	public World(String path) {
 		level = 0;
-		semaphore = new Semaphore(1);
+		semaphore = new Semaphore(0);
 		people = new ArrayList<DynamicObjects>();
 
 		maps = new Map[2];
@@ -89,12 +87,7 @@ public class World {
 
 	public void update(float dt) {
 		timerItem += dt;
-		/*try {
-			semaphore.acquire();
-		} catch (InterruptedException e) {
-
-			e.printStackTrace();
-		}*/
+		
 		Iterator<DynamicObjects> it1 = people.iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -105,7 +98,7 @@ public class World {
 				((Man) ob).update(dt);
 		}
 
-		//semaphore.release();
+		
 		if (timerItem >= 60) {
 			Item item = new Item();
 			getMap().getListItems().add(item);

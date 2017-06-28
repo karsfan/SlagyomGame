@@ -38,15 +38,13 @@ public class PlayScreen implements Screen, ControllerListener {
 	private static Drawable noDialog = null;
 	private static float textTimer;
 
-	public static boolean drawAnimation = false;
+	
 	public int j = 0;
 
 	private boolean stop = false;
 	public int i = 0;
 	PovDirection directionGamepad;
-	public static Item obj;
-	public static float drawx;
-	public static float drawy;
+
 	boolean movesGamePad = false;
 	
 
@@ -91,7 +89,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	@Override
 	public void render(float delta) {
 		update(delta);
-		System.out.println(Game.world.semaphore.availablePermits());
+		//System.out.println(Game.world.semaphore.availablePermits());
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(gamecam.combined);
@@ -126,19 +124,10 @@ public class PlayScreen implements Screen, ControllerListener {
 		}
 		// END TEXT TABLE RENDERING
 
-		if (drawAnimation)
-			j += 2;
-		else
-			j = 0;
 
 	}
 
-	public static void pickAnimation(Item ob, float x, int y) {
-		drawAnimation = true;
-		obj = new Item();
-
-		obj = ob;
-	}
+	
 
 	public static void drawDialog(final String text) {
 		Drawable dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
@@ -157,7 +146,6 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	public void update(float dt) {
 		moveCharacter(dt);
-
 		if ((Game.player.getX() - gamePort.getWorldWidth() / 2 > 0
 				&& Game.player.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
 			gamecam.position.x = Game.player.getX();
@@ -213,8 +201,8 @@ public class PlayScreen implements Screen, ControllerListener {
 				else if (Gdx.input.isKeyPressed(Keys.UP)) {
 					Game.player.movesUp(dt);
 					if (Game.player.collideShop) {
-						game.screenManager.swapScreen(it.slagyom.ScreenManager.State.SHOP);
 						Game.world.semaphore.acquire();
+						game.screenManager.swapScreen(it.slagyom.ScreenManager.State.SHOP);
 						Game.player.collideShop = false;
 					}
 					if (Game.player.collideGym) {
@@ -291,18 +279,7 @@ public class PlayScreen implements Screen, ControllerListener {
 				game.batch.draw(LoadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
 		}
-		// game.batch.draw(LoadingImage.woman1Stand, 500, 500, 160,160);
-
-		if (drawAnimation) {
-			obj.setX((int) (obj.getX() + j));
-			obj.setY((int) (obj.getY() + j));
-			game.batch.draw(LoadingImage.getTileImage(obj), (float) ((StaticObject) obj).shape.getX(),
-					(float) ((StaticObject) obj).shape.getY(), (float) ((StaticObject) obj).shape.getWidth(),
-					(float) ((StaticObject) obj).shape.getHeight());
-			if ((float) ((StaticObject) obj).shape.getX() == Gdx.graphics.getHeight()
-					|| (float) ((StaticObject) obj).shape.getY() == Gdx.graphics.getWidth())
-				drawAnimation = false;
-		}
+		
 	}
 
 	@Override

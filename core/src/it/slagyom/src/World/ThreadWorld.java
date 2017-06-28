@@ -9,6 +9,7 @@ public class ThreadWorld extends Thread {
 	public ThreadWorld(World world, Semaphore semaphore) {
 		this.world = world;
 		this.semaphore = semaphore;
+	//	run();
 	}
 
 	@Override
@@ -21,7 +22,6 @@ public class ThreadWorld extends Thread {
 				try {
 					semaphore.acquire();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				world.update((float) dt / 1000);

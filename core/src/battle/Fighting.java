@@ -1,7 +1,6 @@
 package battle;
 
 import it.slagyom.src.Character.DynamicObjects;
-import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
 
 public class Fighting extends DynamicObjects{
 	

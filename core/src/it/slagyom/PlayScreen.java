@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import battle.Enemy;
 import hud.Hud;
 import it.slagyom.src.Character.DynamicObjects;
+import it.slagyom.src.Character.Player;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.GameConfig;
 import staticObjects.Item;
@@ -46,17 +47,16 @@ public class PlayScreen implements Screen, ControllerListener {
 	PovDirection directionGamepad = null;
 
 	boolean movesGamePad = false;
-	
 
 	public PlayScreen(GameSlagyom game, String name) {
 		new LoadingImage();
 
 		new Game(name);
 		this.game = game;
-		
+
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
-				
+
 		gamePort.apply();
 
 		gamecam.position.x = Game.player.getX();
@@ -75,7 +75,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
-		
+
 		gamecam.position.x = Game.player.getX();
 		gamecam.position.y = Game.player.getY();
 		hud = new Hud(game.batch);
@@ -86,9 +86,9 @@ public class PlayScreen implements Screen, ControllerListener {
 	}
 
 	public PlayScreen(String text, GameSlagyom game, String charName) {
-		
+
 		new LoadingImage();
-		new Game(text,game,charName);
+		new Game(text, game, charName);
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
@@ -97,10 +97,9 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam.position.y = Game.player.getY();
 		hud = new Hud(game.batch);
 
-		
 	}
 
-	@SuppressWarnings({"static-access"})
+	@SuppressWarnings({ "static-access" })
 	@Override
 	public void render(float delta) {
 		update(delta);
@@ -138,10 +137,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		}
 		// END TEXT TABLE RENDERING
 
-
 	}
-
-	
 
 	public static void drawDialog(final String text) {
 		Drawable dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
@@ -176,30 +172,26 @@ public class PlayScreen implements Screen, ControllerListener {
 	private void moveCharacter(float dt) {
 		try {
 			if (!stop) {
-				/*if (movesGamePad) {
-					if (directionGamepad == PovDirection.east)
-						Game.player.movesRight(dt);
-					else if (directionGamepad == PovDirection.north) {
-						Game.player.movesUp(dt);
-						if (Game.player.collideShop) {
-							game.screenManager.swapScreen(it.slagyom.ScreenManager.State.SHOP);
-							Game.world.semaphore.acquire();
-							Game.player.collideShop = false;
-						}
-					} else if (directionGamepad == PovDirection.west)
-						Game.player.movesLeft(dt);
-					else if (directionGamepad == PovDirection.south)
-						Game.player.movesDown(dt);
-					else if (directionGamepad == PovDirection.northEast)
-						Game.player.movesNorthEast(dt);
-					else if (directionGamepad == PovDirection.northWest)
-						Game.player.movesNorthWest(dt);
-					else if (directionGamepad == PovDirection.southEast)
-						Game.player.movesSouthEast(dt);
-					else if (directionGamepad == PovDirection.southWest)
-						Game.player.movesSouthWest(dt);
-	
-				}*/
+				/*
+				 * if (movesGamePad) { if (directionGamepad ==
+				 * PovDirection.east) Game.player.movesRight(dt); else if
+				 * (directionGamepad == PovDirection.north) {
+				 * Game.player.movesUp(dt); if (Game.player.collideShop) {
+				 * game.screenManager.swapScreen(it.slagyom.ScreenManager.State.
+				 * SHOP); Game.world.semaphore.acquire();
+				 * Game.player.collideShop = false; } } else if
+				 * (directionGamepad == PovDirection.west)
+				 * Game.player.movesLeft(dt); else if (directionGamepad ==
+				 * PovDirection.south) Game.player.movesDown(dt); else if
+				 * (directionGamepad == PovDirection.northEast)
+				 * Game.player.movesNorthEast(dt); else if (directionGamepad ==
+				 * PovDirection.northWest) Game.player.movesNorthWest(dt); else
+				 * if (directionGamepad == PovDirection.southEast)
+				 * Game.player.movesSouthEast(dt); else if (directionGamepad ==
+				 * PovDirection.southWest) Game.player.movesSouthWest(dt);
+				 * 
+				 * }
+				 */
 
 				if (Gdx.input.isKeyPressed(Keys.Z)) {
 					Game.player.setVelocity(150f);
@@ -246,7 +238,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 				else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
 
-					//Game.world.createBattle();
+					// Game.world.createBattle();
 					Game.world.semaphore.acquire();
 					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.BATTLE);
 				} else if (Gdx.input.isKeyJustPressed(Keys.B)) {
@@ -261,7 +253,7 @@ public class PlayScreen implements Screen, ControllerListener {
 			hud.showDialog = false;
 			hideDialog();
 			if (stop) {
-				//Game.world.semaphore.release();
+				// Game.world.semaphore.release();
 				Game.world.getThread().start();
 				stop = false;
 			}
@@ -292,8 +284,11 @@ public class PlayScreen implements Screen, ControllerListener {
 			if (ob instanceof DynamicObjects)
 				game.batch.draw(LoadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
+			if (ob instanceof Player)
+				game.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
+						14, 13);
 		}
-		
+
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package it.slagyom;
 
 import com.badlogic.gdx.Screen;
+
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -358,7 +361,6 @@ public class ShopScreen implements Screen {
 		final TextField level1n = new TextField("", MenuScreen.skin);
 		final TextField level2n = new TextField("", MenuScreen.skin);
 		final TextField level3n = new TextField("", MenuScreen.skin);
-
 		level1n.setMessageText("0");
 		level1n.setFocusTraversal(true);
 		level1n.setWidth(30);
@@ -380,7 +382,12 @@ public class ShopScreen implements Screen {
 		buyingTable.add(level2n);
 		buyingTable.add(level3n);
 		// END BUYING TABLE
-
+		/*int [] livellis = new int[5];
+		
+		List livelli = new List(MenuScreen.skin);
+		livelli.setItems(livellis);
+		
+		stage.addActor(livelli);*/
 		stage.addActor(potionsTable);
 		stage.addActor(weaponsTable);
 		stage.addActor(parchmentsTable);

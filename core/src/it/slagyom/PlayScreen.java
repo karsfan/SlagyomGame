@@ -38,7 +38,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	private static Drawable noDialog = null;
 	private static float textTimer;
 
-	
 	public int j = 0;
 
 	private boolean stop = false;
@@ -386,7 +385,6 @@ public class PlayScreen implements Screen, ControllerListener {
 			return true;
 		}
 		movesGamePad = false;
-
 		return false;
 	}
 

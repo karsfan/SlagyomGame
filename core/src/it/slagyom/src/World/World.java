@@ -11,10 +11,11 @@ import it.slagyom.PlayScreen;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.Character.Man;
 import it.slagyom.src.Character.Woman;
-import staticObjects.HeadHome;
+import staticObjects.EnemyHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.StaticObject;
+import staticObjects.StaticObject.Element;
 import it.slagyom.src.Map.Map;
 
 public class World {
@@ -33,11 +34,11 @@ public class World {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
-		maps[0] = new Map("res/map/mappaNUOVAOK", true, "Village one");
-		maps[1] = new Map("res/map/prova", false, "Village two");
+		maps[0] = new Map("res/map/map.txt", true, "Village one");
+		maps[1] = new Map("res/map/map.txt", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
-		//getThread().start();
+		// getThread().start();
 	}
 
 	public World(String path) {
@@ -47,10 +48,10 @@ public class World {
 
 		maps = new Map[2];
 		maps[0] = new Map(path, true, "Village one");
-		maps[1] = new Map("res/map/prova", false, "Village two");
+		// maps[1] = new Map("res/map/prova", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
-		//getThread().start();
+		// getThread().start();
 
 	}
 
@@ -87,7 +88,7 @@ public class World {
 
 	public void update(float dt) {
 		timerItem += dt;
-		
+
 		Iterator<DynamicObjects> it1 = people.iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -98,7 +99,6 @@ public class World {
 				((Man) ob).update(dt);
 		}
 
-		
 		if (timerItem >= 60) {
 			Item item = new Item();
 			getMap().getListItems().add(item);
@@ -158,31 +158,60 @@ public class World {
 		this.thread = thread;
 	}
 
-	public void createBattle(HeadHome headHome) {
-		boolean creata = true;
+	public void createBattle(EnemyHome enemyHome) {
 		Iterator<StaticObject> it = getListTile().iterator();
-		while (it.hasNext()) {
-			StaticObject ob = (StaticObject) it.next();
-			if (ob instanceof PreEnemyHouse) {
-				Iterator<Enemy> it1 = ((PreEnemyHouse) ob).enemy.iterator();
-				while (it1.hasNext()) {
-					Enemy ob1 = (Enemy) it1.next();
-					if (!ob1.morto) {
-						creata = false;
-						break;
-					}
-					if (!creata)
-						break;
+		// se si tratta di un tempio controllo tra la lista dei nemici quali
+		// deve affronatre in caso non ci sono nemici da affrontare uscirà un
+		// avviso
+		if (enemyHome.getElement() == Element.TEMPLE) {
+			boolean creata = false;
+			Iterator<Enemy> it1 = enemyHome.enemy.iterator();
+			while (it1.hasNext()) {
+				Enemy ob = (Enemy) it1.next();
+				if (!ob.morto) {
+					creata = true;
+					battle = new Battle(Game.player, ob);
+					break;
 				}
 			}
-		}
-		if (creata) {
-			battle = new Battle(Game.player, headHome.enemy);
-		} else{
-			Game.player.collideGym = false;
-			PlayScreen.hud.setDialogText("Non ci puoi accedere se prima non hai eliminati tutti i nemici");
-		}
+			if (!creata) {
+				Game.player.collideGym = false;
+				PlayScreen.hud.setDialogText("Non ci sono nemici in questa casa");
+			}
+		} // se si tratta di un castle controllo prima che siano stati sconfitti
+			// tutti i nemici, se lo sono allora partirà la battaglia con il
+			// boss
+		else if (enemyHome.getElement() == Element.CASTLE) {
+			boolean creata = true;
+			while (it.hasNext()) {
+				StaticObject ob = (StaticObject) it.next();
+				if (ob instanceof EnemyHome && ob.getElement() == Element.TEMPLE) {
+					Iterator<Enemy> it1 = ((EnemyHome) ob).enemy.iterator();
+					while (it1.hasNext()) {
+						Enemy ob1 = (Enemy) it1.next();
+						if (!ob1.morto) {
+							creata = false;
+							break;
+						}
+						if (!creata)
+							break;
+					}
+				}
+			}
+			if (creata) {
+				if (!enemyHome.getEnemy().morto)
+					battle = new Battle(Game.player, enemyHome.getEnemy());
+				else {
+					Game.player.collideGym = false;
+					PlayScreen.hud.setDialogText("Hai già sconfitto il boss di questo villaggio, adesso puoi passare al prossimo villaggio");
+				}
 
+			} else {
+				Game.player.collideGym = false;
+				PlayScreen.hud.setDialogText("Non ci puoi accedere se prima non hai eliminati tutti i nemici");
+			}
+
+		}
 	}
 
 }

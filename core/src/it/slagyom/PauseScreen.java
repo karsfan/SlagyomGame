@@ -89,7 +89,6 @@ public class PauseScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.screenManager.swapScreen(game.screenManager.getPreviousState());
-				//Game.world.semaphore.release();
 			}
 		});
 		menuButton.addListener(new ClickListener() {
@@ -106,7 +105,6 @@ public class PauseScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.BAG);
-				// game.swapScreen(State.SHOP);
 
 			}
 		});

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import it.slagyom.ScreenManager.State;
 
 public class GameSlagyom extends Game {
 
@@ -40,15 +39,13 @@ public class GameSlagyom extends Game {
 		prefs.flush();
 	}
 
-	@SuppressWarnings({ "deprecation", "static-access" })
+	@SuppressWarnings({ "static-access" })
 	public void loadGame() {
 		prefs = Gdx.app.getPreferences("My saved game");
 
-		if (screenManager.currentState == State.PAUSE)
-			it.slagyom.src.World.Game.world.getThread().stop();
+		//if (screenManager.currentState == State.PAUSE)
+			//it.slagyom.src.World.Game.world.getThread().stop();
 		screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
-		screenManager.swapScreen(State.PLAYING);
-		//screenManager.setPlayScreen(new PlayScreen(this, prefs.getString("map"), prefs.getString("name")));
 		it.slagyom.src.World.Game.player.x = prefs.getFloat("xCharPosition");
 		it.slagyom.src.World.Game.player.y = prefs.getFloat("yCharPosition");
 		it.slagyom.src.World.Game.player.health = prefs.getFloat("health");

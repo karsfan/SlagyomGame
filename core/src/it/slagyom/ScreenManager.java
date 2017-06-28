@@ -8,7 +8,7 @@ import it.slagyom.src.World.Game;
 public class ScreenManager {
 	GameSlagyom gameSlagyom;
 	public static enum State {
-		MENU, NEWGAME, CONTINUEGAME, OPTIONMENU, MULTIPLAYER, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP
+		MENU, NEWGAME, OPTIONMENU, MULTIPLAYER, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP
 	};
 	
 	State currentState;
@@ -73,11 +73,6 @@ public class ScreenManager {
 			gameSlagyom.musicManager.pause();
 			gameSlagyom.musicManager.play("MAINMUSIC");
 			gameSlagyom.setScreen(pauseScreen);
-			/*try {
-				it.slagyom.src.World.Game.world.semaphore.acquire();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}*/
 			Gdx.input.setInputProcessor(pauseScreen.stage);
 		} else if (currentState == State.BAG) {
 			bagScreen = new BagScreen(gameSlagyom);
@@ -87,11 +82,7 @@ public class ScreenManager {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);
 			Gdx.input.setInputProcessor(shopScreen.stage);
-		} else if (currentState == State.CONTINUEGAME) {
-			gameSlagyom.musicManager.pause();
-			gameSlagyom.setScreen(getPlayScreen());
-			Gdx.input.setInputProcessor(null);
-		}
+		} 
 	}
 
 	public State getCurrentState() {
@@ -103,7 +94,9 @@ public class ScreenManager {
 	}
 
 	public State getPreviousState() {
+		System.out.println(previousState);
 		return previousState;
+		
 	}
 
 	public void setPreviousState(State previousState) {

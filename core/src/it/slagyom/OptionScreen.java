@@ -88,12 +88,9 @@ public class OptionScreen implements Screen {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (fromPause) {
-					//Game.world.semaphore.release();					
-					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
-				}
-				else
-					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MENU);
+				// Game.world.semaphore.release();
+				game.screenManager.swapScreen(game.screenManager.getPreviousState());
+				// game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MENU);
 			}
 		});
 		// Add buttons to table
@@ -128,7 +125,7 @@ public class OptionScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().setScreenSize(width, height);
-		//viewport.update(width, height);
+		// viewport.update(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
 	}

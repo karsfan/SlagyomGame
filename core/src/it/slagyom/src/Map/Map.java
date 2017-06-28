@@ -6,13 +6,16 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+
 import battle.Enemy.Level;
 import it.slagyom.src.World.GameConfig;
+import staticObjects.EnemyHome;
 import staticObjects.HeadHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
 import staticObjects.StaticObject;
+import staticObjects.StaticObject.Element;
 
 public class Map {
 	private LinkedList<StaticObject> listStaticObjects;
@@ -59,8 +62,12 @@ public class Map {
 			try {
 				Scanner input = new Scanner(System.in);
 				input = new Scanner(fr);
+				String line = input.nextLine();
+				String[] split = line.split(" ");
+				GameConfig.WIDTH = Integer.parseInt(split[0]);
+				GameConfig.HEIGHT = Integer.parseInt(split[1]);
 				while (input.hasNextLine()) {
-					String line = input.nextLine();
+					line = input.nextLine();
 					String[] splittata = line.split(" ");
 
 					for (int i = 0; i < splittata.length - 1; i++)
@@ -107,7 +114,6 @@ public class Map {
 			table.setInfo("In questo shop potrai trovare tutto quello che ti serve per sconfiggere i tuoi nemici!!");
 			listStaticObjects.add(table);
 			break;
-
 		case "PREENEMYHOME":
 			if (current)
 				staticObject = new PreEnemyHouse(Level.EASY);
@@ -117,21 +123,33 @@ public class Map {
 			table = new StaticObject("TABLE", point);
 			table.setPoint(pointTable);
 			table.setInfo(
-					"In questa Pre-Enemy House ci sono nemici che dovrai sconfiggere prima di poter affrontare il capo villagio");
+					"In questa Pre-Enemy House ci sono nemici con cui ti potrai allenare");
 			listStaticObjects.add(table);
 			break;
-
-		case "BIGHOME":
+		case "TEMPLE":
+			if (current)
+				staticObject = new EnemyHome(Level.EASY, Element.TEMPLE);
+			else
+				staticObject = new EnemyHome(Level.MEDIUM, Element.TEMPLE);
 			pointTable = new Point(((int) (point.getX() + 128 / 32)), (int) Math.abs((point.getY() - 96 / 32)));
+			table = new StaticObject("TABLE", point);
+			table.setPoint(pointTable);
+			table.setInfo(
+					"In questo Tempio ci sono nemici che dovrai sconfiggere per poter affrontare il capo villaggio!");
+			listStaticObjects.add(table);
+			break;
+			
+		case "CASTLE":
+			pointTable = new Point(((int) (point.getX() + 160 / 32)), (int) Math.abs((point.getY() - 160 / 32)));
 			table = new StaticObject("TABLE", point);
 			table.setPoint(pointTable);
 			listStaticObjects.add(table);
 			if (current == true) {
-				table.setInfo("In questa casa c'e' il capo del villaggio");
-				staticObject = new HeadHome(Level.MEDIUM);
+				table.setInfo("In questa castello c'e' il capo del villaggio");
+				staticObject = new HeadHome(Level.MEDIUM, Element.CASTLE);
 			} else {
-				table.setInfo("In questa casa c'e' il capo del villaggio");
-				staticObject = new HeadHome(Level.HARD);
+				table.setInfo("In questa castello c'e' il capo del villaggio");
+				staticObject = new HeadHome(Level.HARD, Element.CASTLE);
 			}
 			break;
 

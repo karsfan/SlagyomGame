@@ -9,6 +9,7 @@ import it.slagyom.src.World.ICollidable;
 import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
+import staticObjects.EnemyHome;
 import staticObjects.HeadHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
@@ -129,11 +130,8 @@ public class Player extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesRight(float dt) {
-
 		if (x < GameConfig.WIDTH - width / 2) {
 			float velocityX = velocity;
-			// if (collideGround())
-			// velocityX -= 20;
 			x += (velocityX * dt);
 			if (collide(this))
 				x -= (velocityX * dt);
@@ -145,8 +143,6 @@ public class Player extends DynamicObjects implements ICollidable {
 
 		if (x > 5) {
 			float velocityX = velocity;
-			// if (collideGround())
-			// velocityX -= 20;
 			x -= (velocityX * dt);
 			if (collide(this))
 				x += (velocityX * dt);
@@ -308,12 +304,20 @@ public class Player extends DynamicObjects implements ICollidable {
 								Game.world.createBattle((PreEnemyHouse) ob);
 								return true;
 							}
-						} else if (((StaticObject) ob).getElement() == Element.BIGHOME)
+						} else if (((StaticObject) ob).getElement() == Element.TEMPLE) {
+							if (((EnemyHome) ob).collideDoor(this)) {
+								collideGym = true;
+								Game.world.createBattle((EnemyHome) ob);
+								return true;
+							}
+						} else if (((StaticObject) ob).getElement() == Element.CASTLE) {
+							System.out.println("collide con castel");
 							if (((HeadHome) ob).collideDoor(this)) {
 								collideGym = true;
 								Game.world.createBattle((HeadHome) ob);
 								return true;
 							}
+						}
 						return true;
 					}
 			}

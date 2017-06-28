@@ -22,7 +22,7 @@ public class LoadingImage {
 
 	public Texture texture;
 	private static Texture homeImage;
-	private static Texture bigHomeImage;
+	private static Texture templeImage;
 	private static Texture threeImage;
 	private static Texture groundImage;
 	private static Texture floorImage;
@@ -43,6 +43,7 @@ public class LoadingImage {
 	private static Texture bluPotionImage;
 	private static Texture redPotionImage;
 	private static Texture greenPotionImage;
+	private static Texture castleImage;
 
 	public static TextureRegion battleCharacterStand;
 	public static Animation<TextureRegion>[] battleCharacterAnimation;
@@ -88,7 +89,7 @@ public class LoadingImage {
 	public LoadingImage() {
 		// TILES IMAGES
 		homeImage = new Texture("res/home.png");
-		bigHomeImage = new Texture("res/bigHome.png");
+		templeImage = new Texture("res/bigHome.png");
 		threeImage = new Texture("res/three.png");
 		groundImage = new Texture("res/ground.png");
 		floorImage = new Texture("res/floor.png");
@@ -105,7 +106,7 @@ public class LoadingImage {
 		forest2Image = new Texture("res/forest2.png");
 		tableImage = new Texture("res/table.png");
 		battleBackground = new Texture("res/battleBg5.png");
-
+		castleImage = new Texture("res/castle.png");
 		// WORLD ITEM IMAGES
 		coinImage = new Texture("res/coin.png");
 		bluPotionImage = new Texture("res/bluePotion.png");
@@ -398,6 +399,9 @@ public class LoadingImage {
 			case SHOP:
 				texture = shopImage;
 				break;
+			case CASTLE:
+				texture = castleImage;
+				break;
 			case THREE:
 				texture = threeImage;
 				break;
@@ -434,8 +438,8 @@ public class LoadingImage {
 			case STRAW:
 				texture = strawImage;
 				break;
-			case BIGHOME:
-				texture = bigHomeImage;
+			case TEMPLE:
+				texture = templeImage;
 				break;
 			case TABLE:
 				texture = tableImage;

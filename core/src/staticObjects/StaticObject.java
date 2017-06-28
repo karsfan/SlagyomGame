@@ -10,7 +10,7 @@ public class StaticObject implements ICollidable {
 
 	public enum Element {
 		HOME, THREE, FOREST1, FOREST2, GROUND, BUILDING, 
-		WATER, ROCK, FLOOR, ROAD, BIGHOME, SHOP, TABLE, POTION, PARCHMENT, COIN, FLOOR2, PREENEMYHOME, FLOOR3, STRAW, ENEMYHOME, HEADHOME 
+		WATER, ROCK, FLOOR, ROAD, SHOP, TABLE, POTION, PARCHMENT, COIN, FLOOR2, PREENEMYHOME, FLOOR3, STRAW, ENEMYHOME, HEADHOME, CASTLE, TEMPLE 
 	};
 
 	protected Element element;
@@ -44,8 +44,8 @@ public class StaticObject implements ICollidable {
 			this.element = Element.ROCK;
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 32, 32);
 			break;
-		case "BIGHOME":
-			this.element = Element.BIGHOME;
+		case "TEMPLE":
+			this.element = Element.TEMPLE;
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 128, 96);
 			break;
 		case "FLOOR":

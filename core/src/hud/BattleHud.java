@@ -37,7 +37,7 @@ public class BattleHud {
 	public BattleHud(SpriteBatch sb) {
 
 		spriteBatch = sb;
-		viewport = new FitViewport(1700, 956);
+		viewport = new FitViewport(1440, 960);
 		stage = new Stage(viewport, sb);
 
 		healthCharacter = (int) Game.world.battle.character.getHealth();

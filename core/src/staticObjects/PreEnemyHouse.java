@@ -21,7 +21,7 @@ public class PreEnemyHouse extends StaticObject {
 		element = Element.PREENEMYHOME;
 		if (Game.enemy != null) {
 			try {
-				tmp = Game.enemy.getConstructor(Level.class).newInstance(Level.HARD);
+				tmp = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				// TODO Auto-generated catch block

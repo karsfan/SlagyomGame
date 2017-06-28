@@ -171,6 +171,7 @@ public class World {
 				if (!ob.morto) {
 					creata = true;
 					battle = new Battle(Game.player, ob);
+					System.out.println("qui");
 					break;
 				}
 			}

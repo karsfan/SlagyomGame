@@ -22,7 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import battle.Enemy;
 import hud.Hud;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.World.Game;
@@ -350,7 +349,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	public void disconnected(Controller controller) {
 		// TODO Auto-generated method stub
 		System.out.println("qui");
-
 	}
 
 	@Override

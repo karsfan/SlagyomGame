@@ -11,7 +11,6 @@ import it.slagyom.src.World.Weapon;
 public class CharacterBattle extends Fighting implements it.slagyom.src.World.ICollidable {
 
 	public Player player;
-
 	
 	public CharacterBattle(final Player character1) {
 		super();
@@ -19,7 +18,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 
 		player = new Player(character1);
 		player.x = 100;
-		player.y = 250;
+		player.y = GameConfig.mainY_Battle;
 		player.width = 120;
 		player.height = 150;
 		player.currentState = StateDynamicObject.STANDING;
@@ -57,7 +56,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 			fightingTimeCurrent = 0;
 		}
 		dt = 0.35f;
-		if ((jumping || doubleJumping) && player.y + velocityY * dt > 250) {
+		if ((jumping || doubleJumping) && player.y + velocityY * dt > GameConfig.mainY_Battle) {
 			player.y += velocityY * dt;
 
 			updateVelocityY(dt);
@@ -71,7 +70,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 		} else {
 			jumping = false;
 			doubleJumping = false;
-			player.y = 250;
+			player.y = GameConfig.mainY_Battle;
 			velocityY = 0;
 		}
 		Iterator<Bomb> it1 = player.bag.bombe.iterator();
@@ -125,10 +124,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 	public void movesRight(float dt) {
 		right = true;
 		left = false;
-		if (player.x + player.velocity * dt + player.getWidth() < 1920)
-		left = false;
-		right = true;
-		if (player.x + player.velocity * dt + player.getWidth() < 1920)
+		if (player.x + player.velocity * dt + player.getWidth() < GameConfig.WIDTH_BATTLE)
 			player.x += player.velocity * dt;
 		if (collide())
 			player.x -= player.velocity * dt;
@@ -139,7 +135,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 	public void movesLeft(float dt) {
 		left = true;
 		right = false;
-		if (player.x - player.width / 2 > 0)
+		if (player.x > 0)
 			player.x -= player.velocity * dt;
 		if (collide())
 			player.x += player.velocity * dt;
@@ -211,6 +207,19 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 	}
 	public void caricaBomba(float dt) {
 		forza+=100*dt;
+	}
+	public void lancia() {
+		Iterator<Bomb> itBomb = player.bag.bombe.iterator();
+		while (itBomb.hasNext()) {
+			Bomb bomba = (Bomb) itBomb.next();
+			if (!bomba.lanciata) {
+				bomba.lanciata = true;
+				bomba.lancia(forza, this);
+				bomba.id = "Player";
+				break;
+			}
+			System.out.println(bomba.lanciata);
+		}
 	}
 
 }

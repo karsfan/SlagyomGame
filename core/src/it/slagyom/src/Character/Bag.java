@@ -3,67 +3,38 @@ package it.slagyom.src.Character;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import battle.Fighting;
 import it.slagyom.src.World.Weapon;
-import it.slagyom.src.World.Weapon.Type;
 import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
 
 public class Bag {
 	int capacity;
-	public ArrayList<Item> bagItems;
+	public ArrayList<Item> items;
 	public Weapon secondary_weapon;
 	public ArrayList<Bomb> bombe;
-
-	public void lancia(int vel, Fighting fighting) {
-		Iterator<Bomb> itBomb = bombe.iterator();
-		while (itBomb.hasNext()) {
-			Bomb bomba = (Bomb) itBomb.next();
-			if (!bomba.lanciata) {
-				bomba.lanciata = true;
-				bomba.lancia(vel, fighting);
-				bomba.id = "Player";
-				break;
-			}
-		}
-	}
 
 	public Bag() {
 		capacity = 50;
 		secondary_weapon = null;
-		bagItems = new ArrayList<Item>();
+		items = new ArrayList<Item>();
 		bombe = new ArrayList<Bomb>();
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		/*
+		 * bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
+		 * Type.Bomba)); bombe.add(new
+		 * Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		 * bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
+		 * Type.Bomba)); bombe.add(new
+		 * Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		 * bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
+		 * Type.Bomba)); bombe.add(new
+		 * Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		 */
 	}
 
-	public boolean addTool(Item item) {
-		if (bagItems.size() + bombe.size() < capacity) {
-			bagItems.add(item);
-			return true;
-		}
-		return false;
-	}
-
-	public void addWeapon(Weapon weapon) {
-		secondary_weapon = weapon;
-	}
-
-	public boolean addBomb(Bomb bomb) {
-		if (bagItems.size() + bombe.size() < capacity) {
-			bombe.add(bomb);
-			return true;
-		}
-		return false;
-	}
 
 	public void deleteParchments(Item item) {
-		Iterator<Item> itParchment = bagItems.iterator();
+		Iterator<Item> itParchment = items.iterator();
 		while (itParchment.hasNext()) {
 			Item it = (Item) itParchment.next();
 			if (it == item) {
@@ -74,7 +45,7 @@ public class Bag {
 	}
 
 	public boolean deletePotion(Item potion) {
-		Iterator<Item> itPotion = bagItems.iterator();
+		Iterator<Item> itPotion = items.iterator();
 		while (itPotion.hasNext()) {
 			Item tool = (Item) itPotion.next();
 			if (tool == potion) {
@@ -99,7 +70,7 @@ public class Bag {
 
 	public int getNumberOf(Element element, Level level) {
 		int numberOf = 0;
-		Iterator<Item> itemIterator = bagItems.iterator();
+		Iterator<Item> itemIterator = items.iterator();
 		while (itemIterator.hasNext()) {
 			Item searching = (Item) itemIterator.next();
 			if (searching.getElement() == element && searching.level == level) {
@@ -122,7 +93,7 @@ public class Bag {
 	}
 
 	public void removeItem(Element element, Level level) {
-		Iterator<Item> itemIterator = bagItems.iterator();
+		Iterator<Item> itemIterator = items.iterator();
 		while (itemIterator.hasNext()) {
 			Item searching = (Item) itemIterator.next();
 			if (searching.getElement() == element && searching.level == level) {
@@ -130,6 +101,22 @@ public class Bag {
 				break;
 			}
 		}
+	}
+
+	public boolean add(Object object) {
+		if (items.size() + bombe.size() < capacity) {
+			if (object instanceof Bomb)
+				bombe.add((Bomb) object);
+
+			else if (object instanceof Item)
+				items.add((Item) object);
+			return true;
+		}
+		if (object instanceof Weapon){
+			secondary_weapon = (Weapon) object;
+			return true;
+		}
+		return false;
 	}
 
 	public void removeBomb(it.slagyom.src.World.Weapon.Level level) {

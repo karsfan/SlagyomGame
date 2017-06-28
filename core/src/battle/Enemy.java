@@ -27,7 +27,7 @@ public class Enemy extends Fighting {
 	public Enemy(Enemy enemy) {
 
 		x = 700;
-		y = 250;
+		y = GameConfig.mainY_Battle;
 		weapon = enemy.weapon;
 		level = enemy.level;
 		name = enemy.name;
@@ -49,7 +49,6 @@ public class Enemy extends Fighting {
 		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		System.out.println(bombe.size());
 	}
 
 	public Enemy(Level level) {
@@ -82,10 +81,8 @@ public class Enemy extends Fighting {
 		}
 		stateTimer = 0;
 		x = 700;
-		y = 250;
+		y = GameConfig.mainY_Battle;
 
-		Bomb bomb = new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba);
-		bombe.add(bomb);
 		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
@@ -109,8 +106,7 @@ public class Enemy extends Fighting {
 	}
 
 	public void update(float dt) {
-		// bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
-		// Type.Bomba));
+		
 		if (!fighting && !jumping && !doubleJumping) {
 
 			switch (level) {
@@ -136,7 +132,7 @@ public class Enemy extends Fighting {
 			fightingTimeCurrent = 0;
 		}
 		dt = 0.35f;
-		if ((jumping || doubleJumping) && y + velocityY * dt > 250) {
+		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {
 			y += velocityY * dt;
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING);
@@ -147,7 +143,7 @@ public class Enemy extends Fighting {
 		} else {
 			jumping = false;
 			doubleJumping = false;
-			y = 250;
+			y = GameConfig.mainY_Battle;
 			velocityY = 0;
 		}
 		Iterator<Bomb> it1 = bombe.iterator();
@@ -199,10 +195,9 @@ public class Enemy extends Fighting {
 			while (it1.hasNext()) {
 				Bomb ob = (Bomb) it1.next();
 				if (!ob.lanciata) {
-					System.out.println(velocityy);
 					ob.lancia(velocityy, this);
 					ob.id = "Enemy";
-					System.out.println("lancia");
+					System.out.println("bomba lanciata dal nemico");
 					break;
 				}
 			}
@@ -286,8 +281,9 @@ public class Enemy extends Fighting {
 	}
 
 	public void movesRight(float dt) {
-
-		if (x + velocity * dt + getWidth() < 1920)
+		left = false;
+		right = true;
+		if (x + velocity * dt + getWidth() < GameConfig.WIDTH_BATTLE)
 			x += velocity * dt;
 		if (collide())
 			x -= velocity * dt;
@@ -297,7 +293,8 @@ public class Enemy extends Fighting {
 
 	public void movesLeft(float dt) {
 		left = true;
-		if (x - width / 2 > 0)
+		right = false;
+		if (x > 0)
 			x -= velocity * dt;
 		if (collide())
 			x += velocity * dt;
@@ -332,7 +329,6 @@ public class Enemy extends Fighting {
 	public void decreaseHealth(Weapon weaponCharacter) {
 		if (currentState == StateDynamicObject.DEFENDING) {
 			health -= weaponCharacter.getDamage() / 2;
-			System.out.println("quiiiiiiiiiii");
 		} else
 			health -= weaponCharacter.getDamage();
 	}

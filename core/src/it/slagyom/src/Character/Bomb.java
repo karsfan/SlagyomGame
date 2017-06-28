@@ -49,10 +49,8 @@ public class Bomb extends Weapon implements ICollidable {
 
 		if (((Fighting) fighting).left)
 			velocityX -= (int) (velocity * Math.cos(30 * (Math.PI / 180)));
-		// velocityX = velocity;
 		else if (((Fighting) fighting).right)
 			velocityX = (int) (velocity * Math.cos(30 * (Math.PI / 180)));
-		System.out.println(velocityX);
 		velocityY = (int) (velocity * Math.sin(90 * (Math.PI / 180)));
 
 	}
@@ -83,7 +81,7 @@ public class Bomb extends Weapon implements ICollidable {
 		mainY += velocityY * dt - GameConfig.gravity * dt * dt;
 
 		velocityY -= GameConfig.gravity * dt;
-		if (mainY <= 250)
+		if (mainY <= GameConfig.mainY_Battle)
 			morta = true;
 		if (collide())
 			morta = true;

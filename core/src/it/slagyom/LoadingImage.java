@@ -1,5 +1,7 @@
 package it.slagyom;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -45,7 +47,9 @@ public class LoadingImage {
 	private static Texture greenPotionImage;
 	private static Texture castleImage;
 	public static Texture pointer; 
-
+	public static Pixmap cursor; 
+	public static Pixmap noCursor; 
+	
 	public static TextureRegion battleCharacterStand;
 	public static Animation<TextureRegion>[] battleCharacterAnimation;
 
@@ -133,6 +137,9 @@ public class LoadingImage {
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/emptyIcon.png"))));
 		emptyShopIcon = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/shop/emptyIcon.png"))));
+		
+		cursor = new Pixmap(Gdx.files.internal("res/cursor.png"));
+		noCursor = new Pixmap(Gdx.files.internal("res/noCursor.png"));
 
 		// WORLD ANIMATIONS
 		playerAnimation = new Animation[4];
@@ -152,22 +159,22 @@ public class LoadingImage {
 		woman1Stand = new TextureRegion();
 		woman2Stand = new TextureRegion();
 
-		texture = new Texture("assets/bpj.png");
+		texture = new Texture("bpj.png");
 		createFrame(texture, playerAnimation, playerStand);
 
-		texture = new Texture("assets/notPlaying.png");
+		texture = new Texture("notPlaying.png");
 		createFrame(texture, man1Animation, man1Stand);
 
-		texture = new Texture("assets/NotPlaying/woman1.png");
+		texture = new Texture("NotPlaying/woman1.png");
 		createFrame(texture, woman1Animation, woman1Stand);
 
-		texture = new Texture("assets/NotPlaying/woman2.png");
+		texture = new Texture("NotPlaying/woman2.png");
 		createFrame(texture, woman2Animation, woman2Stand);
 
-		texture = new Texture("assets/lancia.png");
+		texture = new Texture("lancia.png");
 		createBattleFrame(texture, battleCharacterAnimation, battleCharacterStand);
 
-		texture = new Texture("assets/lancia.png");
+		texture = new Texture("lancia.png");
 		createBattleFrame(texture, enemyAnimation, enemyStand);
 
 	}

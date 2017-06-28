@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.levels.editor.Editor;
 
+import it.slagyom.ScreenManager.State;
+
 public class MenuScreen implements Screen {
 	GameSlagyom game;
 
@@ -83,7 +85,7 @@ public class MenuScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				game.loadGame();
 				menuMusic.stop();
-				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.CONTINUEGAME);
+				game.screenManager.swapScreen(State.PLAYING);
 				PlayScreen.hud.textTable.clear();
 				PlayScreen.hud.textDialog = "Game loaded!";
 			}

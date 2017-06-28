@@ -97,13 +97,13 @@ public class Player extends DynamicObjects implements ICollidable {
 	}
 
 	public void pickParchment(Item parchment) {
-		bag.addTool(parchment);
+		bag.add(parchment);
 		// eliminata dalla mappa
 		parchment.picked = true;
 	}
 
 	public void pickPotion(Item potion) {
-		bag.addTool(potion);
+		bag.add(potion);
 		// eliminata dalla mappa
 		potion.picked = true;
 	}
@@ -265,7 +265,7 @@ public class Player extends DynamicObjects implements ICollidable {
 
 	boolean pickItem(Item item) {
 		if (item.getElement() != Element.COIN && !item.picked) {
-			if (bag.addTool(item)) {
+			if (bag.add(item)) {
 				GameSlagyom.getMusicManager().play("ITEM");
 				item.setPicked(true);
 				return true;
@@ -311,7 +311,6 @@ public class Player extends DynamicObjects implements ICollidable {
 								return true;
 							}
 						} else if (((StaticObject) ob).getElement() == Element.CASTLE) {
-							System.out.println("collide con castel");
 							if (((BossHome) ob).collideDoor(this)) {
 								collideGym = true;
 								Game.world.createBattle((BossHome) ob);
@@ -321,6 +320,7 @@ public class Player extends DynamicObjects implements ICollidable {
 						return true;
 					}
 			}
+			
 
 		}
 

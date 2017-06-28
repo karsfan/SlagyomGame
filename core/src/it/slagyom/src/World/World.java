@@ -38,6 +38,7 @@ public class World {
 		maps[1] = new Map("res/map/map.txt", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
+		
 		// getThread().start();
 	}
 
@@ -171,6 +172,7 @@ public class World {
 				if (!ob.morto) {
 					creata = true;
 					battle = new Battle(Game.player, ob);
+					System.out.println("qui");
 					break;
 				}
 			}

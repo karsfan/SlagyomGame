@@ -28,7 +28,7 @@ public class MusicManager {
 			itemSound.play(1.0f);
 			break;
 		case "BACKGROUND":
-			backgroundSound.loop(2.0f);
+			backgroundSound.loop(10.0f);
 			break;
 		case "TICK":
 			tickSound.play(1.0f);

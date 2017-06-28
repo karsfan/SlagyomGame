@@ -2,11 +2,13 @@ package staticObjects;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import battle.Enemy;
 import battle.Enemy.Level;
 import it.slagyom.src.Character.Player;
+import it.slagyom.src.World.Game;
 
 public class EnemyHome extends StaticObject {
 	public ArrayList<Enemy> enemy;
@@ -15,13 +17,37 @@ public class EnemyHome extends StaticObject {
 	public EnemyHome(Level levelEnemy, Element type) {
 		element = type;
 		enemy = new ArrayList<Enemy>();
-		if(type == Element.TEMPLE){
-			enemy.add(new Enemy(levelEnemy));
-			enemy.add(new Enemy(levelEnemy));
-			enemy.add(new Enemy(levelEnemy));
+		if (type == Element.TEMPLE) {
+			Enemy enemyOne = new Enemy(Level.HARD);
+			Enemy enemyTwo = new Enemy(levelEnemy);
+			Enemy enemyThree = new Enemy(levelEnemy);
+			if (Game.enemy != null) {
+				try {
+					enemyOne = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
+					enemyTwo = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
+					enemyThree = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			enemy.add(enemyOne);
+			enemy.add(enemyTwo);
+			enemy.add(enemyThree);
+		} else {
+			Enemy boss = new Enemy(levelEnemy);
+			if (Game.enemy != null) {
+				try {
+					boss = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			enemy.add(boss);
 		}
-		else
-			enemy.add(new Enemy(levelEnemy));
 	}
 
 	public void setPoint(Point point) {
@@ -29,6 +55,7 @@ public class EnemyHome extends StaticObject {
 		door = new Rectangle((int) (shape.getX() + shape.getWidth() / 3), (int) shape.getY(), 26, 8);
 
 	}
+
 	public boolean collideDoor(Object e) {
 		if (e instanceof Player) {
 			if (!((door.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
@@ -40,7 +67,8 @@ public class EnemyHome extends StaticObject {
 		}
 		return false;
 	}
-	public Enemy getEnemy(){
+
+	public Enemy getEnemy() {
 		return null;
 	}
 }

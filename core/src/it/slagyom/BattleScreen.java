@@ -14,9 +14,9 @@ import battle.Battle;
 import battle.CharacterBattle;
 import battle.Enemy;
 import hud.BattleHud;
+import it.slagyom.ScreenManager.State;
 import it.slagyom.src.Character.Bomb;
 import it.slagyom.src.Character.DynamicObjects.StateDynamicObject;
-import it.slagyom.src.World.Game;
 
 public class BattleScreen implements Screen {
 
@@ -90,33 +90,27 @@ public class BattleScreen implements Screen {
 		handleInput(dt);
 		hud.update(dt);
 		if (battle.update(dt)) {
-			gameslagyom.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
-			Game.world.semaphore.release();
+			gameslagyom.screenManager.swapScreen(State.PLAYING);
 		}
 
 	}
 
 	private void handleInput(float dt) {
 
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			// va messo in pausa e poi in caso bisogna ritornare nel playscreen
-			gameslagyom.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
-			Game.world.semaphore.release();
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			gameslagyom.screenManager.swapScreen(State.PAUSE);
 		}
 		moveCharacter(dt);
 	}
 
 	private void moveCharacter(float dt) {
 
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			gameslagyom.screenManager.swapScreen(it.slagyom.ScreenManager.State.PAUSE);
-		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			battle.character.caricaBomba(dt);
 			battle.character.bomba = true;
 		} else {
 			if (battle.character.bomba)
-				battle.character.player.bag.lancia(battle.character.forza, battle.character);
+				battle.character.lancia();
 			battle.character.bomba = false;
 			battle.character.forza = 50;
 			
@@ -145,8 +139,6 @@ public class BattleScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
-		// gamecam.position.set((float) gamecam.viewportWidth / 2, (float)
-		// gamecam.viewportHeight / 2, 0);
 		gamecam.update();
 	}
 

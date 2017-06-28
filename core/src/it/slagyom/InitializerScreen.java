@@ -1,7 +1,5 @@
 package it.slagyom;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -24,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import it.slagyom.ScreenManager.State;
 
 public class InitializerScreen implements Screen {
 
@@ -68,8 +68,20 @@ public class InitializerScreen implements Screen {
 			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.musicManager.pause();
+				game.musicManager.play("BACKGROUND");
+				game.screenManager.menuScreen.menuMusic.stop();
 				game.screenManager.setPlayScreen(new PlayScreen(game, NewCharacterScreen.charName));
-				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
+				game.setScreen(game.screenManager.playScreen);
+				game.screenManager.currentState = State.PLAYING;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+				Gdx.input.setInputProcessor(null);
+>>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
+=======
+				Gdx.input.setInputProcessor(null);
+>>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
 			}
 		});
 
@@ -126,7 +138,7 @@ public class InitializerScreen implements Screen {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.NEWGAME);
+				game.screenManager.swapScreen(game.screenManager.getPreviousState());
 			}
 		});
 		// Add buttons to table

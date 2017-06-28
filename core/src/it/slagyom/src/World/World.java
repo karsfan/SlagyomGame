@@ -34,25 +34,23 @@ public class World {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
-		maps[0] = new Map("res/map/map.txt", true, "Village one");
+		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village one");
 		maps[1] = new Map("res/map/map.txt", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
-		
-		// getThread().start();
 	}
 
 	public World(String path) {
 		level = 0;
 		semaphore = new Semaphore(0);
 		people = new ArrayList<DynamicObjects>();
-
+		
+		System.out.println(getClass().getResource("/res/map/map.txt").toString());
 		maps = new Map[2];
 		maps[0] = new Map(path, true, "Village one");
 		// maps[1] = new Map("res/map/prova", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
-		// getThread().start();
 
 	}
 

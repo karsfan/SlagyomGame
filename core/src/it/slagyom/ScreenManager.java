@@ -40,6 +40,7 @@ public class ScreenManager {
 		setCurrentState(newState);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		if (currentState == State.PLAYING || currentState == State.CONTINUEGAME || currentState == State.BATTLE)
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.noCursor, 0, 0));
@@ -50,6 +51,8 @@ public class ScreenManager {
 >>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
 =======
 >>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
+=======
+>>>>>>> 58501b16afee49c8dcead4265b82d355bdf12c52
 		if (currentState == State.MENU) {
 			gameSlagyom.musicManager.play("MAINMUSIC");
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.cursor, 0, 0));
@@ -91,6 +94,7 @@ public class ScreenManager {
 			gameSlagyom.setScreen(battlescreen);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 			Gdx.input.setInputProcessor(null);
@@ -98,10 +102,14 @@ public class ScreenManager {
 =======
 			Gdx.input.setInputProcessor(null);
 >>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
+=======
+			Gdx.input.setInputProcessor(null);
+>>>>>>> 58501b16afee49c8dcead4265b82d355bdf12c52
 		} else if (currentState == State.PAUSE) {
 			gameSlagyom.musicManager.pause();
 			gameSlagyom.musicManager.play("MAINMUSIC");
 			gameSlagyom.setScreen(pauseScreen);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 			/*
@@ -112,6 +120,8 @@ public class ScreenManager {
 >>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
 =======
 >>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
+=======
+>>>>>>> 58501b16afee49c8dcead4265b82d355bdf12c52
 			Gdx.input.setInputProcessor(pauseScreen.stage);
 		} else if (currentState == State.BAG) {
 			bagScreen = new BagScreen(gameSlagyom);
@@ -121,6 +131,7 @@ public class ScreenManager {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);
 			Gdx.input.setInputProcessor(shopScreen.stage);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		} else if (currentState == State.CONTINUEGAME) {
@@ -136,6 +147,9 @@ public class ScreenManager {
 =======
 		} 
 >>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
+=======
+		} 
+>>>>>>> 58501b16afee49c8dcead4265b82d355bdf12c52
 	}
 
 	public State getCurrentState() {

@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import battle.Enemy;
 import hud.Hud;
 import it.slagyom.src.Character.DynamicObjects;
 import it.slagyom.src.World.Game;
@@ -82,6 +83,21 @@ public class PlayScreen implements Screen, ControllerListener {
 		stop = true;
 		Controllers.addListener(this);
 
+	}
+
+	public PlayScreen(String text, GameSlagyom game, String charName) {
+		
+		new LoadingImage();
+		new Game(text,game,charName);
+		this.game = game;
+		gamecam = new OrthographicCamera();
+		gamePort = new ExtendViewport(854, 480, gamecam);
+		gamePort.apply();
+		gamecam.position.x = Game.player.getX();
+		gamecam.position.y = Game.player.getY();
+		hud = new Hud(game.batch);
+
+		
 	}
 
 	@SuppressWarnings({"static-access"})

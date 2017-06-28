@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -36,6 +38,10 @@ public class InitializerScreen implements Screen {
 	private long progress = 0;
 	private long startTime = 0;
 	private ShapeRenderer mShapeRenderer;
+	final Label name = new Label("Welcome " + NewCharacterScreen.charName, MenuScreen.skin);
+	final TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
+	final TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);
+	final TextButton returnButton = new TextButton("Return", MenuScreen.skin);
 
 	public InitializerScreen(final GameSlagyom game) {
 		this.game = game;
@@ -52,15 +58,11 @@ public class InitializerScreen implements Screen {
 		stage = new Stage(viewport, game.batch);
 
 		// Create Table
-		Table mainTable = new Table();
+		final Table mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
 
-		Label name = new Label("Welcome " + NewCharacterScreen.charName, MenuScreen.skin);
 		// Create buttons
-		TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
-		TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);
-		TextButton returnButton = new TextButton("Return", MenuScreen.skin);
 		// Add listeners to buttons
 		defaultLevelButton.addListener(new ClickListener() {
 			@SuppressWarnings("static-access")
@@ -75,7 +77,7 @@ public class InitializerScreen implements Screen {
 			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				JFrame f = new JFrame();
+				/*JFrame f = new JFrame();
 				JFileChooser fc = new JFileChooser();
 				String path = null;
 				f.setVisible(true);
@@ -85,9 +87,39 @@ public class InitializerScreen implements Screen {
 				f.dispose();
 				if (res == JFileChooser.APPROVE_OPTION) {
 					path = (fc.getSelectedFile().getAbsolutePath());
-				}
-				game.screenManager.setPlayScreen(new PlayScreen(game, path, NewCharacterScreen.charName));
-				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
+				}*/
+				final TextField nameAI = new TextField("", MenuScreen.skin);
+				nameAI.setMessageText("Name");
+				nameAI.setFocusTraversal(true);
+				nameAI.setTextFieldListener(new TextFieldListener() {
+					@Override
+					public void keyTyped(TextField textField, char key) {
+						// if ((key == '\r' || key == '\n')){
+						// textField.next(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) ||
+						// Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT));
+						// }
+					}
+				});
+				mainTable.clear();
+				mainTable.add(name).pad(30);
+				mainTable.row();
+				mainTable.add(defaultLevelButton).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 3);
+				mainTable.row();
+				mainTable.add(nameAI);
+				mainTable.row();
+				TextButton a = new TextButton("Continue", MenuScreen.skin);
+				a.addListener(new ClickListener(){
+					public void clicked(InputEvent event, float x, float y) {
+						game.screenManager.setPlayScreen(new PlayScreen(nameAI.getText(),game, NewCharacterScreen.charName));
+						game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
+					}
+				});
+				mainTable.add(a).pad(5);
+				mainTable.row();
+				mainTable.add(returnButton).pad(5);
+				mainTable.row();
+				//game.screenManager.setPlayScreen(new PlayScreen(game, path, NewCharacterScreen.charName));
+				//game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 			}
 		});
 

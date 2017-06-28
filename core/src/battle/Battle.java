@@ -13,7 +13,7 @@ public class Battle{
 	public Battle(Player player, Enemy enemy) {
 		this.character = new CharacterBattle(player);
 		enemyOri = enemy;
-		this.enemy = new Enemy(enemy);
+		this.enemy = enemy;
 		WIDTH = 720;
 		HEIGHT = 480;
 	}

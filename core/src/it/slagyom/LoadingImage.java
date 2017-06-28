@@ -330,6 +330,7 @@ public class LoadingImage {
 	public static Animation<TextureRegion>[] getAnimation(Object ob) {
 		Class<? extends Object> a = ob.getClass();
 		Animation<TextureRegion>[] animation = null;
+		
 		switch (a.getSimpleName()) {
 		case "Player":
 			animation = playerAnimation;
@@ -350,9 +351,12 @@ public class LoadingImage {
 			animation = enemyAnimation;
 			break;
 		default:
+			
 			System.out.println("Errore in getAnimation");
 			break;
 		}
+		if(ob instanceof Enemy)
+			animation = enemyAnimation;
 		return animation;
 	}
 
@@ -383,6 +387,8 @@ public class LoadingImage {
 			System.out.println("Errore in getFrameStand");
 			break;
 		}
+		if(ob instanceof Enemy)
+			textureRegion = enemyStand;
 		return textureRegion;
 	}
 

@@ -34,8 +34,8 @@ public class World {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
-		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village one");
-		maps[1] = new Map("res/map/map.txt", false, "Village two");
+		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getFile(), true, "Village one");
+		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getFile(), false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
 	}
@@ -44,8 +44,8 @@ public class World {
 		level = 0;
 		semaphore = new Semaphore(0);
 		people = new ArrayList<DynamicObjects>();
-		
-		System.out.println(getClass().getResource("/res/map/map.txt").toString());
+		System.out.println(path);
+		System.out.println(getClass().getResource("/res/map/map.txt").getFile());
 		maps = new Map[2];
 		maps[0] = new Map(path, true, "Village one");
 		// maps[1] = new Map("res/map/prova", false, "Village two");

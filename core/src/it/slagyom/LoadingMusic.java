@@ -14,12 +14,12 @@ public class LoadingMusic {
 
 
 	public LoadingMusic() {
-		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
-		backgroundSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/backgroundAudio.ogg"));
-		tickSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/tick.ogg"));
-		coinSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/coin.ogg"));
-		itemSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/item.ogg"));
-		cashSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/cash.mp3"));
+		backgroundSound = Gdx.audio.newSound(Gdx.files.internal("assets/res/audio/backgroundAudio.ogg"));
+		tickSound = Gdx.audio.newSound(Gdx.files.internal("assets/res/audio/tick.ogg"));
+		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("assets/res/audio/mainMusic.mp3"));
+		coinSound = Gdx.audio.newSound(Gdx.files.internal("assets/res/audio/coin.ogg"));
+		itemSound = Gdx.audio.newSound(Gdx.files.internal("assets/res/audio/item.ogg"));
+		cashSound = Gdx.audio.newSound(Gdx.files.internal("assets/res/audio/cash.mp3"));
 
 	}
 }

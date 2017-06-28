@@ -58,6 +58,9 @@ public class ShopScreen implements Screen {
 	private TextButton returnButton;
 	private Label coins;
 
+	int refreshedCoins;
+	boolean scaling = false; 
+	
 	public Item itemSelected;
 	TextButton[] potions;
 
@@ -356,10 +359,13 @@ public class ShopScreen implements Screen {
 		buyingTable.add(buyingLevels[2]);
 
 		TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
-		selectButton.addListener(new ClickListener() {
+		buyButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println("COMPRA");
+				refreshedCoins = Game.player.coins - 30; 
+				scaling = true;
+				MusicManager.play("CASH");
 			}
 		});
 
@@ -487,8 +493,24 @@ public class ShopScreen implements Screen {
 		}
 		if (buying)
 			buyingTable.setVisible(true);
+		
+		coinsTimer += delta;
+		if (scaling) {
+			if (coinsTimer > 0.008f) {
+				coinsTimer = 0;
+				System.out.println("PL " + Game.player.coins + " re " + refreshedCoins);
+				if (Game.player.coins > refreshedCoins) {
+					coins.setText((String.valueOf(Game.player.coins -= 1)));
+					System.out.println(coins);
+				}
+				else
+					scaling = false;
+			
+			}
+		}
 	}
-
+	float coinsTimer = 0;
+	
 	@Override
 	public void resize(int width, int height) {
 		// viewport.update(width, height);

@@ -10,6 +10,8 @@ public class LoadingMusic {
 	public static Sound tickSound;
 	public static Sound coinSound;
 	public static Sound itemSound;
+	public static Sound cashSound;
+
 
 	public LoadingMusic() {
 		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
@@ -17,5 +19,7 @@ public class LoadingMusic {
 		tickSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/tick.ogg"));
 		coinSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/coin.ogg"));
 		itemSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/item.ogg"));
+		cashSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/cash.mp3"));
+
 	}
 }

@@ -36,63 +36,56 @@ public class ShopScreen implements Screen {
 	private Viewport viewport;
 	private OrthographicCamera camera;
 
-	private Texture background;
 	private Sprite backgroundSprite;
-
-	private Texture selectionBackground;
 	private Sprite selectionBackgroundSprite;
-
-	private Texture buyBackground;
 	private Sprite buyBackgroundSprite;
-	boolean selection;
-	boolean buying;
 
 	private Table weaponsTable;
 	private Table potionsTable;
 	private Table parchmentsTable;
 	private Table buyingTable;
-
 	private Table optionsTable;
 
 	private TextButton selectButton;
 	private TextButton returnButton;
 	private Label coins;
 
+	boolean selection;
+	boolean buying;
+
+
+	// Variables for cash-scaling animation
 	int refreshedCoins;
-	boolean scaling = false; 
-	
+	float coinsTimer = 0;
+	boolean scaling = false;
+
 	public Item itemSelected;
-	TextButton[] potions;
 
 	public ShopScreen(final GameSlagyom game) {
 		this.game = game;
-		itemSelected = new Item();
+		// SCREEN INITIALIZING
 		camera = new OrthographicCamera();
-
 		viewport = new ExtendViewport(854, 480, camera);
-		selection = false;
-		buying = false;
 		viewport.apply();
-		background = new Texture("res/shop/shopBackground.png");
-		backgroundSprite = new Sprite(background);
-
-		selectionBackground = new Texture("res/shop/shopSelectionBG.png");
-		selectionBackgroundSprite = new Sprite(selectionBackground);
-
-		buyBackground = new Texture("res/shop/shopBuyBG.png");
-		buyBackgroundSprite = new Sprite(buyBackground);
-
 		stage = new Stage(viewport, game.batch);
 
 		currentCategory = Category.POTIONS;
+		selection = false;
+		buying = false;
+		itemSelected = new Item();
+
+		backgroundSprite = new Sprite(new Texture("res/shop/shopBackground.png"));
+		selectionBackgroundSprite = new Sprite(new Texture("res/shop/shopSelectionBG.png"));
+		buyBackgroundSprite = new Sprite(new Texture("res/shop/shopBuyBG.png"));
 
 		// OPTIONS TABLE
 		optionsTable = new Table();
 		optionsTable.setLayoutEnabled(false);
-		optionsTable.setFillParent(true);
-		optionsTable.top();
 
 		selectButton = new TextButton("Select", MenuScreen.skin);
+		returnButton = new TextButton("Return", MenuScreen.skin);
+		coins = new Label("" + Game.player.coins, MenuScreen.skin);
+
 		selectButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -101,7 +94,6 @@ public class ShopScreen implements Screen {
 			}
 		});
 
-		returnButton = new TextButton("Return", MenuScreen.skin);
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -111,33 +103,9 @@ public class ShopScreen implements Screen {
 			}
 		});
 
-		LoadingImage.emptyShopIcon.setPosition(141, 43);
-		LoadingImage.rightArrow.setPosition(283, 274);
-		LoadingImage.leftArrow.setPosition(115, 274);
-
-		coins = new Label("" + Game.player.coins, MenuScreen.skin);
-		coins.setPosition(199, 274);
-
-		LoadingImage.emptyShopIcon.setVisible(true);
-
-		selectButton.setPosition(573, 90);
-		selectButton.setVisible(false);
-		returnButton.setPosition(573, 50);
-		returnButton.setVisible(false);
-
-		optionsTable.add(LoadingImage.emptyShopIcon);
-		optionsTable.add(LoadingImage.rightArrow);
-		optionsTable.add(LoadingImage.leftArrow);
-		optionsTable.add(LoadingImage.emptyShopIcon);
-
-		optionsTable.add(coins);
-		optionsTable.add(selectButton);
-		optionsTable.add(returnButton);
-
 		LoadingImage.rightArrow.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-
 				if (currentCategory == Category.POTIONS) {
 					currentCategory = Category.WEAPONS;
 				} else if (currentCategory == Category.WEAPONS)
@@ -158,13 +126,31 @@ public class ShopScreen implements Screen {
 					currentCategory = Category.WEAPONS;
 			}
 		});
+
+		// SETTING POSITION AND VISIBILITY OF TABLE'S PARTS
+		LoadingImage.emptyShopIcon.setPosition(141, 43);
+		LoadingImage.rightArrow.setPosition(283, 274);
+		LoadingImage.leftArrow.setPosition(115, 274);
+		coins.setPosition(199, 274);
+		selectButton.setPosition(573, 90);
+		returnButton.setPosition(573, 50);
+		LoadingImage.emptyShopIcon.setVisible(true);
+		selectButton.setVisible(false);
+		returnButton.setVisible(false);
+
+		optionsTable.add(coins);
+		optionsTable.add(selectButton);
+		optionsTable.add(returnButton);
+		optionsTable.add(LoadingImage.rightArrow);
+		optionsTable.add(LoadingImage.leftArrow);
+		optionsTable.add(LoadingImage.emptyShopIcon);
 		// END OPTIONS TABLE
 
 		// POTIONS TABLE
 		potionsTable = new Table();
-		Label potionsLabel;
-
 		potionsTable.setLayoutEnabled(false);
+		Label potionsLabel;
+		TextButton[] potions;
 
 		potionsLabel = new Label("Potions", MenuScreen.skin);
 		potions = new TextButton[3];
@@ -212,25 +198,21 @@ public class ShopScreen implements Screen {
 		});
 
 		potionsLabel.setPosition(149, 425);
-		potionsTable.add(potionsLabel);
-
 		potions[0].setPosition(350, 420);
-		potionsTable.add(potions[0]);
-
 		potions[1].setPosition(350, 370);
-		potionsTable.add(potions[1]);
-
 		potions[2].setPosition(350, 320);
+		potionsTable.add(potionsLabel);
+		potionsTable.add(potions[0]);
+		potionsTable.add(potions[1]);
 		potionsTable.add(potions[2]);
 		// END POTIONS TABLE
 
 		// WEAPON TABLE
 		weaponsTable = new Table();
+		weaponsTable.setLayoutEnabled(false);
+		weaponsTable.setVisible(false);
 		Label weaponsLabel;
 		TextButton[] weapons;
-
-		weaponsTable.setVisible(false);
-		weaponsTable.setLayoutEnabled(false);
 
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 		weapons = new TextButton[3];
@@ -260,25 +242,22 @@ public class ShopScreen implements Screen {
 		});
 
 		weaponsLabel.setPosition(140, 425);
-		weaponsTable.add(weaponsLabel);
-
 		weapons[0].setPosition(350, 420);
-		weaponsTable.add(weapons[0]);
-
 		weapons[1].setPosition(350, 370);
-		weaponsTable.add(weapons[1]);
-
 		weapons[2].setPosition(350, 320);
+		weaponsTable.add(weaponsLabel);
+		weaponsTable.add(weapons[0]);
+		weaponsTable.add(weapons[1]);
 		weaponsTable.add(weapons[2]);
 		// END WEAPONS TABLE
 
 		// PARCHMENTS TABLE
 		parchmentsTable = new Table();
-		Label parchmentsLabel;
-		TextButton[] parchments;
-
-		parchmentsTable.setVisible(false);
 		parchmentsTable.setLayoutEnabled(false);
+
+		Label parchmentsLabel;
+		parchmentsTable.setVisible(false);
+		TextButton[] parchments;
 
 		parchmentsLabel = new Label("Parchments", MenuScreen.skin);
 		parchments = new TextButton[3];
@@ -308,24 +287,20 @@ public class ShopScreen implements Screen {
 		});
 
 		parchmentsLabel.setPosition(120, 425);
-		parchmentsTable.add(parchmentsLabel);
-
 		parchments[0].setPosition(350, 420);
-		parchmentsTable.add(parchments[0]);
-
 		parchments[1].setPosition(350, 370);
-		parchmentsTable.add(parchments[1]);
-
 		parchments[2].setPosition(350, 320);
+		parchmentsTable.add(parchmentsLabel);
+		parchmentsTable.add(parchments[0]);
+		parchmentsTable.add(parchments[1]);
 		parchmentsTable.add(parchments[2]);
 		// END PARCHMENTS TABLE
 
 		// BUYING TABLE
 		buyingTable = new Table();
-		TextButton[] buyingLevels;
-
-		buyingTable.setVisible(false);
 		buyingTable.setLayoutEnabled(false);
+		buyingTable.setVisible(false);
+		TextButton[] buyingLevels;
 
 		buyingLevels = new TextButton[3];
 		buyingLevels[0] = new TextButton("Level 1", MenuScreen.skin);
@@ -349,23 +324,21 @@ public class ShopScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 			}
 		});
+		
 		buyingLevels[0].setPosition(302, 245);
-		buyingTable.add(buyingLevels[0]);
-
 		buyingLevels[1].setPosition(302, 202);
-		buyingTable.add(buyingLevels[1]);
-
 		buyingLevels[2].setPosition(302, 159);
+		buyingTable.add(buyingLevels[0]);
+		buyingTable.add(buyingLevels[1]);
 		buyingTable.add(buyingLevels[2]);
 
 		TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
 		buyButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("COMPRA");
-				refreshedCoins = Game.player.coins - 30; 
-				scaling = true;
+				refreshedCoins = Game.player.coins - 30;
 				MusicManager.play("CASH");
+				scaling = true;
 			}
 		});
 
@@ -378,36 +351,34 @@ public class ShopScreen implements Screen {
 				optionsTable.add(LoadingImage.rightArrow);
 				optionsTable.add(LoadingImage.leftArrow);
 				showInfo(LoadingImage.emptyShopIcon);
-				
+
 			}
 		});
 
 		final TextField level1n = new TextField("", MenuScreen.skin);
+		final TextField level2n = new TextField("", MenuScreen.skin);
+		final TextField level3n = new TextField("", MenuScreen.skin);
+
 		level1n.setMessageText("0");
 		level1n.setFocusTraversal(true);
 		level1n.setWidth(30);
-
-		final TextField level2n = new TextField("", MenuScreen.skin);
 		level2n.setMessageText("0");
 		level2n.setFocusTraversal(true);
 		level2n.setWidth(30);
-
-		final TextField level3n = new TextField("", MenuScreen.skin);
 		level3n.setMessageText("0");
 		level3n.setFocusTraversal(true);
 		level3n.setWidth(30);
 
 		buyButton.setPosition(573, 90);
-		buyingTable.add(buyButton);
 		returnBuyButton.setPosition(573, 50);
-		buyingTable.add(returnBuyButton);
 		level1n.setPosition(482, 240);
-		buyingTable.add(level1n);
 		level2n.setPosition(482, 198);
-		buyingTable.add(level2n);
 		level3n.setPosition(482, 154);
+		buyingTable.add(buyButton);
+		buyingTable.add(returnBuyButton);
+		buyingTable.add(level1n);
+		buyingTable.add(level2n);
 		buyingTable.add(level3n);
-
 		// END BUYING TABLE
 
 		stage.addActor(potionsTable);
@@ -438,8 +409,6 @@ public class ShopScreen implements Screen {
 		optionsTable.removeActor(LoadingImage.rightArrow);
 		optionsTable.removeActor(LoadingImage.leftArrow);
 	}
-	
-	
 
 	@Override
 	public void show() {
@@ -493,24 +462,19 @@ public class ShopScreen implements Screen {
 		}
 		if (buying)
 			buyingTable.setVisible(true);
-		
+
 		coinsTimer += delta;
 		if (scaling) {
 			if (coinsTimer > 0.008f) {
 				coinsTimer = 0;
-				System.out.println("PL " + Game.player.coins + " re " + refreshedCoins);
 				if (Game.player.coins > refreshedCoins) {
 					coins.setText((String.valueOf(Game.player.coins -= 1)));
-					System.out.println(coins);
-				}
-				else
+				} else
 					scaling = false;
-			
 			}
 		}
 	}
-	float coinsTimer = 0;
-	
+
 	@Override
 	public void resize(int width, int height) {
 		// viewport.update(width, height);

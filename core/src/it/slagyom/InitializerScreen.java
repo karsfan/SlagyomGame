@@ -74,7 +74,7 @@ public class InitializerScreen implements Screen {
 				game.screenManager.setPlayScreen(new PlayScreen(game, NewCharacterScreen.charName));
 				game.setScreen(game.screenManager.playScreen);
 				game.screenManager.currentState = State.PLAYING;
-				Gdx.input.setInputProcessor(null);
+				//Gdx.input.setInputProcessor(null);
 			}
 		});
 

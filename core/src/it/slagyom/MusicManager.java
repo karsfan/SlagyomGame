@@ -9,6 +9,7 @@ public class MusicManager {
 	public static Sound tickSound;
 	public static Sound coinSound;
 	public static Sound itemSound;
+	public static Sound cashSound;
 
 	public MusicManager() {
 		mainMusic = LoadingMusic.mainMusic;
@@ -16,10 +17,10 @@ public class MusicManager {
 		tickSound = LoadingMusic.tickSound;
 		coinSound = LoadingMusic.coinSound;
 		itemSound = LoadingMusic.itemSound;
-
+		cashSound = LoadingMusic.cashSound;
 	}
 
-	public void play(String sound) {
+	public static void play(String sound) {
 		switch (sound) {
 		case "COIN":
 			coinSound.play(0.7f);
@@ -28,7 +29,7 @@ public class MusicManager {
 			itemSound.play(1.0f);
 			break;
 		case "BACKGROUND":
-			backgroundSound.loop(2.0f);
+			backgroundSound.loop(10.0f);
 			break;
 		case "TICK":
 			tickSound.play(1.0f);
@@ -36,6 +37,8 @@ public class MusicManager {
 		case "MAINMUSIC":
 			mainMusic.play();
 			break;
+		case "CASH":
+			cashSound.play(1.0f);
 		default:
 			break;
 		}

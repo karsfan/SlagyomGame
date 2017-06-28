@@ -44,6 +44,7 @@ public class LoadingImage {
 	private static Texture redPotionImage;
 	private static Texture greenPotionImage;
 	private static Texture castleImage;
+	public static Texture pointer; 
 
 	public static TextureRegion battleCharacterStand;
 	public static Animation<TextureRegion>[] battleCharacterAnimation;
@@ -91,7 +92,7 @@ public class LoadingImage {
 		homeImage = new Texture("res/home.png");
 		templeImage = new Texture("res/bigHome.png");
 		threeImage = new Texture("res/three.png");
-		groundImage = new Texture("res/ground.png");
+		groundImage = new Texture("res/floor.png");
 		floorImage = new Texture("res/floor.png");
 		floor2Image = new Texture("res/floor3.png");
 		floor3Image = new Texture("res/floor3.png");
@@ -107,11 +108,13 @@ public class LoadingImage {
 		tableImage = new Texture("res/table.png");
 		battleBackground = new Texture("res/battleBg5.png");
 		castleImage = new Texture("res/castle.png");
+		
 		// WORLD ITEM IMAGES
 		coinImage = new Texture("res/coin.png");
 		bluPotionImage = new Texture("res/bluePotion.png");
 		greenPotionImage = new Texture("res/greenPotion.png");
 		redPotionImage = new Texture("res/redPotion.png");
+		pointer = new Texture("res/pointer.png");
 
 		// BAG AND SHOP ITEM IMAGES
 		bluePotion = new ImageButton(

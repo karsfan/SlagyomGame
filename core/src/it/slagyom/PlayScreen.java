@@ -400,7 +400,6 @@ public class PlayScreen implements Screen, ControllerListener {
 			return true;
 		}
 		movesGamePad = false;
-
 		return false;
 	}
 

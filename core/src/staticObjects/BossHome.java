@@ -6,8 +6,8 @@ import java.awt.Rectangle;
 import battle.Enemy;
 import battle.Enemy.Level;
 
-public class HeadHome extends EnemyHome{
-	public HeadHome(Level levelEnemy, Element type) {
+public class BossHome extends EnemyHome{
+	public BossHome(Level levelEnemy, Element type) {
 		super(levelEnemy, type);
 	}
 	

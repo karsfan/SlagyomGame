@@ -38,12 +38,11 @@ public class PlayScreen implements Screen, ControllerListener {
 	private static Drawable noDialog = null;
 	private static float textTimer;
 
-	
 	public int j = 0;
 
 	private boolean stop = false;
 	public int i = 0;
-	PovDirection directionGamepad;
+	PovDirection directionGamepad = null;
 
 	boolean movesGamePad = false;
 	
@@ -63,7 +62,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam.position.y = Game.player.getY();
 		hud = new Hud(game.batch);
 
-		//Controllers.addListener(this);
+		Controllers.addListener(this);
 
 	}
 
@@ -89,7 +88,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	@Override
 	public void render(float delta) {
 		update(delta);
-		//System.out.println(Game.world.semaphore.availablePermits());
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(gamecam.combined);
@@ -162,7 +160,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	private void moveCharacter(float dt) {
 		try {
 			if (!stop) {
-				if (movesGamePad) {
+				/*if (movesGamePad) {
 					if (directionGamepad == PovDirection.east)
 						Game.player.movesRight(dt);
 					else if (directionGamepad == PovDirection.north) {
@@ -184,10 +182,10 @@ public class PlayScreen implements Screen, ControllerListener {
 						Game.player.movesSouthEast(dt);
 					else if (directionGamepad == PovDirection.southWest)
 						Game.player.movesSouthWest(dt);
+	
+				}*/
 
-				}
-
-				else if (Gdx.input.isKeyPressed(Keys.Z)) {
+				if (Gdx.input.isKeyPressed(Keys.Z)) {
 					Game.player.setVelocity(150f);
 					LoadingImage.setFrameDurationCharacter(0.1f);
 				} else {
@@ -198,7 +196,7 @@ public class PlayScreen implements Screen, ControllerListener {
 					Game.player.movesLeft(dt);
 				else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
 					Game.player.movesRight(dt);
-				else if (Gdx.input.isKeyPressed(Keys.UP)) {
+				else if (Gdx.input.isKeyPressed(Keys.UP) || (directionGamepad == PovDirection.north && movesGamePad)) {
 					Game.player.movesUp(dt);
 					if (Game.player.collideShop) {
 						Game.world.semaphore.acquire();

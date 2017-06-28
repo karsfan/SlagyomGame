@@ -10,7 +10,7 @@ import java.util.Scanner;
 import battle.Enemy.Level;
 import it.slagyom.src.World.GameConfig;
 import staticObjects.EnemyHome;
-import staticObjects.HeadHome;
+import staticObjects.BossHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
@@ -146,10 +146,10 @@ public class Map {
 			listStaticObjects.add(table);
 			if (current == true) {
 				table.setInfo("In questa castello c'e' il capo del villaggio");
-				staticObject = new HeadHome(Level.MEDIUM, Element.CASTLE);
+				staticObject = new BossHome(Level.MEDIUM, Element.CASTLE);
 			} else {
 				table.setInfo("In questa castello c'e' il capo del villaggio");
-				staticObject = new HeadHome(Level.HARD, Element.CASTLE);
+				staticObject = new BossHome(Level.HARD, Element.CASTLE);
 			}
 			break;
 

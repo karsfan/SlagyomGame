@@ -160,6 +160,9 @@ public class World {
 
 	public void createBattle(EnemyHome enemyHome) {
 		Iterator<StaticObject> it = getListTile().iterator();
+		// se si tratta di un tempio controllo tra la lista dei nemici quali
+		// deve affronatre in caso non ci sono nemici da affrontare uscirà un
+		// avviso
 		if (enemyHome.getElement() == Element.TEMPLE) {
 			boolean creata = false;
 			Iterator<Enemy> it1 = enemyHome.enemy.iterator();
@@ -175,7 +178,10 @@ public class World {
 				Game.player.collideGym = false;
 				PlayScreen.hud.setDialogText("Non ci sono nemici in questa casa");
 			}
-		} else if (enemyHome.getElement() == Element.CASTLE) {
+		} // se si tratta di un castle controllo prima che siano stati sconfitti
+			// tutti i nemici, se lo sono allora partirà la battaglia con il
+			// boss
+		else if (enemyHome.getElement() == Element.CASTLE) {
 			boolean creata = true;
 			while (it.hasNext()) {
 				StaticObject ob = (StaticObject) it.next();
@@ -193,7 +199,13 @@ public class World {
 				}
 			}
 			if (creata) {
-				battle = new Battle(Game.player, enemyHome.getEnemy());
+				if (!enemyHome.getEnemy().morto)
+					battle = new Battle(Game.player, enemyHome.getEnemy());
+				else {
+					Game.player.collideGym = false;
+					PlayScreen.hud.setDialogText("Hai già sconfitto il boss di questo villaggio, adesso puoi passare al prossimo villaggio");
+				}
+
 			} else {
 				Game.player.collideGym = false;
 				PlayScreen.hud.setDialogText("Non ci puoi accedere se prima non hai eliminati tutti i nemici");

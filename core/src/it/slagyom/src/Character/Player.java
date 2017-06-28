@@ -10,7 +10,7 @@ import it.slagyom.src.World.Weapon;
 import it.slagyom.src.World.Weapon.Level;
 import it.slagyom.src.World.Weapon.Type;
 import staticObjects.EnemyHome;
-import staticObjects.HeadHome;
+import staticObjects.BossHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
@@ -312,9 +312,9 @@ public class Player extends DynamicObjects implements ICollidable {
 							}
 						} else if (((StaticObject) ob).getElement() == Element.CASTLE) {
 							System.out.println("collide con castel");
-							if (((HeadHome) ob).collideDoor(this)) {
+							if (((BossHome) ob).collideDoor(this)) {
 								collideGym = true;
-								Game.world.createBattle((HeadHome) ob);
+								Game.world.createBattle((BossHome) ob);
 								return true;
 							}
 						}

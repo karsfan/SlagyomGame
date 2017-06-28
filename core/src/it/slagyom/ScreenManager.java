@@ -40,7 +40,6 @@ public class ScreenManager {
 	public void swapScreen(State newState) {
 		setPreviousState(currentState);
 		setCurrentState(newState);
-
 		if (currentState == State.MENU) {
 			gameSlagyom.musicManager.play("MAINMUSIC");
 			gameSlagyom.setScreen(menuScreen);
@@ -69,6 +68,7 @@ public class ScreenManager {
 		} else if (currentState == State.BATTLE) {
 			battlescreen = new BattleScreen(gameSlagyom, it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
+			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
 			gameSlagyom.musicManager.pause();
 			gameSlagyom.musicManager.play("MAINMUSIC");
@@ -94,7 +94,6 @@ public class ScreenManager {
 	}
 
 	public State getPreviousState() {
-		System.out.println(previousState);
 		return previousState;
 		
 	}

@@ -49,6 +49,7 @@ public class Game {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public Game(String text, GameSlagyom game2, String charName) {
 		try {
 			enemy = ((Class<? extends Enemy>) Class.forName("enemy.Ai."+text));

@@ -68,10 +68,8 @@ public class PauseScreen implements Screen {
 			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				// game.setScreen(game.playScreen);
 				game.saveGame();
 				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
-				//Game.world.semaphore.release();
 				PlayScreen.hud.setDialogText("Game saved!");
 			}
 		});
@@ -79,7 +77,6 @@ public class PauseScreen implements Screen {
 		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				OptionScreen.fromPause = true;
 				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.OPTIONMENU);
 
 			}
@@ -105,7 +102,6 @@ public class PauseScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.BAG);
-
 			}
 		});
 
@@ -163,18 +159,15 @@ public class PauseScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	//	System.out.println(Game.world.semaphore+ "ren");
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();
 
 		stage.act();
-
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			game.screenManager.swapScreen(game.screenManager.getPreviousState());
-			//Game.world.semaphore.release();
 		}
 
 	}
@@ -182,7 +175,6 @@ public class PauseScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().setScreenSize(width, height);
-		// viewport.update(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
 	}

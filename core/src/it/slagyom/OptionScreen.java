@@ -21,7 +21,6 @@ public class OptionScreen implements Screen {
 	protected Stage stage;
 	private Viewport viewport;
 	private OrthographicCamera camera;
-	public static boolean fromPause;
 
 	private Texture background;
 	private Sprite backgroundSprite;
@@ -43,7 +42,6 @@ public class OptionScreen implements Screen {
 		camera.update();
 
 		stage = new Stage(viewport, game.batch);
-		fromPause = false;
 		// Create Table
 		Table mainTable = new Table();
 		mainTable.setFillParent(true);

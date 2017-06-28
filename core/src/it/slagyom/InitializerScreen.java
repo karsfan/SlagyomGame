@@ -1,7 +1,5 @@
 package it.slagyom;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -24,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import it.slagyom.ScreenManager.State;
 
 public class InitializerScreen implements Screen {
 
@@ -69,7 +69,8 @@ public class InitializerScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.screenManager.setPlayScreen(new PlayScreen(game, NewCharacterScreen.charName));
-				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
+				game.setScreen(game.screenManager.playScreen);
+				game.screenManager.currentState = State.PLAYING;
 			}
 		});
 

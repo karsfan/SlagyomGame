@@ -38,6 +38,7 @@ public class World {
 		maps[1] = new Map("res/map/map.txt", false, "Village two");
 
 		setThread(new ThreadWorld(this, semaphore));
+		
 		// getThread().start();
 	}
 

@@ -43,8 +43,6 @@ public class GameSlagyom extends Game {
 	public void loadGame() {
 		prefs = Gdx.app.getPreferences("My saved game");
 
-		//if (screenManager.currentState == State.PAUSE)
-			//it.slagyom.src.World.Game.world.getThread().stop();
 		screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
 		it.slagyom.src.World.Game.player.x = prefs.getFloat("xCharPosition");
 		it.slagyom.src.World.Game.player.y = prefs.getFloat("yCharPosition");

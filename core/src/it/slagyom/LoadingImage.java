@@ -152,22 +152,22 @@ public class LoadingImage {
 		woman1Stand = new TextureRegion();
 		woman2Stand = new TextureRegion();
 
-		texture = new Texture("assets/bpj.png");
+		texture = new Texture("bpj.png");
 		createFrame(texture, playerAnimation, playerStand);
 
-		texture = new Texture("assets/notPlaying.png");
+		texture = new Texture("notPlaying.png");
 		createFrame(texture, man1Animation, man1Stand);
 
-		texture = new Texture("assets/NotPlaying/woman1.png");
+		texture = new Texture("NotPlaying/woman1.png");
 		createFrame(texture, woman1Animation, woman1Stand);
 
-		texture = new Texture("assets/NotPlaying/woman2.png");
+		texture = new Texture("NotPlaying/woman2.png");
 		createFrame(texture, woman2Animation, woman2Stand);
 
-		texture = new Texture("assets/lancia.png");
+		texture = new Texture("lancia.png");
 		createBattleFrame(texture, battleCharacterAnimation, battleCharacterStand);
 
-		texture = new Texture("assets/lancia.png");
+		texture = new Texture("lancia.png");
 		createBattleFrame(texture, enemyAnimation, enemyStand);
 
 	}

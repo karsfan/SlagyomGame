@@ -68,9 +68,13 @@ public class InitializerScreen implements Screen {
 			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.musicManager.pause();
+				game.musicManager.play("BACKGROUND");
+				game.screenManager.menuScreen.menuMusic.stop();
 				game.screenManager.setPlayScreen(new PlayScreen(game, NewCharacterScreen.charName));
 				game.setScreen(game.screenManager.playScreen);
 				game.screenManager.currentState = State.PLAYING;
+				Gdx.input.setInputProcessor(null);
 			}
 		});
 

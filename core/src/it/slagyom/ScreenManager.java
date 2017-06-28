@@ -38,27 +38,16 @@ public class ScreenManager {
 	public void swapScreen(State newState) {
 		setPreviousState(currentState);
 		setCurrentState(newState);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-		if (currentState == State.PLAYING || currentState == State.CONTINUEGAME || currentState == State.BATTLE)
+		
+		if (currentState == State.PLAYING || currentState == State.BATTLE)
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.noCursor, 0, 0));
 		else
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.cursor, 0, 0));
-		
-=======
->>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
-=======
->>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
-=======
->>>>>>> 58501b16afee49c8dcead4265b82d355bdf12c52
 		if (currentState == State.MENU) {
 			gameSlagyom.musicManager.play("MAINMUSIC");
-			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.cursor, 0, 0));
 			gameSlagyom.setScreen(menuScreen);
 			Gdx.input.setInputProcessor(menuScreen.stage);
-			
+
 		} else if (currentState == State.PLAYING) {
 			gameSlagyom.musicManager.pause();
 			gameSlagyom.setScreen(getPlayScreen());
@@ -67,7 +56,6 @@ public class ScreenManager {
 			menuScreen.menuMusic.stop();
 			gameSlagyom.musicManager.play("BACKGROUND");
 
-			
 			Game.world.semaphore.release();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.MULTIPLAYER) {
@@ -76,7 +64,6 @@ public class ScreenManager {
 
 		} else if (currentState == State.OPTIONMENU) {
 			gameSlagyom.setScreen(optionScreen);
-			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.cursor, 0, 0));
 			Gdx.input.setInputProcessor(optionScreen.stage);
 
 		} else if (currentState == State.NEWGAME) {
@@ -92,36 +79,17 @@ public class ScreenManager {
 		} else if (currentState == State.BATTLE) {
 			battlescreen = new BattleScreen(gameSlagyom, it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
 			Gdx.input.setInputProcessor(null);
->>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
-=======
 			Gdx.input.setInputProcessor(null);
->>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
-=======
 			Gdx.input.setInputProcessor(null);
->>>>>>> 58501b16afee49c8dcead4265b82d355bdf12c52
 		} else if (currentState == State.PAUSE) {
 			gameSlagyom.musicManager.pause();
 			gameSlagyom.musicManager.play("MAINMUSIC");
 			gameSlagyom.setScreen(pauseScreen);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 			/*
 			 * try { it.slagyom.src.World.Game.world.semaphore.acquire(); }
 			 * catch (InterruptedException e) { e.printStackTrace(); }
 			 */
-=======
->>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
-=======
->>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
-=======
->>>>>>> 58501b16afee49c8dcead4265b82d355bdf12c52
 			Gdx.input.setInputProcessor(pauseScreen.stage);
 		} else if (currentState == State.BAG) {
 			bagScreen = new BagScreen(gameSlagyom);
@@ -131,25 +99,15 @@ public class ScreenManager {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);
 			Gdx.input.setInputProcessor(shopScreen.stage);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-		} else if (currentState == State.CONTINUEGAME) {
-			gameSlagyom.musicManager.pause();
-			gameSlagyom.musicManager.play("BACKGROUND");
-			gameSlagyom.setScreen(getPlayScreen());
-
-			Gdx.input.setInputProcessor(null);
+			/*
+			 * } else if (currentState == State.CONTINUEGAME) {
+			 * gameSlagyom.musicManager.pause();
+			 * gameSlagyom.musicManager.play("BACKGROUND");
+			 * gameSlagyom.setScreen(getPlayScreen());
+			 * 
+			 * Gdx.input.setInputProcessor(null);
+			 */
 		}
-=======
-		} 
->>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
-=======
-		} 
->>>>>>> f48baa90bc764f4a709c224d4117d5d4ced3b127
-=======
-		} 
->>>>>>> 58501b16afee49c8dcead4265b82d355bdf12c52
 	}
 
 	public State getCurrentState() {
@@ -162,7 +120,7 @@ public class ScreenManager {
 
 	public State getPreviousState() {
 		return previousState;
-		
+
 	}
 
 	public void setPreviousState(State previousState) {

@@ -14,9 +14,9 @@ public class LoadingMusic {
 
 
 	public LoadingMusic() {
-		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
 		backgroundSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/backgroundAudio.ogg"));
 		tickSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/tick.ogg"));
+		mainMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
 		coinSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/coin.ogg"));
 		itemSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/item.ogg"));
 		cashSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/cash.mp3"));

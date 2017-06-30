@@ -34,7 +34,6 @@ public class LoadingImage {
 	private static Texture preEnemyHomeImage;
 	private static Texture shopImage;
 	private static Texture roadImage;
-	private static Texture buildingImage;
 	private static Texture waterImage;
 	private static Texture rockImage;
 	private static Texture forest1Image;
@@ -104,13 +103,12 @@ public class LoadingImage {
 		preEnemyHomeImage = new Texture("res/preEnemyHome.png");
 		shopImage = new Texture("res/shop.png");
 		roadImage = new Texture("res/road.png");
-		buildingImage = new Texture("res/building.png");
 		waterImage = new Texture("res/water.png");
 		rockImage = new Texture("res/rock.png");
 		forest1Image = new Texture("res/forest1.png");
 		forest2Image = new Texture("res/forest2.png");
 		tableImage = new Texture("res/table.png");
-		battleBackground = new Texture("res/battleBg5.png");
+		battleBackground = new Texture("res/battleBg4.png");
 		castleImage = new Texture("res/castle.png");
 		
 		// WORLD ITEM IMAGES
@@ -429,9 +427,6 @@ public class LoadingImage {
 				break;
 			case GROUND:
 				texture = groundImage;
-				break;
-			case BUILDING:
-				texture = buildingImage;
 				break;
 			case WATER:
 				texture = waterImage;

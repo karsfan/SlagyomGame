@@ -63,6 +63,9 @@ public class ShopScreen implements Screen {
 	boolean selection;
 	boolean buying;
 
+	final TextField level1n = new TextField("", MenuScreen.skin);
+	final TextField level2n = new TextField("", MenuScreen.skin);
+	final TextField level3n = new TextField("", MenuScreen.skin);
 
 	// Variables for cash-scaling animation
 	int refreshedCoins;
@@ -344,10 +347,15 @@ public class ShopScreen implements Screen {
 
 		TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
 		buyButton.addListener(new ClickListener() {
+			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				refreshedCoins = Game.player.coins - 30;
-				MusicManager.play("CASH");
+				System.out.println(level1n.getText());
+				// se non si scrive nulla nei text field da problemi
+				// bisgna assicurarsi che ci sia scritto qualcosa
+				refreshedCoins = Game.player.coins - (Integer.parseInt(level1n.getText()))*10 - (Integer.parseInt(level2n.getText()))*20
+						- (Integer.parseInt(level3n.getText()))*30;
+				game.musicManager.play("CASH");
 				scaling = true;
 			}
 		});
@@ -365,9 +373,6 @@ public class ShopScreen implements Screen {
 			}
 		});
 
-		final TextField level1n = new TextField("", MenuScreen.skin);
-		final TextField level2n = new TextField("", MenuScreen.skin);
-		final TextField level3n = new TextField("", MenuScreen.skin);
 		level1n.setMessageText("0");
 		level1n.setFocusTraversal(true);
 		level1n.setWidth(30);

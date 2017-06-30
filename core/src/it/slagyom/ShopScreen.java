@@ -2,32 +2,23 @@ package it.slagyom;
 
 import com.badlogic.gdx.Screen;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import hud.BattleHud;
 import it.slagyom.ScreenManager.State;
 import it.slagyom.src.World.Game;
 import staticObjects.Item;
@@ -56,13 +47,12 @@ public class ShopScreen implements Screen {
 	private Table buyingTable;
 	private Table optionsTable;
 
-	private TextButton selectButton;
 	private TextButton returnButton;
 	private Label coins;
-
-	boolean selection;
+	Label textTable; 
 	boolean buying;
 
+	TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
 	final TextField level1n = new TextField("", MenuScreen.skin);
 	final TextField level2n = new TextField("", MenuScreen.skin);
 	final TextField level3n = new TextField("", MenuScreen.skin);
@@ -71,7 +61,6 @@ public class ShopScreen implements Screen {
 	int refreshedCoins;
 	float coinsTimer = 0;
 	boolean scaling = false;
-
 	public Item itemSelected;
 	//il button Select si puo togliere. Quando premiamo su un arma facciamo uscire subito la buyingTable, mentre quando premiamo su una
 	//pozione o su una pergamena facciamo uscire solamente i tasti buy e return e in caso un altro button dove si puo scrivere quante cose
@@ -85,10 +74,23 @@ public class ShopScreen implements Screen {
 		stage = new Stage(viewport, game.batch);
 
 		currentCategory = Category.POTIONS;
-		selection = false;
+		//selection = false;
 		buying = false;
 		itemSelected = new Item();
 
+		buyingTable = new Table();
+		buyingTable.setLayoutEnabled(false);
+		buyingTable.setVisible(false);
+		level1n.setMessageText("0");
+		level1n.setFocusTraversal(true);
+		level1n.setWidth(30);
+		level2n.setMessageText("0");
+		level2n.setFocusTraversal(true);
+		level2n.setWidth(30);
+		level3n.setMessageText("0");
+		level3n.setFocusTraversal(true);
+		level3n.setWidth(30);
+		
 		backgroundSprite = new Sprite(new Texture("res/shop/shopBackground.png"));
 		selectionBackgroundSprite = new Sprite(new Texture("res/shop/shopSelectionBG.png"));
 		buyBackgroundSprite = new Sprite(new Texture("res/shop/shopBuyBG.png"));
@@ -97,18 +99,22 @@ public class ShopScreen implements Screen {
 		optionsTable = new Table();
 		optionsTable.setLayoutEnabled(false);
 
-		selectButton = new TextButton("Select", MenuScreen.skin);
+	//	selectButton = new TextButton("Select", MenuScreen.skin);
 		returnButton = new TextButton("Return", MenuScreen.skin);
 		coins = new Label("" + Game.player.coins, MenuScreen.skin);
+		buyButton.setPosition(573, 90);
+		level1n.setPosition(482, 240);
+		level2n.setPosition(482, 198);
+		level3n.setPosition(482, 154);
+		optionsTable.add(buyButton);
+		buyButton.setVisible(false);
+		optionsTable.add(returnButton);
+		buyButton.setVisible(false);
+		buyingTable.add(level1n);
+		buyingTable.add(level2n);
+		buyingTable.add(level3n);
 
-		selectButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				hideInfo();
-				if(weaponsTable.isVisible())
-					buying = true;
-			}
-		});
+	
 
 		returnButton.addListener(new ClickListener() {
 			@Override
@@ -116,6 +122,10 @@ public class ShopScreen implements Screen {
 				showInfo(LoadingImage.emptyShopIcon);
 				hideInfo();
 				LoadingImage.emptyShopIcon.setVisible(true);
+				buyingTable.setVisible(false);
+				buying = false;
+				optionsTable.add(LoadingImage.rightArrow);
+				optionsTable.add(LoadingImage.leftArrow);
 			}
 		});
 
@@ -150,14 +160,11 @@ public class ShopScreen implements Screen {
 		LoadingImage.rightArrow.setPosition(283, 274);
 		LoadingImage.leftArrow.setPosition(115, 274);
 		coins.setPosition(199, 274);
-		selectButton.setPosition(573, 90);
 		returnButton.setPosition(573, 50);
 		LoadingImage.emptyShopIcon.setVisible(true);
-		selectButton.setVisible(false);
 		returnButton.setVisible(false);
 
 		optionsTable.add(coins);
-		optionsTable.add(selectButton);
 		optionsTable.add(returnButton);
 		optionsTable.add(LoadingImage.rightArrow);
 		optionsTable.add(LoadingImage.leftArrow);
@@ -191,10 +198,22 @@ public class ShopScreen implements Screen {
 		potions[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bluePotion);
+				showInfo(LoadingImage.bluePotion);	
 				buying = true;
+				textTable = new Label("Insert number", MenuScreen.skin);
+				textTable.setWidth(10);
 				itemSelected.setElement(Element.POTION);
 				itemSelected.setLevel(Level.FIRST);
+				buyingTable.clear();
+				textTable.setPosition(302, 202);
+				buyingTable.add(textTable);
+				textTable = new Label("a", MenuScreen.skin);
+				textTable.setPosition(302, 245);
+				buyingTable.add(textTable);
+				buyingTable.setVisible(true);	
+				level1n.setText("Num");
+				buyingTable.add(level1n);
+				
 			}
 		});
 
@@ -245,6 +264,12 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.spear);
+				buying = true;
+				buyingTable.clear();
+				buyingTable.setVisible(true);	
+				buyingTable.add(level1n);
+				buyingTable.add(level2n);
+				buyingTable.add(level3n);
 			}
 		});
 
@@ -252,6 +277,10 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.sword);
+				buying = true;
+				buyingTable.add(level1n);
+				buyingTable.add(level2n);
+				buyingTable.add(level3n);
 			}
 		});
 
@@ -259,6 +288,10 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.spear);
+				buying = true;
+				buyingTable.add(level1n);
+				buyingTable.add(level2n);
+				buyingTable.add(level3n);
 			}
 		});
 
@@ -290,6 +323,7 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bluePotion);
+				buying = true;
 			}
 		});
 
@@ -297,6 +331,7 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.sword);
+				buying = true;
 			}
 		});
 
@@ -304,6 +339,7 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.spear);
+				buying = true;
 			}
 		});
 		//leggi nota prima del metdo
@@ -319,10 +355,8 @@ public class ShopScreen implements Screen {
 		// END PARCHMENTS TABLE
 
 		// BUYING TABLE
-		buyingTable = new Table();
-		buyingTable.setLayoutEnabled(false);
-		buyingTable.setVisible(false);
-		TextButton[] buyingLevels;
+		
+		/*TextButton[] buyingLevels;
 
 		buyingLevels = new TextButton[3];
 		buyingLevels[0] = new TextButton("Level 1", MenuScreen.skin);
@@ -352,9 +386,9 @@ public class ShopScreen implements Screen {
 		buyingLevels[2].setPosition(302, 159);
 		buyingTable.add(buyingLevels[0]);
 		buyingTable.add(buyingLevels[1]);
-		buyingTable.add(buyingLevels[2]);
+		buyingTable.add(buyingLevels[2]);*/
+		
 
-		TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
 		buyButton.addListener(new ClickListener() {
 			@SuppressWarnings("static-access")
 			@Override
@@ -369,50 +403,14 @@ public class ShopScreen implements Screen {
 			}
 		});
 		//leggi nota prima del metdo
-		TextButton returnBuyButton = new TextButton("Return", MenuScreen.skin);
-		returnBuyButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				buyingTable.setVisible(false);
-				buying = false;
-				optionsTable.add(LoadingImage.rightArrow);
-				optionsTable.add(LoadingImage.leftArrow);
-				showInfo(LoadingImage.emptyShopIcon);
-
-			}
-		});
-
-		level1n.setMessageText("0");
-		level1n.setFocusTraversal(true);
-		level1n.setWidth(30);
-		level2n.setMessageText("0");
-		level2n.setFocusTraversal(true);
-		level2n.setWidth(30);
-		level3n.setMessageText("0");
-		level3n.setFocusTraversal(true);
-		level3n.setWidth(30);
-
-		buyButton.setPosition(573, 90);
-		returnBuyButton.setPosition(573, 50);
-		level1n.setPosition(482, 240);
-		level2n.setPosition(482, 198);
-		level3n.setPosition(482, 154);
-		buyingTable.add(buyButton);
-		buyingTable.add(returnBuyButton);
-		buyingTable.add(level1n);
-		buyingTable.add(level2n);
-		buyingTable.add(level3n);
 		// END BUYING TABLE
-<<<<<<< HEAD
 
-=======
 		/*int [] livellis = new int[5];
 		
 		List livelli = new List(MenuScreen.skin);
 		livelli.setItems(livellis);
 		//leggi nota prima del metdo
 		stage.addActor(livelli);*/
->>>>>>> bb2e30cc686f09899ea7665e66c3166db1181428
 		stage.addActor(potionsTable);
 		stage.addActor(weaponsTable);
 		stage.addActor(parchmentsTable);
@@ -426,17 +424,13 @@ public class ShopScreen implements Screen {
 		optionsTable.add(icon);
 		LoadingImage.emptyShopIcon.setVisible(false);
 
-		selection = true;
 		if(weaponsTable.isVisible()){
-		selectButton.setVisible(true);
 		returnButton.setVisible(true);
 		}
 		
 	}
 
 	private void hideInfo() {
-		selection = false;
-		selectButton.setVisible(false);
 		returnButton.setVisible(false);
 	}
 
@@ -456,9 +450,9 @@ public class ShopScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.batch.begin();
-		if (selection)
+		/*if (selection)
 			selectionBackgroundSprite.draw(game.batch);
-		else if (buying) {
+		else*/ if (buying) {
 			buyingMode();
 			selectionBackgroundSprite.draw(game.batch);
 			buyBackgroundSprite.draw(game.batch);
@@ -495,7 +489,7 @@ public class ShopScreen implements Screen {
 			buyingTable.setVisible(false);
 
 		}
-		if (buying && weaponsTable.isVisible())
+		if (buying )
 			buyingTable.setVisible(true);
 
 		coinsTimer += delta;

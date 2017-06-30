@@ -73,7 +73,9 @@ public class ShopScreen implements Screen {
 	boolean scaling = false;
 
 	public Item itemSelected;
-
+	//il button Select si puo togliere. Quando premiamo su un arma facciamo uscire subito la buyingTable, mentre quando premiamo su una
+	//pozione o su una pergamena facciamo uscire solamente i tasti buy e return e in caso un altro button dove si puo scrivere quante cose
+	//di quel tipo si vogliono
 	public ShopScreen(final GameSlagyom game) {
 		this.game = game;
 		// SCREEN INITIALIZING
@@ -103,7 +105,8 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				hideInfo();
-				buying = true;
+				if(weaponsTable.isVisible())
+					buying = true;
 			}
 		});
 
@@ -125,6 +128,7 @@ public class ShopScreen implements Screen {
 					currentCategory = Category.PARCHMENTS;
 				else if (currentCategory == Category.PARCHMENTS)
 					currentCategory = Category.POTIONS;
+				buying = false;
 			}
 		});
 
@@ -137,6 +141,7 @@ public class ShopScreen implements Screen {
 					currentCategory = Category.POTIONS;
 				else if (currentCategory == Category.PARCHMENTS)
 					currentCategory = Category.WEAPONS;
+				buying = false;
 			}
 		});
 
@@ -187,6 +192,7 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bluePotion);
+				buying = true;
 				itemSelected.setElement(Element.POTION);
 				itemSelected.setLevel(Level.FIRST);
 			}
@@ -196,6 +202,7 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.redPotion);
+				buying = true;
 				itemSelected.setElement(Element.POTION);
 				itemSelected.setLevel(Level.SECOND);
 			}
@@ -205,6 +212,7 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.greenPotion);
+				buying = true;
 				itemSelected.setElement(Element.POTION);
 				itemSelected.setLevel(Level.THIRD);
 			}
@@ -226,7 +234,7 @@ public class ShopScreen implements Screen {
 		weaponsTable.setVisible(false);
 		Label weaponsLabel;
 		TextButton[] weapons;
-
+		//leggi nota prima del metdo
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 		weapons = new TextButton[3];
 		weapons[0] = new TextButton("Ascia", MenuScreen.skin);
@@ -298,6 +306,7 @@ public class ShopScreen implements Screen {
 				showInfo(LoadingImage.spear);
 			}
 		});
+		//leggi nota prima del metdo
 
 		parchmentsLabel.setPosition(120, 425);
 		parchments[0].setPosition(350, 420);
@@ -359,7 +368,7 @@ public class ShopScreen implements Screen {
 				scaling = true;
 			}
 		});
-
+		//leggi nota prima del metdo
 		TextButton returnBuyButton = new TextButton("Return", MenuScreen.skin);
 		returnBuyButton.addListener(new ClickListener() {
 			@Override
@@ -394,7 +403,16 @@ public class ShopScreen implements Screen {
 		buyingTable.add(level2n);
 		buyingTable.add(level3n);
 		// END BUYING TABLE
+<<<<<<< HEAD
 
+=======
+		/*int [] livellis = new int[5];
+		
+		List livelli = new List(MenuScreen.skin);
+		livelli.setItems(livellis);
+		//leggi nota prima del metdo
+		stage.addActor(livelli);*/
+>>>>>>> bb2e30cc686f09899ea7665e66c3166db1181428
 		stage.addActor(potionsTable);
 		stage.addActor(weaponsTable);
 		stage.addActor(parchmentsTable);
@@ -409,8 +427,11 @@ public class ShopScreen implements Screen {
 		LoadingImage.emptyShopIcon.setVisible(false);
 
 		selection = true;
+		if(weaponsTable.isVisible()){
 		selectButton.setVisible(true);
 		returnButton.setVisible(true);
+		}
+		
 	}
 
 	private void hideInfo() {
@@ -474,7 +495,7 @@ public class ShopScreen implements Screen {
 			buyingTable.setVisible(false);
 
 		}
-		if (buying)
+		if (buying && weaponsTable.isVisible())
 			buyingTable.setVisible(true);
 
 		coinsTimer += delta;

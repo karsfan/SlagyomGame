@@ -102,19 +102,21 @@ public class ShopScreen implements Screen {
 	//	selectButton = new TextButton("Select", MenuScreen.skin);
 		returnButton = new TextButton("Return", MenuScreen.skin);
 		coins = new Label("" + Game.player.coins, MenuScreen.skin);
-		buyButton.setPosition(573, 90);
-		level1n.setPosition(482, 240);
-		level2n.setPosition(482, 198);
-		level3n.setPosition(482, 154);
-		optionsTable.add(buyButton);
-		buyButton.setVisible(false);
-		optionsTable.add(returnButton);
-		buyButton.setVisible(false);
-		buyingTable.add(level1n);
-		buyingTable.add(level2n);
-		buyingTable.add(level3n);
 
 	
+		buyButton.addListener(new ClickListener() {
+			@SuppressWarnings("static-access")
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				System.out.println(level1n.getText());
+				// se non si scrive nulla nei text field da problemi
+				// bisgna assicurarsi che ci sia scritto qualcosa
+				refreshedCoins = Game.player.coins - (Integer.parseInt(level1n.getText()))*10 - (Integer.parseInt(level2n.getText()))*20
+						- (Integer.parseInt(level3n.getText()))*30;
+				game.musicManager.play("CASH");
+				scaling = true;
+			}
+		});
 
 		returnButton.addListener(new ClickListener() {
 			@Override
@@ -155,6 +157,15 @@ public class ShopScreen implements Screen {
 			}
 		});
 
+		buyButton.setPosition(573, 90);
+		level1n.setPosition(482, 240);
+		level2n.setPosition(482, 198);
+		level3n.setPosition(482, 154);
+		optionsTable.add(buyButton);
+		optionsTable.add(returnButton);
+		buyingTable.add(level1n);
+		buyingTable.add(level2n);
+		buyingTable.add(level3n);
 		// SETTING POSITION AND VISIBILITY OF TABLE'S PARTS
 		LoadingImage.emptyShopIcon.setPosition(141, 43);
 		LoadingImage.rightArrow.setPosition(283, 274);
@@ -163,14 +174,13 @@ public class ShopScreen implements Screen {
 		returnButton.setPosition(573, 50);
 		LoadingImage.emptyShopIcon.setVisible(true);
 		returnButton.setVisible(false);
-
+		buyButton.setVisible(false);
 		optionsTable.add(coins);
 		optionsTable.add(returnButton);
 		optionsTable.add(LoadingImage.rightArrow);
 		optionsTable.add(LoadingImage.leftArrow);
 		optionsTable.add(LoadingImage.emptyShopIcon);
 		// END OPTIONS TABLE
-
 		// POTIONS TABLE
 		potionsTable = new Table();
 		potionsTable.setLayoutEnabled(false);
@@ -213,7 +223,8 @@ public class ShopScreen implements Screen {
 				buyingTable.setVisible(true);	
 				level1n.setText("Num");
 				buyingTable.add(level1n);
-				
+				buyingTable.add(buyButton);
+				buyingTable.add(returnButton);
 			}
 		});
 
@@ -270,6 +281,8 @@ public class ShopScreen implements Screen {
 				buyingTable.add(level1n);
 				buyingTable.add(level2n);
 				buyingTable.add(level3n);
+				buyingTable.add(buyButton);
+				buyingTable.add(returnButton);
 			}
 		});
 
@@ -389,19 +402,7 @@ public class ShopScreen implements Screen {
 		buyingTable.add(buyingLevels[2]);*/
 		
 
-		buyButton.addListener(new ClickListener() {
-			@SuppressWarnings("static-access")
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				System.out.println(level1n.getText());
-				// se non si scrive nulla nei text field da problemi
-				// bisgna assicurarsi che ci sia scritto qualcosa
-				refreshedCoins = Game.player.coins - (Integer.parseInt(level1n.getText()))*10 - (Integer.parseInt(level2n.getText()))*20
-						- (Integer.parseInt(level3n.getText()))*30;
-				game.musicManager.play("CASH");
-				scaling = true;
-			}
-		});
+		
 		//leggi nota prima del metdo
 		// END BUYING TABLE
 
@@ -424,14 +425,15 @@ public class ShopScreen implements Screen {
 		optionsTable.add(icon);
 		LoadingImage.emptyShopIcon.setVisible(false);
 
-		if(weaponsTable.isVisible()){
+		buyButton.setVisible(true);
 		returnButton.setVisible(true);
-		}
+		
 		
 	}
 
 	private void hideInfo() {
 		returnButton.setVisible(false);
+		buyButton.setVisible(false);
 	}
 
 	void buyingMode() {

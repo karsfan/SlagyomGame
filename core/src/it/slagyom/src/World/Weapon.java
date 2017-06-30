@@ -10,7 +10,6 @@ public class Weapon {
 	public enum Level {
 		lev1, lev2, lev3
 	};
-
 	float damage;
 	public Level level;
 	public int price;
@@ -83,21 +82,22 @@ public class Weapon {
 			case lev1:
 				damage = 10;
 				width = 10;
-				price = 10;
+				price = 15;
 				break;
 			case lev2:
 				damage = 17;
 				width = 14;
-				price = 40;
+				price = 60;
 				break;
 			case lev3:
 				damage = 30;
 				width = 18;
-				price = 80;
+				price = 100;
 				break;
 			default:
 				break;
 			}
+			break;
 
 		case Spear:
 			switch (level) {
@@ -119,7 +119,7 @@ public class Weapon {
 			default:
 				break;
 			}
-
+			break;
 		case Bow:
 			switch (level) {
 			case lev1:
@@ -140,6 +140,7 @@ public class Weapon {
 			default:
 				break;
 			}
+			break;
 		case Bomba:
 			switch (level) {
 			case lev1:
@@ -163,6 +164,7 @@ public class Weapon {
 			default:
 				break;
 			}
+			break;
 		default:
 			break;
 

@@ -61,6 +61,7 @@ public class ShopScreen implements Screen {
 
 	// Variables for cash-scaling animation
 	int refreshedCoins;
+	float coinsTimer = 0;
 	boolean scaling = false;
 	public Item itemSelected;
 
@@ -110,11 +111,6 @@ public class ShopScreen implements Screen {
 			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-<<<<<<< HEAD
-				hideInfo();
-				if (weaponsTable.isVisible())
-					buying = true;
-=======
 				// se non si scrive nulla nei text field da problemi
 				// bisgna assicurarsi che ci sia scritto qualcosa
 				boolean buy = false;
@@ -141,7 +137,6 @@ public class ShopScreen implements Screen {
 				else
 					refreshedCoins = Game.player.coins;
 				scaling = true;
->>>>>>> 56a31f2f8cbb76adb53f24738e06b67da24c9783
 			}
 		});
 
@@ -440,82 +435,6 @@ public class ShopScreen implements Screen {
 
 		// BUYING TABLE
 
-<<<<<<< HEAD
-		buyingLevels[0].addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-			}
-		});
-
-		buyingLevels[1].addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-			}
-		});
-
-		buyingLevels[2].addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-			}
-		});
-
-		buyingLevels[0].setPosition(302, 245);
-		buyingLevels[1].setPosition(302, 202);
-		buyingLevels[2].setPosition(302, 159);
-		buyingTable.add(buyingLevels[0]);
-		buyingTable.add(buyingLevels[1]);
-		buyingTable.add(buyingLevels[2]);
-
-		TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
-		buyButton.addListener(new ClickListener() {
-			@SuppressWarnings("static-access")
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				System.out.println(level1n.getText());
-				// se non si scrive nulla nei text field da problemi
-				// bisgna assicurarsi che ci sia scritto qualcosa
-				refreshedCoins = Game.player.coins - (Integer.parseInt(level1n.getText())) * 10
-						- (Integer.parseInt(level2n.getText())) * 20 - (Integer.parseInt(level3n.getText())) * 30;
-				game.musicManager.play("CASH");
-				scaling = true;
-			}
-		});
-		// leggi nota prima del metdo
-		TextButton returnBuyButton = new TextButton("Return", MenuScreen.skin);
-		returnBuyButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				buyingTable.setVisible(false);
-				buying = false;
-				optionsTable.add(LoadingImage.rightArrow);
-				optionsTable.add(LoadingImage.leftArrow);
-				showInfo(LoadingImage.emptyShopIcon);
-
-			}
-		});
-
-		level1n.setMessageText("0");
-		level1n.setFocusTraversal(true);
-		level1n.setWidth(30);
-		level2n.setMessageText("0");
-		level2n.setFocusTraversal(true);
-		level2n.setWidth(30);
-		level3n.setMessageText("0");
-		level3n.setFocusTraversal(true);
-		level3n.setWidth(30);
-
-		buyButton.setPosition(573, 90);
-		returnBuyButton.setPosition(573, 50);
-		level1n.setPosition(482, 240);
-		level2n.setPosition(482, 198);
-		level3n.setPosition(482, 154);
-		buyingTable.add(buyButton);
-		buyingTable.add(returnBuyButton);
-		buyingTable.add(level1n);
-		buyingTable.add(level2n);
-		buyingTable.add(level3n);
-		// END BUYING TABLE
-=======
 		/*
 		 * TextButton[] buyingLevels;
 		 * 
@@ -555,7 +474,6 @@ public class ShopScreen implements Screen {
 		 * List livelli = new List(MenuScreen.skin); livelli.setItems(livellis);
 		 * //leggi nota prima del metdo stage.addActor(livelli);
 		 */
->>>>>>> 56a31f2f8cbb76adb53f24738e06b67da24c9783
 		stage.addActor(potionsTable);
 		stage.addActor(weaponsTable);
 		stage.addActor(parchmentsTable);
@@ -569,16 +487,8 @@ public class ShopScreen implements Screen {
 		optionsTable.add(icon);
 		LoadingImage.emptyShopIcon.setVisible(false);
 
-<<<<<<< HEAD
-		selection = true;
-		if (weaponsTable.isVisible()) {
-			selectButton.setVisible(true);
-			returnButton.setVisible(true);
-		}
-=======
 		buyButton.setVisible(true);
 		returnButton.setVisible(true);
->>>>>>> 56a31f2f8cbb76adb53f24738e06b67da24c9783
 
 	}
 
@@ -645,11 +555,15 @@ public class ShopScreen implements Screen {
 		if (buying)
 			buyingTable.setVisible(true);
 
+		coinsTimer += delta;
 		if (scaling) {
+			if (coinsTimer > 0.008f) {
+				coinsTimer = 0;
 				if (Game.player.coins > refreshedCoins) {
 					coins.setText((String.valueOf(Game.player.coins -= 1)));
 				} else
 					scaling = false;
+			}
 		}
 	}
 

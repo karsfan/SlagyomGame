@@ -69,13 +69,15 @@ public class ShopScreen implements Screen {
 
 	// Variables for cash-scaling animation
 	int refreshedCoins;
-	float coinsTimer = 0;
 	boolean scaling = false;
 
 	public Item itemSelected;
-	//il button Select si puo togliere. Quando premiamo su un arma facciamo uscire subito la buyingTable, mentre quando premiamo su una
-	//pozione o su una pergamena facciamo uscire solamente i tasti buy e return e in caso un altro button dove si puo scrivere quante cose
-	//di quel tipo si vogliono
+
+	// il button Select si puo togliere. Quando premiamo su un arma facciamo
+	// uscire subito la buyingTable, mentre quando premiamo su una
+	// pozione o su una pergamena facciamo uscire solamente i tasti buy e return
+	// e in caso un altro button dove si puo scrivere quante cose
+	// di quel tipo si vogliono
 	public ShopScreen(final GameSlagyom game) {
 		this.game = game;
 		// SCREEN INITIALIZING
@@ -105,7 +107,7 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				hideInfo();
-				if(weaponsTable.isVisible())
+				if (weaponsTable.isVisible())
 					buying = true;
 			}
 		});
@@ -234,7 +236,7 @@ public class ShopScreen implements Screen {
 		weaponsTable.setVisible(false);
 		Label weaponsLabel;
 		TextButton[] weapons;
-		//leggi nota prima del metdo
+		// leggi nota prima del metdo
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 		weapons = new TextButton[3];
 		weapons[0] = new TextButton("Ascia", MenuScreen.skin);
@@ -306,7 +308,7 @@ public class ShopScreen implements Screen {
 				showInfo(LoadingImage.spear);
 			}
 		});
-		//leggi nota prima del metdo
+		// leggi nota prima del metdo
 
 		parchmentsLabel.setPosition(120, 425);
 		parchments[0].setPosition(350, 420);
@@ -346,7 +348,7 @@ public class ShopScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 			}
 		});
-		
+
 		buyingLevels[0].setPosition(302, 245);
 		buyingLevels[1].setPosition(302, 202);
 		buyingLevels[2].setPosition(302, 159);
@@ -362,13 +364,13 @@ public class ShopScreen implements Screen {
 				System.out.println(level1n.getText());
 				// se non si scrive nulla nei text field da problemi
 				// bisgna assicurarsi che ci sia scritto qualcosa
-				refreshedCoins = Game.player.coins - (Integer.parseInt(level1n.getText()))*10 - (Integer.parseInt(level2n.getText()))*20
-						- (Integer.parseInt(level3n.getText()))*30;
+				refreshedCoins = Game.player.coins - (Integer.parseInt(level1n.getText())) * 10
+						- (Integer.parseInt(level2n.getText())) * 20 - (Integer.parseInt(level3n.getText())) * 30;
 				game.musicManager.play("CASH");
 				scaling = true;
 			}
 		});
-		//leggi nota prima del metdo
+		// leggi nota prima del metdo
 		TextButton returnBuyButton = new TextButton("Return", MenuScreen.skin);
 		returnBuyButton.addListener(new ClickListener() {
 			@Override
@@ -403,16 +405,6 @@ public class ShopScreen implements Screen {
 		buyingTable.add(level2n);
 		buyingTable.add(level3n);
 		// END BUYING TABLE
-<<<<<<< HEAD
-
-=======
-		/*int [] livellis = new int[5];
-		
-		List livelli = new List(MenuScreen.skin);
-		livelli.setItems(livellis);
-		//leggi nota prima del metdo
-		stage.addActor(livelli);*/
->>>>>>> bb2e30cc686f09899ea7665e66c3166db1181428
 		stage.addActor(potionsTable);
 		stage.addActor(weaponsTable);
 		stage.addActor(parchmentsTable);
@@ -427,11 +419,11 @@ public class ShopScreen implements Screen {
 		LoadingImage.emptyShopIcon.setVisible(false);
 
 		selection = true;
-		if(weaponsTable.isVisible()){
-		selectButton.setVisible(true);
-		returnButton.setVisible(true);
+		if (weaponsTable.isVisible()) {
+			selectButton.setVisible(true);
+			returnButton.setVisible(true);
 		}
-		
+
 	}
 
 	private void hideInfo() {
@@ -498,15 +490,11 @@ public class ShopScreen implements Screen {
 		if (buying && weaponsTable.isVisible())
 			buyingTable.setVisible(true);
 
-		coinsTimer += delta;
 		if (scaling) {
-			if (coinsTimer > 0.008f) {
-				coinsTimer = 0;
 				if (Game.player.coins > refreshedCoins) {
 					coins.setText((String.valueOf(Game.player.coins -= 1)));
 				} else
 					scaling = false;
-			}
 		}
 	}
 

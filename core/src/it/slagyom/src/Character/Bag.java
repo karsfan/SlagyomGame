@@ -32,7 +32,6 @@ public class Bag {
 		 */
 	}
 
-
 	public void deleteParchments(Item item) {
 		Iterator<Item> itParchment = items.iterator();
 		while (itParchment.hasNext()) {
@@ -110,10 +109,10 @@ public class Bag {
 
 			else if (object instanceof Item)
 				items.add((Item) object);
-			return true;
-		}
-		if (object instanceof Weapon){
-			secondary_weapon = (Weapon) object;
+			
+			if (object instanceof Weapon) {
+				secondary_weapon = new Weapon(((Weapon) object).getLevel(), ((Weapon) object).getType());
+			}
 			return true;
 		}
 		return false;

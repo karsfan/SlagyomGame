@@ -16,8 +16,7 @@ public class Item extends StaticObject {
 
 	public boolean picked;
 	float x, y;
-	public String info;
-	public static float stateTimer;
+	public float price;
 	public Level level;
 
 	public Item(float x, float y, Element element, Level level) {
@@ -41,7 +40,6 @@ public class Item extends StaticObject {
 		this.element = element;
 		this.level = level;
 		picked = false;
-		stateTimer = 0;
 	}
 
 	public Item() {
@@ -62,12 +60,18 @@ public class Item extends StaticObject {
 			shape.height = 14;
 			positionItem();
 			r = rand.nextInt(3);
-			if (r == 0)
+			if (r == 0) {
 				level = Level.FIRST;
-			if (r == 1)
+				price = 10;
+			}
+			if (r == 1) {
 				level = Level.SECOND;
-			if (r == 2)
+				price = 20;
+			}
+			if (r == 2) {
 				level = Level.THIRD;
+				price = 30;
+			}
 			break;
 		case 2:
 			element = Element.PARCHMENT;
@@ -96,7 +100,7 @@ public class Item extends StaticObject {
 			shape = new Rectangle();
 			shape.width = 14;
 			shape.height = 14;
-			
+
 			switch (level) {
 			case EASY:
 				this.level = Level.FIRST;
@@ -160,10 +164,19 @@ public class Item extends StaticObject {
 
 	public void setLevel(Level level) {
 		this.level = level;
-	}
-
-	public float getStateTimer() {
-		return stateTimer;
+		switch (level) {
+		case FIRST:
+			price = 10;
+			break;
+		case SECOND:
+			price = 20;
+			break;
+		case THIRD:
+			price = 30;
+			break;
+		default:
+			break;
+		}
 	}
 
 	public float getX() {

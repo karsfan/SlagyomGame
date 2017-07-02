@@ -47,7 +47,7 @@ public class World {
 		semaphore = new Semaphore(0);
 		people = new ArrayList<DynamicObjects>();
 		System.out.println(path);
-		System.out.println(getClass().getResource("/res/map/map.txt").getPath());
+		//System.out.println(getClass().getResource(path).getFile());
 		maps = new Map[2];
 		maps[0] = new Map(path, true, "Village one");
 		// maps[1] = new Map("res/map/prova", false, "Village two");

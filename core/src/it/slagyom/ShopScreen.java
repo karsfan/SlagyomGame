@@ -119,9 +119,9 @@ public class ShopScreen implements Screen {
 					if (tmp >= 0) {
 						buy = true;
 						refreshedCoins = tmp;
-						Game.player.bag.add(itemSelected);
+						for(int i = 0; i<Integer.parseInt(level3n.getText()); i++)
+							Game.player.bag.add(itemSelected);
 					}
-
 				}
 				if (weaponsTable.isVisible()) {
 					int tmp = (int) (Game.player.coins - weaponSelected.price);

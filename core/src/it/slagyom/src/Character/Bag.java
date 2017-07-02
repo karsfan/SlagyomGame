@@ -110,7 +110,7 @@ public class Bag {
 			else if (object instanceof Item)
 				items.add((Item) object);
 			
-			if (object instanceof Weapon) {
+			else if (object instanceof Weapon) {
 				secondary_weapon = new Weapon(((Weapon) object).getLevel(), ((Weapon) object).getType());
 			}
 			return true;

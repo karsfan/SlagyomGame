@@ -55,14 +55,14 @@ public class BagScreen implements Screen {
 	public Item itemSelected;
 	private int firstX;
 	private int firstY;
-	private int secondX;
 	private int secondY;
-	private int thirdX;
 	private int thirdY;
 	TextButton[] potions;
 	TextButton weapons;
 	TextButton[] bombs;
 	public Weapon weaponSelected;
+	TextButton[] parchments;
+
 	public BagScreen(final GameSlagyom game) {
 		this.game = game;
 		itemSelected = new Item();
@@ -92,10 +92,33 @@ public class BagScreen implements Screen {
 		delete.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
-				potions[0].setText("Blue potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST));
-				potions[1].setText("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND));
-				potions[2].setText("Red potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD));
+				if (potionsTable.isVisible()) {
+					Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+					potions[0].setText("Blue potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST));
+					potions[1].setText("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND));
+					potions[2].setText("Red potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD));
+				}
+				if (parchmentsTable.isVisible()) {
+					Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+					parchments[0]
+							.setText("Parchment lev1  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
+					parchments[1]
+							.setText("Parchment lev2  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
+				}
+				if (bombsTable.isVisible()) {
+					Game.player.bag.removeBomb(weaponSelected.getLevel());
+					bombs[0].setText(
+							"Bomb lev1   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev1));
+					bombs[1].setText(
+							"Bomb lev2   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev2));
+					bombs[2].setText(
+							"Bomb lev3   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev3));
+				}
+
+				if (weaponsTable.isVisible()) {
+					Game.player.bag.secondary_weapon = null;
+					weapons.setText("");
+				}
 			}
 		});
 
@@ -177,7 +200,7 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bluePotion);
-				itemSelected = new Item(Element.POTION,Level.FIRST);
+				itemSelected = new Item(Element.POTION, Level.FIRST);
 			}
 		});
 
@@ -185,7 +208,7 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.greenPotion);
-				itemSelected = new Item(Element.POTION,Level.SECOND);
+				itemSelected = new Item(Element.POTION, Level.SECOND);
 			}
 		});
 
@@ -193,7 +216,7 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.redPotion);
-				itemSelected = new Item(Element.POTION,Level.THIRD);
+				itemSelected = new Item(Element.POTION, Level.THIRD);
 			}
 		});
 
@@ -218,18 +241,22 @@ public class BagScreen implements Screen {
 
 		bombsLabel = new Label("Bombs", MenuScreen.skin);
 		bombs = new TextButton[3];
-		bombs[0] = new TextButton("Bomb lev1   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev1),
+		bombs[0] = new TextButton(
+				"Bomb lev1   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev1),
 				MenuScreen.skin);
-		bombs[1] = new TextButton("Bomb lev2   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev2),
+		bombs[1] = new TextButton(
+				"Bomb lev2   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev2),
 				MenuScreen.skin);
-		bombs[2] = new TextButton("Bomb lev3   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev3),
+		bombs[2] = new TextButton(
+				"Bomb lev3   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev3),
 				MenuScreen.skin);
 
 		bombs[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bluePotion);
-				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev1, it.slagyom.src.World.Weapon.Type.Bomba);
+				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev1,
+						it.slagyom.src.World.Weapon.Type.Bomba);
 			}
 		});
 
@@ -237,7 +264,8 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.greenPotion);
-				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev2, it.slagyom.src.World.Weapon.Type.Bomba);
+				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev2,
+						it.slagyom.src.World.Weapon.Type.Bomba);
 			}
 		});
 
@@ -245,7 +273,8 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.redPotion);
-				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev3, it.slagyom.src.World.Weapon.Type.Bomba);
+				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev3,
+						it.slagyom.src.World.Weapon.Type.Bomba);
 			}
 		});
 
@@ -267,7 +296,6 @@ public class BagScreen implements Screen {
 		// WEAPON TABLE
 		weaponsTable = new Table();
 		Label weaponsLabel;
-		
 
 		weaponsTable.setVisible(false);
 		weaponsTable.setLayoutEnabled(false);
@@ -276,7 +304,7 @@ public class BagScreen implements Screen {
 
 		weapons = new TextButton(Game.player.primary_weapon.getType().toString() + " "
 				+ Game.player.primary_weapon.getLevel().toString(), MenuScreen.skin);
-		
+
 		weapons.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -284,33 +312,33 @@ public class BagScreen implements Screen {
 			}
 		});
 
-
 		weaponsLabel.setPosition(140, 425);
 		weaponsTable.add(weaponsLabel);
 
 		weapons.setPosition(350, 420);
 		weaponsTable.add(weapons);
 
-		
 		// END WEAPONS TABLE
 
 		// PARCHMENTS TABLE
 		parchmentsTable = new Table();
 		Label parchmentsLabel;
-		TextButton[] parchments;
 
 		parchmentsTable.setVisible(false);
 		parchmentsTable.setLayoutEnabled(false);
 
 		parchmentsLabel = new Label("Parchments", MenuScreen.skin);
 		parchments = new TextButton[2];
-		parchments[0] = new TextButton("Parchment1", MenuScreen.skin);
-		parchments[1] = new TextButton("Parchment2", MenuScreen.skin);
+		parchments[0] = new TextButton(
+				"Parchment lev1  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST), MenuScreen.skin);
+		parchments[1] = new TextButton(
+				"Parchment lev2  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND), MenuScreen.skin);
 
 		parchments[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bluePotion);
+				itemSelected = new Item(Element.PARCHMENT, Level.FIRST);
 			}
 		});
 
@@ -318,6 +346,7 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.sword);
+				itemSelected = new Item(Element.PARCHMENT, Level.SECOND);
 			}
 		});
 
@@ -419,7 +448,7 @@ public class BagScreen implements Screen {
 		} else if (currentPocket == Pocket.WEAPONS) {
 			weaponsTable.setVisible(true);
 			bombsTable.setVisible(false);
-			if(Game.player.bag.secondary_weapon != null)
+			if (Game.player.bag.secondary_weapon != null)
 				weapons.setVisible(true);
 			else
 				weapons.setVisible(false);
@@ -427,10 +456,22 @@ public class BagScreen implements Screen {
 			parchmentsTable.setVisible(false);
 		} else if (currentPocket == Pocket.PARCHMENTS) {
 			parchmentsTable.setVisible(true);
+			if (Game.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST) <= 0) {
+				parchments[0].setVisible(false);
+				parchments[1].setPosition(firstX, firstY);
+			} else {
+				parchments[0].setVisible(true);
+				parchments[0].setPosition(firstX, firstY);
+				parchments[1].setPosition(firstX, secondY);
+			}
+			if (Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND) <= 0)
+				parchments[1].setVisible(false);
+			else
+				parchments[1].setVisible(true);
 			bombsTable.setVisible(false);
 			potionsTable.setVisible(false);
 			weaponsTable.setVisible(false);
-		}else if (currentPocket == Pocket.BOMBS) {
+		} else if (currentPocket == Pocket.BOMBS) {
 			parchmentsTable.setVisible(false);
 			bombsTable.setVisible(true);
 			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev1) <= 0) {
@@ -443,7 +484,7 @@ public class BagScreen implements Screen {
 				bombs[1].setPosition(firstX, secondY);
 				bombs[2].setPosition(firstX, thirdY);
 			}
-			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev2)<= 0) {
+			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev2) <= 0) {
 				bombs[1].setVisible(false);
 				bombs[2].setPosition(firstX, secondY);
 			} else

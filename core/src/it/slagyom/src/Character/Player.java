@@ -16,7 +16,6 @@ import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
-import it.slagyom.GameSlagyom;
 import it.slagyom.LoadingMusic;
 import it.slagyom.PlayScreen;
 

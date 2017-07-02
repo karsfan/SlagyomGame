@@ -43,8 +43,8 @@ public class Item extends StaticObject {
 	}
 	
 	public Item(Element element, Level level) {
-		setLevel(level);
 		this.element = element;
+		setLevel(level);
 	}
 	
 	public Item() {
@@ -171,10 +171,16 @@ public class Item extends StaticObject {
 		this.level = level;
 		switch (level) {
 		case FIRST:
-			price = 10;
+			if(element == Element.POTION)
+				price = 10;
+			else if(element == Element.PARCHMENT)
+				price = 4;
 			break;
 		case SECOND:
-			price = 20;
+			if(element == Element.POTION)
+				price = 20;
+			else if(element == Element.PARCHMENT)
+				price = 9;
 			break;
 		case THIRD:
 			price = 30;

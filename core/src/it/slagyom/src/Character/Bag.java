@@ -104,11 +104,13 @@ public class Bag {
 
 	public boolean add(Object object) {
 		if (items.size() + bombe.size() < capacity) {
-			if (object instanceof Bomb)
+			if (object instanceof Bomb){
 				bombe.add((Bomb) object);
+			}
 
-			else if (object instanceof Item)
+			else if (object instanceof Item){
 				items.add((Item) object);
+			}
 			
 			else if (object instanceof Weapon) {
 				secondary_weapon = new Weapon(((Weapon) object).getLevel(), ((Weapon) object).getType());

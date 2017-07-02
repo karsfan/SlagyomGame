@@ -194,10 +194,10 @@ public class PauseScreen implements Screen {
 
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void dispose() {
-		MenuScreen.skin.dispose();
-		MenuScreen.atlas.dispose();
+		game.screenManager.playScreen.dispose();
 	}
 
 	/*

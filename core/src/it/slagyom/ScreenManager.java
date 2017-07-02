@@ -34,7 +34,6 @@ public class ScreenManager {
 		swapScreen(State.MENU);
 	}
 
-	@SuppressWarnings("static-access")
 	public void swapScreen(State newState) {
 		setPreviousState(currentState);
 		setCurrentState(newState);

@@ -147,7 +147,7 @@ public class Weapon {
 				damage = 8;
 				width = 10;
 				height = 10;
-				price = 2;
+				price = 3;
 				break;
 			case lev2:
 				damage = 20;

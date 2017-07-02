@@ -43,8 +43,8 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	private boolean stop = false;
 	public int i = 0;
+	
 	PovDirection directionGamepad = null;
-
 	boolean movesGamePad = false;
 
 	public PlayScreen(GameSlagyom game, String name) {
@@ -98,7 +98,6 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	}
 
-	@SuppressWarnings({ "static-access" })
 	@Override
 	public void render(float delta) {
 		update(delta);
@@ -168,7 +167,6 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	}
 
-	@SuppressWarnings("static-access")
 	private void moveCharacter(float dt) {
 		try {
 			if (!stop) {

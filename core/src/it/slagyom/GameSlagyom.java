@@ -9,22 +9,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameSlagyom extends Game {
 
 	ScreenManager screenManager;
-	static MusicManager musicManager;
+	LoadingMusic musicLoader;
 	public static Preferences prefs;
 	SpriteBatch batch;
 
 	@Override
 	public void create() {
 		new LoadingMusic();
-		musicManager = new MusicManager();
 		batch = new SpriteBatch();
 
 		screenManager = new ScreenManager(this);
 		prefs = Gdx.app.getPreferences("My saved game");
-	}
-
-	public static MusicManager getMusicManager() {
-		return musicManager;
 	}
 
 	public static void saveGame() {

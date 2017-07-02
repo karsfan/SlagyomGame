@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class GameServer extends Thread {
 	private ServerSocket server;
 
-
 	public GameServer(int port) throws Exception {
 		server = new ServerSocket(port);
 		System.out.println("Il server è in attesa sulla porta " + port);
@@ -41,8 +40,7 @@ class Connect extends Thread {
 	BufferedReader in = null;
 	BufferedWriter outRo = null;
 	PrintStream out = null;
-	
-	
+
 	public Connect() {
 	}
 
@@ -51,7 +49,7 @@ class Connect extends Thread {
 		try {
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			out = new PrintStream(client.getOutputStream(), true);
-			outRo = new BufferedWriter (new OutputStreamWriter(client.getOutputStream()));
+			outRo = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
 		} catch (Exception e1) {
 			try {
 				client.close();
@@ -62,19 +60,21 @@ class Connect extends Thread {
 		}
 		this.start();
 	}
+
 	Scanner scanner = new Scanner(System.in);
+
 	public void run() {
 		try {
-			//out.println("Ciao " + MultiplayerScreen.multiplayerCharName + "!");
+			// out.println("Ciao " + MultiplayerScreen.multiplayerCharName +
+			// "!");
 			String message = scanner.next();
 			outRo.write(message);
-			
-			
-			//out.flush();
+
+			// out.flush();
 			outRo.flush();
-			
+
 			// chiude gli stream e le connessioni
-			//out.close();
+			// out.close();
 			outRo.close();
 			in.close();
 			client.close();

@@ -122,7 +122,8 @@ public class PlayScreen implements Screen, ControllerListener {
 						hud.textTable.row();
 					if (i % 75 == 0) {
 						hud.textTable.clear();
-						game.musicManager.play("TICK");
+						LoadingMusic.tickSound.play(1.0f);
+
 					}
 					drawDialog(String.valueOf(hud.textDialog.charAt(i)));
 					i++;
@@ -230,7 +231,7 @@ public class PlayScreen implements Screen, ControllerListener {
 					gamecam.position.y = Game.player.getY();
 
 				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-					game.musicManager.pause();
+					LoadingMusic.pause();
 					Game.world.semaphore.acquire();
 					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PAUSE);
 				}

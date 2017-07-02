@@ -133,7 +133,7 @@ public class ShopScreen implements Screen {
 					}
 				}
 				if (buy)
-					game.musicManager.play("CASH");
+					LoadingMusic.cashSound.play(1.5f);
 				else
 					refreshedCoins = Game.player.coins;
 				scaling = true;

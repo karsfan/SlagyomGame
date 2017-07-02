@@ -12,7 +12,6 @@ public class LoadingMusic {
 	public static Sound itemSound;
 	public static Sound cashSound;
 
-
 	public LoadingMusic() {
 		backgroundSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/backgroundAudio.ogg"));
 		tickSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/tick.ogg"));
@@ -21,5 +20,11 @@ public class LoadingMusic {
 		itemSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/item.ogg"));
 		cashSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/cash.mp3"));
 
+	}
+
+	public static void pause() {
+		if (mainMusic.isPlaying())
+			mainMusic.pause();
+		backgroundSound.pause();
 	}
 }

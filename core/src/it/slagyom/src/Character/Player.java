@@ -17,6 +17,7 @@ import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
 import it.slagyom.GameSlagyom;
+import it.slagyom.LoadingMusic;
 import it.slagyom.PlayScreen;
 
 public class Player extends DynamicObjects implements ICollidable {
@@ -266,14 +267,16 @@ public class Player extends DynamicObjects implements ICollidable {
 	boolean pickItem(Item item) {
 		if (item.getElement() != Element.COIN && !item.picked) {
 			if (bag.add(item)) {
-				GameSlagyom.getMusicManager().play("ITEM");
+				LoadingMusic.itemSound.play(1.0f);
+
 				item.setPicked(true);
 				return true;
 			}
 		} else {
 			if (!item.picked) {
-				coins+=5;
-				GameSlagyom.getMusicManager().play("COIN");
+				coins += 5;
+				LoadingMusic.coinSound.play(0.7f);
+
 			}
 			item.setPicked(true);
 			return true;
@@ -320,7 +323,6 @@ public class Player extends DynamicObjects implements ICollidable {
 						return true;
 					}
 			}
-			
 
 		}
 

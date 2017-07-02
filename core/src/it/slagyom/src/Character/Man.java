@@ -29,7 +29,7 @@ public class Man extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		width = 30;
 		height = 30;
-		positionMan();
+		while(!positionMan());
 
 		mainX = 100;
 		mainY = 100;
@@ -40,13 +40,14 @@ public class Man extends DynamicObjects implements ICollidable {
 		previousState = StateDynamicObject.STANDING;
 	}
 
-	public void positionMan() {
+	public boolean positionMan() {
 		int rand = (int) (Math.random() * GameConfig.WIDTH);
 		x = rand;
 		rand = (int) (Math.random() * GameConfig.HEIGHT);
 		y = rand;
 		if (collide(this))
 			positionMan();
+		return true;
 	}
 
 	public String getInfo() {

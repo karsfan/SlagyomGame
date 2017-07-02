@@ -19,15 +19,16 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import it.slagyom.src.World.Game;
+import it.slagyom.src.World.Weapon;
 import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
 
 public class BagScreen implements Screen {
 	private enum Pocket {
-		POTIONS, WEAPONS, PARCHMENTS
+		POTIONS, WEAPONS, PARCHMENTS, BOMBS
 	}
-	
+
 	public Pocket currentPocket;
 
 	private GameSlagyom game;
@@ -43,6 +44,7 @@ public class BagScreen implements Screen {
 	boolean selection;
 
 	private Table weaponsTable;
+	private Table bombsTable;
 	private Table potionsTable;
 	private Table parchmentsTable;
 
@@ -51,8 +53,16 @@ public class BagScreen implements Screen {
 	private TextButton delete;
 	private TextButton exit;
 	public Item itemSelected;
+	private int firstX;
+	private int firstY;
+	private int secondX;
+	private int secondY;
+	private int thirdX;
+	private int thirdY;
 	TextButton[] potions;
-
+	TextButton weapons;
+	TextButton[] bombs;
+	public Weapon weaponSelected;
 	public BagScreen(final GameSlagyom game) {
 		this.game = game;
 		itemSelected = new Item();
@@ -121,11 +131,13 @@ public class BagScreen implements Screen {
 		LoadingImage.rightArrow.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (currentPocket == Pocket.POTIONS)
+				if (currentPocket == Pocket.POTIONS) {
 					currentPocket = Pocket.WEAPONS;
-				else if (currentPocket == Pocket.WEAPONS)
+				} else if (currentPocket == Pocket.WEAPONS)
 					currentPocket = Pocket.PARCHMENTS;
 				else if (currentPocket == Pocket.PARCHMENTS)
+					currentPocket = Pocket.BOMBS;
+				else if (currentPocket == Pocket.BOMBS)
 					currentPocket = Pocket.POTIONS;
 			}
 		});
@@ -134,11 +146,13 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (currentPocket == Pocket.POTIONS)
+					currentPocket = Pocket.BOMBS;
+				else if (currentPocket == Pocket.BOMBS)
 					currentPocket = Pocket.PARCHMENTS;
-				else if (currentPocket == Pocket.WEAPONS)
-					currentPocket = Pocket.POTIONS;
 				else if (currentPocket == Pocket.PARCHMENTS)
 					currentPocket = Pocket.WEAPONS;
+				else if (currentPocket == Pocket.WEAPONS)
+					currentPocket = Pocket.POTIONS;
 			}
 		});
 
@@ -154,17 +168,16 @@ public class BagScreen implements Screen {
 		potions = new TextButton[3];
 		potions[0] = new TextButton("Blue potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST),
 				MenuScreen.skin);
-		potions[1] = new TextButton("Green potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND),
+		potions[1] = new TextButton("Red potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND),
 				MenuScreen.skin);
-		potions[2] = new TextButton("Red potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD),
+		potions[2] = new TextButton("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD),
 				MenuScreen.skin);
 
 		potions[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bluePotion);
-				itemSelected.setElement(Element.POTION);
-				itemSelected.setLevel(Level.FIRST);
+				itemSelected = new Item(Element.POTION,Level.FIRST);
 			}
 		});
 
@@ -172,8 +185,7 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.greenPotion);
-				itemSelected.setElement(Element.POTION);
-				itemSelected.setLevel(Level.SECOND);
+				itemSelected = new Item(Element.POTION,Level.SECOND);
 			}
 		});
 
@@ -181,82 +193,105 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.redPotion);
-				itemSelected.setElement(Element.POTION);
-				itemSelected.setLevel(Level.THIRD);
+				itemSelected = new Item(Element.POTION,Level.THIRD);
 			}
 		});
 
 		potionsLabel.setPosition(149, 425);
 		potionsTable.add(potionsLabel);
-
-		potions[0].setPosition(350, 420);
+		firstX = 350;
+		firstY = 420;
+		secondY = 370;
+		thirdY = 320;
+		potions[0].setPosition(firstX, firstY);
 		potionsTable.add(potions[0]);
 
-		potions[1].setPosition(350, 370);
+		potions[1].setPosition(firstX, secondY);
 		potionsTable.add(potions[1]);
 
-		potions[2].setPosition(350, 320);
+		potions[2].setPosition(firstX, thirdY);
 		potionsTable.add(potions[2]);
 		// END POTIONS TABLE
+		Label bombsLabel;
+		bombsTable = new Table();
+		bombsTable.setLayoutEnabled(false);
 
+		bombsLabel = new Label("Bombs", MenuScreen.skin);
+		bombs = new TextButton[3];
+		bombs[0] = new TextButton("Bomb lev1   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev1),
+				MenuScreen.skin);
+		bombs[1] = new TextButton("Bomb lev2   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev2),
+				MenuScreen.skin);
+		bombs[2] = new TextButton("Bomb lev3   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev3),
+				MenuScreen.skin);
+
+		bombs[0].addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showInfo(LoadingImage.bluePotion);
+				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev1, it.slagyom.src.World.Weapon.Type.Bomba);
+			}
+		});
+
+		bombs[1].addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showInfo(LoadingImage.greenPotion);
+				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev2, it.slagyom.src.World.Weapon.Type.Bomba);
+			}
+		});
+
+		bombs[2].addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showInfo(LoadingImage.redPotion);
+				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev3, it.slagyom.src.World.Weapon.Type.Bomba);
+			}
+		});
+
+		bombsLabel.setPosition(149, 425);
+		bombsTable.add(bombsLabel);
+		firstX = 350;
+		firstY = 420;
+		secondY = 370;
+		thirdY = 320;
+		bombs[0].setPosition(firstX, firstY);
+		bombsTable.add(bombs[0]);
+
+		bombs[1].setPosition(firstX, secondY);
+		bombsTable.add(bombs[1]);
+
+		bombs[2].setPosition(firstX, thirdY);
+		bombsTable.add(bombs[2]);
+		// END bombs TABLE
 		// WEAPON TABLE
 		weaponsTable = new Table();
 		Label weaponsLabel;
-		TextButton[] weapons;
+		
 
 		weaponsTable.setVisible(false);
 		weaponsTable.setLayoutEnabled(false);
 
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
-		weapons = new TextButton[4];
 
-		weapons[0] = new TextButton(Game.player.primary_weapon.getType().toString() + " "
+		weapons = new TextButton(Game.player.primary_weapon.getType().toString() + " "
 				+ Game.player.primary_weapon.getLevel().toString(), MenuScreen.skin);
-		weapons[1] = new TextButton("Bomb  lev1", MenuScreen.skin);
-		weapons[2] = new TextButton("Bomb  lev2", MenuScreen.skin);
-		weapons[3] = new TextButton("Bomb  lev3", MenuScreen.skin);
-		weapons[0].addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.spear);
-			}
-		});
-
-		weapons[1].addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.sword);
-			}
-		});
-
-		weapons[2].addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.spear);
-			}
-		});
 		
-		weapons[3].addListener(new ClickListener() {
+		weapons.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.spear);
 			}
 		});
+
 
 		weaponsLabel.setPosition(140, 425);
 		weaponsTable.add(weaponsLabel);
 
-		weapons[0].setPosition(350, 420);
-		weaponsTable.add(weapons[0]);
+		weapons.setPosition(350, 420);
+		weaponsTable.add(weapons);
 
-		weapons[1].setPosition(350, 370);
-		weaponsTable.add(weapons[1]);
-
-		weapons[2].setPosition(350, 320);
-		weaponsTable.add(weapons[2]);
 		
-		weapons[3].setPosition(350, 270);
-		weaponsTable.add(weapons[3]);
 		// END WEAPONS TABLE
 
 		// PARCHMENTS TABLE
@@ -298,16 +333,16 @@ public class BagScreen implements Screen {
 		// END PARCHMENTS TABLE
 
 		stage.addActor(potionsTable);
+		stage.addActor(bombsTable);
 		stage.addActor(weaponsTable);
 		stage.addActor(parchmentsTable);
 		stage.addActor(optionsTable);
-		
+
 		Controllers.addListener(new MenuControllerListener(potionsTable));
 		Controllers.addListener(new MenuControllerListener(weaponsTable));
 		Controllers.addListener(new MenuControllerListener(parchmentsTable));
 		Controllers.addListener(new MenuControllerListener(optionsTable));
-		
-		
+
 	}
 
 	private void showInfo(ImageButton icon) {
@@ -351,9 +386,6 @@ public class BagScreen implements Screen {
 
 		game.batch.end();
 
-		stage.act();
-		stage.draw();
-
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			game.screenManager.swapScreen(ScreenManager.State.PLAYING);
 			Game.world.semaphore.release();
@@ -361,18 +393,70 @@ public class BagScreen implements Screen {
 
 		if (currentPocket == Pocket.POTIONS) {
 			potionsTable.setVisible(true);
+			bombsTable.setVisible(false);
+			if (Game.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
+				potions[0].setVisible(false);
+				potions[1].setPosition(firstX, firstY);
+				potions[2].setPosition(firstX, secondY);
+			} else {
+				potions[0].setVisible(true);
+				potions[0].setPosition(firstX, firstY);
+				potions[1].setPosition(firstX, secondY);
+				potions[2].setPosition(firstX, thirdY);
+			}
+			if (Game.player.bag.getNumberOf(Element.POTION, Level.SECOND) <= 0) {
+				potions[1].setVisible(false);
+				potions[2].setPosition(firstX, secondY);
+			} else
+				potions[1].setVisible(true);
+			if (Game.player.bag.getNumberOf(Element.POTION, Level.THIRD) <= 0)
+				potions[2].setVisible(false);
+			else
+				potions[2].setVisible(true);
+
 			weaponsTable.setVisible(false);
 			parchmentsTable.setVisible(false);
 		} else if (currentPocket == Pocket.WEAPONS) {
 			weaponsTable.setVisible(true);
+			bombsTable.setVisible(false);
+			if(Game.player.bag.secondary_weapon != null)
+				weapons.setVisible(true);
+			else
+				weapons.setVisible(false);
 			potionsTable.setVisible(false);
 			parchmentsTable.setVisible(false);
 		} else if (currentPocket == Pocket.PARCHMENTS) {
 			parchmentsTable.setVisible(true);
+			bombsTable.setVisible(false);
+			potionsTable.setVisible(false);
+			weaponsTable.setVisible(false);
+		}else if (currentPocket == Pocket.BOMBS) {
+			parchmentsTable.setVisible(false);
+			bombsTable.setVisible(true);
+			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev1) <= 0) {
+				bombs[0].setVisible(false);
+				bombs[1].setPosition(firstX, firstY);
+				bombs[2].setPosition(firstX, secondY);
+			} else {
+				bombs[0].setVisible(true);
+				bombs[0].setPosition(firstX, firstY);
+				bombs[1].setPosition(firstX, secondY);
+				bombs[2].setPosition(firstX, thirdY);
+			}
+			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev2)<= 0) {
+				bombs[1].setVisible(false);
+				bombs[2].setPosition(firstX, secondY);
+			} else
+				bombs[1].setVisible(true);
+			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev3) <= 0)
+				bombs[2].setVisible(false);
+			else
+				bombs[2].setVisible(true);
 			potionsTable.setVisible(false);
 			weaponsTable.setVisible(false);
 		}
-
+		stage.act();
+		stage.draw();
 	}
 
 	@Override

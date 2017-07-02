@@ -41,7 +41,12 @@ public class Item extends StaticObject {
 		this.level = level;
 		picked = false;
 	}
-
+	
+	public Item(Element element, Level level) {
+		setLevel(level);
+		this.element = element;
+	}
+	
 	public Item() {
 		Random rand = new Random();
 		int r = rand.nextInt(2);

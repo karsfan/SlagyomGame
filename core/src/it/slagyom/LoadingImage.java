@@ -86,6 +86,8 @@ public class LoadingImage {
 	public static ImageButton emptyShopIcon;
 	public static ImageButton leftArrow;
 	public static ImageButton rightArrow;
+	public static ImageButton howMuch;
+
 
 	// AUDIO & MUSIC
 
@@ -135,7 +137,7 @@ public class LoadingImage {
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/emptyIcon.png"))));
 		emptyShopIcon = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/shop/emptyIcon.png"))));
-		
+		howMuch = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/shop/howMuch.png"))));
 		cursor = new Pixmap(Gdx.files.internal("res/cursor.png"));
 		noCursor = new Pixmap(Gdx.files.internal("res/noCursor.png"));
 

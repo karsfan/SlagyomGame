@@ -72,6 +72,7 @@ public class ShopScreen implements Screen {
 	// di quel tipo si vogliono
 	public ShopScreen(final GameSlagyom game) {
 		this.game = game;
+
 		// SCREEN INITIALIZING
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(854, 480, camera);
@@ -108,25 +109,25 @@ public class ShopScreen implements Screen {
 		coins = new Label("" + Game.player.coins, MenuScreen.skin);
 
 		buyButton.addListener(new ClickListener() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// se non si scrive nulla nei text field da problemi
 				// bisgna assicurarsi che ci sia scritto qualcosa
 				boolean buy = false;
-				if (potionsTable.isVisible() && level3n.getText() != null) {
-					int tmp = (int) (Game.player.coins - (Integer.parseInt(level3n.getText())) * itemSelected.price);
+				if (potionsTable.isVisible() && level2n.getText() != null) {
+					int tmp = (int) (Game.player.coins - (Integer.parseInt(level2n.getText())) * itemSelected.price);
 					if (tmp >= 0) {
 						buy = true;
 						refreshedCoins = tmp;
-						Game.player.bag.add(itemSelected);
+						Item a = new Item();
+						for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
+							Game.player.bag.add(itemSelected);
 					}
 
 				}
 				if (weaponsTable.isVisible()) {
 					int tmp = (int) (Game.player.coins - weaponSelected.price);
-					if(tmp >= 0)
-					{
+					if (tmp >= 0) {
 						buy = true;
 						refreshedCoins = tmp;
 						Game.player.bag.add(weaponSelected);
@@ -186,11 +187,13 @@ public class ShopScreen implements Screen {
 		level1n.setPosition(482, 240);
 		level2n.setPosition(482, 198);
 		level3n.setPosition(482, 154);
+		LoadingImage.howMuch.setPosition(0, 0);
 		optionsTable.add(buyButton);
 		optionsTable.add(returnButton);
 		buyingTable.add(level1n);
 		buyingTable.add(level2n);
 		buyingTable.add(level3n);
+
 		// SETTING POSITION AND VISIBILITY OF TABLE'S PARTS
 		LoadingImage.emptyShopIcon.setPosition(141, 43);
 		LoadingImage.rightArrow.setPosition(283, 274);
@@ -206,6 +209,7 @@ public class ShopScreen implements Screen {
 		optionsTable.add(LoadingImage.leftArrow);
 		optionsTable.add(LoadingImage.emptyShopIcon);
 		// END OPTIONS TABLE
+
 		// POTIONS TABLE
 		potionsTable = new Table();
 		potionsTable.setLayoutEnabled(false);
@@ -234,16 +238,14 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bluePotion);
+				LoadingImage.howMuch.setVisible(true);
 				buying = true;
-				textTable = new Label("Insert number", MenuScreen.skin);
-				textTable.setWidth(10);
-				itemSelected.setElement(Element.POTION);
-				itemSelected.setLevel(Level.FIRST);
+				itemSelected = new Item(Element.POTION, Level.FIRST);
 				buyingTable.clear();
-				textTable.setPosition(302, 202);
-				buyingTable.add(textTable);
 				buyingTable.setVisible(true);
-				buyingTable.add(level3n);
+				buyingTable.add(textTable);
+				buyingTable.add(LoadingImage.howMuch);
+				buyingTable.add(level2n);
 				buyingTable.add(buyButton);
 				buyingTable.add(returnButton);
 			}
@@ -253,18 +255,17 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.redPotion);
+				LoadingImage.howMuch.setVisible(true);
 				buying = true;
-				textTable = new Label("Insert number", MenuScreen.skin);
-				textTable.setWidth(10);
 				buyingTable.clear();
-				textTable.setPosition(302, 202);
-				buyingTable.add(textTable);
 				buyingTable.setVisible(true);
-				buyingTable.add(level3n);
+				buyingTable.add(textTable);
+				buyingTable.add(LoadingImage.howMuch);
+				buyingTable.add(level2n);
 				buyingTable.add(buyButton);
 				buyingTable.add(returnButton);
-				itemSelected.setElement(Element.POTION);
-				itemSelected.setLevel(Level.SECOND);
+				itemSelected = new Item(Element.POTION, Level.SECOND);
+
 			}
 		});
 
@@ -272,18 +273,17 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.greenPotion);
+				LoadingImage.howMuch.setVisible(true);
 				buying = true;
-				textTable = new Label("Insert number", MenuScreen.skin);
-				textTable.setWidth(10);
 				buyingTable.clear();
-				textTable.setPosition(302, 202);
-				buyingTable.add(textTable);
 				buyingTable.setVisible(true);
-				buyingTable.add(level3n);
+				buyingTable.add(textTable);
+				buyingTable.add(LoadingImage.howMuch);
+				buyingTable.add(level2n);
 				buyingTable.add(buyButton);
 				buyingTable.add(returnButton);
-				itemSelected.setElement(Element.POTION);
-				itemSelected.setLevel(Level.THIRD);
+				itemSelected = new Item(Element.POTION, Level.THIRD);
+
 			}
 		});
 
@@ -326,19 +326,19 @@ public class ShopScreen implements Screen {
 				lev1.setVisible(true);
 				lev2.setVisible(true);
 				lev3.setVisible(true);
-				lev1.addListener(new ClickListener(){
+				lev1.addListener(new ClickListener() {
 					@Override
 					public void clicked(InputEvent event, float x, float y) {
 						weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev1, Type.Sword);
 					}
 				});
-				lev2.addListener(new ClickListener(){
+				lev2.addListener(new ClickListener() {
 					@Override
 					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev3, Type.Sword);
+						weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev2, Type.Sword);
 					}
 				});
-				lev3.addListener(new ClickListener(){
+				lev3.addListener(new ClickListener() {
 					@Override
 					public void clicked(InputEvent event, float x, float y) {
 						weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev3, Type.Sword);

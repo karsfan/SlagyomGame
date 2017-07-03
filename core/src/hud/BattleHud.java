@@ -42,7 +42,7 @@ public class BattleHud {
 
 		healthCharacter = (int) Game.world.battle.character.getHealth();
 		healthEnemy = (int) Game.world.battle.enemy.getHealth();
-
+	
 		atlasBar = new TextureAtlas("menu/glassy/glassy-ui.atlas");
 		skinBar = new Skin(Gdx.files.internal("menu/glassy/glassy-ui.json"), atlasBar);
 
@@ -54,11 +54,10 @@ public class BattleHud {
 		barEnemy.setBounds(this.viewport.getWorldWidth() / 1.2f, this.viewport.getWorldHeight() / 1.1f, healthEnemy,
 				15);*/
 
-
 		Table table = new Table();
 		table.top(); // la allinea sopra al centro
 		table.setFillParent(true);
-
+		
 		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/BattleHudBg.png")));
 		table.setBackground(hudBG);
 		
@@ -77,7 +76,7 @@ public class BattleHud {
 	}
 
 	public void update(float dt) {
-
+		
 		healthCharacter = (int) Game.world.battle.character.getHealth();
 		barPlayer.setValue(healthCharacter.intValue());
 		healthEnemy = (int) Game.world.battle.enemy.getHealth();

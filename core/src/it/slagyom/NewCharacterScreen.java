@@ -21,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import it.slagyom.ScreenManager.State;
+
 public class NewCharacterScreen implements Screen {
 
 	private GameSlagyom game;
@@ -126,7 +128,7 @@ public class NewCharacterScreen implements Screen {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.screenManager.swapScreen(game.screenManager.getPreviousState());
+				game.screenManager.swapScreen(State.MENU);
 			}
 		});
 

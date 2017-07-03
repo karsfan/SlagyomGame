@@ -87,8 +87,8 @@ public class OptionScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// Game.world.semaphore.release();
-				game.screenManager.swapScreen(game.screenManager.getPreviousState());
-				// game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MENU);
+				
+				 game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MENU);
 			}
 		});
 		// Add buttons to table

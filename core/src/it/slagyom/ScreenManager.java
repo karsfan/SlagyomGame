@@ -35,7 +35,8 @@ public class ScreenManager {
 	}
 
 	public void swapScreen(State newState) {
-		setPreviousState(currentState);
+		if(currentState == State.PLAYING || currentState == State.BATTLE)
+			setPreviousState(currentState);
 		setCurrentState(newState);
 
 		if (currentState == State.PLAYING || currentState == State.BATTLE)
@@ -77,19 +78,12 @@ public class ScreenManager {
 			Gdx.input.setInputProcessor(initializerScreen.stage);
 
 		} else if (currentState == State.BATTLE) {
-			battlescreen = new BattleScreen(gameSlagyom, it.slagyom.src.World.Game.world.battle);
+			//battlescreen = new BattleScreen(gameSlagyom, it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
-			Gdx.input.setInputProcessor(null);
-			Gdx.input.setInputProcessor(null);
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
 			LoadingMusic.pause();
-			LoadingMusic.mainMusic.play();
 			gameSlagyom.setScreen(pauseScreen);
-			/*
-			 * try { it.slagyom.src.World.Game.world.semaphore.acquire(); }
-			 * catch (InterruptedException e) { e.printStackTrace(); }
-			 */
 			Gdx.input.setInputProcessor(pauseScreen.stage);
 		} else if (currentState == State.BAG) {
 			bagScreen = new BagScreen(gameSlagyom);
@@ -99,14 +93,6 @@ public class ScreenManager {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);
 			Gdx.input.setInputProcessor(shopScreen.stage);
-			/*
-			 * } else if (currentState == State.CONTINUEGAME) {
-			 * gameSlagyom.musicManager.pause();
-			 * gameSlagyom.musicManager.play("BACKGROUND");
-			 * gameSlagyom.setScreen(getPlayScreen());
-			 * 
-			 * Gdx.input.setInputProcessor(null);
-			 */
 		}
 	}
 

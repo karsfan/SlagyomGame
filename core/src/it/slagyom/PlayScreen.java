@@ -167,6 +167,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	}
 
+	@SuppressWarnings("static-access")
 	private void moveCharacter(float dt) {
 		try {
 			if (!stop) {
@@ -210,6 +211,7 @@ public class PlayScreen implements Screen, ControllerListener {
 						Game.player.collideShop = false;
 					}
 					if (Game.player.collideGym) {
+						game.screenManager.battlescreen = new BattleScreen(game, it.slagyom.src.World.Game.world.battle);
 						game.screenManager.swapScreen(it.slagyom.ScreenManager.State.BATTLE);
 						Game.world.semaphore.acquire();
 						Game.player.collideGym = false;

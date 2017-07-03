@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import it.slagyom.ScreenManager.State;
 import it.slagyom.src.World.Game;
 import it.slagyom.src.World.Weapon;
 import staticObjects.Item;
@@ -87,22 +88,29 @@ public class BagScreen implements Screen {
 		use = new TextButton("Use", MenuScreen.skin);
 		delete = new TextButton("Delete", MenuScreen.skin);
 		exit = new TextButton("Return", MenuScreen.skin);
-
+		use.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (game.screenManager.getPreviousState() == State.BATTLE)
+					if (potionsTable.isVisible()) {
+						Game.player.bag.useItem(itemSelected);
+						setTextPotions();
+					}
+			}
+		});
 		delete.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (potionsTable.isVisible()) {
 					Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
-					potions[0].setText("Blue potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST));
-					potions[1].setText("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND));
-					potions[2].setText("Red potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD));
+					setTextPotions();
 				}
 				if (parchmentsTable.isVisible()) {
 					Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
 					parchments[0]
 							.setText("Parchment lev1  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
-					parchments[1]
-							.setText("Parchment lev2  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
+					parchments[1].setText(
+							"Parchment lev2  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
 				}
 				if (bombsTable.isVisible()) {
 					Game.player.bag.removeBomb(weaponSelected.getLevel());
@@ -415,7 +423,7 @@ public class BagScreen implements Screen {
 		game.batch.end();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			game.screenManager.swapScreen(ScreenManager.State.PLAYING);
+			game.screenManager.swapScreen(State.PAUSE);
 			Game.world.semaphore.release();
 		}
 
@@ -434,7 +442,7 @@ public class BagScreen implements Screen {
 			}
 			if (Game.player.bag.getNumberOf(Element.POTION, Level.SECOND) <= 0) {
 				potions[1].setVisible(false);
-				potions[2].setPosition(firstX, secondY);
+				potions[2].setPosition(firstX, potions[1].getY());
 			} else
 				potions[1].setVisible(true);
 			if (Game.player.bag.getNumberOf(Element.POTION, Level.THIRD) <= 0)
@@ -485,7 +493,7 @@ public class BagScreen implements Screen {
 			}
 			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev2) <= 0) {
 				bombs[1].setVisible(false);
-				bombs[2].setPosition(firstX, secondY);
+				bombs[2].setPosition(firstX, bombs[1].getY());
 			} else
 				bombs[1].setVisible(true);
 			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev3) <= 0)
@@ -497,6 +505,12 @@ public class BagScreen implements Screen {
 		}
 		stage.act();
 		stage.draw();
+	}
+
+	public void setTextPotions() {
+		potions[0].setText("Blue potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST));
+		potions[1].setText("Red potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND));
+		potions[2].setText("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD));
 	}
 
 	@Override

@@ -98,7 +98,7 @@ public class MultiplayerScreen implements Screen {
 				multiplayerPort = Integer.parseInt(port.getText());
 			
 				try {
-					new GameClient();
+					//new GameClient();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

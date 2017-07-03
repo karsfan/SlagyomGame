@@ -3,6 +3,7 @@ package it.slagyom.src.Character;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import it.slagyom.src.World.Game;
 import it.slagyom.src.World.Weapon;
 import staticObjects.Item;
 import staticObjects.Item.Level;
@@ -19,6 +20,7 @@ public class Bag {
 		secondary_weapon = null;
 		items = new ArrayList<Item>();
 		bombe = new ArrayList<Bomb>();
+
 		/*
 		 * bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
 		 * Type.Bomba)); bombe.add(new
@@ -30,6 +32,7 @@ public class Bag {
 		 * Type.Bomba)); bombe.add(new
 		 * Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
 		 */
+
 	}
 
 	public void deleteParchments(Item item) {
@@ -104,16 +107,16 @@ public class Bag {
 
 	public boolean add(Object object) {
 		if (items.size() + bombe.size() < capacity) {
-			if (object instanceof Bomb){
+			if (object instanceof Bomb) {
 				Bomb bomb = new Bomb(((Bomb) object).getLevel(), ((Bomb) object).getType());
 				bombe.add(bomb);
 			}
 
-			else if (object instanceof Item){
+			else if (object instanceof Item) {
 				Item item = new Item(((Item) object).getElement(), ((Item) object).getLevel());
 				items.add(item);
 			}
-			
+
 			else if (object instanceof Weapon) {
 				secondary_weapon = new Weapon(((Weapon) object).getLevel(), ((Weapon) object).getType());
 			}
@@ -122,6 +125,27 @@ public class Bag {
 		return false;
 	}
 
+	public void useItem(Item item) {
+		if(item.getElement() == Element.POTION){
+			switch(item.getLevel()){
+			case FIRST:
+				System.out.println(Game.world.battle.character.player.health);
+				Game.world.battle.character.player.health += 15;
+				System.out.println(Game.world.battle.character.player.health);
+				break;
+			case SECOND:
+				Game.world.battle.character.player.health += 25;
+				break;
+			case THIRD:
+				Game.world.battle.character.player.health += 45;
+				break;
+			default:
+				System.out.println("potion non assegnata");
+				break;
+			}
+			removeItem(item.getElement(), item.getLevel());
+	}
+}
 	public void removeBomb(it.slagyom.src.World.Weapon.Level level) {
 		Iterator<Bomb> bombIterator = bombe.iterator();
 		while (bombIterator.hasNext()) {

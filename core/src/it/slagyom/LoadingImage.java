@@ -80,8 +80,11 @@ public class LoadingImage {
 	public static ImageButton bluePotion;
 	public static ImageButton redPotion;
 	public static ImageButton greenPotion;
+	public static ImageButton bomb;
+	public static ImageButton parchment;
 	public static ImageButton spear;
 	public static ImageButton sword;
+	public static ImageButton bow;
 	public static ImageButton emptyBagIcon;
 	public static ImageButton emptyShopIcon;
 	public static ImageButton leftArrow;
@@ -127,8 +130,10 @@ public class LoadingImage {
 		greenPotion = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/greenPotion.png"))));
 		spear = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/spear.png"))));
-		sword = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/spear.png"))));
-
+		sword = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/sword.png"))));
+		bow = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/bow.png"))));
+		bomb = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/bomb.png"))));
+		parchment = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/parchment.png"))));
 		rightArrow = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/rightArrow.png"))));
 		leftArrow = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/leftArrow.png"))));

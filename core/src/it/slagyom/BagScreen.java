@@ -77,7 +77,6 @@ public class BagScreen implements Screen {
 		selectionBackgroundSprite = new Sprite(selectionBackground);
 
 		stage = new Stage(viewport, game.batch);
-
 		currentPocket = Pocket.POTIONS;
 
 		// OPTIONS TABLE
@@ -254,7 +253,7 @@ public class BagScreen implements Screen {
 		bombs[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bluePotion);
+				showInfo(LoadingImage.bomb);
 				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev1,
 						it.slagyom.src.World.Weapon.Type.Bomba);
 			}
@@ -263,7 +262,7 @@ public class BagScreen implements Screen {
 		bombs[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.greenPotion);
+				showInfo(LoadingImage.bomb);
 				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev2,
 						it.slagyom.src.World.Weapon.Type.Bomba);
 			}
@@ -272,7 +271,7 @@ public class BagScreen implements Screen {
 		bombs[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.redPotion);
+				showInfo(LoadingImage.bomb);
 				weaponSelected = new Weapon(it.slagyom.src.World.Weapon.Level.lev3,
 						it.slagyom.src.World.Weapon.Type.Bomba);
 			}
@@ -337,7 +336,7 @@ public class BagScreen implements Screen {
 		parchments[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bluePotion);
+				showInfo(LoadingImage.parchment);
 				itemSelected = new Item(Element.PARCHMENT, Level.FIRST);
 			}
 		});
@@ -345,7 +344,7 @@ public class BagScreen implements Screen {
 		parchments[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.sword);
+				showInfo(LoadingImage.parchment);
 				itemSelected = new Item(Element.PARCHMENT, Level.SECOND);
 			}
 		});

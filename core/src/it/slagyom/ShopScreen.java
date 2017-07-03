@@ -319,7 +319,7 @@ public class ShopScreen implements Screen {
 		bombs[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bluePotion);
+				showInfo(LoadingImage.bomb);
 				LoadingImage.howMuch.setVisible(true);
 				buying = true;
 				weaponSelected = new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
@@ -337,7 +337,7 @@ public class ShopScreen implements Screen {
 		bombs[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.redPotion);
+				showInfo(LoadingImage.bomb);
 				LoadingImage.howMuch.setVisible(true);
 				buying = true;
 				buyingTable.clear();
@@ -355,7 +355,7 @@ public class ShopScreen implements Screen {
 		bombs[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.greenPotion);
+				showInfo(LoadingImage.bomb);
 				LoadingImage.howMuch.setVisible(true);
 				buying = true;
 				buyingTable.clear();
@@ -386,6 +386,12 @@ public class ShopScreen implements Screen {
 		weaponsTable.setVisible(false);
 		Label weaponsLabel;
 		TextButton[] weapons = new TextButton[3];
+		final TextButton lev1 = new TextButton("Lev1  $15", MenuScreen.skin);
+		final TextButton lev2 = new TextButton("Lev2  $60", MenuScreen.skin);
+		final TextButton lev3 = new TextButton("Lev3  $100", MenuScreen.skin);
+		lev1.setPosition(302, 250);
+		lev2.setPosition(302, 206);
+		lev3.setPosition(302, 163);
 		// leggi nota prima del metdo
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 		weapons[0] = new TextButton("Sword", MenuScreen.skin);
@@ -398,15 +404,7 @@ public class ShopScreen implements Screen {
 				buying = true;
 				buyingTable.clear();
 				buyingTable.setVisible(true);
-				TextButton lev1 = new TextButton("Lev1  $15", MenuScreen.skin);
-				TextButton lev2 = new TextButton("Lev1  $60", MenuScreen.skin);
-				TextButton lev3 = new TextButton("Lev1  $100", MenuScreen.skin);
-				lev1.setPosition(302, 240);
-				lev2.setPosition(302, 198);
-				lev3.setPosition(302, 154);
-				lev1.setVisible(true);
-				lev2.setVisible(true);
-				lev3.setVisible(true);
+
 				lev1.addListener(new ClickListener() {
 					@Override
 					public void clicked(InputEvent event, float x, float y) {
@@ -440,15 +438,6 @@ public class ShopScreen implements Screen {
 				buying = true;
 				buyingTable.clear();
 				buyingTable.setVisible(true);
-				TextButton lev1 = new TextButton("Lev1  $15", MenuScreen.skin);
-				TextButton lev2 = new TextButton("Lev1  $60", MenuScreen.skin);
-				TextButton lev3 = new TextButton("Lev1  $100", MenuScreen.skin);
-				lev1.setPosition(302, 240);
-				lev2.setPosition(302, 198);
-				lev3.setPosition(302, 154);
-				lev1.setVisible(true);
-				lev2.setVisible(true);
-				lev3.setVisible(true);
 				lev1.addListener(new ClickListener() {
 					@Override
 					public void clicked(InputEvent event, float x, float y) {
@@ -478,19 +467,10 @@ public class ShopScreen implements Screen {
 		weapons[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.spear);
+				showInfo(LoadingImage.bow);
 				buying = true;
 				buyingTable.clear();
 				buyingTable.setVisible(true);
-				TextButton lev1 = new TextButton("Lev1  $15", MenuScreen.skin);
-				TextButton lev2 = new TextButton("Lev1  $60", MenuScreen.skin);
-				TextButton lev3 = new TextButton("Lev1  $100", MenuScreen.skin);
-				lev1.setPosition(302, 240);
-				lev2.setPosition(302, 198);
-				lev3.setPosition(302, 154);
-				lev1.setVisible(true);
-				lev2.setVisible(true);
-				lev3.setVisible(true);
 				lev1.addListener(new ClickListener() {
 					@Override
 					public void clicked(InputEvent event, float x, float y) {
@@ -542,7 +522,7 @@ public class ShopScreen implements Screen {
 		parchments[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bluePotion);
+				showInfo(LoadingImage.parchment);
 				LoadingImage.howMuch.setVisible(true);
 				buying = true;
 				itemSelected = new Item(Element.PARCHMENT, Level.FIRST);
@@ -559,7 +539,7 @@ public class ShopScreen implements Screen {
 		parchments[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.sword);
+				showInfo(LoadingImage.parchment);
 				LoadingImage.howMuch.setVisible(true);
 				buying = true;
 				itemSelected = new Item(Element.PARCHMENT, Level.SECOND);

@@ -58,7 +58,7 @@ public class BattleScreen implements Screen {
 	private void draw() {
 
 		gameslagyom.batch.draw(LoadingImage.getBattleBgImage(), 0, 0);
-		
+
 		CharacterBattle tmp = battle.character;
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp), tmp.getX(), tmp.getY(), tmp.getWidth(),
 				tmp.getHeight());
@@ -75,12 +75,12 @@ public class BattleScreen implements Screen {
 						searching.getWidth() + 10, searching.getHeight() + 10);
 			}
 		}
-		Iterator <Bomb> bombIterator1 = battle.enemy.bombe.iterator();
+		Iterator<Bomb> bombIterator1 = battle.enemy.bombe.iterator();
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
-			if (searching1.lanciata==true) {
-				gameslagyom.batch.draw(LoadingImage.getTileImage(searching1), searching1.getMainX(), searching1.getMainY(), searching1.getWidth()+10,
-						searching1.getHeight()+10);
+			if (searching1.lanciata == true) {
+				gameslagyom.batch.draw(LoadingImage.getTileImage(searching1), searching1.getMainX(),
+						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
 			}
 		}
 	}
@@ -109,17 +109,18 @@ public class BattleScreen implements Screen {
 			battle.character.caricaBomba(dt);
 			battle.character.bomba = true;
 		} else {
-			if (battle.character.bomba)
+			if (battle.character.bomba) {
 				battle.character.lancia();
-			battle.character.bomba = false;
-			battle.character.forza = 50;
-			
+				battle.character.bomba = false;
+				battle.character.forza = 50;
+			}
+
 			if (Gdx.input.isKeyJustPressed(Keys.S))
 				battle.character.setState(StateDynamicObject.DEFENDING, dt);
-			
+
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				battle.character.jump(dt);
-				
+
 			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.A))
 					battle.character.fightLeft(dt);

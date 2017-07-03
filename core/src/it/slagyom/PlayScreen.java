@@ -342,7 +342,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	@Override
 	public void disconnected(Controller controller) {
 		// TODO Auto-generated method stub
-		System.out.println("qui");
 	}
 
 	@Override

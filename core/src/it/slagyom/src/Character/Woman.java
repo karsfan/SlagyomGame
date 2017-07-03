@@ -305,8 +305,6 @@ public class Woman extends DynamicObjects implements ICollidable {
 			return;
 		}
 
-		if (collisionWithCharacter)
-			System.out.println("collision");
 
 		StateDynamicObject newState = null;
 		if (rand == 0)

@@ -218,7 +218,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 				bomba.id = "Player";
 				break;
 			}
-			System.out.println(bomba.lanciata);
+			//System.out.println(bomba.lanciata);
 		}
 	}
 

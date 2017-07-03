@@ -118,7 +118,6 @@ public class ShopScreen implements Screen {
 					if (tmp >= 0) {
 						buy = true;
 						refreshedCoins = tmp;
-						System.out.println(refreshedCoins);
 						for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
 							Game.player.bag.add(itemSelected);
 					}

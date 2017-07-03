@@ -15,11 +15,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import Multiplayer.ConnectionManager;
 import Multiplayer.GameClient;
 import Multiplayer.GameServer;
+import Multiplayer.MultiplayerManager;
 
 public class MultiplayerScreen implements Screen {
 
+	private MultiplayerManager multiplayer;
+	
 	private GameSlagyom game;
 	protected Stage stage;
 	private Viewport viewport;
@@ -34,6 +38,8 @@ public class MultiplayerScreen implements Screen {
 
 	public MultiplayerScreen(final GameSlagyom game) {
 		this.game = game;
+		
+		multiplayer = new MultiplayerManager();
 
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(854, 480, camera);
@@ -92,14 +98,14 @@ public class MultiplayerScreen implements Screen {
 				multiplayerPort = Integer.parseInt(port.getText());
 			
 				try {
-					new GameClient(multiplayerPort);
+					new GameClient();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-
+		
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

@@ -1,40 +1,63 @@
 package Multiplayer;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 
+public class GameClient extends Thread {
+	Socket socket;
+	private BufferedReader reader;
+	private PrintWriter writer;
+	private MultiplayerManager gameManager;
 
-
-public class GameClient {
-
-	public GameClient(int port) {
-		BufferedReader in = null;
-		BufferedWriter outRo = null;
-	//	PrintStream out = null;
-		Socket socket = null;
-		String message = null;
-		
-		System.out.println("SONO IL CLIENT");
+	private boolean server;
+	private boolean online;
+	
+	public GameClient(Socket socket, MultiplayerManager gameManager) {
+		this.socket = socket;
+		this.gameManager = gameManager;
 		try {
-			// open a socket connection
-			socket = new Socket("localhost", port);
-			// Apre i canali I/O
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			//out = new PrintStream(socket.getOutputStream(), true);
-			outRo = new BufferedWriter (new OutputStreamWriter(socket.getOutputStream()));
-			
-			// Legge dal server
-			message = in.readLine();
-			System.out.print("Messaggio Ricevuto : " + message);
-			outRo.close();
-			//out.close();
-			in.close();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+			this.writer = new PrintWriter(socket.getOutputStream(), true);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
 	}
+	
+	public void setOnline(boolean online) {
+		this.online = online;
+	}
+
+	public boolean isOnline() {
+		return this.online;
+	}
+	
+	public void dispatch(final String message) {
+		if ((this.writer != null) && (message != null))
+			this.writer.println(message);
+	}
+
+	public void send() {
+		this.gameManager.dispatch(this);
+	}
+
+	public String receive() {
+		try {
+			System.out.println("Provo A Ricevere");
+			return this.reader.readLine();
+		} catch (IOException e) {
+			return "#Error";
+		}
+	}
+
+	public boolean isServer() {
+		return this.server;
+	}
+
+	public void setServer(boolean server) {
+		this.server = server;
+	}
+		
 }

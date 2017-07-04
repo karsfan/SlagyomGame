@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import it.slagyom.LoadingImage;
 import it.slagyom.MenuScreen;
 import it.slagyom.src.World.Game;
 

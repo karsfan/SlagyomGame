@@ -58,7 +58,7 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && player.y + velocityY * dt > GameConfig.mainY_Battle) {
 			player.y += velocityY * dt;
-
+		//	System.out.println(velocityY + " "+ velocityY*dt);
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING, dt);
 
@@ -146,12 +146,14 @@ public class CharacterBattle extends Fighting implements it.slagyom.src.World.IC
 	public void jump(float dt) {
 		if (!jumping && !doubleJumping) {
 			jumping = true;
+			//velocityY = 400;
 			velocityY = 100;
 			velocityX = 10;
 			setState(StateDynamicObject.JUMPING, dt);
 		} else if (jumping && !doubleJumping) {
 			jumping = false;
 			doubleJumping = true;
+			//velocityY = 400;
 			velocityY = 100;
 			velocityX = 10;
 		}

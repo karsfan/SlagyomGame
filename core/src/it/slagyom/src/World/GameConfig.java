@@ -1,6 +1,7 @@
 package it.slagyom.src.World;
 
 public class GameConfig {
+	//public static float gravity = 34f;
 	public static float gravity = 17f;
 	public static float WIDTH = 1440;
 	public static float HEIGHT = 960;

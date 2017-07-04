@@ -2,9 +2,10 @@ package Multiplayer;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
-public class MultiplayerManager extends Thread{
+public class MultiplayerManager extends Thread {
 
 	private final Set<GameClient> clients = new HashSet<GameClient>();
 	// private int serverConnected = 0;
@@ -35,8 +36,9 @@ public class MultiplayerManager extends Thread{
 
 	public void dispatch(final GameClient senderClient) {
 		for (final GameClient client : this.clients)
-			if (!client.equals(senderClient))
-				client.dispatch(this.message);
+			if (!client.equals(senderClient)) {
+				 client.dispatch(this.message);
+			}
 	}
 
 	public void dispatchStart() {
@@ -51,7 +53,6 @@ public class MultiplayerManager extends Thread{
 				if (client.isOnline())
 					client.send();
 			for (final GameClient client : this.clients) {
-				System.out.println("Older Message: " + this.message);
 				this.message = client.receive();
 				System.out.println("Messaggio Ricevuto: " + this.message);
 			}

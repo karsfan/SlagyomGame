@@ -1,5 +1,7 @@
 package it.slagyom;
 
+import java.net.Socket;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import Multiplayer.ConnectionManager;
 import Multiplayer.GameClient;
 import Multiplayer.GameServer;
 import Multiplayer.MultiplayerManager;
@@ -23,6 +24,7 @@ import Multiplayer.MultiplayerManager;
 public class MultiplayerScreen implements Screen {
 
 	private MultiplayerManager multiplayer;
+	private Socket socket; 
 	
 	private GameSlagyom game;
 	protected Stage stage;
@@ -74,7 +76,6 @@ public class MultiplayerScreen implements Screen {
 		TextButton startServerButton = new TextButton("Start server", MenuScreen.skin);
 		TextButton playButton = new TextButton("Play", MenuScreen.skin);
 		TextButton returnButton = new TextButton("Return", MenuScreen.skin);
-
 		// Add listeners to buttons
 		startServerButton.addListener(new ClickListener() {
 			@Override
@@ -82,7 +83,9 @@ public class MultiplayerScreen implements Screen {
 				multiplayerAddress = address.getText();
 				multiplayerPort = Integer.parseInt(port.getText());
 				try {
-					new GameServer(multiplayerPort);
+					srvr = new GameServer(multiplayerPort);
+					srvr.start();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -96,11 +99,13 @@ public class MultiplayerScreen implements Screen {
 				multiplayerCharName = name.getText();
 				multiplayerAddress = address.getText();
 				multiplayerPort = Integer.parseInt(port.getText());
-			
 				try {
-					//new GameClient();
+					socket = new Socket(multiplayerAddress, multiplayerPort);
+					clnt = new GameClient(multiplayerCharName, socket, multiplayer);
+					System.out.println("From MPSCREEN CLIENT: " + multiplayerCharName);
+					clnt.dispatch("Ciao sono " + multiplayerCharName);
+					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -129,7 +134,8 @@ public class MultiplayerScreen implements Screen {
 
 		stage.addActor(mainTable);
 	}
-
+	GameServer srvr;
+	GameClient clnt;
 	@Override
 	public void show() {
 

@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class GameClient extends Thread {
 	Socket socket;
+	String name;
+	public String message;
 	private BufferedReader reader;
 	private PrintWriter writer;
 	private MultiplayerManager gameManager;
@@ -15,7 +18,8 @@ public class GameClient extends Thread {
 	private boolean server;
 	private boolean online;
 	
-	public GameClient(Socket socket, MultiplayerManager gameManager) {
+	public GameClient(String name, Socket socket, MultiplayerManager gameManager) {
+		this.name = name;
 		this.socket = socket;
 		this.gameManager = gameManager;
 		try {
@@ -35,8 +39,13 @@ public class GameClient extends Thread {
 	}
 	
 	public void dispatch(final String message) {
-		if ((this.writer != null) && (message != null))
+		if ((this.writer != null) && (message != null)) {
+//			Scanner s = new Scanner(System.in);
+//			System.out.println("NOME: " + name);			
 			this.writer.println(message);
+//			this.writer.println(s.next());
+		}
+		
 	}
 
 	public void send() {

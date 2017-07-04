@@ -34,19 +34,18 @@ public class NewCharacterScreen implements Screen {
 	private Sprite backgroundSprite;
 
 	static String charName;
-	
+
 	Drawable maleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/male.png")));
 	Drawable maleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/maleok.png")));
 
 	Drawable femaleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/female.png")));
 	Drawable femalokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/femaleok.png")));
-	
+
 	ImageButton male = new ImageButton(maleDraw);
 	ImageButton female = new ImageButton(femaleDraw);
-	
+
 	Table gender = new Table();
 
-	
 	public NewCharacterScreen(final GameSlagyom game) {
 		this.game = game;
 
@@ -83,35 +82,33 @@ public class NewCharacterScreen implements Screen {
 				// }
 			}
 		});
-		
+
 		male.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println("MALE");
-				//gender.clear();
-				//male = new ImageButton(maleokDraw);
-				//female = new ImageButton(femaleDraw);
-				
-				//gender.add(male);
-				//gender.add(female).padLeft(20);
+				// gender.clear();
+				// male = new ImageButton(maleokDraw);
+				// female = new ImageButton(femaleDraw);
+
+				// gender.add(male);
+				// gender.add(female).padLeft(20);
 			}
 		});
 
-		
 		female.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println("FEMALE");
-				//gender.clear();
-				//female = new ImageButton(femalokDraw);
-				//male = new ImageButton(maleDraw);
-				
-				//femaleDraw = femalokDraw;
-				//maleDraw = maleDraw;
-				
-				
-				//gender.add(male);
-				//gender.add(female).padLeft(20);
+				// gender.clear();
+				// female = new ImageButton(femalokDraw);
+				// male = new ImageButton(maleDraw);
+
+				// femaleDraw = femalokDraw;
+				// maleDraw = maleDraw;
+
+				// gender.add(male);
+				// gender.add(female).padLeft(20);
 			}
 		});
 
@@ -120,7 +117,8 @@ public class NewCharacterScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				charName = name.getText().toUpperCase();
-				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.WELCOME);
+				if (!charName.isEmpty())
+					game.screenManager.swapScreen(it.slagyom.ScreenManager.State.WELCOME);
 			}
 		});
 

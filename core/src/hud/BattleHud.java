@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import it.slagyom.LoadingImage;
 import it.slagyom.MenuScreen;
 import it.slagyom.src.World.Game;
 
@@ -33,7 +34,7 @@ public class BattleHud {
 	public static Skin skinBar;
 	ProgressBar barPlayer;
 	ProgressBar barEnemy;
-
+	Table table = new Table();
 	public BattleHud(SpriteBatch sb) {
 
 		spriteBatch = sb;
@@ -54,7 +55,6 @@ public class BattleHud {
 		barEnemy.setBounds(this.viewport.getWorldWidth() / 1.2f, this.viewport.getWorldHeight() / 1.1f, healthEnemy,
 				15);*/
 
-		Table table = new Table();
 		table.top(); // la allinea sopra al centro
 		table.setFillParent(true);
 		

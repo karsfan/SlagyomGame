@@ -21,11 +21,11 @@ public class Enemy extends Fighting {
 	public Weapon weapon;
 	public ArrayList<Bomb> bombe = new ArrayList<>();
 	public boolean morto = false;
-	Pack win_bonus;
+	public Pack win_bonus;
 	public Level level;
 
 	public Enemy(Enemy enemy) {
-
+		win_bonus = enemy.win_bonus;
 		x = 700;
 		y = GameConfig.mainY_Battle;
 		weapon = enemy.weapon;
@@ -79,6 +79,7 @@ public class Enemy extends Fighting {
 		default:
 			break;
 		}
+		win_bonus = new Pack(level);
 		stateTimer = 0;
 		x = 700;
 		y = GameConfig.mainY_Battle;

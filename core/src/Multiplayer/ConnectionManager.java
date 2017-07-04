@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ConnectionManager implements Runnable {
-	private String name = "Asociale1";
+	private String name = "Prova1";
 	private PrintWriter writer;
 	private BufferedReader reader;
 	private Socket socket;

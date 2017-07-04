@@ -211,7 +211,6 @@ public class World {
 				Game.player.collideGym = false;
 				PlayScreen.hud.setDialogText("Non ci puoi accedere se prima non hai eliminati tutti i nemici");
 			}
-
 		}
 	}
 

@@ -53,15 +53,13 @@ public class BagScreen implements Screen {
 	private TextButton use;
 	private TextButton delete;
 	private TextButton exit;
+
 	public Item itemSelected;
-	private int firstX;
-	private int firstY;
-	private int secondY;
-	private int thirdY;
+	public Weapon weaponSelected;
+	
 	TextButton[] potions;
 	TextButton weapons;
 	TextButton[] bombs;
-	public Weapon weaponSelected;
 	TextButton[] parchments;
 
 	public BagScreen(final GameSlagyom game) {
@@ -142,11 +140,11 @@ public class BagScreen implements Screen {
 		LoadingImage.leftArrow.setPosition(115, 254);
 		LoadingImage.emptyBagIcon.setVisible(true);
 
-		use.setPosition(573, 110);
+		use.setPosition(ScreenConfig.optionTableX, ScreenConfig.optionTableFirstY);
 		use.setVisible(false);
-		delete.setPosition(573, 70);
+		delete.setPosition(ScreenConfig.optionTableX, ScreenConfig.optionTableSecondY);
 		delete.setVisible(false);
-		exit.setPosition(573, 30);
+		exit.setPosition(ScreenConfig.optionTableX, ScreenConfig.optionTableThirdY);
 		exit.setVisible(false);
 
 		optionsTable.add(LoadingImage.emptyBagIcon);
@@ -190,11 +188,9 @@ public class BagScreen implements Screen {
 
 		// POTIONS TABLE
 		potionsTable = new Table();
-		Label potionsLabel;
+		Label potionsLabel = new Label("Potions", MenuScreen.skin);;
 
 		potionsTable.setLayoutEnabled(false);
-
-		potionsLabel = new Label("Potions", MenuScreen.skin);
 		potions = new TextButton[3];
 		potions[0] = new TextButton("Blue potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST),
 				MenuScreen.skin);
@@ -229,24 +225,16 @@ public class BagScreen implements Screen {
 
 		potionsLabel.setPosition(149, 425);
 		potionsTable.add(potionsLabel);
-		firstX = 350;
-		firstY = 420;
-		secondY = 370;
-		thirdY = 320;
-		potions[0].setPosition(firstX, firstY);
+		
 		potionsTable.add(potions[0]);
-
-		potions[1].setPosition(firstX, secondY);
 		potionsTable.add(potions[1]);
-
-		potions[2].setPosition(firstX, thirdY);
 		potionsTable.add(potions[2]);
 		// END POTIONS TABLE
-		Label bombsLabel;
+		
+		Label bombsLabel= new Label("Bombs", MenuScreen.skin);
 		bombsTable = new Table();
 		bombsTable.setLayoutEnabled(false);
 
-		bombsLabel = new Label("Bombs", MenuScreen.skin);
 		bombs = new TextButton[3];
 		bombs[0] = new TextButton(
 				"Bomb lev1   x" + Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev1),
@@ -287,19 +275,12 @@ public class BagScreen implements Screen {
 
 		bombsLabel.setPosition(149, 425);
 		bombsTable.add(bombsLabel);
-		firstX = 350;
-		firstY = 420;
-		secondY = 370;
-		thirdY = 320;
-		bombs[0].setPosition(firstX, firstY);
+		
 		bombsTable.add(bombs[0]);
-
-		bombs[1].setPosition(firstX, secondY);
 		bombsTable.add(bombs[1]);
-
-		bombs[2].setPosition(firstX, thirdY);
 		bombsTable.add(bombs[2]);
-		// END bombs TABLE
+		// END BOMBS TABLE
+		
 		// WEAPON TABLE
 		weaponsTable = new Table();
 		Label weaponsLabel;
@@ -360,10 +341,7 @@ public class BagScreen implements Screen {
 		parchmentsLabel.setPosition(120, 425);
 		parchmentsTable.add(parchmentsLabel);
 
-		parchments[0].setPosition(350, 420);
 		parchmentsTable.add(parchments[0]);
-
-		parchments[1].setPosition(350, 370);
 		parchmentsTable.add(parchments[1]);
 
 		// END PARCHMENTS TABLE
@@ -432,17 +410,17 @@ public class BagScreen implements Screen {
 			bombsTable.setVisible(false);
 			if (Game.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
 				potions[0].setVisible(false);
-				potions[1].setPosition(firstX, firstY);
-				potions[2].setPosition(firstX, secondY);
+				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 			} else {
 				potions[0].setVisible(true);
-				potions[0].setPosition(firstX, firstY);
-				potions[1].setPosition(firstX, secondY);
-				potions[2].setPosition(firstX, thirdY);
+				potions[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
 			}
 			if (Game.player.bag.getNumberOf(Element.POTION, Level.SECOND) <= 0) {
 				potions[1].setVisible(false);
-				potions[2].setPosition(firstX, potions[1].getY());
+				potions[2].setPosition(ScreenConfig.tableBagX, potions[1].getY());
 			} else
 				potions[1].setVisible(true);
 			if (Game.player.bag.getNumberOf(Element.POTION, Level.THIRD) <= 0)
@@ -465,11 +443,11 @@ public class BagScreen implements Screen {
 			parchmentsTable.setVisible(true);
 			if (Game.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST) <= 0) {
 				parchments[0].setVisible(false);
-				parchments[1].setPosition(firstX, firstY);
+				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 			} else {
 				parchments[0].setVisible(true);
-				parchments[0].setPosition(firstX, firstY);
-				parchments[1].setPosition(firstX, secondY);
+				parchments[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 			}
 			if (Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND) <= 0)
 				parchments[1].setVisible(false);
@@ -483,17 +461,17 @@ public class BagScreen implements Screen {
 			bombsTable.setVisible(true);
 			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev1) <= 0) {
 				bombs[0].setVisible(false);
-				bombs[1].setPosition(firstX, firstY);
-				bombs[2].setPosition(firstX, secondY);
+				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 			} else {
 				bombs[0].setVisible(true);
-				bombs[0].setPosition(firstX, firstY);
-				bombs[1].setPosition(firstX, secondY);
-				bombs[2].setPosition(firstX, thirdY);
+				bombs[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
 			}
 			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev2) <= 0) {
 				bombs[1].setVisible(false);
-				bombs[2].setPosition(firstX, bombs[1].getY());
+				bombs[2].setPosition(ScreenConfig.tableBagX, bombs[1].getY());
 			} else
 				bombs[1].setVisible(true);
 			if (Game.player.bag.getNumberOfBomb(it.slagyom.src.World.Weapon.Level.lev3) <= 0)

@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.levels.editor.Editor;
 
 import gameManager.GameSlagyom;
 import gameManager.ScreenManager;
@@ -126,12 +125,7 @@ public class MenuScreen implements Screen {
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYER);
 			}
 		});
-		editorButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				new Editor();
-			}
-		});
+		
 		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

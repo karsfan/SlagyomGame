@@ -128,7 +128,7 @@ public class MultiplayerScreen implements Screen {
 		mainTable.row();
 		mainTable.add(port).pad(5);
 		mainTable.row();
-		mainTable.add(startServerButton).pad(5);
+		//mainTable.add(startServerButton).pad(5);
 		mainTable.row();
 		mainTable.add(playButton).pad(5);
 		mainTable.row();

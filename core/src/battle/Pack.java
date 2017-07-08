@@ -3,7 +3,7 @@ package battle;
 import java.util.ArrayList;
 
 import battle.Enemy.Level;
-import it.slagyom.src.World.Weapon;
+import character.Weapon;
 import staticObjects.Item;
 import staticObjects.StaticObject.Element;
 

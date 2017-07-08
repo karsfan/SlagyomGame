@@ -2,13 +2,13 @@ package battle;
 
 import java.util.Iterator;
 
-import it.slagyom.src.Character.Bomb;
-import it.slagyom.src.Character.Player;
-import it.slagyom.src.World.Game;
-import it.slagyom.src.World.GameConfig;
-import it.slagyom.src.World.Weapon;
+import character.Bomb;
+import character.Player;
+import character.Weapon;
+import world.Game;
+import world.GameConfig;
 
-public class CharacterBattle extends Fighting implements it.slagyom.src.World.ICollidable {
+public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	public Player player;
 	

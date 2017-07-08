@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import battle.Enemy;
 import battle.Enemy.Level;
-import it.slagyom.src.Character.Player;
-import it.slagyom.src.World.Game;
+import character.Player;
+import world.Game;
 
 public class EnemyHome extends StaticObject {
 	public ArrayList<Enemy> enemy;

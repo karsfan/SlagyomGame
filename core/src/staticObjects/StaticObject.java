@@ -3,8 +3,8 @@ package staticObjects;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import it.slagyom.src.Character.DynamicObjects;
-import it.slagyom.src.World.ICollidable;
+import character.DynamicObjects;
+import world.ICollidable;
 
 public class StaticObject implements ICollidable {
 

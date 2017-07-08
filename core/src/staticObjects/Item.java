@@ -4,9 +4,9 @@ import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.Random;
 
-import it.slagyom.src.Character.Player;
-import it.slagyom.src.World.Game;
-import it.slagyom.src.World.GameConfig;
+import character.Player;
+import world.Game;
+import world.GameConfig;
 
 public class Item extends StaticObject {
 

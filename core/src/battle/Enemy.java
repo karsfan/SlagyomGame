@@ -5,11 +5,11 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 
-import it.slagyom.src.Character.Bomb;
-import it.slagyom.src.World.Game;
-import it.slagyom.src.World.GameConfig;
-import it.slagyom.src.World.Weapon;
-import it.slagyom.src.World.Weapon.Type;
+import character.Bomb;
+import character.Weapon;
+import character.Weapon.Type;
+import world.Game;
+import world.GameConfig;
 
 public class Enemy extends Fighting {
 
@@ -46,9 +46,9 @@ public class Enemy extends Fighting {
 		doubleJumping = false;
 		velocityY = 0;
 		velocityX = 10;
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 	}
 
 	public Enemy(Level level) {
@@ -57,21 +57,21 @@ public class Enemy extends Fighting {
 		switch (level) {
 		case EASY:
 			name = "Bob";
-			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev1);
+			weapon = new Weapon(character.Weapon.Level.lev1);
 			health = 100;
 			win_bonus = new Pack(Level.EASY);
 			velocity = 40;
 			break;
 		case MEDIUM:
 			name = "John";
-			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev2);
+			weapon = new Weapon(character.Weapon.Level.lev2);
 			health = 250;
 			win_bonus = new Pack(Level.MEDIUM);
 			velocity = 60;
 			break;
 		case HARD:
 			name = "Ciccio";
-			weapon = new Weapon(it.slagyom.src.World.Weapon.Level.lev3);
+			weapon = new Weapon(character.Weapon.Level.lev3);
 			health = 400;
 			win_bonus = new Pack(Level.HARD);
 			velocity = 80;
@@ -84,9 +84,9 @@ public class Enemy extends Fighting {
 		x = 700;
 		y = GameConfig.mainY_Battle;
 
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 	}
 
 	public float getHealth() {

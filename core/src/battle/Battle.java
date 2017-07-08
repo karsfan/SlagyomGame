@@ -1,6 +1,6 @@
 package battle;
 
-import it.slagyom.src.Character.Player;
+import character.Player;
 
 public class Battle{
 

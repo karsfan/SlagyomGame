@@ -1,7 +1,7 @@
 package enemy.Ai;
 
 import battle.Enemy;
-import it.slagyom.src.World.Game;
+import world.Game;
 
 public class AiProva extends Enemy{
 

@@ -1,6 +1,6 @@
 package battle;
 
-import it.slagyom.src.Character.DynamicObjects;
+import character.DynamicObjects;
 
 public class Fighting extends DynamicObjects{
 	

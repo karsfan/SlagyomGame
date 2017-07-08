@@ -5,10 +5,10 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import battle.Pack;
-import it.slagyom.src.Character.Player;
-import it.slagyom.src.World.Weapon;
-import it.slagyom.src.World.Weapon.Level;
-import it.slagyom.src.World.Weapon.Type;
+import character.Player;
+import character.Weapon;
+import character.Weapon.Level;
+import character.Weapon.Type;
 
 public class Shop extends StaticObject {
 

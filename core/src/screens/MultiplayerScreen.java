@@ -3,6 +3,8 @@ package screens;
 
 import java.net.Socket;
 
+import javax.crypto.spec.SecretKeySpec;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,15 +21,11 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
-import gameManager.ScreenManager;
-import gameManager.ScreenManager.State;
-import multiplayer.GameClient;
-import multiplayer.GameServer;
-import multiplayer.MultiplayerManager;
+import multiplayer.NetworkPlayScreen;
+import multiplayer.Server;
 
 public class MultiplayerScreen implements Screen {
 
-	private MultiplayerManager multiplayer;
 	private Socket socket; 
 	
 	private GameSlagyom game;
@@ -45,7 +43,6 @@ public class MultiplayerScreen implements Screen {
 	public MultiplayerScreen(final GameSlagyom game) {
 		this.game = game;
 		
-		multiplayer = new MultiplayerManager();
 
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(854, 480, camera);
@@ -86,13 +83,7 @@ public class MultiplayerScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				multiplayerAddress = address.getText();
 				multiplayerPort = Integer.parseInt(port.getText());
-				try {
-					srvr = new GameServer(multiplayerPort);
-					srvr.start();
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				new Server(multiplayerPort, 3);
 			}
 		});
 		
@@ -103,14 +94,8 @@ public class MultiplayerScreen implements Screen {
 				multiplayerCharName = name.getText();
 				multiplayerAddress = address.getText();
 				multiplayerPort = Integer.parseInt(port.getText());
-				try {
-					socket = new Socket(multiplayerAddress, multiplayerPort);
-//					clnt = new GameClient("server", multiplayerPort);
-					System.out.println("From MPSCREEN CLIENT: " + multiplayerCharName);
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				System.out.println("clic");
+				game.setScreen(new NetworkPlayScreen(game, name.getText()));
 			}
 		});
 		
@@ -128,7 +113,7 @@ public class MultiplayerScreen implements Screen {
 		mainTable.row();
 		mainTable.add(port).pad(5);
 		mainTable.row();
-		//mainTable.add(startServerButton).pad(5);
+		mainTable.add(startServerButton).pad(5);
 		mainTable.row();
 		mainTable.add(playButton).pad(5);
 		mainTable.row();
@@ -137,8 +122,7 @@ public class MultiplayerScreen implements Screen {
 
 		stage.addActor(mainTable);
 	}
-	GameServer srvr;
-	GameClient clnt;
+
 	@Override
 	public void show() {
 

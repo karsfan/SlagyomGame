@@ -33,7 +33,7 @@ public class NewCharacterScreen implements Screen {
 	private Texture background;
 	private Sprite backgroundSprite;
 
-	static String charName;
+	 String charName;
 
 	Drawable maleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/male.png")));
 	Drawable maleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/maleok.png")));

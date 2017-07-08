@@ -5,12 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import it.slagyom.ScreenManager.State;
 
 public class GameSlagyom extends Game {
 
 	ScreenManager screenManager;
 	LoadingMusic musicLoader;
-	public static Preferences prefs;
+	public Preferences prefs;
 	SpriteBatch batch;
 
 	@Override
@@ -19,10 +20,10 @@ public class GameSlagyom extends Game {
 		batch = new SpriteBatch();
 
 		screenManager = new ScreenManager(this);
-		prefs = Gdx.app.getPreferences("My saved game");
+		// prefs = Gdx.app.getPreferences("My saved game");
 	}
 
-	public static void saveGame() {
+	public void saveGame() {
 		prefs.putString("map", it.slagyom.src.World.Game.world.getMap().getMapPath());
 		prefs.putString("name", it.slagyom.src.World.Game.player.name);
 		prefs.putFloat("xCharPosition", it.slagyom.src.World.Game.player.x);
@@ -34,16 +35,20 @@ public class GameSlagyom extends Game {
 		prefs.flush();
 	}
 
-	@SuppressWarnings({ "static-access" })
-	public void loadGame() {
-		prefs = Gdx.app.getPreferences("My saved game");
-
-		screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
-		it.slagyom.src.World.Game.player.x = prefs.getFloat("xCharPosition");
-		it.slagyom.src.World.Game.player.y = prefs.getFloat("yCharPosition");
-		it.slagyom.src.World.Game.player.health = prefs.getFloat("health");
-		it.slagyom.src.World.Game.player.power = prefs.getFloat("power");
-		it.slagyom.src.World.Game.player.coins = prefs.getInteger("coins");
+	@SuppressWarnings("static-access")
+	public void loadGame(String path) {
+		prefs = Gdx.app.getPreferences(path);
+		if (prefs.getString("name") != "") {
+			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
+			it.slagyom.src.World.Game.player.x = prefs.getFloat("xCharPosition");
+			it.slagyom.src.World.Game.player.y = prefs.getFloat("yCharPosition");
+			it.slagyom.src.World.Game.player.health = prefs.getFloat("health");
+			it.slagyom.src.World.Game.player.power = prefs.getFloat("power");
+			it.slagyom.src.World.Game.player.coins = prefs.getInteger("coins");
+			screenManager.swapScreen(State.PLAYING);
+			screenManager.playScreen.hud.textTable.clear();
+			screenManager.playScreen.hud.textDialog = "Game loaded";
+		}
 
 	}
 

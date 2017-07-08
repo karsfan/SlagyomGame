@@ -13,16 +13,16 @@ public class ScreenManager {
 	State currentState;
 	private State previousState;
 
-	static MenuScreen menuScreen;
-	static NewCharacterScreen newCharacterScreen;
-	static InitializerScreen initializerScreen;
-	static OptionScreen optionScreen;
-	static BattleScreen battlescreen;
-	static PauseScreen pauseScreen;
-	static PlayScreen playScreen;
-	static BagScreen bagScreen;
-	static ShopScreen shopScreen;
-	static MultiplayerScreen multiplayerScreen;
+	MenuScreen menuScreen;
+	NewCharacterScreen newCharacterScreen;
+	InitializerScreen initializerScreen;
+	OptionScreen optionScreen;
+	BattleScreen battlescreen;
+	PauseScreen pauseScreen;
+	PlayScreen playScreen;
+	BagScreen bagScreen;
+	ShopScreen shopScreen;
+	MultiplayerScreen multiplayerScreen;
 
 	public ScreenManager(GameSlagyom gameSlagyom) {
 		this.gameSlagyom = gameSlagyom;
@@ -35,7 +35,7 @@ public class ScreenManager {
 	}
 
 	public void swapScreen(State newState) {
-		if(currentState == State.PLAYING || currentState == State.BATTLE)
+		if (currentState == State.PLAYING || currentState == State.BATTLE)
 			setPreviousState(currentState);
 		setCurrentState(newState);
 
@@ -43,7 +43,7 @@ public class ScreenManager {
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.noCursor, 0, 0));
 		else
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.cursor, 0, 0));
-		
+
 		if (currentState == State.MENU) {
 			LoadingMusic.mainMusic.play();
 			gameSlagyom.setScreen(menuScreen);
@@ -73,12 +73,15 @@ public class ScreenManager {
 			Gdx.input.setInputProcessor(newCharacterScreen.stage);
 
 		} else if (currentState == State.WELCOME) {
+			System.out.println(gameSlagyom.screenManager.newCharacterScreen.charName);
+			gameSlagyom.prefs = Gdx.app.getPreferences(newCharacterScreen.charName);
 			initializerScreen = new InitializerScreen(gameSlagyom);
 			gameSlagyom.setScreen(initializerScreen);
 			Gdx.input.setInputProcessor(initializerScreen.stage);
 
 		} else if (currentState == State.BATTLE) {
-			//battlescreen = new BattleScreen(gameSlagyom, it.slagyom.src.World.Game.world.battle);
+			// battlescreen = new BattleScreen(gameSlagyom,
+			// it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
@@ -113,11 +116,11 @@ public class ScreenManager {
 		this.previousState = previousState;
 	}
 
-	public static PlayScreen getPlayScreen() {
+	public  PlayScreen getPlayScreen() {
 		return playScreen;
 	}
 
-	public static void setPlayScreen(PlayScreen playScreen) {
-		ScreenManager.playScreen = playScreen;
+	public void setPlayScreen(PlayScreen playScreen) {
+		this.playScreen = playScreen;
 	}
 }

@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -27,7 +26,7 @@ import it.slagyom.ScreenManager.State;
 
 public class InitializerScreen implements Screen {
 
-	private GameSlagyom game;
+	public GameSlagyom game;
 	protected Stage stage;
 	private Viewport viewport;
 	private OrthographicCamera camera;
@@ -38,13 +37,14 @@ public class InitializerScreen implements Screen {
 	private long progress = 0;
 	private long startTime = 0;
 	private ShapeRenderer mShapeRenderer;
-	final Label name = new Label("Welcome " + NewCharacterScreen.charName, MenuScreen.skin);
+	final Label name;
 	final TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
 	final TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);
 	final TextButton returnButton = new TextButton("Return", MenuScreen.skin);
 
 	public InitializerScreen(final GameSlagyom game) {
 		this.game = game;
+		name = new Label("Welcome " + game.screenManager.newCharacterScreen.charName, MenuScreen.skin);
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(854, 480, camera);
 		viewport.apply();
@@ -65,13 +65,12 @@ public class InitializerScreen implements Screen {
 		// Create buttons
 		// Add listeners to buttons
 		defaultLevelButton.addListener(new ClickListener() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				LoadingMusic.pause();
 				LoadingMusic.backgroundSound.loop(10.0f);
 				game.screenManager.menuScreen.menuMusic.stop();
-				game.screenManager.setPlayScreen(new PlayScreen(game, NewCharacterScreen.charName));
+				game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName));
 				game.setScreen(game.screenManager.playScreen);
 				game.screenManager.currentState = State.PLAYING;
 				//Gdx.input.setInputProcessor(null);
@@ -79,7 +78,6 @@ public class InitializerScreen implements Screen {
 		});
 
 		chooseLevelButton.addListener(new ClickListener() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				/*JFrame f = new JFrame();
@@ -96,15 +94,7 @@ public class InitializerScreen implements Screen {
 				final TextField nameAI = new TextField("", MenuScreen.skin);
 				nameAI.setMessageText("Name");
 				nameAI.setFocusTraversal(true);
-				nameAI.setTextFieldListener(new TextFieldListener() {
-					@Override
-					public void keyTyped(TextField textField, char key) {
-						// if ((key == '\r' || key == '\n')){
-						// textField.next(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) ||
-						// Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT));
-						// }
-					}
-				});
+				
 				mainTable.clear();
 				mainTable.add(name).pad(30);
 				mainTable.row();
@@ -115,7 +105,7 @@ public class InitializerScreen implements Screen {
 				TextButton a = new TextButton("Continue", MenuScreen.skin);
 				a.addListener(new ClickListener(){
 					public void clicked(InputEvent event, float x, float y) {
-						game.screenManager.setPlayScreen(new PlayScreen(nameAI.getText(),game, NewCharacterScreen.charName));
+						game.screenManager.setPlayScreen(new PlayScreen(nameAI.getText(),game, game.screenManager.newCharacterScreen.charName));
 						game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
 					}
 				});

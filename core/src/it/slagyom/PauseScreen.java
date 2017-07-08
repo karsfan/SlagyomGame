@@ -65,7 +65,6 @@ public class PauseScreen implements Screen {
 
 		// Add listeners to buttons
 		saveGame.addListener(new ClickListener() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.saveGame();
@@ -89,11 +88,12 @@ public class PauseScreen implements Screen {
 			}
 		});
 		menuButton.addListener(new ClickListener() {
-			@SuppressWarnings({ "deprecation", "static-access" })
+			@SuppressWarnings("deprecation")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Game.world.getThread().stop();
 				game.screenManager.playScreen.dispose();
+				game.screenManager.menuScreen = new MenuScreen(game);
 				game.screenManager.swapScreen(it.slagyom.ScreenManager.State.MENU);
 			}
 		});
@@ -194,7 +194,6 @@ public class PauseScreen implements Screen {
 
 	}
 
-	@SuppressWarnings("static-access")
 	@Override
 	public void dispose() {
 		game.screenManager.playScreen.dispose();

@@ -1,5 +1,6 @@
 package it.slagyom;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -13,12 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.levels.editor.Editor;
 
-import it.slagyom.ScreenManager.State;
 
 public class MenuScreen implements Screen {
 	GameSlagyom game;
@@ -66,12 +67,12 @@ public class MenuScreen implements Screen {
 		mainTable.top();
 
 		// Create buttons
-		TextButton playButton = new TextButton("New Game", skin);
-		TextButton continueButton = new TextButton("Continue game", skin);
-		TextButton multiplayerButton = new TextButton("Multiplayer", skin);
-		TextButton editorButton = new TextButton("Level editor", skin);
-		TextButton optionsButton = new TextButton("Options", skin);
-		TextButton exitButton = new TextButton("Exit", skin);
+		final TextButton playButton = new TextButton("New Game", skin);
+		final TextButton continueButton = new TextButton("Continue game", skin);
+		final TextButton multiplayerButton = new TextButton("Multiplayer", skin);
+		final TextButton editorButton = new TextButton("Level editor", skin);
+		final TextButton optionsButton = new TextButton("Options", skin);
+		final TextButton exitButton = new TextButton("Exit", skin);
 
 		// Add listeners to buttons
 		playButton.addListener(new ClickListener() {
@@ -83,11 +84,37 @@ public class MenuScreen implements Screen {
 		continueButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.loadGame();
+			
+				final TextField nameLoad = new TextField("", MenuScreen.skin);
+				nameLoad.setMessageText("Name");
+				nameLoad.setFocusTraversal(true);
+				mainTable.clear();
+				mainTable.add(playButton).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 5);
+				mainTable.row();
+				
+				mainTable.add(nameLoad).pad(5);
+				mainTable.row();
+				TextButton cont = new TextButton("Continue", MenuScreen.skin);
+				cont.addListener(new ClickListener(){
+					public void clicked(InputEvent event, float x, float y) {
+						game.loadGame(nameLoad.getText());
+						
+					}
+				});
+				mainTable.add(cont).pad(5);
+				mainTable.row();
+				mainTable.add(multiplayerButton).pad(5);
+				mainTable.row();
+				mainTable.add(editorButton).pad(5);
+				mainTable.row();
+				mainTable.add(optionsButton).pad(5);
+				mainTable.row();
+				mainTable.add(exitButton).pad(5);
+				//game.loadGame(path);
 				menuMusic.stop();
-				game.screenManager.swapScreen(State.PLAYING);
-				PlayScreen.hud.textTable.clear();
-				PlayScreen.hud.textDialog = "Game loaded!";
+				//game.screenManager.swapScreen(State.PLAYING);
+				//PlayScreen.hud.textTable.clear();
+				//PlayScreen.hud.textDialog = "Game loaded!";
 			}
 		});
 		multiplayerButton.addListener(new ClickListener() {

@@ -55,7 +55,6 @@ public class OptionScreen implements Screen {
 
 		// Add listeners to buttons
 		musicButton.addListener(new ClickListener() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				activeMusic = !activeMusic;

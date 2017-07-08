@@ -52,6 +52,7 @@ public class GameClient extends Thread {
 //			Scanner s = new Scanner(System.in);
 //			System.out.println("NOME: " + name);			
 			this.writer.println(message);
+			this.writer.flush();
 //			this.writer.println(s.next());
 		}
 		

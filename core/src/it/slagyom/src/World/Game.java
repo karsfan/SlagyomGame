@@ -54,8 +54,8 @@ public class Game {
 		try {
 			enemy = ((Class<? extends Enemy>) Class.forName("enemy.Ai."+text));
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("Impossibile trovare la classe enemy.Ai."+text);
 		}
 		world = new World();
 		

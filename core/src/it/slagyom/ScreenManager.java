@@ -45,7 +45,7 @@ public class ScreenManager {
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.cursor, 0, 0));
 
 		if (currentState == State.MENU) {
-			LoadingMusic.mainMusic.play();
+			//LoadingMusic.mainMusic.play();
 			gameSlagyom.setScreen(menuScreen);
 			Gdx.input.setInputProcessor(menuScreen.stage);
 

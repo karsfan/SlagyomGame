@@ -101,9 +101,8 @@ public class MultiplayerScreen implements Screen {
 				multiplayerPort = Integer.parseInt(port.getText());
 				try {
 					socket = new Socket(multiplayerAddress, multiplayerPort);
-					clnt = new GameClient(multiplayerCharName, socket, multiplayer);
+//					clnt = new GameClient("server", multiplayerPort);
 					System.out.println("From MPSCREEN CLIENT: " + multiplayerCharName);
-					clnt.dispatch("Ciao sono " + multiplayerCharName);
 					
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -54,6 +54,7 @@ public class MultiplayerManager extends Thread {
 					client.send();
 			for (final GameClient client : this.clients) {
 				this.message = client.receive();
+				//client.writeMsg();
 				System.out.println("Messaggio Ricevuto: " + this.message);
 			}
 		}

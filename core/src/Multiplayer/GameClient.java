@@ -30,6 +30,15 @@ public class GameClient extends Thread {
 		}
 	}
 	
+//	@Override
+//	public void run() {
+//		try {
+//			message = reader.readLine();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//	
 	public void setOnline(boolean online) {
 		this.online = online;
 	}

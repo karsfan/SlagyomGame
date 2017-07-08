@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -25,7 +26,11 @@ public class BattleScreen implements Screen {
 	public GameSlagyom gameslagyom;
 	public BattleHud hud;
 	public Battle battle;
-
+	boolean youWin = false;
+	boolean youLose = false;
+	Label potion;
+	Label bomb;
+	Label coin;
 	public BattleScreen(GameSlagyom gameslagyom, Battle battle) {
 		this.gameslagyom = gameslagyom;
 		this.battle = battle;
@@ -83,15 +88,41 @@ public class BattleScreen implements Screen {
 						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
 			}
 		}
+		if (youWin)
+			gameslagyom.batch.draw(LoadingImage.getYouWinImage(), 0, 0);
+		else if (youLose)
+			gameslagyom.batch.draw(LoadingImage.getYouLoseImage(), 0, 0);
 	}
 
 	public void update(float dt) {
 
-		handleInput(dt);
-		hud.update(dt);
-		if (battle.update(dt)) {
-			gameslagyom.screenManager.swapScreen(State.PLAYING);
+		if (!youWin && !youLose) {
+			handleInput(dt);
+			hud.update(dt);
+			if (battle.update(dt)) {
+				if (battle.character.getHealth() <= 0){
+					youLose = true;
+					if(battle.enemy.win_bonus.getNumberOf("POTIONLEV3")>0){
+						potion = new Label("Potion lev3 x"+Integer.toString(battle.enemy.win_bonus.getNumberOf("POTIONLEV3")) , MenuScreen.skin);
+						potion.setSize(100, 100);
+						potion.setPosition(gamePort.getWorldWidth()/4, gamePort.getWorldHeight()/2.5f);
+						hud.stage.addActor(potion);
+					}
+				}
+				else{
+					youWin = true;
+					if(battle.enemy.win_bonus.getNumberOf("POTIONLEV1")>0){
+						potion = new Label("Potion lev1 x"+Integer.toString(battle.enemy.win_bonus.getNumberOf("POTIONLEV1")) , MenuScreen.skin);
+						potion.setSize(100, 100);
+						potion.setPosition(gamePort.getWorldWidth()/4, gamePort.getWorldHeight()/3);
+						hud.stage.addActor(potion);
+					}
+				}
+			}
 		}
+		if (youWin || youLose)
+			if (Gdx.input.isKeyJustPressed(Keys.ENTER))
+				gameslagyom.screenManager.swapScreen(State.PLAYING);
 
 	}
 

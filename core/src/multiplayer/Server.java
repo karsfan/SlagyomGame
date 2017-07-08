@@ -4,19 +4,15 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Server extends Thread {
 	ArrayList<ServerHandler> connected;
 	ServerSocket serverSocket;
 	int numPlayer;
-
-	public Server() {
-		System.out.println("OIMFAPASMFOPASMOAFSP");
-	}
+	
 
 	public Server(int port, int numPlayer) {
-		this.numPlayer = 3;
+		this.numPlayer =2;
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) {

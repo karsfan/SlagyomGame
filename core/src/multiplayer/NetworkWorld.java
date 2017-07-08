@@ -14,6 +14,7 @@ public class NetworkWorld {
 	Map map;
 	
 	public NetworkWorld(String name) {
+		otherPlayers = new ArrayList<NetworkPlayer>();
 		map = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village");
 		player = new NetworkPlayer(name);
 	}

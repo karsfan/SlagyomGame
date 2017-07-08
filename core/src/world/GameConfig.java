@@ -13,4 +13,5 @@ public class GameConfig {
 	public static float WIDTH_BATTLE = 1440;
 	public static float HEIGHT_BATTLE = 960;
 	public static float mainY_Battle = 180;
+	public int gamePlayerNet = 0;
 }

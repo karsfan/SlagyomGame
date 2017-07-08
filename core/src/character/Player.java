@@ -372,7 +372,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		return primary_weapon;
 	}
 
-	public void moves(float dt) {
+	/*public void moves(float dt) {
 		if (getCurrentState() == StateDynamicObject.RUNNINGDOWN)
 			movesDown(dt);
 		else if (getCurrentState() == StateDynamicObject.RUNNINGUP)
@@ -381,7 +381,6 @@ public class Player extends DynamicObjects implements ICollidable {
 			movesRight(dt);
 		else if (getCurrentState() == StateDynamicObject.RUNNINGLEFT)
 			movesLeft(dt);
-
-	}
+	}*/
 
 }

@@ -15,6 +15,7 @@ import character.DynamicObjects;
 import character.Woman;
 import character.DynamicObjects.StateDynamicObject;
 import character.Woman.WomanType;
+import multiplayer.NetworkPlayer;
 import staticObjects.Item;
 import staticObjects.StaticObject;
 import staticObjects.Item.Level;
@@ -47,10 +48,10 @@ public class LoadingImage {
 	private static Texture youWinImage;
 	private static Texture youLoseImage;
 	private static Texture castleImage;
-	public static Texture pointer; 
-	public static Pixmap cursor; 
-	public static Pixmap noCursor; 
-	
+	public static Texture pointer;
+	public static Pixmap cursor;
+	public static Pixmap noCursor;
+
 	public static TextureRegion battleCharacterStand;
 	public static Animation<TextureRegion>[] battleCharacterAnimation;
 
@@ -92,7 +93,6 @@ public class LoadingImage {
 	public static ImageButton leftArrow;
 	public static ImageButton rightArrow;
 	public static ImageButton howMuch;
-
 
 	// AUDIO & MUSIC
 
@@ -348,10 +348,16 @@ public class LoadingImage {
 	public static Animation<TextureRegion>[] getAnimation(Object ob) {
 		Class<? extends Object> a = ob.getClass();
 		Animation<TextureRegion>[] animation = null;
-		
+
 		switch (a.getSimpleName()) {
 		case "Player":
 			animation = playerAnimation;
+			break;
+		case "NetworkPlayer":
+			if (((NetworkPlayer) ob).player)
+				animation = playerAnimation;
+			else
+				animation = man1Animation;
 			break;
 		case "Man":
 			animation = man1Animation;
@@ -369,11 +375,11 @@ public class LoadingImage {
 			animation = enemyAnimation;
 			break;
 		default:
-			
+
 			System.out.println("Errore in getAnimation");
 			break;
 		}
-		if(ob instanceof Enemy)
+		if (ob instanceof Enemy)
 			animation = enemyAnimation;
 		return animation;
 	}
@@ -384,6 +390,12 @@ public class LoadingImage {
 		switch (a.getSimpleName()) {
 		case "Player":
 			textureRegion = playerStand;
+			break;
+		case "NetworkPlayer":
+			if (((NetworkPlayer) ob).player)
+				textureRegion = playerStand;
+			else
+				textureRegion = man1Stand;
 			break;
 		case "Man":
 			textureRegion = man1Stand;
@@ -405,7 +417,7 @@ public class LoadingImage {
 			System.out.println("Errore in getFrameStand");
 			break;
 		}
-		if(ob instanceof Enemy)
+		if (ob instanceof Enemy)
 			textureRegion = enemyStand;
 		return textureRegion;
 	}
@@ -492,6 +504,7 @@ public class LoadingImage {
 	public static Texture getYouWinImage() {
 		return youWinImage;
 	}
+
 	public static Texture getYouLoseImage() {
 		return youLoseImage;
 	}

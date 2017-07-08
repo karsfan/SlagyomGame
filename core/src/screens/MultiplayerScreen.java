@@ -3,7 +3,6 @@ package screens;
 
 import java.net.Socket;
 
-import javax.crypto.spec.SecretKeySpec;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

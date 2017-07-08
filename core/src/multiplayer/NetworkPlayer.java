@@ -15,7 +15,8 @@ public class NetworkPlayer extends DynamicObjects {
 	public int coins;
 	public boolean collideShop = false;
 	public boolean collideGym = false;
-	
+	public int ID = 0;
+	public boolean player = false;
 	public NetworkPlayer(String name) {
 		super();
 		this.name = name;
@@ -33,4 +34,31 @@ public class NetworkPlayer extends DynamicObjects {
 		height = 30;
 		width = 30;
 	}
+	public NetworkPlayer() {
+		super();
+		//this.name = name;
+		bag = new Bag();
+		primary_weapon = new Weapon(Level.lev1, Type.Spear);
+		health = 300;
+		power = 100;
+		coins = 0;
+
+		velocity = 100;
+
+		currentState = StateDynamicObject.STANDING;
+		previousState = StateDynamicObject.STANDING;
+		stateTimer = 0;
+		height = 30;
+		width = 30;
+	}
+
+	public void setY(float f) {
+		y = f;
+		
+	}
+	public void setX(float f) {
+		x = f;
+		
+	}
+	
 }

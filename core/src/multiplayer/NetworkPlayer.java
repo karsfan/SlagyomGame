@@ -5,21 +5,15 @@ import java.util.Iterator;
 import character.Bag;
 import character.DynamicObjects;
 import character.Weapon;
-import character.DynamicObjects.StateDynamicObject;
+import character.Player;
 import character.Weapon.Level;
 import character.Weapon.Type;
-import screens.PlayScreen;
-import staticObjects.BossHome;
-import staticObjects.EnemyHome;
-import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
-import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
-import world.Game;
 import world.GameConfig;
 
-public class NetworkPlayer extends DynamicObjects {
+public class NetworkPlayer extends Player {
 
 	public Bag bag;
 	public Weapon primary_weapon;
@@ -32,7 +26,7 @@ public class NetworkPlayer extends DynamicObjects {
 	public boolean player = false;
 	
 	public NetworkPlayer(String name) {
-		super();
+		super(name);
 		this.name = name;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);

@@ -22,7 +22,7 @@ public class Map {
 	private String nameVillage;
 	public String mapPath;
 	public boolean current;
-
+	public boolean online = false;
 	public Map(String path, boolean bool, String nameVillage) {
 		this.nameVillage = nameVillage;
 		current = bool;
@@ -115,9 +115,9 @@ public class Map {
 			break;
 		case "PREENEMYHOME":
 			if (current)
-				staticObject = new PreEnemyHouse(Level.EASY);
+				staticObject = new PreEnemyHouse(Level.EASY, true);
 			else
-				staticObject = new PreEnemyHouse(Level.MEDIUM);
+				staticObject = new PreEnemyHouse(Level.MEDIUM, false);
 			pointTable = new Point(((int) (point.getX() + 96 / 32)), (int) Math.abs((point.getY() - 96 / 32)));
 			table = new StaticObject("TABLE", point);
 			table.setPoint(pointTable);

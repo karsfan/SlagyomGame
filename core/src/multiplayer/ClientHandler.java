@@ -22,6 +22,7 @@ public class ClientHandler extends Thread {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void run() {
 		while (true) {

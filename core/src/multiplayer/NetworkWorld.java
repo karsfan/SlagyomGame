@@ -6,11 +6,9 @@ import java.util.LinkedList;
 
 import battle.Battle;
 import battle.Enemy;
-import character.Player;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.StaticObject;
-import world.Game;
 import world.Map;
 
 public class NetworkWorld {
@@ -39,13 +37,13 @@ public class NetworkWorld {
 	}
 
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
-		boolean creata = false;
+		//boolean creata = false;
 		Iterator<Enemy> it1 = preEnemyHouse.enemy.iterator();
 		while (it1.hasNext()) {
-			Enemy ob = (Enemy) it1.next();
+			NetworkEnemy ob = (NetworkEnemy) it1.next();
 			if (!ob.morto) {
-				creata = true;
-				battle = new Battle(Game.player, ob);
+				//creata = true;
+				battle = new Battle(Client.networkWorld.player, ob);
 				break;
 			}
 		}

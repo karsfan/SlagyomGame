@@ -1,34 +1,41 @@
 package battle;
 
 import character.Player;
+import multiplayer.NetworkCharacterBattle;
+import multiplayer.NetworkEnemy;
+import multiplayer.NetworkPlayer;
 
-public class Battle{
+public class Battle {
 
 	public CharacterBattle character;
 	public Enemy enemyOri;
 	public Enemy enemy;
-	
 
 	public Battle(Player player, Enemy enemy) {
-		this.character = new CharacterBattle(player);
+		if (player instanceof NetworkPlayer)
+			this.character = new NetworkCharacterBattle(player);
+		else
+			this.character = new CharacterBattle(player);
 		enemyOri = enemy;
-		this.enemy = new Enemy(enemy);
-		//this.enemy = enemy;
+		if (enemy instanceof NetworkEnemy) {
+			this.enemy = new NetworkEnemy(enemy);
+		} else
+			this.enemy = new Enemy(enemy);
+		// this.enemy = enemy;
 	}
 
 	public boolean update(float dt) {
-	
-		if (enemy.health <= 0){
+
+		if (enemy.health <= 0) {
 			enemyOri.morto = true;
 			return true;
 		}
-		if (character.getHealth() <= 0){
+		if (character.getHealth() <= 0) {
 			return true;
 		}
 		character.update(dt);
 		enemy.update(dt);
 		return false;
 	}
-
 
 }

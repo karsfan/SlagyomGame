@@ -37,8 +37,28 @@ public class Player extends DynamicObjects implements ICollidable {
 		health = 300;
 		power = 100;
 		coins = 0;
-		while (!positionCharacter())
-			;
+		// while (!positionCharacter())
+		// ;
+
+		velocity = 100;
+
+		currentState = StateDynamicObject.STANDING;
+		previousState = StateDynamicObject.STANDING;
+		stateTimer = 0;
+		height = 30;
+		width = 30;
+	}
+
+	public Player() {
+		super();
+		 //this.name = name;
+		bag = new Bag();
+		primary_weapon = new Weapon(Level.lev1, Type.Spear);
+		health = 300;
+		power = 100;
+		coins = 0;
+		// while (!positionCharacter())
+		// ;
 
 		velocity = 100;
 
@@ -372,15 +392,12 @@ public class Player extends DynamicObjects implements ICollidable {
 		return primary_weapon;
 	}
 
-	/*public void moves(float dt) {
-		if (getCurrentState() == StateDynamicObject.RUNNINGDOWN)
-			movesDown(dt);
-		else if (getCurrentState() == StateDynamicObject.RUNNINGUP)
-			movesUp(dt);
-		else if (getCurrentState() == StateDynamicObject.RUNNINGRIGHT)
-			movesRight(dt);
-		else if (getCurrentState() == StateDynamicObject.RUNNINGLEFT)
-			movesLeft(dt);
-	}*/
+	/*
+	 * public void moves(float dt) { if (getCurrentState() ==
+	 * StateDynamicObject.RUNNINGDOWN) movesDown(dt); else if (getCurrentState()
+	 * == StateDynamicObject.RUNNINGUP) movesUp(dt); else if (getCurrentState()
+	 * == StateDynamicObject.RUNNINGRIGHT) movesRight(dt); else if
+	 * (getCurrentState() == StateDynamicObject.RUNNINGLEFT) movesLeft(dt); }
+	 */
 
 }

@@ -1,10 +1,6 @@
 
 package screens;
 
-<<<<<<< HEAD
-import java.net.Socket;
-=======
->>>>>>> ca0538b21911414e5542edf2725a8524819fa3bf
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -29,11 +25,7 @@ import multiplayer.ServerThread;
 
 public class MultiplayerScreen implements Screen {
 
-<<<<<<< HEAD
-	private Socket socket;
 
-=======
->>>>>>> ca0538b21911414e5542edf2725a8524819fa3bf
 	private GameSlagyom game;
 	public Stage stage;
 	private Viewport viewport;

@@ -27,8 +27,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		
 	}
 
+
 	public float getHealth() {
-		return player.getHealth();
+		return (float) player.getHealth();
 	}
 
 	public float getX() {

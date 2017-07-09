@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import character.DynamicObjects.StateDynamicObject;
-import world.GameConfig;
-
 public class Client {
 	public static NetworkWorld networkWorld;
 	Socket socket;

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import battle.Enemy;
 import battle.Enemy.Level;
 import character.Player;
+import multiplayer.NetworkEnemy;
 import multiplayer.NetworkPlayer;
 import world.Game;
 
@@ -16,9 +17,13 @@ public class PreEnemyHouse extends StaticObject {
 	public ArrayList<Enemy> enemy;
 	private Rectangle door;
 
-	public PreEnemyHouse(Level levelEnemy) {
+	public PreEnemyHouse(Level levelEnemy, boolean online) {
 		enemy = new ArrayList<>();
-		Enemy tmp = new Enemy(levelEnemy);
+		Enemy tmp;
+		if (online) {
+			tmp = new NetworkEnemy(levelEnemy);
+		} else
+			tmp = new Enemy(levelEnemy);
 		element = Element.PREENEMYHOME;
 		if (Game.enemy != null) {
 			try {

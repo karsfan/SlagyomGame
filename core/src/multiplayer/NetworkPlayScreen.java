@@ -28,7 +28,6 @@ import hud.Hud;
 import screens.BattleScreen;
 import staticObjects.Item;
 import staticObjects.StaticObject;
-import world.Game;
 import world.GameConfig;
 
 public class NetworkPlayScreen implements Screen, ControllerListener {

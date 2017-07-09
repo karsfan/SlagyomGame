@@ -1,7 +1,10 @@
 
 package screens;
 
+<<<<<<< HEAD
 import java.net.Socket;
+=======
+>>>>>>> ca0538b21911414e5542edf2725a8524819fa3bf
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,14 +22,18 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
+import gameManager.ScreenManager.State;
 import multiplayer.NetworkPlayScreen;
 import multiplayer.Server;
 import multiplayer.ServerThread;
 
 public class MultiplayerScreen implements Screen {
 
+<<<<<<< HEAD
 	private Socket socket;
 
+=======
+>>>>>>> ca0538b21911414e5542edf2725a8524819fa3bf
 	private GameSlagyom game;
 	public Stage stage;
 	private Viewport viewport;
@@ -84,7 +91,8 @@ public class MultiplayerScreen implements Screen {
 				multiplayerPort = Integer.parseInt(port.getText());
 				server = new Server(multiplayerPort, 3);
 				new ServerThread(server);
-				game.setScreen(new NetworkPlayScreen(game, name.getText()));
+				game.screenManager.networkPlayScreen = new NetworkPlayScreen(game, name.getText());
+				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
 			}
 		});
 
@@ -95,7 +103,8 @@ public class MultiplayerScreen implements Screen {
 				multiplayerCharName = name.getText();
 				multiplayerAddress = address.getText();
 				multiplayerPort = Integer.parseInt(port.getText());
-				game.setScreen(new NetworkPlayScreen(game, name.getText()));
+				game.screenManager.networkPlayScreen = new NetworkPlayScreen(game, name.getText());
+				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
 			}
 		});
 

@@ -20,6 +20,7 @@ import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
 import hud.BattleHud;
+import multiplayer.NetworkCharacterBattle;
 
 public class BattleScreen implements Screen {
 
@@ -33,6 +34,7 @@ public class BattleScreen implements Screen {
 	Label potion;
 	Label bomb;
 	Label coin;
+
 	public BattleScreen(GameSlagyom gameslagyom, Battle battle) {
 		this.gameslagyom = gameslagyom;
 		this.battle = battle;
@@ -41,7 +43,7 @@ public class BattleScreen implements Screen {
 		gamePort.apply();
 		gamecam.position.x = battle.character.getX();
 		gamecam.position.y = battle.character.getY();
-		hud = new BattleHud(gameslagyom.batch);
+		hud = new BattleHud(gameslagyom.batch, battle);
 	}
 
 	@Override
@@ -102,29 +104,37 @@ public class BattleScreen implements Screen {
 			handleInput(dt);
 			hud.update(dt);
 			if (battle.update(dt)) {
-				if (battle.character.getHealth() <= 0){
+				if (battle.character.getHealth() <= 0) {
 					youLose = true;
-					if(battle.enemy.win_bonus.getNumberOf("POTIONLEV3")>0){
-						potion = new Label("Potion lev3 x"+Integer.toString(battle.enemy.win_bonus.getNumberOf("POTIONLEV3")) , MenuScreen.skin);
+					if (battle.enemy.win_bonus.getNumberOf("POTIONLEV3") > 0) {
+						potion = new Label(
+								"Potion lev3 x" + Integer.toString(battle.enemy.win_bonus.getNumberOf("POTIONLEV3")),
+								MenuScreen.skin);
 						potion.setSize(100, 100);
-						potion.setPosition(gamePort.getWorldWidth()/4, gamePort.getWorldHeight()/2.5f);
+						potion.setPosition(gamePort.getWorldWidth() / 4, gamePort.getWorldHeight() / 2.5f);
 						hud.stage.addActor(potion);
 					}
-				}
-				else{
+				} else {
 					youWin = true;
-					if(battle.enemy.win_bonus.getNumberOf("POTIONLEV1")>0){
-						potion = new Label("Potion lev1 x"+Integer.toString(battle.enemy.win_bonus.getNumberOf("POTIONLEV1")) , MenuScreen.skin);
+					if (battle.enemy.win_bonus.getNumberOf("POTIONLEV1") > 0) {
+						potion = new Label(
+								"Potion lev1 x" + Integer.toString(battle.enemy.win_bonus.getNumberOf("POTIONLEV1")),
+								MenuScreen.skin);
 						potion.setSize(100, 100);
-						potion.setPosition(gamePort.getWorldWidth()/4, gamePort.getWorldHeight()/3);
+						potion.setPosition(gamePort.getWorldWidth() / 4, gamePort.getWorldHeight() / 3);
 						hud.stage.addActor(potion);
 					}
 				}
 			}
 		}
 		if (youWin || youLose)
-			if (Gdx.input.isKeyJustPressed(Keys.ENTER))
-				gameslagyom.screenManager.swapScreen(State.PLAYING);
+			if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+				if (battle.character instanceof NetworkCharacterBattle){
+					gameslagyom.screenManager.swapScreen(State.MULTIPLAYERGAME);
+				}
+				else
+					gameslagyom.screenManager.swapScreen(State.PLAYING);
+			}
 
 	}
 

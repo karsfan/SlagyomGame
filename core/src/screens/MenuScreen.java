@@ -20,8 +20,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
-import gameManager.ScreenManager;
-import gameManager.ScreenManager.State;
 
 
 public class MenuScreen implements Screen {
@@ -118,7 +116,7 @@ public class MenuScreen implements Screen {
 		multiplayerButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYER);
+				game.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYERMENU);
 			}
 		});
 		

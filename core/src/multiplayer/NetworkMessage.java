@@ -8,7 +8,6 @@ public class NetworkMessage {
 	int y;
 	StateDynamicObject currentState;
 	public NetworkMessage(String message){
-		String[] split;
 		char [] charMessage = new char[message.length()];
 		message.getChars(0, message.length(), charMessage, 0);
 		String IDstring="", xString="", yString="", currentStateString="";

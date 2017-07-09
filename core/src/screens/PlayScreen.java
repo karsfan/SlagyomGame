@@ -28,8 +28,6 @@ import character.Player;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.LoadingMusic;
-import gameManager.ScreenManager;
-import gameManager.ScreenManager.State;
 import hud.Hud;
 import staticObjects.Item;
 import staticObjects.StaticObject;

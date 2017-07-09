@@ -2,6 +2,7 @@ package gameManager;
 
 import com.badlogic.gdx.Gdx;
 
+import multiplayer.NetworkPlayScreen;
 import screens.BagScreen;
 import screens.BattleScreen;
 import screens.InitializerScreen;
@@ -18,7 +19,7 @@ public class ScreenManager {
 	GameSlagyom gameSlagyom;
 
 	public static enum State {
-		MENU, NEWGAME, OPTIONMENU, MULTIPLAYER, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP
+		MENU, NEWGAME, OPTIONMENU, MULTIPLAYERMENU, MULTIPLAYERGAME, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP, 
 	};
 
 	public State currentState;
@@ -34,6 +35,7 @@ public class ScreenManager {
 	public BagScreen bagScreen;
 	public ShopScreen shopScreen;
 	public MultiplayerScreen multiplayerScreen;
+	public NetworkPlayScreen networkPlayScreen;
 
 	public ScreenManager(GameSlagyom gameSlagyom) {
 		this.gameSlagyom = gameSlagyom;
@@ -56,7 +58,7 @@ public class ScreenManager {
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.cursor, 0, 0));
 
 		if (currentState == State.MENU) {
-			//LoadingMusic.mainMusic.play();
+			// LoadingMusic.mainMusic.play();
 			gameSlagyom.setScreen(menuScreen);
 			Gdx.input.setInputProcessor(menuScreen.stage);
 
@@ -70,7 +72,7 @@ public class ScreenManager {
 
 			Game.world.semaphore.release();
 			Gdx.input.setInputProcessor(null);
-		} else if (currentState == State.MULTIPLAYER) {
+		} else if (currentState == State.MULTIPLAYERMENU) {
 			gameSlagyom.setScreen(multiplayerScreen);
 			Gdx.input.setInputProcessor(multiplayerScreen.stage);
 
@@ -108,6 +110,10 @@ public class ScreenManager {
 			gameSlagyom.setScreen(shopScreen);
 			Gdx.input.setInputProcessor(shopScreen.stage);
 		}
+		else if (currentState == State.MULTIPLAYERGAME) {
+			gameSlagyom.setScreen(networkPlayScreen);
+			Gdx.input.setInputProcessor(null);
+		}
 	}
 
 	public State getCurrentState() {
@@ -127,7 +133,7 @@ public class ScreenManager {
 		this.previousState = previousState;
 	}
 
-	public  PlayScreen getPlayScreen() {
+	public PlayScreen getPlayScreen() {
 		return playScreen;
 	}
 

@@ -371,11 +371,18 @@ public class LoadingImage {
 		case "CharacterBattle":
 			animation = battleCharacterAnimation;
 			break;
+		case "NetworkCharacterBattle":
+			animation = battleCharacterAnimation;
+			break;
 		case "Enemy":
 			animation = enemyAnimation;
 			break;
+		case "NetworkEnemy":
+			animation = enemyAnimation;
+			break;
+			
 		default:
-
+			
 			System.out.println("Errore in getAnimation");
 			break;
 		}
@@ -405,12 +412,17 @@ public class LoadingImage {
 				textureRegion = woman1Stand;
 			if (((Woman) ob).type == WomanType.WOMAN2)
 				textureRegion = woman2Stand;
-
 			break;
 		case "CharacterBattle":
 			textureRegion = battleCharacterStand;
 			break;
+		case "NetworkCharacterBattle":
+			textureRegion = battleCharacterStand;
+			break;
 		case "Enemy":
+			textureRegion = enemyStand;
+			break;
+		case "NetworkEnemy":
 			textureRegion = enemyStand;
 			break;
 		default:

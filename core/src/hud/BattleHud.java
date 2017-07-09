@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import battle.Battle;
 import screens.MenuScreen;
-import world.Game;
 
 public class BattleHud {
 
@@ -33,15 +33,16 @@ public class BattleHud {
 	public static Skin skinBar;
 	ProgressBar barPlayer;
 	ProgressBar barEnemy;
+	Battle battle;
 	Table table = new Table();
-	public BattleHud(SpriteBatch sb) {
+	public BattleHud(SpriteBatch sb, Battle battle) {
 
 		spriteBatch = sb;
 		viewport = new FitViewport(1440, 960);
 		stage = new Stage(viewport, sb);
-
-		healthCharacter = (int) Game.world.battle.character.getHealth();
-		healthEnemy = (int) Game.world.battle.enemy.getHealth();
+		this.battle = battle;
+		healthCharacter = (int) this.battle.character.getHealth();
+		healthEnemy = (int) this.battle.enemy.getHealth();
 	
 		atlasBar = new TextureAtlas("menu/glassy/glassy-ui.atlas");
 		skinBar = new Skin(Gdx.files.internal("menu/glassy/glassy-ui.json"), atlasBar);
@@ -60,9 +61,9 @@ public class BattleHud {
 		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/BattleHudBg.png")));
 		table.setBackground(hudBG);
 		
-		nameCharacterLabel = new Label(Game.player.name, MenuScreen.skin);
+		nameCharacterLabel = new Label(this.battle.character.name, MenuScreen.skin);
 		table.add(nameCharacterLabel).expandX().padTop(15);
-		nameEnemyLabel = new Label(Game.world.battle.enemy.getName(), MenuScreen.skin);
+		nameEnemyLabel = new Label(this.battle.enemy.getName(), MenuScreen.skin);
 		table.add(nameEnemyLabel).expandX().padLeft(this.viewport.getWorldHeight()/3);
 		
 		table.row().padTop(15);
@@ -74,11 +75,12 @@ public class BattleHud {
 
 	}
 
+	
 	public void update(float dt) {
 		
-		healthCharacter = (int) Game.world.battle.character.getHealth();
+		healthCharacter = (int) this.battle.character.getHealth();
 		barPlayer.setValue(healthCharacter.intValue());
-		healthEnemy = (int) Game.world.battle.enemy.getHealth();
+		healthEnemy = (int) this.battle.enemy.getHealth();
 		barEnemy.setValue(healthEnemy.intValue());
 	}
 }

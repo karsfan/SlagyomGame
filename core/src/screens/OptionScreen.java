@@ -90,12 +90,12 @@ public class OptionScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// Game.world.semaphore.release();
-				
-				 game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+
+				game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 			}
 		});
 		// Add buttons to table
-		mainTable.add(musicButton).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 5);
+		mainTable.add(musicButton).pad(5).padTop(viewport.getWorldHeight() / 2 - viewport.getWorldHeight() / 5);
 		mainTable.row();
 		mainTable.add(fullscreenButton).pad(5);
 		mainTable.row();

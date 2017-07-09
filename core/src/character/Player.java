@@ -275,7 +275,6 @@ public class Player extends DynamicObjects implements ICollidable {
 			if (!item.picked) {
 				coins += 5;
 				LoadingMusic.coinSound.play(0.7f);
-
 			}
 			item.setPicked(true);
 			return true;

@@ -134,7 +134,7 @@ public class NewCharacterScreen implements Screen {
 		});
 
 		// Add buttons to table
-		mainTable.add(name).pad(5).padTop(Gdx.graphics.getHeight() / 4);
+		mainTable.add(name).pad(5).padTop(viewport.getWorldHeight() / 4);
 		mainTable.row();
 		male.setPosition(mainTable.getPadX(), mainTable.getPadY());
 		gender.pad(15);
@@ -172,7 +172,6 @@ public class NewCharacterScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().setScreenSize(width, height);
-		// viewport.update(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
 	}

@@ -72,7 +72,6 @@ public class MenuScreen implements Screen {
 		final TextButton playButton = new TextButton("New Game", skin);
 		final TextButton continueButton = new TextButton("Continue game", skin);
 		final TextButton multiplayerButton = new TextButton("Multiplayer", skin);
-		final TextButton editorButton = new TextButton("Level editor", skin);
 		final TextButton optionsButton = new TextButton("Options", skin);
 		final TextButton exitButton = new TextButton("Exit", skin);
 
@@ -88,12 +87,11 @@ public class MenuScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 			
 				final TextField nameLoad = new TextField("", MenuScreen.skin);
-				nameLoad.setMessageText("Name");
+				nameLoad.setMessageText("Saved game");
 				nameLoad.setFocusTraversal(true);
 				mainTable.clear();
-				mainTable.add(playButton).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 5);
+				mainTable.add(playButton).pad(5).padTop(viewport.getWorldHeight() / 3);
 				mainTable.row();
-				
 				mainTable.add(nameLoad).pad(5);
 				mainTable.row();
 				TextButton cont = new TextButton("Continue", MenuScreen.skin);
@@ -106,8 +104,6 @@ public class MenuScreen implements Screen {
 				mainTable.add(cont).pad(5);
 				mainTable.row();
 				mainTable.add(multiplayerButton).pad(5);
-				mainTable.row();
-				mainTable.add(editorButton).pad(5);
 				mainTable.row();
 				mainTable.add(optionsButton).pad(5);
 				mainTable.row();
@@ -141,13 +137,11 @@ public class MenuScreen implements Screen {
 		});
 
 		// Add buttons to table
-		mainTable.add(playButton).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 5);
+		mainTable.add(playButton).pad(5).padTop(viewport.getWorldHeight() / 3);
 		mainTable.row();
 		mainTable.add(continueButton).pad(5);
 		mainTable.row();
 		mainTable.add(multiplayerButton).pad(5);
-		mainTable.row();
-		mainTable.add(editorButton).pad(5);
 		mainTable.row();
 		mainTable.add(optionsButton).pad(5);
 		mainTable.row();

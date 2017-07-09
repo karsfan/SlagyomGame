@@ -131,7 +131,7 @@ public class InitializerScreen implements Screen {
 
 		mainTable.add(name).pad(30);
 		mainTable.row();
-		mainTable.add(defaultLevelButton).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 3);
+		mainTable.add(defaultLevelButton).pad(5).padTop(Gdx.graphics.getHeight() / 3);
 		mainTable.row();
 		mainTable.add(chooseLevelButton).pad(5);
 		mainTable.row();

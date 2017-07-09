@@ -3,7 +3,6 @@ package screens;
 
 import java.net.Socket;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -26,8 +25,8 @@ import multiplayer.ServerThread;
 
 public class MultiplayerScreen implements Screen {
 
-	private Socket socket; 
-	
+	private Socket socket;
+
 	private GameSlagyom game;
 	public Stage stage;
 	private Viewport viewport;
@@ -40,9 +39,9 @@ public class MultiplayerScreen implements Screen {
 	public static String multiplayerAddress;
 	public static int multiplayerPort;
 	Server server;
+
 	public MultiplayerScreen(final GameSlagyom game) {
 		this.game = game;
-		
 
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(854, 480, camera);
@@ -88,7 +87,7 @@ public class MultiplayerScreen implements Screen {
 				game.setScreen(new NetworkPlayScreen(game, name.getText()));
 			}
 		});
-		
+
 		playButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -99,16 +98,16 @@ public class MultiplayerScreen implements Screen {
 				game.setScreen(new NetworkPlayScreen(game, name.getText()));
 			}
 		});
-		
+
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 			}
 		});
-		
+
 		// Add buttons to table
-		mainTable.add(name).pad(5).padTop(Gdx.graphics.getHeight() / 2 - Gdx.graphics.getHeight() / 5);
+		mainTable.add(name).pad(5).padTop(viewport.getWorldHeight() / 2 - viewport.getWorldHeight() / 5);
 		mainTable.row();
 		mainTable.add(address).pad(5);
 		mainTable.row();
@@ -145,7 +144,7 @@ public class MultiplayerScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().setScreenSize(width, height);
-		//viewport.update(width, height);
+		// viewport.update(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
 	}

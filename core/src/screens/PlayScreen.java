@@ -43,16 +43,20 @@ public class PlayScreen implements Screen, ControllerListener {
 	public GameSlagyom game;
 	public static Hud hud;
 	private static Drawable noDialog = null;
+	
 	private static float textTimer;
-
-	public int j = 0;
-
+	public int textIndex = 0;
 	private boolean stop = false;
-	public int i = 0;
 	
 	PovDirection directionGamepad = null;
 	boolean movesGamePad = false;
-
+	
+	
+	/**
+	 * Constructor of the screen where you play the game
+	 * @param game that are you playing
+	 * @param name of the player
+	 */
 	public PlayScreen(GameSlagyom game, String name) {
 		new LoadingImage();
 
@@ -71,7 +75,13 @@ public class PlayScreen implements Screen, ControllerListener {
 		Controllers.addListener(this);
 
 	}
-
+	
+	/**
+	 * Constructor of the screen where you play the game with map path
+	 * @param game that are you playing
+	 * @param game's map's path
+	 * @param name of the player
+	 */
 	public PlayScreen(GameSlagyom game, String path, String name) {
 		new LoadingImage();
 
@@ -122,28 +132,32 @@ public class PlayScreen implements Screen, ControllerListener {
 		if (hud.showDialog) {
 			if (textTimer > 0.08f) {
 				textTimer = 0;
-				if (i < hud.textDialog.length()) {
-					if (i % 25 == 0)
+				if (textIndex < hud.textDialog.length()) {
+					if (textIndex % 25 == 0)
 						hud.textTable.row();
-					if (i % 75 == 0) {
+					if (textIndex % 75 == 0) {
 						hud.textTable.clear();
 						LoadingMusic.tickSound.play(1.0f);
 
 					}
-					drawDialog(String.valueOf(hud.textDialog.charAt(i)));
-					i++;
+					drawDialog(String.valueOf(hud.textDialog.charAt(textIndex)));
+					textIndex++;
 				}
 			}
 		}
 
 		if (!hud.showDialog) {
 			hideDialog();
-			i = 0;
+			textIndex = 0;
 		}
 		// END TEXT TABLE RENDERING
 
 	}
-
+	
+	/**
+	 * Draws the dialog on the screen
+	 * @param text that you want to show
+	 */
 	public static void drawDialog(final String text) {
 		Drawable dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
 		if (hud.showDialog) {

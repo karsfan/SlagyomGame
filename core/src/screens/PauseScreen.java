@@ -119,7 +119,7 @@ public class PauseScreen implements Screen {
 		// Add buttons to table
 		mainTable.add(pauseLabel).pad(30);
 		mainTable.row();
-		mainTable.add(bagButton).padTop(Gdx.graphics.getHeight() / 3 - Gdx.graphics.getHeight() / 5);
+		mainTable.add(bagButton).padTop(viewport.getWorldHeight()  / 3 - viewport.getWorldHeight()  / 5);
 		mainTable.row();
 		mainTable.add(saveGame).pad(5);
 		mainTable.row().pad(15);

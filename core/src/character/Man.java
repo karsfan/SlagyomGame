@@ -246,21 +246,7 @@ public class Man extends DynamicObjects implements ICollidable {
 		Iterator<StaticObject> it = Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
-			if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)// &&
-																														// ((Tile)
-																														// ob).getElement()
-																														// !=
-																														// Element.FLOOR
-																														// &&
-																														// ((Tile)
-																														// ob).getElement()
-																														// !=
-																														// Element.FLOOR2
-																														// &&
-																														// ((Tile)
-																														// ob).getElement()
-																														// !=
-																														// Element.FLOOR3)
+			if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)
 				if (((StaticObject) ob).collide(this)) {
 					collision = true;
 					return true;

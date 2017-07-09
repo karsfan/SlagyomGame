@@ -8,7 +8,7 @@ import character.DynamicObjects.StateDynamicObject;
 import world.GameConfig;
 
 public class Client {
-	public NetworkWorld networkWorld;
+	public static NetworkWorld networkWorld;
 	Socket socket;
 	PrintWriter writer;
 	ClientHandler clientHandler;

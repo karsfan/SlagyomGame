@@ -1,11 +1,22 @@
 package multiplayer;
 
+import java.util.Iterator;
+
 import character.Bag;
 import character.DynamicObjects;
 import character.Weapon;
 import character.DynamicObjects.StateDynamicObject;
 import character.Weapon.Level;
 import character.Weapon.Type;
+import screens.PlayScreen;
+import staticObjects.BossHome;
+import staticObjects.EnemyHome;
+import staticObjects.Item;
+import staticObjects.PreEnemyHouse;
+import staticObjects.Shop;
+import staticObjects.StaticObject;
+import staticObjects.StaticObject.Element;
+import world.Game;
 import world.GameConfig;
 
 public class NetworkPlayer extends DynamicObjects {
@@ -19,7 +30,7 @@ public class NetworkPlayer extends DynamicObjects {
 	public boolean collideGym = false;
 	public int ID = 0;
 	public boolean player = false;
-
+	
 	public NetworkPlayer(String name) {
 		super();
 		this.name = name;
@@ -111,5 +122,20 @@ public class NetworkPlayer extends DynamicObjects {
 		}
 		setState(StateDynamicObject.RUNNINGDOWN);
 	}
+	@Override
+	public synchronized boolean collide(Object e) {
+		Iterator<StaticObject> it = Client.networkWorld.getListTile().iterator();
+		while (it.hasNext()) {
+			Object ob = (Object) it.next();
+			if (ob instanceof StaticObject) {
+				if (((StaticObject) ob).getElement() != Element.GROUND
+						&& ((StaticObject) ob).getElement() != Element.ROAD)
+					if (((StaticObject) ob).collide(this)) {
+						return true;
+					}
+			}
+		}
+		return false;
+	}	
 
 }

@@ -3,8 +3,10 @@ package multiplayer;
 import character.Bag;
 import character.DynamicObjects;
 import character.Weapon;
+import character.DynamicObjects.StateDynamicObject;
 import character.Weapon.Level;
 import character.Weapon.Type;
+import world.GameConfig;
 
 public class NetworkPlayer extends DynamicObjects {
 
@@ -17,6 +19,7 @@ public class NetworkPlayer extends DynamicObjects {
 	public boolean collideGym = false;
 	public int ID = 0;
 	public boolean player = false;
+
 	public NetworkPlayer(String name) {
 		super();
 		this.name = name;
@@ -34,9 +37,10 @@ public class NetworkPlayer extends DynamicObjects {
 		height = 30;
 		width = 30;
 	}
+
 	public NetworkPlayer() {
 		super();
-		//this.name = name;
+		// this.name = name;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
@@ -54,11 +58,58 @@ public class NetworkPlayer extends DynamicObjects {
 
 	public void setY(float f) {
 		y = f;
-		
+
 	}
+
 	public void setX(float f) {
 		x = f;
-		
+
 	}
-	
+
+	public void movesRight(float dt) {
+		if (x < GameConfig.WIDTH - width / 2) {
+			float velocityX = velocity;
+			x += (int)(velocityX * dt);
+			if (collide(this))
+				x -= (int)(velocityX * dt);
+		}
+		setState(StateDynamicObject.RUNNINGRIGHT);
+	}
+
+	public void movesLeft(float dt) {
+
+		if (x > 5) {
+			float velocityX = velocity;
+			x -= (int)(velocityX * dt);
+			if (collide(this))
+				x +=(int) (velocityX * dt);
+
+		}
+		setState(StateDynamicObject.RUNNINGLEFT);
+	}
+
+	public void movesUp(float dt) {
+
+		if (y < GameConfig.HEIGHT - height - 5) {
+			float velocityY = velocity;
+
+			y += (int)(velocityY * dt);
+			if (collide(this)) {
+				y -= (int)(velocityY * dt);
+			}
+		}
+		setState(StateDynamicObject.RUNNINGUP);
+	}
+
+	public void movesDown(float dt) {
+		if (y > 0) {
+			float velocityY = velocity;
+
+			y -= (int)(velocityY * dt);
+			if (collide(this))
+				y += (int)(velocityY * dt);
+		}
+		setState(StateDynamicObject.RUNNINGDOWN);
+	}
+
 }

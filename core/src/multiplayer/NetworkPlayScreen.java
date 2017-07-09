@@ -147,11 +147,11 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 				LoadingImage.setFrameDurationCharacter(0.2f);
 			}
 			if (Gdx.input.isKeyPressed(Keys.LEFT))
-				client.networkWorld.player.movesLeft(dt);
+				client.movesLeft(dt);
 			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-				client.networkWorld.player.movesRight(dt);
+				client.movesRight(dt);
 			else if (Gdx.input.isKeyPressed(Keys.UP) || (directionGamepad == PovDirection.north && movesGamePad)) {
-				client.networkWorld.player.movesUp(dt);
+				client.movesUp(dt);
 				if (client.networkWorld.player.collideShop) {
 					// client.networkWorld.world.semaphore.acquire();
 					game.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
@@ -167,8 +167,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 				}
 
 			} else if (Gdx.input.isKeyPressed(Keys.DOWN))
-				client.networkWorld.player.movesDown(dt);
-
+				client.movesDown(dt);
 			else if (Gdx.input.isKeyJustPressed(Keys.C)) {
 				gamecam.zoom -= 0.2;
 				gamecam.position.x = client.networkWorld.player.getX();

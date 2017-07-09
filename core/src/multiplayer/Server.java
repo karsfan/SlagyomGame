@@ -5,21 +5,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Server extends Thread {
+public class Server {
 	ArrayList<ServerHandler> connected;
 	ServerSocket serverSocket;
 	int numPlayer;
-	
 
 	public Server(int port, int numPlayer) {
-		this.numPlayer =2;
+		this.numPlayer = 2;
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		connected = new ArrayList<ServerHandler>();
-		start();
 	}
 
 	public void start() {
@@ -36,18 +34,18 @@ public class Server extends Thread {
 				e.printStackTrace();
 			}
 		}
-
-		for (int i = 0; i < numPlayer; i++) 
+		System.out.println("all player are connected");
+		for (int i = 0; i < numPlayer; i++)
 			for (ServerHandler serverHandler : connected) {
 				serverHandler.writer.println(i);
 				serverHandler.writer.flush();
 			}
 
-			for (ServerHandler serverHandler : connected) {
-				serverHandler.writer.println("ok");
-				serverHandler.writer.flush();
-			}
-		
+		for (ServerHandler serverHandler : connected) {
+			serverHandler.writer.println("ok");
+			serverHandler.writer.flush();
+		}
+
 	}
 
 	public void send(String message) {
@@ -59,9 +57,9 @@ public class Server extends Thread {
 
 	public void close() {
 		for (ServerHandler serverHandler : connected) {
-			//serverHandler.close();
+			// serverHandler.close();
 		}
-		//serverSocket.close();
+		// serverSocket.close();
 	}
 
 }

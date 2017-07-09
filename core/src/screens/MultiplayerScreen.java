@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import gameManager.GameSlagyom;
 import multiplayer.NetworkPlayScreen;
 import multiplayer.Server;
+import multiplayer.ServerThread;
 
 public class MultiplayerScreen implements Screen {
 
@@ -38,7 +39,7 @@ public class MultiplayerScreen implements Screen {
 	public static String multiplayerCharName;
 	public static String multiplayerAddress;
 	public static int multiplayerPort;
-
+	Server server;
 	public MultiplayerScreen(final GameSlagyom game) {
 		this.game = game;
 		
@@ -82,7 +83,9 @@ public class MultiplayerScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				multiplayerAddress = address.getText();
 				multiplayerPort = Integer.parseInt(port.getText());
-				new Server(multiplayerPort, 3);
+				server = new Server(multiplayerPort, 3);
+				new ServerThread(server);
+				game.setScreen(new NetworkPlayScreen(game, name.getText()));
 			}
 		});
 		

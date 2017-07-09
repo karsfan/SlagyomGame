@@ -40,7 +40,6 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 	private static Drawable noDialog = null;
 	private static float textTimer;
 	public Client client;
-
 	public int j = 0;
 
 	private boolean stop = false;
@@ -60,7 +59,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 		// hud = new Hud(game.batch);
 
-		client = new Client(1);
+		client = new Client(name);
 		gamecam.position.x = client.networkWorld.player.getX();
 		gamecam.position.y = client.networkWorld.player.getY();
 		// Controllers.addListener(this);

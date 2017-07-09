@@ -12,7 +12,7 @@ public class Client {
 	
 	boolean initialize = false;
 
-	public Client(int ID) {
+	public Client(String name) {
 		try {
 			socket = new Socket("localhost", 5555);
 			writer = new PrintWriter(socket.getOutputStream());
@@ -20,7 +20,7 @@ public class Client {
 			e.printStackTrace();
 		}
 
-		networkWorld = new NetworkWorld("Ciccio");
+		networkWorld = new NetworkWorld(name);
 		clientHandler = new ClientHandler(socket, this);
 		clientHandler.start();
 	}

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import battle.Enemy;
 import battle.Enemy.Level;
 import character.Player;
+import multiplayer.NetworkPlayer;
 import world.Game;
 
 public class PreEnemyHouse extends StaticObject {
@@ -39,6 +40,14 @@ public class PreEnemyHouse extends StaticObject {
 					|| ((Player) e).getX() > door.x + door.width)
 					|| (door.y > ((Player) e).getY() + ((Player) e).getHeight() / 2
 							|| ((Player) e).getY() > door.y + door.height))) {
+				return true;
+			}
+		}
+		if (e instanceof NetworkPlayer) {
+			if (!((door.x > ((NetworkPlayer) e).getX() + ((NetworkPlayer) e).getWidth() / 2
+					|| ((NetworkPlayer) e).getX() > door.x + door.width)
+					|| (door.y > ((NetworkPlayer) e).getY() + ((NetworkPlayer) e).getHeight() / 2
+							|| ((NetworkPlayer) e).getY() > door.y + door.height))) {
 				return true;
 			}
 		}

@@ -131,8 +131,28 @@ public class NetworkPlayer extends DynamicObjects {
 				if (((StaticObject) ob).getElement() != Element.GROUND
 						&& ((StaticObject) ob).getElement() != Element.ROAD)
 					if (((StaticObject) ob).collide(this)) {
+						if (((StaticObject) ob).getElement() == Element.PREENEMYHOME) 
+							if (((PreEnemyHouse) ob).collideDoor(this)) {
+								collideGym = true;
+								System.out.println("collide");
+								Client.networkWorld.createBattle((PreEnemyHouse) ob);
+								return true;
+							}
+							
 						return true;
 					}
+			}
+		}
+		Iterator<NetworkPlayer> otherPlayer = Client.networkWorld.otherPlayers.iterator();
+		while(otherPlayer.hasNext()){
+			Object ob = (Object) otherPlayer.next();
+			if (ob instanceof NetworkPlayer) {
+				if (!((x > ((DynamicObjects) ob).getX() + ((DynamicObjects) ob).getWidth() / 2
+						|| ((DynamicObjects) ob).getX() > x + width / 2)
+						|| (y > ((DynamicObjects) ob).getY() + ((DynamicObjects) ob).getHeight() / 2
+								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
+					return true;
+				}
 			}
 		}
 		return false;

@@ -48,6 +48,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 	PovDirection directionGamepad = null;
 	boolean movesGamePad = false;
 
+	@SuppressWarnings("static-access")
 	public NetworkPlayScreen(GameSlagyom game, String name) {
 		new LoadingImage();
 		this.game = game;
@@ -122,8 +123,9 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 		// hud.textTable.setBackground(noDialog);
 	}
 
+	@SuppressWarnings("static-access")
 	public void update(float dt) {
-		 moveCharacter(dt);
+		moveCharacter(dt);
 		if ((client.networkWorld.player.getX() - gamePort.getWorldWidth() / 2 > 0
 				&& client.networkWorld.player.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
 			gamecam.position.x = client.networkWorld.player.getX();
@@ -136,6 +138,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 	}
 
+	@SuppressWarnings("static-access")
 	private void moveCharacter(float dt) {
 		if (!stop) {
 
@@ -159,9 +162,8 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 				}
 
 				if (client.networkWorld.player.collideGym) {
-					// game.screenManager.battlescreen = new
-					// BattleScreen(game, world.Game.world.battle);
-					// game.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
+					game.screenManager.battlescreen = new BattleScreen(game, client.networkWorld.battle);
+					game.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
 					// client.networkWorld.world.semaphore.acquire();
 					// client.networkWorld.player.collideGym = false;
 				}
@@ -185,9 +187,10 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 			}
 
 		}
-	
+
 	}
 
+	@SuppressWarnings("static-access")
 	public synchronized void draw() {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) client.networkWorld.getListTile().listIterator();
 
@@ -228,6 +231,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 				14, 13);
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);

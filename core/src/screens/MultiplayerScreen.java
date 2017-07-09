@@ -96,7 +96,6 @@ public class MultiplayerScreen implements Screen {
 				multiplayerCharName = name.getText();
 				multiplayerAddress = address.getText();
 				multiplayerPort = Integer.parseInt(port.getText());
-				System.out.println("clic");
 				game.setScreen(new NetworkPlayScreen(game, name.getText()));
 			}
 		});

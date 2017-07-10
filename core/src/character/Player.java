@@ -85,6 +85,7 @@ public class Player extends DynamicObjects implements ICollidable {
 				player.height, player.velocity);
 		this.bag = player.bag;
 		this.primary_weapon = player.primary_weapon;
+		this.bag.secondary_weapon = player.bag.secondary_weapon;
 		this.health = player.health;
 		this.power = player.power;
 		this.coins = player.coins;
@@ -111,7 +112,7 @@ public class Player extends DynamicObjects implements ICollidable {
 	}
 
 	public void swapWeapon() {
-		Weapon temporary = primary_weapon;
+		Weapon temporary = new Weapon(primary_weapon.getLevel(), primary_weapon.getType());
 		primary_weapon = bag.secondary_weapon;
 		bag.secondary_weapon = temporary;
 	}

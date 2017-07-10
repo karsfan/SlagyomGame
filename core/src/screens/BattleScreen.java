@@ -148,6 +148,10 @@ public class BattleScreen implements Screen {
 
 	private void moveCharacter(float dt) {
 
+		if(Gdx.input.isKeyJustPressed(Keys.O)){
+			System.out.println("SWap");
+			battle.character.swapWeapon();
+		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			battle.character.caricaBomba(dt);
 			battle.character.bomba = true;

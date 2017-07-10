@@ -5,6 +5,7 @@ import java.util.Iterator;
 import character.Bomb;
 import character.Player;
 import character.Weapon;
+import character.Weapon.Type;
 import world.Game;
 import world.GameConfig;
 
@@ -15,18 +16,29 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public CharacterBattle(final Player character1) {
 		super();
 		stateTimer = 0;
-
+	
 		player = new Player(character1);
+		player.primary_weapon = new Weapon(character1.primary_weapon.getLevel(), character1.primary_weapon.getType());
+		player.bag.secondary_weapon = new Weapon(character1.bag.secondary_weapon.getLevel(), character1.bag.secondary_weapon.getType());
 		player.x = 100;
 		player.y = GameConfig.mainY_Battle;
 		player.width = 120;
 		player.height = 150;
-		player.currentState = StateDynamicObject.STANDING;
+		player.currentState = StateDynamicObject.RUNNINGRIGHT;
 		player.previousState = null;
 		right = true;
 		
 	}
-
+	public void swapWeapon() {
+		Weapon temporary = new Weapon(player.primary_weapon.getLevel(), player.primary_weapon.getType());
+		player.primary_weapon = new Weapon(player.bag.secondary_weapon.getLevel(),player.bag.secondary_weapon.getType()) ;
+		player.bag.secondary_weapon = new Weapon(temporary.getLevel(), temporary.getType());
+		if(player.primary_weapon.getType() == Type.Sword)
+			player.width = 200;
+		else
+			player.width = 120;
+		System.out.println(player.primary_weapon.getType() + " "+temporary.getType());
+	}
 
 	public float getHealth() {
 		return (float) player.getHealth();

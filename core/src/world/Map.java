@@ -22,10 +22,11 @@ public class Map {
 	private String nameVillage;
 	public String mapPath;
 	public boolean current;
-	public boolean online = false;
-	public Map(String path, boolean bool, String nameVillage) {
+	public boolean online;
+	public Map(String path, boolean villageCurrent, String nameVillage, boolean online) {
 		this.nameVillage = nameVillage;
-		current = bool;
+		current = villageCurrent;
+		this.online = online;
 		listStaticObjects = new LinkedList<StaticObject>();
 		listItems = new LinkedList<Item>();
 		readMap(path);
@@ -115,9 +116,9 @@ public class Map {
 			break;
 		case "PREENEMYHOME":
 			if (current)
-				staticObject = new PreEnemyHouse(Level.EASY, true);
+				staticObject = new PreEnemyHouse(Level.EASY, online);
 			else
-				staticObject = new PreEnemyHouse(Level.MEDIUM, false);
+				staticObject = new PreEnemyHouse(Level.MEDIUM, online);
 			pointTable = new Point(((int) (point.getX() + 96 / 32)), (int) Math.abs((point.getY() - 96 / 32)));
 			table = new StaticObject("TABLE", point);
 			table.setPoint(pointTable);

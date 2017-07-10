@@ -15,25 +15,24 @@ public class Item extends StaticObject {
 	}
 
 	public boolean picked;
-	float x, y;
 	public float price;
 	public Level level;
 
 	public Item(float x, float y, Element element, Level level) {
 		switch (element) {
 		case COIN:
-			this.x = x;
-			this.y = y;
+			this.level = Level.FIRST;
 			shape = new Rectangle((int) x, (int) y, 14, 14);
 			break;
 		case POTION:
 			shape = new Rectangle((int) x, (int) y, 14, 14);
-			level = Level.FIRST;
 			break;
 		case PARCHMENT:
+			System.out.println("akjnmnx a,");
 			shape = new Rectangle((int) x, (int) y, 10, 10);
 			break;
 		default:
+			System.out.println("Qui");
 			break;
 		}
 
@@ -57,6 +56,7 @@ public class Item extends StaticObject {
 			shape.width = 11;
 			shape.height = 11;
 			positionItem();
+			this.level = Level.FIRST;
 			break;
 		case 1:
 			element = Element.POTION;
@@ -84,8 +84,10 @@ public class Item extends StaticObject {
 			shape.width = 10;
 			shape.height = 10;
 			positionItem();
+			System.out.println("qkjb");
 			break;
 		default:
+			System.out.println("QUO");
 			break;
 		}
 	}
@@ -145,6 +147,48 @@ public class Item extends StaticObject {
 		}
 	}
 
+	public Item(float x, float y, String element, String level) {
+		switch (element) {
+		case "COIN":
+			this.element = Element.COIN;
+			this.level = Level.FIRST;
+			shape = new Rectangle((int) x, (int) y, 14, 14);
+			break;
+		case "POTION":
+			this.element = Element.POTION;
+			shape = new Rectangle((int) x, (int) y, 14, 14);
+			switch(level){
+			case "FIRST":
+				this.level = Level.FIRST;
+			case "SECOND":
+				this.level = Level.SECOND;
+			case "THIRD":
+				this.level = Level.THIRD;
+			default:
+				break;
+			}
+			break;
+		case "PARCHMENT":
+			this.element = Element.PARCHMENT;
+			switch(level){
+			case "FIRST":
+				this.level = Level.FIRST;
+			case "SECOND":
+				this.level = Level.SECOND;
+			case "THIRD":
+				this.level = Level.THIRD;
+			default:
+				break;
+			}
+			shape = new Rectangle((int) x, (int) y, 10, 10);
+			break;
+		default:
+			System.out.println("Errore letture Item da File");
+			break;
+		}
+		picked = false;
+	}
+
 	private void positionItem() {
 		Random rand = new Random();
 		int r = rand.nextInt((int) GameConfig.WIDTH);
@@ -191,20 +235,14 @@ public class Item extends StaticObject {
 	}
 
 	public float getX() {
-		return x;
+		return shape.x;
 	}
 
-	public void setX(float f) {
-		this.x = f;
-	}
 
 	public float getY() {
-		return y;
+		return shape.y;
 	}
 
-	public void setY(float f) {
-		this.y = f;
-	}
 
 	public float getWidth() {
 		return shape.width;

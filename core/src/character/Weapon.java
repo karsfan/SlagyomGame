@@ -10,6 +10,7 @@ public class Weapon {
 	public enum Level {
 		lev1, lev2, lev3
 	};
+
 	float damage;
 	public Level level;
 	public int price;
@@ -63,6 +64,70 @@ public class Weapon {
 			break;
 		default:
 			System.out.println("default in Weapon(level)");
+			break;
+		}
+	}
+	//constructor per inizializzare leggendo da file il salvataggio
+	public Weapon(String type, String level) {
+		switch (type) {
+		case "Sword":
+			this.type = Type.Sword;
+			switch (level) {
+			case "lev1":
+				this.level = Level.lev1;
+				setWeapon(Type.Sword, Level.lev1);
+				break;
+			case "lev2":
+				this.level = Level.lev2;
+				setWeapon(Type.Sword, Level.lev2);
+				break;
+			case "lev3":
+				this.level = Level.lev3;
+				setWeapon(Type.Sword, Level.lev3);
+				break;
+			default:
+				break;
+			}
+			break;
+		case "Spear":
+			this.type = Type.Spear;
+			switch (level) {
+			case "lev1":
+				this.level = Level.lev1;
+				setWeapon(Type.Spear, Level.lev1);
+				break;
+			case "lev2":
+				this.level = Level.lev2;
+				setWeapon(Type.Spear, Level.lev2);
+				break;
+			case "lev3":
+				this.level = Level.lev3;
+				setWeapon(Type.Spear, Level.lev3);
+				break;
+			default:
+				break;
+			}
+			break;
+		case "Bow":
+			this.type = Type.Bow;
+			switch (level) {
+			case "lev1":
+				this.level = Level.lev1;
+				setWeapon(Type.Bow, Level.lev1);
+				break;
+			case "lev2":
+				this.level = Level.lev2;
+				setWeapon(Type.Bow, Level.lev2);
+				break;
+			case "lev3":
+				this.level = Level.lev3;
+				setWeapon(Type.Bow, Level.lev3);
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
 			break;
 		}
 	}

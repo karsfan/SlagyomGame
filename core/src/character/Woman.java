@@ -34,7 +34,8 @@ public class Woman extends DynamicObjects implements ICollidable {
 			type = WomanType.WOMAN1;
 		else
 			type = WomanType.WOMAN2;
-		while(!positionMan());
+		while (!positionMan())
+			;
 
 		mainX = 100;
 		mainY = 100;
@@ -43,6 +44,39 @@ public class Woman extends DynamicObjects implements ICollidable {
 		info = "Ciao sono Ciccio";
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
+	}
+
+	public Woman(float x, float y, String type) {
+		super();
+		collision = false;
+		collisionWithCharacter = false;
+		stateTimer = 0;
+		width = 30;
+		height = 30;
+		this.x = x;
+		this.y = y;
+		switch (type) {
+		case "WOMAN1":
+			this.type = WomanType.WOMAN1;
+			break;
+		case "WOMAN2":
+			this.type = WomanType.WOMAN2;
+			break;
+		default:
+			break;
+		}
+
+		mainX = 100;
+		mainY = 100;
+		velocity = 80;
+		name = "Ciccio";
+		info = "Ciao sono Ciccio";
+		currentState = StateDynamicObject.STANDING;
+		previousState = StateDynamicObject.STANDING;
+	}
+
+	public WomanType getType() {
+		return type;
 	}
 
 	public boolean positionMan() {
@@ -304,7 +338,6 @@ public class Woman extends DynamicObjects implements ICollidable {
 			collisionWithCharacter = false;
 			return;
 		}
-
 
 		StateDynamicObject newState = null;
 		if (rand == 0)

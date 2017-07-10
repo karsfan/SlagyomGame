@@ -294,8 +294,8 @@ public class BagScreen implements Screen {
 
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 
-		weapons = new TextButton(Game.player.primary_weapon.getType().toString() + " "
-				+ Game.player.primary_weapon.getLevel().toString(), MenuScreen.skin);
+		weapons = new TextButton(Game.player.bag.secondary_weapon.getType().toString() + " "
+				+ Game.player.bag.secondary_weapon.getLevel().toString(), MenuScreen.skin);
 
 		weapons.addListener(new ClickListener() {
 			@Override

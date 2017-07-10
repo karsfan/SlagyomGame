@@ -19,7 +19,7 @@ public class NetworkWorld {
 	
 	public NetworkWorld(String name) {
 		otherPlayers = new ArrayList<NetworkPlayer>();
-		map = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village");
+		map = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village", true);
 		player = new NetworkPlayer(name);
 	}
 

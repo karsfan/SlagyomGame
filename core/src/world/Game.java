@@ -19,6 +19,7 @@ public class Game {
 		while(!world.addDynamicObject());
 		while(!world.addItems());
 		player = new Player(name);
+		player.positionCharacter();
 		world.getListDynamicObjects().add(player);
 		world.getThread().start();
 		//graph = new ListenableDirectedGraph<>(DefaultEdge.class);
@@ -33,14 +34,14 @@ public class Game {
 		//	}
 		}
 	}*/
-
+//constructor for loadGame
 	public Game(String path, String name) {
 
 		world = new World(path);
 		player = new Player(name);
 		world.getListDynamicObjects().add(player);
-		while(!world.addDynamicObject());
-		while(!world.addItems());
+		//while(!world.addDynamicObject());
+		//while(!world.addItems());
 
 	}
 

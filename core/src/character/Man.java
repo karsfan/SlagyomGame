@@ -29,7 +29,27 @@ public class Man extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		width = 30;
 		height = 30;
-		while(!positionMan());
+		while (!positionMan())
+			;
+
+		mainX = 100;
+		mainY = 100;
+		velocity = 80;
+		name = "Ciccio";
+		info = "Ciao sono Ciccio";
+		currentState = StateDynamicObject.STANDING;
+		previousState = StateDynamicObject.STANDING;
+	}
+
+	public Man(float x, float y) {
+		super();
+		collision = false;
+		collisionWithCharacter = false;
+		stateTimer = 0;
+		width = 30;
+		height = 30;
+		this.x = x;
+		this.y = y;
 
 		mainX = 100;
 		mainY = 100;
@@ -67,7 +87,7 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesRight(float dt) {
-		if (x + velocity * dt< GameConfig.WIDTH - width / 2) {
+		if (x + velocity * dt < GameConfig.WIDTH - width / 2) {
 			x += velocity * dt;
 			if (collide(this)) {
 				// collision = true;
@@ -103,7 +123,7 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesLeft(float dt) {
-		if (x - velocity * dt> 5) {
+		if (x - velocity * dt > 5) {
 			x -= velocity * dt;
 			if (collide(this)) {
 				x += velocity * dt;
@@ -138,7 +158,7 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesUp(float dt) {
-		if (y +velocity * dt < GameConfig.HEIGHT - height - 5) {
+		if (y + velocity * dt < GameConfig.HEIGHT - height - 5) {
 			y += velocity * dt;
 			if (collide(this)) {
 				y -= velocity * dt;
@@ -174,7 +194,7 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesDown(float dt) {
-		if (y - velocity * dt> 0) {
+		if (y - velocity * dt > 0) {
 			y -= velocity * dt;
 			if (collide(this)) {
 				y += velocity * dt;
@@ -281,7 +301,6 @@ public class Man extends DynamicObjects implements ICollidable {
 			collisionWithCharacter = false;
 			return;
 		}
-
 
 		StateDynamicObject newState = null;
 		if (rand == 0)

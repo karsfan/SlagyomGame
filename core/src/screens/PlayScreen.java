@@ -3,7 +3,6 @@ package screens;
 import java.util.Iterator;
 import java.util.ListIterator;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -41,19 +40,21 @@ public class PlayScreen implements Screen, ControllerListener {
 	public GameSlagyom game;
 	public static Hud hud;
 	private static Drawable noDialog = null;
-	
+
 	private static float textTimer;
 	public int textIndex = 0;
 	private boolean stop = false;
-	
+
 	PovDirection directionGamepad = null;
 	boolean movesGamePad = false;
-	
-	
+
 	/**
 	 * Constructor of the screen where you play the game
-	 * @param game that are you playing
-	 * @param name of the player
+	 * 
+	 * @param game
+	 *            that are you playing
+	 * @param name
+	 *            of the player
 	 */
 	public PlayScreen(GameSlagyom game, String name) {
 		new LoadingImage();
@@ -73,12 +74,16 @@ public class PlayScreen implements Screen, ControllerListener {
 		Controllers.addListener(this);
 
 	}
-	
+
 	/**
 	 * Constructor of the screen where you play the game with map path
-	 * @param game that are you playing
-	 * @param game's map's path
-	 * @param name of the player
+	 * 
+	 * @param game
+	 *            that are you playing
+	 * @param game's
+	 *            map's path
+	 * @param name
+	 *            of the player
 	 */
 	public PlayScreen(GameSlagyom game, String path, String name) {
 		new LoadingImage();
@@ -151,10 +156,12 @@ public class PlayScreen implements Screen, ControllerListener {
 		// END TEXT TABLE RENDERING
 
 	}
-	
+
 	/**
 	 * Draws the dialog on the screen
-	 * @param text that you want to show
+	 * 
+	 * @param text
+	 *            that you want to show
 	 */
 	public static void drawDialog(final String text) {
 		Drawable dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));

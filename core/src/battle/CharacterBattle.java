@@ -15,13 +15,13 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public Bag bag;
 	public Weapon primary_weapon;
 	public float health;
+
 	public CharacterBattle(Player player) {
 		super();
 		stateTimer = 0;
-		
+
 		bag = player.bag;
 		primary_weapon = player.primary_weapon;
-		System.out.println(player.health);
 		this.health = player.health;
 		this.x = 100;
 		this.y = GameConfig.mainY_Battle;
@@ -35,16 +35,18 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void swapWeapon() {
-		Weapon temporary = new Weapon(Game.world.player.primary_weapon.getLevel(),
-				Game.world.player.primary_weapon.getType());
-		Game.world.player.primary_weapon = bag.secondary_weapon;
-		bag.secondary_weapon = temporary;
-		primary_weapon = Game.world.player.primary_weapon;
+		if (bag.secondary_weapon != null) {
+			Weapon temporary = new Weapon(Game.world.player.primary_weapon.getLevel(),
+					Game.world.player.primary_weapon.getType());
+			Game.world.player.primary_weapon = bag.secondary_weapon;
+			bag.secondary_weapon = temporary;
+			primary_weapon = Game.world.player.primary_weapon;
 
-		if (primary_weapon.getType() == Type.Sword)
-			width = 200;
-		else
-			width = 120;
+			if (primary_weapon.getType() == Type.Sword)
+				width = 200;
+			else
+				width = 120;
+		}
 	}
 
 	public float getHealth() {

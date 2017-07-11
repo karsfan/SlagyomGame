@@ -5,6 +5,8 @@ import java.util.Iterator;
 import battle.CharacterBattle;
 import character.Bomb;
 import character.Player;
+import character.Weapon;
+import character.Weapon.Type;
 import world.Game;
 import world.GameConfig;
 
@@ -55,6 +57,21 @@ public class NetworkCharacterBattle extends CharacterBattle {
 		}
 	}
 
+	public void swapWeapon() {
+		if (bag.secondary_weapon != null) {
+			Weapon temporary = new Weapon(Client.networkWorld.player.primary_weapon.getLevel(),
+					Client.networkWorld.player.primary_weapon.getType());
+			Client.networkWorld.player.primary_weapon = bag.secondary_weapon;
+			bag.secondary_weapon = temporary;
+			primary_weapon = Client.networkWorld.player.primary_weapon;
+
+			if (primary_weapon.getType() == Type.Sword)
+				width = 200;
+			else
+				width = 120;
+		}
+	}
+
 	@Override
 	public void fightRight(float dt) {
 		width += primary_weapon.getWidth();
@@ -84,26 +101,10 @@ public class NetworkCharacterBattle extends CharacterBattle {
 
 		if (!((x > Client.networkWorld.battle.enemy.getX() + Client.networkWorld.battle.enemy.getWidth() / 2
 				|| Client.networkWorld.battle.enemy.getX() > x + width / 2)
-				|| (y > Client.networkWorld.battle.enemy.getY()
-						+ Client.networkWorld.battle.enemy.getHeight() / 2
+				|| (y > Client.networkWorld.battle.enemy.getY() + Client.networkWorld.battle.enemy.getHeight() / 2
 						|| Client.networkWorld.battle.enemy.getY() > y + height / 2)))
 			return true;
 		return false;
-	}
-
-	@Override
-	public void movesRight(float dt) {
-		right = true;
-		left = false;
-		if (x + velocity * dt + getWidth() < GameConfig.WIDTH_BATTLE){
-			x += velocity * dt;
-		}
-		if (collide()){
-			System.out.println("collide");
-			x -= velocity * dt;
-		}
-		if (!fighting)
-			setState(StateDynamicObject.RUNNINGRIGHT, dt);
 	}
 
 }

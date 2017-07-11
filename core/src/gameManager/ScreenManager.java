@@ -48,7 +48,7 @@ public class ScreenManager {
 	}
 
 	public void swapScreen(State newState) {
-		if (currentState == State.PLAYING || currentState == State.BATTLE)
+		if (currentState == State.PLAYING || currentState == State.BATTLE || currentState == State.MULTIPLAYERGAME)
 			setPreviousState(currentState);
 		setCurrentState(newState);
 

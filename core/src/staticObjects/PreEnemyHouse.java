@@ -19,24 +19,28 @@ public class PreEnemyHouse extends StaticObject {
 
 	public PreEnemyHouse(Level levelEnemy, boolean online) {
 		enemy = new ArrayList<>();
+		element = Element.PREENEMYHOME;
 		Enemy tmp;
 		if (online) {
 			tmp = new NetworkEnemy(levelEnemy);
-		} else
+			enemy.add(tmp);
+			enemy.add(new NetworkEnemy(levelEnemy));
+			enemy.add(new NetworkEnemy(levelEnemy));
+		} else {
 			tmp = new Enemy(levelEnemy);
-		element = Element.PREENEMYHOME;
-		if (Game.enemy != null) {
-			try {
-				tmp = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (Game.enemy != null) {
+				try {
+					tmp = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			enemy.add(tmp);
+			enemy.add(new Enemy(levelEnemy));
+			enemy.add(new Enemy(levelEnemy));
 		}
-		enemy.add(tmp);
-		enemy.add(new Enemy(levelEnemy));
-		enemy.add(new Enemy(levelEnemy));
 	}
 
 	public boolean collideDoor(Object e) {
@@ -45,14 +49,6 @@ public class PreEnemyHouse extends StaticObject {
 					|| ((Player) e).getX() > door.x + door.width)
 					|| (door.y > ((Player) e).getY() + ((Player) e).getHeight() / 2
 							|| ((Player) e).getY() > door.y + door.height))) {
-				return true;
-			}
-		}
-		if (e instanceof NetworkPlayer) {
-			if (!((door.x > ((NetworkPlayer) e).getX() + ((NetworkPlayer) e).getWidth() / 2
-					|| ((NetworkPlayer) e).getX() > door.x + door.width)
-					|| (door.y > ((NetworkPlayer) e).getY() + ((NetworkPlayer) e).getHeight() / 2
-							|| ((NetworkPlayer) e).getY() > door.y + door.height))) {
 				return true;
 			}
 		}

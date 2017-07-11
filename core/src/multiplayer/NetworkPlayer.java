@@ -9,6 +9,7 @@ import character.Player;
 import character.Weapon.Level;
 import character.Weapon.Type;
 import staticObjects.PreEnemyHouse;
+import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
 import world.GameConfig;
@@ -24,7 +25,7 @@ public class NetworkPlayer extends Player {
 	public boolean collideGym = false;
 	public int ID = 0;
 	public boolean player = false;
-	
+
 	public NetworkPlayer(String name) {
 		super(name);
 		this.name = name;
@@ -74,9 +75,9 @@ public class NetworkPlayer extends Player {
 	public void movesRight(float dt) {
 		if (x < GameConfig.WIDTH - width / 2) {
 			float velocityX = velocity;
-			x += (int)(velocityX * dt);
+			x += (int) (velocityX * dt);
 			if (collide(this))
-				x -= (int)(velocityX * dt);
+				x -= (int) (velocityX * dt);
 		}
 		setState(StateDynamicObject.RUNNINGRIGHT);
 	}
@@ -85,9 +86,9 @@ public class NetworkPlayer extends Player {
 
 		if (x > 5) {
 			float velocityX = velocity;
-			x -= (int)(velocityX * dt);
+			x -= (int) (velocityX * dt);
 			if (collide(this))
-				x +=(int) (velocityX * dt);
+				x += (int) (velocityX * dt);
 
 		}
 		setState(StateDynamicObject.RUNNINGLEFT);
@@ -98,9 +99,9 @@ public class NetworkPlayer extends Player {
 		if (y < GameConfig.HEIGHT - height - 5) {
 			float velocityY = velocity;
 
-			y += (int)(velocityY * dt);
+			y += (int) (velocityY * dt);
 			if (collide(this)) {
-				y -= (int)(velocityY * dt);
+				y -= (int) (velocityY * dt);
 			}
 		}
 		setState(StateDynamicObject.RUNNINGUP);
@@ -110,12 +111,13 @@ public class NetworkPlayer extends Player {
 		if (y > 0) {
 			float velocityY = velocity;
 
-			y -= (int)(velocityY * dt);
+			y -= (int) (velocityY * dt);
 			if (collide(this))
-				y += (int)(velocityY * dt);
+				y += (int) (velocityY * dt);
 		}
 		setState(StateDynamicObject.RUNNINGDOWN);
 	}
+
 	@Override
 	public synchronized boolean collide(Object e) {
 		Iterator<StaticObject> it = Client.networkWorld.getListTile().iterator();
@@ -125,20 +127,25 @@ public class NetworkPlayer extends Player {
 				if (((StaticObject) ob).getElement() != Element.GROUND
 						&& ((StaticObject) ob).getElement() != Element.ROAD)
 					if (((StaticObject) ob).collide(this)) {
-						if (((StaticObject) ob).getElement() == Element.PREENEMYHOME) 
+						if (((StaticObject) ob).getElement() == Element.PREENEMYHOME) {
 							if (((PreEnemyHouse) ob).collideDoor(this)) {
 								collideGym = true;
-								System.out.println("collide");
 								Client.networkWorld.createBattle((PreEnemyHouse) ob);
 								return true;
 							}
-							
+						} else if (((StaticObject) ob).getElement() == Element.SHOP) {
+							if (((Shop) ob).collideDoor(this)) {
+								collideShop = true;
+								return true;
+							}
+						}
+
 						return true;
 					}
 			}
 		}
 		Iterator<NetworkPlayer> otherPlayer = Client.networkWorld.otherPlayers.iterator();
-		while(otherPlayer.hasNext()){
+		while (otherPlayer.hasNext()) {
 			Object ob = (Object) otherPlayer.next();
 			if (ob instanceof NetworkPlayer) {
 				if (!((x > ((DynamicObjects) ob).getX() + ((DynamicObjects) ob).getWidth() / 2
@@ -150,6 +157,6 @@ public class NetworkPlayer extends Player {
 			}
 		}
 		return false;
-	}	
+	}
 
 }

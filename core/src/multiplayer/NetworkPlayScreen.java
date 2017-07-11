@@ -51,7 +51,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 	public NetworkPlayScreen(GameSlagyom game, String name) {
 		new LoadingImage();
 		this.game = game;
-
+		this.game.Modality = true;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
 
@@ -163,8 +163,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 				if (client.networkWorld.player.collideGym) {
 					game.screenManager.battlescreen = new BattleScreen(game, client.networkWorld.battle);
 					game.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
-					// client.networkWorld.world.semaphore.acquire();
-					// client.networkWorld.player.collideGym = false;
+					client.networkWorld.player.collideGym = false;
 				}
 
 			} else if (Gdx.input.isKeyPressed(Keys.DOWN))

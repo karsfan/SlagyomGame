@@ -36,7 +36,9 @@ public class World {
 	public boolean remove = false;
 
 	public static Stack<String> dialogues;
-	public static Stack<String> peopleNames;
+	public static Stack<String> manNames;
+	public static Stack<String> womanNames;
+	
 	private FileReader fileReader;
 	private Scanner input;
 
@@ -53,10 +55,12 @@ public class World {
 		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));
 		
-		peopleNames = new Stack<String>();
+		manNames = new Stack<String>();
+		womanNames = new Stack<String>();
 		dialogues = new Stack<String>();
 		try {
-			loadFromFile(peopleNames, getClass().getResource("/res/strings/names.txt").getPath());
+			loadFromFile(manNames, getClass().getResource("/res/strings/manNames.txt").getPath());
+			loadFromFile(womanNames, getClass().getResource("/res/strings/womanNames.txt").getPath());
 			loadFromFile(dialogues, getClass().getResource("/res/strings/dialogues.txt").getPath());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -78,10 +82,12 @@ public class World {
 		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));
 
-		peopleNames = new Stack<String>();
+		manNames = new Stack<String>();
+		womanNames = new Stack<String>();
 		dialogues = new Stack<String>();
 		try {
-			loadFromFile(peopleNames, getClass().getResource("/res/strings/names.txt").getPath());
+			loadFromFile(manNames, getClass().getResource("/res/strings/manNames.txt").getPath());
+			loadFromFile(womanNames, getClass().getResource("/res/strings/womanNames.txt").getPath());
 			loadFromFile(dialogues, getClass().getResource("/res/strings/dialogues.txt").getPath());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

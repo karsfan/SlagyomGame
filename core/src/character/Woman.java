@@ -7,6 +7,7 @@ import staticObjects.StaticObject.Element;
 import world.Game;
 import world.GameConfig;
 import world.ICollidable;
+import world.World;
 
 public class Woman extends DynamicObjects implements ICollidable {
 	public static enum WomanType {
@@ -16,7 +17,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 	public String name;
 	public int mainX;
 	public int mainY;
-	private String info;
+	public String info;
 	public boolean collision;
 	public boolean collisionWithCharacter;
 	int passi;
@@ -40,8 +41,8 @@ public class Woman extends DynamicObjects implements ICollidable {
 		mainX = 100;
 		mainY = 100;
 		velocity = 80;
-		name = "Ciccio";
-		info = "Ciao sono Ciccio";
+		name = World.womanNames.pop();
+		info = World.dialogues.pop();
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 	}
@@ -69,8 +70,8 @@ public class Woman extends DynamicObjects implements ICollidable {
 		mainX = 100;
 		mainY = 100;
 		velocity = 80;
-		name = "Ciccio";
-		info = "Ciao sono Ciccio";
+		name = World.womanNames.pop();
+		info = World.dialogues.pop();
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 	}
@@ -289,21 +290,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 		Iterator<StaticObject> it = Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
-			if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)// &&
-																														// ((Tile)
-																														// ob).getElement()
-																														// !=
-																														// Element.FLOOR
-																														// &&
-																														// ((Tile)
-																														// ob).getElement()
-																														// !=
-																														// Element.FLOOR2
-																														// &&
-																														// ((Tile)
-																														// ob).getElement()
-																														// !=
-																														// Element.FLOOR3)
+			if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)
 				if (((StaticObject) ob).collide(this)) {
 					collision = true;
 					return true;

@@ -23,7 +23,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import character.DynamicObjects;
+import character.Man;
 import character.Player;
+import character.Woman;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.LoadingMusic;
@@ -275,10 +277,10 @@ public class PlayScreen implements Screen, ControllerListener {
 			hud.showDialog = false;
 			hideDialog();
 			if (stop) {
-				// Game.world.semaphore.release();
-				Game.world.getThread().start();
+					Game.world.getThread().start();
 				stop = false;
 			}
+			
 		}
 	}
 
@@ -303,9 +305,32 @@ public class PlayScreen implements Screen, ControllerListener {
 		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
-			if (ob instanceof DynamicObjects)
+			if (ob instanceof DynamicObjects) {
 				game.batch.draw(LoadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
+				if (ob instanceof Man)
+					if (((Man)ob).collisionWithCharacter) {
+						hud.showDialog = true;
+						hud.setDialogText(((Man)ob).name + ": "+ ((Man)ob).info);
+//						try {
+//							Game.world.semaphore.acquire();
+//							stop = true;
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+					}
+				if (ob instanceof Woman)
+					if (((Woman)ob).collisionWithCharacter) {
+						hud.showDialog = true;
+						hud.setDialogText(((Woman)ob).name + ": "+ ((Woman)ob).info);
+//						try {
+//							Game.world.semaphore.acquire();
+//							stop = true;
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+					}
+			}
 			if (ob instanceof Player)
 				game.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
 						14, 13);

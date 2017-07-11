@@ -201,8 +201,11 @@ public class BagScreen implements Screen {
 
 		potionsTable.setLayoutEnabled(false);
 		potions = new TextButton[3];
-		for (int i = 0; i < 3; i++)
-			potions[i] = new TextButton("", MenuScreen.skin);
+		
+		potions[0] = new TextButton("Blue potion  x", MenuScreen.skin);
+		potions[1] = new TextButton("Red potion  x", MenuScreen.skin);
+		potions[2] = new TextButton("Green potion  x", MenuScreen.skin);
+
 		setTextPotions();
 
 		potions[0].addListener(new ClickListener() {
@@ -243,8 +246,9 @@ public class BagScreen implements Screen {
 		bombsTable.setLayoutEnabled(false);
 
 		bombs = new TextButton[3];
-		for (int i = 0; i < 3; i++)
-			bombs[i] = new TextButton("", MenuScreen.skin);
+		bombs[0] = new TextButton("Bomb lev1  x", MenuScreen.skin);
+		bombs[1] = new TextButton("Bomb lev2  x", MenuScreen.skin);
+		bombs[2] = new TextButton("Bomb lev3  x", MenuScreen.skin);
 		setTextBomb();
 
 		bombs[0].addListener(new ClickListener() {
@@ -326,8 +330,8 @@ public class BagScreen implements Screen {
 
 		parchmentsLabel = new Label("Parchments", MenuScreen.skin);
 		parchments = new TextButton[2];
-		for (int i = 0; i < 2; i++)
-			parchments[i] = new TextButton("", MenuScreen.skin);
+		parchments[0] = new TextButton("Parchment lev1  x", MenuScreen.skin);
+		parchments[1] = new TextButton("Parchment lev1  x", MenuScreen.skin);
 		setTextParchment();
 
 		parchments[0].addListener(new ClickListener() {
@@ -364,7 +368,6 @@ public class BagScreen implements Screen {
 		Controllers.addListener(new MenuControllerListener(weaponsTable));
 		Controllers.addListener(new MenuControllerListener(parchmentsTable));
 		Controllers.addListener(new MenuControllerListener(optionsTable));
-
 	}
 
 	private void showInfo(ImageButton icon) {

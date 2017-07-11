@@ -20,16 +20,15 @@ import world.GameConfig;
 import world.ICollidable;
 
 public class Player extends DynamicObjects implements ICollidable {
-	
-	public String gender; 
+
+	public String gender;
 	public Bag bag;
 	public Weapon primary_weapon;
 	public int health;
 	public int coins;
 	public boolean collideShop = false;
 	public boolean collideGym = false;
-	
-	
+
 	public Player(String name) {
 		super();
 		this.name = name;
@@ -50,7 +49,7 @@ public class Player extends DynamicObjects implements ICollidable {
 
 	public Player() {
 		super();
-		 //this.name = name;
+		// this.name = name;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
@@ -59,7 +58,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		// ;
 
 		velocity = 100;
-		
+
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 		stateTimer = 0;
@@ -359,8 +358,14 @@ public class Player extends DynamicObjects implements ICollidable {
 						|| ((DynamicObjects) ob).getX() > x + width / 2)
 						|| (y > ((DynamicObjects) ob).getY() + ((DynamicObjects) ob).getHeight() / 2
 								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
+					if (ob instanceof Man) {
+						((Man) ob).collisionWithCharacter = true;
+					}
+					if (ob instanceof Woman)
+						((Woman) ob).collisionWithCharacter = true;
 					return true;
 				}
+
 			}
 		}
 

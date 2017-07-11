@@ -95,7 +95,7 @@ public class BagScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				if (game.screenManager.getPreviousState() == State.BATTLE)
 					if (potionsTable.isVisible()) {
-						Game.player.bag.useItem(itemSelected);
+						Game.world.player.bag.useItem(itemSelected);
 						setTextPotions();
 					}
 			}
@@ -104,28 +104,28 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (potionsTable.isVisible()) {
-					Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+					Game.world.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
 					setTextPotions();
 				}
 				if (parchmentsTable.isVisible()) {
-					Game.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+					Game.world.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
 					parchments[0]
-							.setText("Parchment lev1  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
+							.setText("Parchment lev1  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
 					parchments[1].setText(
-							"Parchment lev2  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
+							"Parchment lev2  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
 				}
 				if (bombsTable.isVisible()) {
-					Game.player.bag.removeBomb(weaponSelected.getLevel());
+					Game.world.player.bag.removeBomb(weaponSelected.getLevel());
 					bombs[0].setText(
-							"Bomb lev1   x" + Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
+							"Bomb lev1   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
 					bombs[1].setText(
-							"Bomb lev2   x" + Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
+							"Bomb lev2   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
 					bombs[2].setText(
-							"Bomb lev3   x" + Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
+							"Bomb lev3   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
 				}
 
 				if (weaponsTable.isVisible()) {
-					Game.player.bag.secondary_weapon = null;
+					Game.world.player.bag.secondary_weapon = null;
 					weapons.setText("");
 				}
 			}
@@ -196,11 +196,11 @@ public class BagScreen implements Screen {
 
 		potionsTable.setLayoutEnabled(false);
 		potions = new TextButton[3];
-		potions[0] = new TextButton("Blue potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST),
+		potions[0] = new TextButton("Blue potion    x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST),
 				MenuScreen.skin);
-		potions[1] = new TextButton("Red potion    x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND),
+		potions[1] = new TextButton("Red potion    x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND),
 				MenuScreen.skin);
-		potions[2] = new TextButton("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD),
+		potions[2] = new TextButton("Green potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD),
 				MenuScreen.skin);
 
 		potions[0].addListener(new ClickListener() {
@@ -241,13 +241,13 @@ public class BagScreen implements Screen {
 
 		bombs = new TextButton[3];
 		bombs[0] = new TextButton(
-				"Bomb lev1   x" + Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev1),
+				"Bomb lev1   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1),
 				MenuScreen.skin);
 		bombs[1] = new TextButton(
-				"Bomb lev2   x" + Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev2),
+				"Bomb lev2   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2),
 				MenuScreen.skin);
 		bombs[2] = new TextButton(
-				"Bomb lev3   x" + Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev3),
+				"Bomb lev3   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3),
 				MenuScreen.skin);
 
 		bombs[0].addListener(new ClickListener() {
@@ -294,8 +294,8 @@ public class BagScreen implements Screen {
 
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 
-		weapons = new TextButton(Game.player.bag.secondary_weapon.getType().toString() + " "
-				+ Game.player.bag.secondary_weapon.getLevel().toString(), MenuScreen.skin);
+		weapons = new TextButton(Game.world.player.bag.secondary_weapon.getType().toString() + " "
+				+ Game.world.player.bag.secondary_weapon.getLevel().toString(), MenuScreen.skin);
 
 		weapons.addListener(new ClickListener() {
 			@Override
@@ -322,9 +322,9 @@ public class BagScreen implements Screen {
 		parchmentsLabel = new Label("Parchments", MenuScreen.skin);
 		parchments = new TextButton[2];
 		parchments[0] = new TextButton(
-				"Parchment lev1  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST), MenuScreen.skin);
+				"Parchment lev1  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST), MenuScreen.skin);
 		parchments[1] = new TextButton(
-				"Parchment lev2  x" + Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND), MenuScreen.skin);
+				"Parchment lev2  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND), MenuScreen.skin);
 
 		parchments[0].addListener(new ClickListener() {
 			@Override
@@ -412,7 +412,7 @@ public class BagScreen implements Screen {
 		if (currentPocket == Pocket.POTIONS) {
 			potionsTable.setVisible(true);
 			bombsTable.setVisible(false);
-			if (Game.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
+			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
 				potions[0].setVisible(false);
 				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
@@ -422,12 +422,12 @@ public class BagScreen implements Screen {
 				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
 			}
-			if (Game.player.bag.getNumberOf(Element.POTION, Level.SECOND) <= 0) {
+			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND) <= 0) {
 				potions[1].setVisible(false);
 				potions[2].setPosition(ScreenConfig.tableBagX, potions[1].getY());
 			} else
 				potions[1].setVisible(true);
-			if (Game.player.bag.getNumberOf(Element.POTION, Level.THIRD) <= 0)
+			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD) <= 0)
 				potions[2].setVisible(false);
 			else
 				potions[2].setVisible(true);
@@ -437,7 +437,7 @@ public class BagScreen implements Screen {
 		} else if (currentPocket == Pocket.WEAPONS) {
 			weaponsTable.setVisible(true);
 			bombsTable.setVisible(false);
-			if (Game.player.bag.secondary_weapon != null)
+			if (Game.world.player.bag.secondary_weapon != null)
 				weapons.setVisible(true);
 			else
 				weapons.setVisible(false);
@@ -445,7 +445,7 @@ public class BagScreen implements Screen {
 			parchmentsTable.setVisible(false);
 		} else if (currentPocket == Pocket.PARCHMENTS) {
 			parchmentsTable.setVisible(true);
-			if (Game.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST) <= 0) {
+			if (Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST) <= 0) {
 				parchments[0].setVisible(false);
 				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 			} else {
@@ -453,7 +453,7 @@ public class BagScreen implements Screen {
 				parchments[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 			}
-			if (Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND) <= 0)
+			if (Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND) <= 0)
 				parchments[1].setVisible(false);
 			else
 				parchments[1].setVisible(true);
@@ -463,7 +463,7 @@ public class BagScreen implements Screen {
 		} else if (currentPocket == Pocket.BOMBS) {
 			parchmentsTable.setVisible(false);
 			bombsTable.setVisible(true);
-			if (Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev1) <= 0) {
+			if (Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1) <= 0) {
 				bombs[0].setVisible(false);
 				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
@@ -473,12 +473,12 @@ public class BagScreen implements Screen {
 				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
 			}
-			if (Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev2) <= 0) {
+			if (Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2) <= 0) {
 				bombs[1].setVisible(false);
 				bombs[2].setPosition(ScreenConfig.tableBagX, bombs[1].getY());
 			} else
 				bombs[1].setVisible(true);
-			if (Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev3) <= 0)
+			if (Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3) <= 0)
 				bombs[2].setVisible(false);
 			else
 				bombs[2].setVisible(true);
@@ -490,9 +490,9 @@ public class BagScreen implements Screen {
 	}
 
 	public void setTextPotions() {
-		potions[0].setText("Blue potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.FIRST));
-		potions[1].setText("Red potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.SECOND));
-		potions[2].setText("Green potion  x" + Game.player.bag.getNumberOf(Element.POTION, Level.THIRD));
+		potions[0].setText("Blue potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST));
+		potions[1].setText("Red potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND));
+		potions[2].setText("Green potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD));
 	}
 
 	@Override

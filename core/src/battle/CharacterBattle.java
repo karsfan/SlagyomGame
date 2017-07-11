@@ -12,32 +12,37 @@ import world.GameConfig;
 public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	public Player player;
-	
-	public CharacterBattle(final Player character1) {
+
+	public CharacterBattle(Player player) {
 		super();
 		stateTimer = 0;
-	
-		player = new Player(character1);
-		player.primary_weapon = new Weapon(character1.primary_weapon.getLevel(), character1.primary_weapon.getType());
-		player.bag.secondary_weapon = new Weapon(character1.bag.secondary_weapon.getLevel(), character1.bag.secondary_weapon.getType());
-		player.x = 100;
-		player.y = GameConfig.mainY_Battle;
-		player.width = 120;
-		player.height = 150;
-		player.currentState = StateDynamicObject.RUNNINGRIGHT;
-		player.previousState = null;
+
+		this.player = new Player(player);
+
+		this.player.x = 100;
+		this.player.y = GameConfig.mainY_Battle;
+		if (player.primary_weapon.getType() == Type.Sword)
+			this.player.width = 200;
+		else
+			this.player.width = 120;
+		this.player.height = 150;
+		this.player.currentState = StateDynamicObject.RUNNINGRIGHT;
+		this.player.previousState = null;
 		right = true;
-		
+
 	}
+
 	public void swapWeapon() {
-		Weapon temporary = new Weapon(player.primary_weapon.getLevel(), player.primary_weapon.getType());
-		player.primary_weapon = new Weapon(player.bag.secondary_weapon.getLevel(),player.bag.secondary_weapon.getType()) ;
-		player.bag.secondary_weapon = new Weapon(temporary.getLevel(), temporary.getType());
-		if(player.primary_weapon.getType() == Type.Sword)
+		Weapon temporary = new Weapon(Game.world.player.primary_weapon.getLevel(),
+				Game.world.player.primary_weapon.getType());
+		Game.world.player.primary_weapon = player.bag.secondary_weapon;
+		player.bag.secondary_weapon = temporary;
+		player.primary_weapon = Game.world.player.primary_weapon;
+
+		if (player.primary_weapon.getType() == Type.Sword)
 			player.width = 200;
 		else
 			player.width = 120;
-		System.out.println(player.primary_weapon.getType() + " "+temporary.getType());
 	}
 
 	public float getHealth() {
@@ -71,7 +76,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && player.y + velocityY * dt > GameConfig.mainY_Battle) {
 			player.y += velocityY * dt;
-		//	System.out.println(velocityY + " "+ velocityY*dt);
+			// System.out.println(velocityY + " "+ velocityY*dt);
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING, dt);
 
@@ -159,14 +164,14 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public void jump(float dt) {
 		if (!jumping && !doubleJumping) {
 			jumping = true;
-			//velocityY = 400;
+			// velocityY = 400;
 			velocityY = 100;
 			velocityX = 10;
 			setState(StateDynamicObject.JUMPING, dt);
 		} else if (jumping && !doubleJumping) {
 			jumping = false;
 			doubleJumping = true;
-			//velocityY = 400;
+			// velocityY = 400;
 			velocityY = 100;
 			velocityX = 10;
 		}
@@ -220,9 +225,11 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public void decreaseHealth(Weapon weapon) {
 		player.health -= weapon.getDamage();
 	}
+
 	public void caricaBomba(float dt) {
-		forza+=100*dt;
+		forza += 100 * dt;
 	}
+
 	public void lancia() {
 		Iterator<Bomb> itBomb = player.bag.bombe.iterator();
 		while (itBomb.hasNext()) {
@@ -233,7 +240,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 				bomba.id = "Player";
 				break;
 			}
-			//System.out.println(bomba.lanciata);
+			// System.out.println(bomba.lanciata);
 		}
 	}
 

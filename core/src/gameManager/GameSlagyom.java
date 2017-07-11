@@ -67,26 +67,26 @@ public class GameSlagyom extends Game {
 		}
 
 		prefs.putString("map", world.Game.world.getMap().getMapPath());
-		prefs.putString("name", world.Game.player.name);
-		prefs.putInteger("POTION1", world.Game.player.bag.getNumberOf(Element.POTION, Level.FIRST));
-		prefs.putInteger("POTION2", world.Game.player.bag.getNumberOf(Element.POTION, Level.SECOND));
-		prefs.putInteger("POTION3", world.Game.player.bag.getNumberOf(Element.POTION, Level.THIRD));
-		prefs.putInteger("PARCHMENT1", world.Game.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
-		prefs.putInteger("PARCHMENT2", world.Game.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
-		prefs.putInteger("BOMB1", world.Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
-		prefs.putInteger("BOMB2", world.Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
-		prefs.putInteger("BOMB3", world.Game.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
-		prefs.putString("PrimaryWeapon", world.Game.player.primary_weapon.getType().toString());
-		prefs.putString("PrimaryWeaponLevel", world.Game.player.primary_weapon.level.toString());
-		if (world.Game.player.bag.secondary_weapon != null) {
-			prefs.putString("SecondaryWeapon", world.Game.player.bag.secondary_weapon.getType().toString());
-			prefs.putString("SecondaryWeaponLevel", world.Game.player.bag.secondary_weapon.level.toString());
+		prefs.putString("name", world.Game.world.player.name);
+		prefs.putInteger("POTION1", world.Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST));
+		prefs.putInteger("POTION2", world.Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND));
+		prefs.putInteger("POTION3", world.Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD));
+		prefs.putInteger("PARCHMENT1", world.Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
+		prefs.putInteger("PARCHMENT2", world.Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
+		prefs.putInteger("BOMB1", world.Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
+		prefs.putInteger("BOMB2", world.Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
+		prefs.putInteger("BOMB3", world.Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
+		prefs.putString("PrimaryWeapon", world.Game.world.player.primary_weapon.getType().toString());
+		prefs.putString("PrimaryWeaponLevel", world.Game.world.player.primary_weapon.level.toString());
+		if (world.Game.world.player.bag.secondary_weapon != null) {
+			prefs.putString("SecondaryWeapon", world.Game.world.player.bag.secondary_weapon.getType().toString());
+			prefs.putString("SecondaryWeaponLevel", world.Game.world.player.bag.secondary_weapon.level.toString());
 		}
-		prefs.putFloat("xCharPosition", world.Game.player.x);
-		prefs.putFloat("yCharPosition", world.Game.player.y);
-		prefs.putFloat("health", world.Game.player.health);
-		prefs.putFloat("power", world.Game.player.power);
-		prefs.putInteger("coins", world.Game.player.coins);
+		prefs.putFloat("xCharPosition", world.Game.world.player.x);
+		prefs.putFloat("yCharPosition", world.Game.world.player.y);
+		prefs.putFloat("health", world.Game.world.player.health);
+		prefs.putFloat("power", world.Game.world.player.power);
+		prefs.putInteger("coins", world.Game.world.player.coins);
 
 		prefs.flush();
 	}
@@ -96,55 +96,55 @@ public class GameSlagyom extends Game {
 		prefs = Gdx.app.getPreferences(path);
 		if (prefs.getString("name") != "") {
 			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
-			world.Game.player.x = prefs.getFloat("xCharPosition");
-			world.Game.player.y = prefs.getFloat("yCharPosition");
-			world.Game.player.health = prefs.getFloat("health");
-			world.Game.player.power = prefs.getFloat("power");
-			world.Game.player.coins = prefs.getInteger("coins");
+			world.Game.world.player.x = prefs.getFloat("xCharPosition");
+			world.Game.world.player.y = prefs.getFloat("yCharPosition");
+			world.Game.world.player.health = prefs.getFloat("health");
+			world.Game.world.player.power = prefs.getFloat("power");
+			world.Game.world.player.coins = prefs.getInteger("coins");
 
 			for (int i = 0; i < prefs.getInteger("POTION1"); i++) {
 				Item potion = new Item(Element.POTION, Level.FIRST);
-				world.Game.player.bag.add(potion);
+				world.Game.world.player.bag.add(potion);
 			}
 
 			for (int i = 0; i < prefs.getInteger("POTION2"); i++) {
 				Item potion = new Item(Element.POTION, Level.SECOND);
-				world.Game.player.bag.add(potion);
+				world.Game.world.player.bag.add(potion);
 			}
 
 			for (int i = 0; i < prefs.getInteger("POTION3"); i++) {
 				Item potion = new Item(Element.POTION, Level.THIRD);
-				world.Game.player.bag.add(potion);
+				world.Game.world.player.bag.add(potion);
 			}
 
 			for (int i = 0; i < prefs.getInteger("PARCHMENT1"); i++) {
 				Item potion = new Item(Element.PARCHMENT, Level.FIRST);
-				world.Game.player.bag.add(potion);
+				world.Game.world.player.bag.add(potion);
 			}
 
 			for (int i = 0; i < prefs.getInteger("PARCHMENT2"); i++) {
 				Item potion = new Item(Element.PARCHMENT, Level.FIRST);
-				world.Game.player.bag.add(potion);
+				world.Game.world.player.bag.add(potion);
 			}
 
 			for (int i = 0; i < prefs.getInteger("BOMB1"); i++) {
 				Bomb bomb = new Bomb(character.Weapon.Level.lev1, Type.Bomba);
-				world.Game.player.bag.add(bomb);
+				world.Game.world.player.bag.add(bomb);
 			}
 
 			for (int i = 0; i < prefs.getInteger("BOMB2"); i++) {
 				Bomb bomb = new Bomb(character.Weapon.Level.lev2, Type.Bomba);
-				world.Game.player.bag.add(bomb);
+				world.Game.world.player.bag.add(bomb);
 			}
 
 			for (int i = 0; i < prefs.getInteger("BOMB3"); i++) {
 				Bomb bomb = new Bomb(character.Weapon.Level.lev3, Type.Bomba);
-				world.Game.player.bag.add(bomb);
+				world.Game.world.player.bag.add(bomb);
 			}
-			world.Game.player.primary_weapon = new Weapon(prefs.getString("PrimaryWeapon"),
+			world.Game.world.player.primary_weapon = new Weapon(prefs.getString("PrimaryWeapon"),
 					prefs.getString("PrimaryWeaponLevel"));
 			if (prefs.getString("SecondaryWeapon") != null){
-				world.Game.player.bag.secondary_weapon = new Weapon(prefs.getString("SecondaryWeapon"),
+				world.Game.world.player.bag.secondary_weapon = new Weapon(prefs.getString("SecondaryWeapon"),
 						prefs.getString("SecondaryWeaponLevel"));
 			}
 			

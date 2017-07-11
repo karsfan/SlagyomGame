@@ -41,7 +41,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		// ;
 
 		velocity = 100;
-
+		System.out.println("laknslkn");
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 		stateTimer = 0;
@@ -61,7 +61,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		// ;
 
 		velocity = 100;
-
+		System.out.println("costukjhds");
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 		stateTimer = 0;
@@ -85,7 +85,6 @@ public class Player extends DynamicObjects implements ICollidable {
 				player.height, player.velocity);
 		this.bag = player.bag;
 		this.primary_weapon = player.primary_weapon;
-		this.bag.secondary_weapon = player.bag.secondary_weapon;
 		this.health = player.health;
 		this.power = player.power;
 		this.coins = player.coins;
@@ -112,9 +111,12 @@ public class Player extends DynamicObjects implements ICollidable {
 	}
 
 	public void swapWeapon() {
-		Weapon temporary = new Weapon(primary_weapon.getLevel(), primary_weapon.getType());
-		primary_weapon = bag.secondary_weapon;
+		
+		Weapon temporary = new Weapon(Game.world.player.primary_weapon.getLevel(), Game.world.player.primary_weapon.getType());
+		Game.world.player.primary_weapon = bag.secondary_weapon;
+		System.out.println(temporary.getType() + " prim"+Game.world.player.primary_weapon.getType());
 		bag.secondary_weapon = temporary;
+		this.primary_weapon = Game.world.player.primary_weapon;
 	}
 
 	public void pickParchment(Item parchment) {

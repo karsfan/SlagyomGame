@@ -110,41 +110,41 @@ public class ShopScreen implements Screen {
 		optionsTable.setLayoutEnabled(false);
 
 		returnButton = new TextButton("Return", MenuScreen.skin);
-		coins = new Label("" + Game.player.coins, MenuScreen.skin);
+		coins = new Label("" + Game.world.player.coins, MenuScreen.skin);
 
 		buyButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				boolean buy = false;
 				if ((potionsTable.isVisible() || parchmentsTable.isVisible()) && level2n.getText() != null) {
-					int tmp = (int) (Game.player.coins - (Integer.parseInt(level2n.getText())) * itemSelected.price);
+					int tmp = (int) (Game.world.player.coins - (Integer.parseInt(level2n.getText())) * itemSelected.price);
 					if (tmp >= 0) {
 						buy = true;
 						refreshedCoins = tmp;
 						for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
-							Game.player.bag.add(itemSelected);
+							Game.world.player.bag.add(itemSelected);
 					}
 				} else if (weaponsTable.isVisible()) {
-					int tmp = (int) (Game.player.coins - weaponSelected.price);
+					int tmp = (int) (Game.world.player.coins - weaponSelected.price);
 					if (tmp >= 0) {
 						buy = true;
 						refreshedCoins = tmp;
-						Game.player.bag.add(weaponSelected);
+						Game.world.player.bag.add(weaponSelected);
 					}
 				} else if (bombsTable.isVisible() && level2n.getText() != null) {
-					int tmp = (int) (Game.player.coins - (Integer.parseInt(level2n.getText())) * weaponSelected.price);
+					int tmp = (int) (Game.world.player.coins - (Integer.parseInt(level2n.getText())) * weaponSelected.price);
 					if (tmp >= 0) {
 						buy = true;
 						refreshedCoins = tmp;
 
 						for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
-							Game.player.bag.add(weaponSelected);
+							Game.world.player.bag.add(weaponSelected);
 					}
 				}
 				if (buy)
 					LoadingMusic.cashSound.play(1.5f);
 				else
-					refreshedCoins = Game.player.coins;
+					refreshedCoins = Game.world.player.coins;
 				scaling = true;
 			}
 		});
@@ -560,8 +560,8 @@ public class ShopScreen implements Screen {
 		if (scaling) {
 			if (coinsTimer > 0.008f) {
 				coinsTimer = 0;
-				if (Game.player.coins > refreshedCoins) {
-					coins.setText((String.valueOf(Game.player.coins -= 1)));
+				if (Game.world.player.coins > refreshedCoins) {
+					coins.setText((String.valueOf(Game.world.player.coins -= 1)));
 				} else
 					scaling = false;
 			}

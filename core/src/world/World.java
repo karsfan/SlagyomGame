@@ -9,6 +9,7 @@ import battle.Battle;
 import battle.Enemy;
 import character.DynamicObjects;
 import character.Man;
+import character.Player;
 import character.Woman;
 import screens.PlayScreen;
 import staticObjects.EnemyHome;
@@ -20,6 +21,7 @@ import staticObjects.StaticObject.Element;
 public class World {
 
 	private ArrayList<DynamicObjects> people;
+	public Player player;
 	public Map[] maps;
 	public Battle battle;
 	private ThreadWorld thread;
@@ -28,27 +30,31 @@ public class World {
 	float timerItem = 0;
 	public boolean remove = false;
 
-	public World() {
+	public World(String name) {
 		semaphore = new Semaphore(1);
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
-	
+
 		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village one", false);
 		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getPath(), false, "Village two", false);
-
+		player = new Player(name);
+		
+		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));
 	}
 
-	public World(String path) {
+	public World(String path, String name) {
 		level = 0;
 		semaphore = new Semaphore(0);
 		people = new ArrayList<DynamicObjects>();
-		
+
 		maps = new Map[2];
 		maps[0] = new Map(path, true, "Village one", false);
 		maps[1] = new Map(path, false, "Village two", false);
-
+		player = new Player(name);
+		
+		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));
 
 	}
@@ -86,7 +92,6 @@ public class World {
 
 	public void update(float dt) {
 		timerItem += dt;
-
 		Iterator<DynamicObjects> it1 = people.iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -116,12 +121,12 @@ public class World {
 			Enemy ob = (Enemy) it1.next();
 			if (!ob.morto) {
 				creata = true;
-				battle = new Battle(Game.player, ob);
+				battle = new Battle(player, ob);
 				break;
 			}
 		}
 		if (!creata) {
-			Game.player.collideGym = false;
+			player.collideGym = false;
 			PlayScreen.hud.setDialogText("Non ci sono nemici in questa casa");
 		}
 	}
@@ -139,7 +144,7 @@ public class World {
 			people = new ArrayList<DynamicObjects>();
 			getMap().setCurrent(false);
 			maps[level].setCurrent(true);
-			people.add(Game.player);
+			people.add(player);
 			while (!addDynamicObject())
 				;
 			addItems();
@@ -156,6 +161,7 @@ public class World {
 		this.thread = thread;
 	}
 
+
 	public void createBattle(EnemyHome enemyHome) {
 		Iterator<StaticObject> it = getListTile().iterator();
 		// se si tratta di un tempio controllo tra la lista dei nemici quali
@@ -168,12 +174,12 @@ public class World {
 				Enemy ob = (Enemy) it1.next();
 				if (!ob.morto) {
 					creata = true;
-					battle = new Battle(Game.player, ob);
+					battle = new Battle(player, ob);
 					break;
 				}
 			}
 			if (!creata) {
-				Game.player.collideGym = false;
+				player.collideGym = false;
 				PlayScreen.hud.setDialogText("Non ci sono nemici in questa casa");
 			}
 		} // se si tratta di un castle controllo prima che siano stati sconfitti
@@ -198,14 +204,15 @@ public class World {
 			}
 			if (creata) {
 				if (!enemyHome.getEnemy().morto)
-					battle = new Battle(Game.player, enemyHome.getEnemy());
+					battle = new Battle(player, enemyHome.getEnemy());
 				else {
-					Game.player.collideGym = false;
-					PlayScreen.hud.setDialogText("Hai già sconfitto il boss di questo villaggio, adesso puoi passare al prossimo villaggio");
+					player.collideGym = false;
+					PlayScreen.hud.setDialogText(
+							"Hai già sconfitto il boss di questo villaggio, adesso puoi passare al prossimo villaggio");
 				}
 
 			} else {
-				Game.player.collideGym = false;
+				player.collideGym = false;
 				PlayScreen.hud.setDialogText("Non ci puoi accedere se prima non hai eliminati tutti i nemici");
 			}
 		}

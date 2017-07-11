@@ -42,7 +42,7 @@ public class World {
 	private FileReader fileReader;
 	private Scanner input;
 
-	public World(String name) {
+	public World(String name, boolean male) {
 		semaphore = new Semaphore(1);
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
@@ -50,7 +50,7 @@ public class World {
 
 		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village one", false);
 		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getPath(), false, "Village two", false);
-		player = new Player(name);
+		player = new Player(name, male);
 
 		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));
@@ -69,7 +69,7 @@ public class World {
 		}
 	}
 
-	public World(String path, String name) {
+	public World(String path, String name, boolean male) {
 		level = 0;
 		semaphore = new Semaphore(0);
 		people = new ArrayList<DynamicObjects>();
@@ -77,7 +77,7 @@ public class World {
 		maps = new Map[2];
 		maps[0] = new Map(path, true, "Village one", false);
 		maps[1] = new Map(path, false, "Village two", false);
-		player = new Player(name);
+		player = new Player(name, male);
 
 		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));

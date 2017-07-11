@@ -58,10 +58,10 @@ public class PlayScreen implements Screen, ControllerListener {
 	 * @param name
 	 *            of the player
 	 */
-	public PlayScreen(GameSlagyom game, String name) {
+	public PlayScreen(GameSlagyom game, String name, boolean male) {
 		new LoadingImage();
 
-		new Game(name);
+		new Game(name, male);
 		this.game = game;
 
 		gamecam = new OrthographicCamera();
@@ -87,10 +87,10 @@ public class PlayScreen implements Screen, ControllerListener {
 	 * @param name
 	 *            of the player
 	 */
-	public PlayScreen(GameSlagyom game, String path, String name) {
+	public PlayScreen(GameSlagyom game, String path, String name, boolean male) {
 		new LoadingImage();
 
-		new Game(path, name);
+		new Game(path, name, male);
 		this.game = game;
 		this.game.Modality = false;
 		gamecam = new OrthographicCamera();
@@ -102,13 +102,14 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		stop = true;
 		Controllers.addListener(this);
+		System.out.println();
 
 	}
 
-	public PlayScreen(String text, GameSlagyom game, String charName) {
+	public PlayScreen(String text, GameSlagyom game, String charName, boolean male) {
 
 		new LoadingImage();
-		new Game(text, game, charName);
+		new Game(text, game, charName, male);
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);

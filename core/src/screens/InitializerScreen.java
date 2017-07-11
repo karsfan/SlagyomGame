@@ -72,7 +72,7 @@ public class InitializerScreen implements Screen {
 				LoadingMusic.pause();
 				LoadingMusic.backgroundSound.loop(10.0f);
 				game.screenManager.menuScreen.menuMusic.stop();
-				game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName));
+				game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected));
 				game.setScreen(game.screenManager.playScreen);
 				game.screenManager.currentState = State.PLAYING;
 				//Gdx.input.setInputProcessor(null);
@@ -107,7 +107,7 @@ public class InitializerScreen implements Screen {
 				TextButton a = new TextButton("Continue", MenuScreen.skin);
 				a.addListener(new ClickListener(){
 					public void clicked(InputEvent event, float x, float y) {
-						game.screenManager.setPlayScreen(new PlayScreen(nameAI.getText(),game, game.screenManager.newCharacterScreen.charName));
+						game.screenManager.setPlayScreen(new PlayScreen(nameAI.getText(),game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected));
 						game.screenManager.swapScreen(gameManager.ScreenManager.State.PLAYING);
 					}
 				});
@@ -130,7 +130,7 @@ public class InitializerScreen implements Screen {
 
 		mainTable.add(name).pad(30);
 		mainTable.row();
-		mainTable.add(defaultLevelButton).pad(5).padTop(camera.viewportHeight / 3);
+		mainTable.add(defaultLevelButton).pad(5).padTop(camera.viewportHeight / 5);
 		mainTable.row();
 		mainTable.add(chooseLevelButton).pad(5);
 		mainTable.row();

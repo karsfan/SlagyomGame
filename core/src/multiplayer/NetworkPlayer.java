@@ -20,7 +20,7 @@ public class NetworkPlayer extends Player {
 	public boolean player = false;
 
 	public NetworkPlayer(String name) {
-		super(name);
+		super(name, true);
 		this.name = name;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);

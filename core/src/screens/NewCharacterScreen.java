@@ -37,7 +37,7 @@ public class NewCharacterScreen implements Screen {
 	private Sprite backgroundSprite;
 
 	public String charName;
-	public String selectedGender;
+	public boolean maleSelected;
 
 	Drawable maleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/male.png")));
 	Drawable maleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/maleok.png")));
@@ -72,7 +72,7 @@ public class NewCharacterScreen implements Screen {
 		mainTable.top();
 
 		charName = "";
-		selectedGender = "male";
+		maleSelected = true;
 		// Create buttons
 
 		final TextField name = new TextField("", MenuScreen.skin);
@@ -85,7 +85,7 @@ public class NewCharacterScreen implements Screen {
 				System.out.println("MALE");
 				male.setChecked(true);
 				female.setChecked(false);
-				selectedGender = "male";
+				maleSelected = true;
 			}
 		});
 
@@ -95,7 +95,7 @@ public class NewCharacterScreen implements Screen {
 				System.out.println("FEMALE");
 				female.setChecked(true);
 				male.setChecked(false);
-				selectedGender = "female";
+				maleSelected = false;
 			}
 		});
 

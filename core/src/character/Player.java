@@ -28,10 +28,12 @@ public class Player extends DynamicObjects implements ICollidable {
 	public int coins;
 	public boolean collideShop = false;
 	public boolean collideGym = false;
-
-	public Player(String name) {
+	public boolean male; 
+	
+	public Player(String name, boolean male) {
 		super();
 		this.name = name;
+		this.male = male;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
@@ -45,6 +47,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		height = 30;
 		width = 30;
+		System.out.println(male);
 	}
 
 	public Player() {
@@ -64,6 +67,8 @@ public class Player extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		height = 30;
 		width = 30;
+		
+		System.out.println(male);
 	}
 
 	public boolean positionCharacter() {

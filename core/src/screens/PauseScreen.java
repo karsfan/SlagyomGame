@@ -1,6 +1,5 @@
 package screens;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controllers;
@@ -74,7 +73,7 @@ public class PauseScreen implements Screen {
 				PlayScreen.hud.setDialogText("Game saved!");
 			}
 		});
-	//	saveGame.addListener(new InputListener());
+		// saveGame.addListener(new InputListener());
 		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -93,8 +92,10 @@ public class PauseScreen implements Screen {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Game.world.getThread().stop();
-				game.screenManager.playScreen.dispose();
+				if (!game.Modality) {
+					Game.world.getThread().stop();
+					game.screenManager.playScreen.dispose();
+				}
 				game.screenManager.menuScreen = new MenuScreen(game);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 			}
@@ -117,7 +118,7 @@ public class PauseScreen implements Screen {
 		// Add buttons to table
 		mainTable.add(pauseLabel).pad(30);
 		mainTable.row();
-		mainTable.add(bagButton).padTop(viewport.getWorldHeight()  / 3 - viewport.getWorldHeight()  / 5);
+		mainTable.add(bagButton).padTop(viewport.getWorldHeight() / 3 - viewport.getWorldHeight() / 5);
 		mainTable.row();
 		mainTable.add(saveGame).pad(5);
 		mainTable.row().pad(15);

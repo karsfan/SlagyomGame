@@ -1,8 +1,13 @@
 package world;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Scanner;
+import java.util.Stack;
 import java.util.concurrent.Semaphore;
 
 import battle.Battle;
@@ -30,6 +35,11 @@ public class World {
 	float timerItem = 0;
 	public boolean remove = false;
 
+	public static Stack<String> dialogues;
+	public static Stack<String> peopleNames;
+	private FileReader fileReader;
+	private Scanner input;
+
 	public World(String name) {
 		semaphore = new Semaphore(1);
 		level = 0;
@@ -39,9 +49,20 @@ public class World {
 		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village one", false);
 		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getPath(), false, "Village two", false);
 		player = new Player(name);
-		
+
 		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));
+		
+		peopleNames = new Stack<String>();
+		dialogues = new Stack<String>();
+		try {
+			loadFromFile(peopleNames, getClass().getResource("/res/strings/names.txt").getPath());
+			loadFromFile(dialogues, getClass().getResource("/res/strings/dialogues.txt").getPath());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public World(String path, String name) {
@@ -53,9 +74,37 @@ public class World {
 		maps[0] = new Map(path, true, "Village one", false);
 		maps[1] = new Map(path, false, "Village two", false);
 		player = new Player(name);
-		
+
 		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));
+
+		peopleNames = new Stack<String>();
+		dialogues = new Stack<String>();
+		try {
+			loadFromFile(peopleNames, getClass().getResource("/res/strings/names.txt").getPath());
+			loadFromFile(dialogues, getClass().getResource("/res/strings/dialogues.txt").getPath());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void loadFromFile(Stack<String> list, String path) throws IOException {
+		input = new Scanner(System.in);
+		try {
+			fileReader = new FileReader(path);
+			input = new Scanner(fileReader);
+			String line = input.nextLine();
+			while (input.hasNextLine()) {
+				line = input.nextLine();
+				list.push(line);
+			}
+			input.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
 
 	}
 
@@ -160,7 +209,6 @@ public class World {
 	public void setThread(ThreadWorld thread) {
 		this.thread = thread;
 	}
-
 
 	public void createBattle(EnemyHome enemyHome) {
 		Iterator<StaticObject> it = getListTile().iterator();

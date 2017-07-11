@@ -141,7 +141,6 @@ public class PlayScreen implements Screen, ControllerListener {
 					if (textIndex % 75 == 0) {
 						hud.textTable.clear();
 						LoadingMusic.tickSound.play(1.0f);
-
 					}
 					drawDialog(String.valueOf(hud.textDialog.charAt(textIndex)));
 					textIndex++;

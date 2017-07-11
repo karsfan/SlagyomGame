@@ -25,7 +25,9 @@ import character.Weapon.Type;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.LoadingMusic;
+import gameManager.ScreenConfig;
 import gameManager.ScreenManager.State;
+import multiplayer.Client;
 import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
@@ -86,7 +88,7 @@ public class ShopScreen implements Screen {
 		currentCategory = Category.POTIONS;
 		// selection = false;
 		buying = false;
-		itemSelected = new Item();
+		itemSelected = new Item(null, null);
 
 		buyingTable = new Table();
 		buyingTable.setLayoutEnabled(false);
@@ -110,41 +112,81 @@ public class ShopScreen implements Screen {
 		optionsTable.setLayoutEnabled(false);
 
 		returnButton = new TextButton("Return", MenuScreen.skin);
-		coins = new Label("" + Game.world.player.coins, MenuScreen.skin);
-
+		if (!game.Modality)
+			coins = new Label("" + Game.world.player.coins, MenuScreen.skin);
+		else
+			coins = new Label("" + Client.networkWorld.player.coins, MenuScreen.skin);
 		buyButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				boolean buy = false;
 				if ((potionsTable.isVisible() || parchmentsTable.isVisible()) && level2n.getText() != null) {
-					int tmp = (int) (Game.world.player.coins - (Integer.parseInt(level2n.getText())) * itemSelected.price);
-					if (tmp >= 0) {
-						buy = true;
-						refreshedCoins = tmp;
-						for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
-							Game.world.player.bag.add(itemSelected);
+					if (!game.Modality) {
+						int tmp = (int) (Game.world.player.coins
+								- (Integer.parseInt(level2n.getText())) * itemSelected.price);
+						if (tmp >= 0) {
+							buy = true;
+							refreshedCoins = tmp;
+							for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
+								Game.world.player.bag.add(itemSelected);
+						}
+					} else {
+						int tmp = (int) (Client.networkWorld.player.coins
+								- (Integer.parseInt(level2n.getText())) * itemSelected.price);
+						if (tmp >= 0) {
+							buy = true;
+							refreshedCoins = tmp;
+							for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
+								Client.networkWorld.player.bag.add(itemSelected);
+						}
 					}
 				} else if (weaponsTable.isVisible()) {
-					int tmp = (int) (Game.world.player.coins - weaponSelected.price);
-					if (tmp >= 0) {
-						buy = true;
-						refreshedCoins = tmp;
-						Game.world.player.bag.add(weaponSelected);
+					if (!game.Modality) {
+						int tmp = (int) (Game.world.player.coins - weaponSelected.price);
+						if (tmp >= 0) {
+							buy = true;
+							refreshedCoins = tmp;
+							Game.world.player.bag.add(weaponSelected);
+						}
+					} else {
+						int tmp = (int) (Client.networkWorld.player.coins - weaponSelected.price);
+						if (tmp >= 0) {
+							buy = true;
+							refreshedCoins = tmp;
+							Client.networkWorld.player.bag.add(weaponSelected);
+						}
 					}
 				} else if (bombsTable.isVisible() && level2n.getText() != null) {
-					int tmp = (int) (Game.world.player.coins - (Integer.parseInt(level2n.getText())) * weaponSelected.price);
-					if (tmp >= 0) {
-						buy = true;
-						refreshedCoins = tmp;
+					if (!game.Modality) {
+						int tmp = (int) (Game.world.player.coins
+								- (Integer.parseInt(level2n.getText())) * weaponSelected.price);
+						if (tmp >= 0) {
+							buy = true;
+							refreshedCoins = tmp;
 
-						for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
-							Game.world.player.bag.add(weaponSelected);
+							for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
+								Game.world.player.bag.add(weaponSelected);
+						}
+					} else {
+						int tmp = (int) (Client.networkWorld.player.coins
+								- (Integer.parseInt(level2n.getText())) * weaponSelected.price);
+						if (tmp >= 0) {
+							buy = true;
+							refreshedCoins = tmp;
+
+							for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
+								Client.networkWorld.player.bag.add(weaponSelected);
+						}
 					}
 				}
 				if (buy)
 					LoadingMusic.cashSound.play(1.5f);
-				else
-					refreshedCoins = Game.world.player.coins;
+				else {
+					if (!game.Modality)
+						refreshedCoins = Game.world.player.coins;
+					else
+						refreshedCoins = Client.networkWorld.player.coins;
+				}
 				scaling = true;
 			}
 		});
@@ -265,9 +307,9 @@ public class ShopScreen implements Screen {
 		});
 
 		potionsLabel.setPosition(149, 425);
-		potions[0].setPosition(350, 420);
-		potions[1].setPosition(350, 370);
-		potions[2].setPosition(350, 320);
+		potions[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+		potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+		potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
 		potionsTable.add(potionsLabel);
 		potionsTable.add(potions[0]);
 		potionsTable.add(potions[1]);
@@ -286,8 +328,7 @@ public class ShopScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bomb);
-				weaponSelected = new Bomb(character.Weapon.Level.lev1,
-						character.Weapon.Type.Bomba);
+				weaponSelected = new Bomb(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
 				setBuyingTable();
 			}
 		});
@@ -297,8 +338,7 @@ public class ShopScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bomb);
 				setBuyingTable();
-				weaponSelected = new Bomb(character.Weapon.Level.lev2,
-						character.Weapon.Type.Bomba);
+				weaponSelected = new Bomb(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
 			}
 		});
 
@@ -307,8 +347,7 @@ public class ShopScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bomb);
 				setBuyingTable();
-				weaponSelected = new Bomb(character.Weapon.Level.lev3,
-						character.Weapon.Type.Bomba);
+				weaponSelected = new Bomb(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
 			}
 		});
 
@@ -525,8 +564,10 @@ public class ShopScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE))
-			game.screenManager.swapScreen(State.PLAYING);
-
+			if (!game.Modality)
+				game.screenManager.swapScreen(State.PLAYING);
+			else
+				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
 		if (currentCategory == Category.POTIONS) {
 			potionsTable.setVisible(true);
 			weaponsTable.setVisible(false);
@@ -560,10 +601,17 @@ public class ShopScreen implements Screen {
 		if (scaling) {
 			if (coinsTimer > 0.008f) {
 				coinsTimer = 0;
-				if (Game.world.player.coins > refreshedCoins) {
-					coins.setText((String.valueOf(Game.world.player.coins -= 1)));
-				} else
-					scaling = false;
+				if (!game.Modality) {
+					if (Game.world.player.coins > refreshedCoins) {
+						coins.setText((String.valueOf(Game.world.player.coins -= 1)));
+					} else
+						scaling = false;
+				} else {
+					if (Client.networkWorld.player.coins > refreshedCoins) {
+						coins.setText((String.valueOf(Client.networkWorld.player.coins -= 1)));
+					} else
+						scaling = false;
+				}
 			}
 		}
 	}

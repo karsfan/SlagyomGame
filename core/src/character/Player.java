@@ -105,15 +105,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		this.name = name;
 	}
 
-	public void swapWeapon() {
-		
-		Weapon temporary = new Weapon(Game.world.player.primary_weapon.getLevel(), Game.world.player.primary_weapon.getType());
-		Game.world.player.primary_weapon = bag.secondary_weapon;
-		System.out.println(temporary.getType() + " prim"+Game.world.player.primary_weapon.getType());
-		bag.secondary_weapon = temporary;
-		this.primary_weapon = Game.world.player.primary_weapon;
-	}
-
 	public void pickParchment(Item parchment) {
 		bag.add(parchment);
 		// eliminata dalla mappa
@@ -285,7 +276,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		if (item.getElement() != Element.COIN && !item.picked) {
 			if (bag.add(item)) {
 				LoadingMusic.itemSound.play(1.0f);
-
 				item.setPicked(true);
 				return true;
 			}

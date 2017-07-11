@@ -40,12 +40,13 @@ public class Item extends StaticObject {
 		this.level = level;
 		picked = false;
 	}
-	
+
 	public Item(Element element, Level level) {
 		this.element = element;
-		setLevel(level);
+		if (level != null)
+			setLevel(level);
 	}
-	
+
 	public Item() {
 		Random rand = new Random();
 		int r = rand.nextInt(2);
@@ -157,7 +158,7 @@ public class Item extends StaticObject {
 		case "POTION":
 			this.element = Element.POTION;
 			shape = new Rectangle((int) x, (int) y, 14, 14);
-			switch(level){
+			switch (level) {
 			case "FIRST":
 				this.level = Level.FIRST;
 			case "SECOND":
@@ -170,7 +171,7 @@ public class Item extends StaticObject {
 			break;
 		case "PARCHMENT":
 			this.element = Element.PARCHMENT;
-			switch(level){
+			switch (level) {
 			case "FIRST":
 				this.level = Level.FIRST;
 			case "SECOND":
@@ -215,15 +216,15 @@ public class Item extends StaticObject {
 		this.level = level;
 		switch (level) {
 		case FIRST:
-			if(element == Element.POTION)
+			if (element == Element.POTION)
 				price = 10;
-			else if(element == Element.PARCHMENT)
+			else if (element == Element.PARCHMENT)
 				price = 4;
 			break;
 		case SECOND:
-			if(element == Element.POTION)
+			if (element == Element.POTION)
 				price = 20;
-			else if(element == Element.PARCHMENT)
+			else if (element == Element.PARCHMENT)
 				price = 9;
 			break;
 		case THIRD:
@@ -238,11 +239,9 @@ public class Item extends StaticObject {
 		return shape.x;
 	}
 
-
 	public float getY() {
 		return shape.y;
 	}
-
 
 	public float getWidth() {
 		return shape.width;

@@ -24,10 +24,12 @@ import gameManager.LoadingImage;
 import gameManager.MenuControllerListener;
 import gameManager.ScreenConfig;
 import gameManager.ScreenManager.State;
+import multiplayer.Client;
 import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
 import world.Game;
+import world.GameConfig;
 
 public class BagScreen implements Screen {
 	private enum Pocket {
@@ -60,7 +62,7 @@ public class BagScreen implements Screen {
 
 	public Item itemSelected;
 	public Weapon weaponSelected;
-	
+
 	TextButton[] potions;
 	TextButton weapons;
 	TextButton[] bombs;
@@ -68,7 +70,7 @@ public class BagScreen implements Screen {
 
 	public BagScreen(final GameSlagyom game) {
 		this.game = game;
-		itemSelected = new Item();
+		itemSelected = new Item(null, null);
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(854, 480, camera);
 		selection = false;
@@ -95,33 +97,36 @@ public class BagScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				if (game.screenManager.getPreviousState() == State.BATTLE)
 					if (potionsTable.isVisible()) {
-						Game.world.player.bag.useItem(itemSelected);
+						if (!game.Modality)
+							Game.world.player.bag.useItem(itemSelected);
 						setTextPotions();
 					}
+
 			}
 		});
 		delete.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (potionsTable.isVisible()) {
-					Game.world.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+					if (!game.Modality)
+						Game.world.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+					else
+						Client.networkWorld.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
 					setTextPotions();
 				}
 				if (parchmentsTable.isVisible()) {
-					Game.world.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
-					parchments[0]
-							.setText("Parchment lev1  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
-					parchments[1].setText(
-							"Parchment lev2  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
+					if (!game.Modality)
+						Game.world.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+					else
+						Client.networkWorld.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
+					setTextParchment();
 				}
 				if (bombsTable.isVisible()) {
-					Game.world.player.bag.removeBomb(weaponSelected.getLevel());
-					bombs[0].setText(
-							"Bomb lev1   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
-					bombs[1].setText(
-							"Bomb lev2   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
-					bombs[2].setText(
-							"Bomb lev3   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
+					if (!game.Modality)
+						Game.world.player.bag.removeBomb(weaponSelected.getLevel());
+					else
+						Client.networkWorld.player.bag.removeBomb(weaponSelected.getLevel());
+					setTextBomb();
 				}
 
 				if (weaponsTable.isVisible()) {
@@ -192,16 +197,13 @@ public class BagScreen implements Screen {
 
 		// POTIONS TABLE
 		potionsTable = new Table();
-		Label potionsLabel = new Label("Potions", MenuScreen.skin);;
+		Label potionsLabel = new Label("Potions", MenuScreen.skin);
 
 		potionsTable.setLayoutEnabled(false);
 		potions = new TextButton[3];
-		potions[0] = new TextButton("Blue potion    x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST),
-				MenuScreen.skin);
-		potions[1] = new TextButton("Red potion    x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND),
-				MenuScreen.skin);
-		potions[2] = new TextButton("Green potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD),
-				MenuScreen.skin);
+		for (int i = 0; i < 3; i++)
+			potions[i] = new TextButton("", MenuScreen.skin);
+		setTextPotions();
 
 		potions[0].addListener(new ClickListener() {
 			@Override
@@ -229,33 +231,27 @@ public class BagScreen implements Screen {
 
 		potionsLabel.setPosition(149, 425);
 		potionsTable.add(potionsLabel);
-		
+
+		//setPositionPotion();
 		potionsTable.add(potions[0]);
 		potionsTable.add(potions[1]);
 		potionsTable.add(potions[2]);
 		// END POTIONS TABLE
-		
-		Label bombsLabel= new Label("Bombs", MenuScreen.skin);
+
+		Label bombsLabel = new Label("Bombs", MenuScreen.skin);
 		bombsTable = new Table();
 		bombsTable.setLayoutEnabled(false);
 
 		bombs = new TextButton[3];
-		bombs[0] = new TextButton(
-				"Bomb lev1   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1),
-				MenuScreen.skin);
-		bombs[1] = new TextButton(
-				"Bomb lev2   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2),
-				MenuScreen.skin);
-		bombs[2] = new TextButton(
-				"Bomb lev3   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3),
-				MenuScreen.skin);
+		for (int i = 0; i < 3; i++)
+			bombs[i] = new TextButton("", MenuScreen.skin);
+		setTextBomb();
 
 		bombs[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bomb);
-				weaponSelected = new Weapon(character.Weapon.Level.lev1,
-						character.Weapon.Type.Bomba);
+				weaponSelected = new Weapon(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
 			}
 		});
 
@@ -263,8 +259,7 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bomb);
-				weaponSelected = new Weapon(character.Weapon.Level.lev2,
-						character.Weapon.Type.Bomba);
+				weaponSelected = new Weapon(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
 			}
 		});
 
@@ -272,19 +267,18 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.bomb);
-				weaponSelected = new Weapon(character.Weapon.Level.lev3,
-						character.Weapon.Type.Bomba);
+				weaponSelected = new Weapon(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
 			}
 		});
 
 		bombsLabel.setPosition(149, 425);
 		bombsTable.add(bombsLabel);
-		
+
 		bombsTable.add(bombs[0]);
 		bombsTable.add(bombs[1]);
 		bombsTable.add(bombs[2]);
 		// END BOMBS TABLE
-		
+
 		// WEAPON TABLE
 		weaponsTable = new Table();
 		Label weaponsLabel;
@@ -293,10 +287,21 @@ public class BagScreen implements Screen {
 		weaponsTable.setLayoutEnabled(false);
 
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
-
-		weapons = new TextButton(Game.world.player.bag.secondary_weapon.getType().toString() + " "
-				+ Game.world.player.bag.secondary_weapon.getLevel().toString(), MenuScreen.skin);
-
+		if (!game.Modality) {
+			if (Game.world.player.bag.secondary_weapon != null)
+				weapons = new TextButton(Game.world.player.bag.secondary_weapon.getType().toString() + " "
+						+ Game.world.player.bag.secondary_weapon.getLevel().toString(), MenuScreen.skin);
+			else
+				weapons = new TextButton("", MenuScreen.skin);
+		} else {
+			if (Client.networkWorld.player.bag.secondary_weapon != null)
+				weapons = new TextButton(
+						Client.networkWorld.player.bag.secondary_weapon.getType().toString() + " "
+								+ Client.networkWorld.player.bag.secondary_weapon.getLevel().toString(),
+						MenuScreen.skin);
+			else
+				weapons = new TextButton("", MenuScreen.skin);
+		}
 		weapons.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -307,7 +312,7 @@ public class BagScreen implements Screen {
 		weaponsLabel.setPosition(140, 425);
 		weaponsTable.add(weaponsLabel);
 
-		weapons.setPosition(350, 420);
+		weapons.setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 		weaponsTable.add(weapons);
 
 		// END WEAPONS TABLE
@@ -321,10 +326,9 @@ public class BagScreen implements Screen {
 
 		parchmentsLabel = new Label("Parchments", MenuScreen.skin);
 		parchments = new TextButton[2];
-		parchments[0] = new TextButton(
-				"Parchment lev1  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST), MenuScreen.skin);
-		parchments[1] = new TextButton(
-				"Parchment lev2  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND), MenuScreen.skin);
+		for (int i = 0; i < 2; i++)
+			parchments[i] = new TextButton("", MenuScreen.skin);
+		setTextParchment();
 
 		parchments[0].addListener(new ClickListener() {
 			@Override
@@ -406,63 +410,92 @@ public class BagScreen implements Screen {
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			game.screenManager.swapScreen(State.PAUSE);
-			Game.world.semaphore.release();
 		}
 
 		if (currentPocket == Pocket.POTIONS) {
 			potionsTable.setVisible(true);
+			setPositionPotion();
 			bombsTable.setVisible(false);
-			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
-				potions[0].setVisible(false);
-				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
-				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
-			} else {
-				potions[0].setVisible(true);
-				potions[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
-				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
-				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
-			}
-			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND) <= 0) {
-				potions[1].setVisible(false);
-				potions[2].setPosition(ScreenConfig.tableBagX, potions[1].getY());
-			} else
-				potions[1].setVisible(true);
-			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD) <= 0)
-				potions[2].setVisible(false);
-			else
-				potions[2].setVisible(true);
-
 			weaponsTable.setVisible(false);
 			parchmentsTable.setVisible(false);
 		} else if (currentPocket == Pocket.WEAPONS) {
 			weaponsTable.setVisible(true);
 			bombsTable.setVisible(false);
-			if (Game.world.player.bag.secondary_weapon != null)
-				weapons.setVisible(true);
-			else
-				weapons.setVisible(false);
+			if (!game.Modality)
+				if (Game.world.player.bag.secondary_weapon != null)
+					weapons.setVisible(true);
+				else
+					weapons.setVisible(false);
+			else if (game.Modality)
+				if (Client.networkWorld.player.bag.secondary_weapon != null && game.Modality)
+					weapons.setVisible(true);
+				else
+					weapons.setVisible(false);
 			potionsTable.setVisible(false);
 			parchmentsTable.setVisible(false);
 		} else if (currentPocket == Pocket.PARCHMENTS) {
 			parchmentsTable.setVisible(true);
-			if (Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST) <= 0) {
-				parchments[0].setVisible(false);
-				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
-			} else {
-				parchments[0].setVisible(true);
-				parchments[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
-				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
-			}
-			if (Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND) <= 0)
-				parchments[1].setVisible(false);
-			else
-				parchments[1].setVisible(true);
+			setPositionParchement();
 			bombsTable.setVisible(false);
 			potionsTable.setVisible(false);
 			weaponsTable.setVisible(false);
 		} else if (currentPocket == Pocket.BOMBS) {
 			parchmentsTable.setVisible(false);
 			bombsTable.setVisible(true);
+			setPositionBomb();
+			potionsTable.setVisible(false);
+			weaponsTable.setVisible(false);
+		}
+		stage.act();
+		stage.draw();
+	}
+
+	public void setTextParchment() {
+		if (!game.Modality) {
+			parchments[0]
+					.setText("Parchment lev1  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
+			parchments[1]
+					.setText("Parchment lev2  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
+		} else {
+			parchments[0].setText(
+					"Parchment lev1  x" + Client.networkWorld.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
+			parchments[1].setText(
+					"Parchment lev2  x" + Client.networkWorld.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
+		}
+	}
+
+	public void setTextPotions() {
+		if (!game.Modality) {
+			potions[0].setText("Blue potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST));
+			potions[1].setText("Red potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND));
+			potions[2].setText("Green potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD));
+		} else {
+			potions[0].setText(
+					"Blue potion  x" + Client.networkWorld.player.bag.getNumberOf(Element.POTION, Level.FIRST));
+			potions[1].setText(
+					"Red potion  x" + Client.networkWorld.player.bag.getNumberOf(Element.POTION, Level.SECOND));
+			potions[2].setText(
+					"Green potion  x" + Client.networkWorld.player.bag.getNumberOf(Element.POTION, Level.THIRD));
+		}
+	}
+
+	public void setTextBomb() {
+		if (!game.Modality) {
+			bombs[0].setText("Bomb lev1   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
+			bombs[1].setText("Bomb lev2   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
+			bombs[2].setText("Bomb lev3   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
+		} else {
+			bombs[0].setText(
+					"Bomb lev1   x" + Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
+			bombs[1].setText(
+					"Bomb lev2   x" + Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
+			bombs[2].setText(
+					"Bomb lev3   x" + Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
+		}
+	}
+
+	public void setPositionBomb() {
+		if (!game.Modality) {
 			if (Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1) <= 0) {
 				bombs[0].setVisible(false);
 				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
@@ -482,17 +515,101 @@ public class BagScreen implements Screen {
 				bombs[2].setVisible(false);
 			else
 				bombs[2].setVisible(true);
-			potionsTable.setVisible(false);
-			weaponsTable.setVisible(false);
+		} else {
+			if (Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev1) <= 0) {
+				bombs[0].setVisible(false);
+				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+			} else {
+				bombs[0].setVisible(true);
+				bombs[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
+			}
+			if (Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev2) <= 0) {
+				bombs[1].setVisible(false);
+				bombs[2].setPosition(ScreenConfig.tableBagX, bombs[1].getY());
+			} else
+				bombs[1].setVisible(true);
+			if (Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev3) <= 0)
+				bombs[2].setVisible(false);
+			else
+				bombs[2].setVisible(true);
 		}
-		stage.act();
-		stage.draw();
 	}
 
-	public void setTextPotions() {
-		potions[0].setText("Blue potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST));
-		potions[1].setText("Red potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND));
-		potions[2].setText("Green potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD));
+	public void setPositionPotion() {
+		if (!game.Modality) {
+			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
+				potions[0].setVisible(false);
+				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+			} else {
+				potions[0].setVisible(true);
+				potions[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
+			}
+			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND) <= 0) {
+				potions[1].setVisible(false);
+				potions[2].setPosition(ScreenConfig.tableBagX, potions[1].getY());
+			} else
+				potions[1].setVisible(true);
+			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD) <= 0)
+				potions[2].setVisible(false);
+			else
+				potions[2].setVisible(true);
+		} else {
+			if (Client.networkWorld.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
+				potions[0].setVisible(false);
+				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+			} else {
+				potions[0].setVisible(true);
+				potions[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
+			}
+			if (Client.networkWorld.player.bag.getNumberOf(Element.POTION, Level.SECOND) <= 0) {
+				potions[1].setVisible(false);
+				potions[2].setPosition(ScreenConfig.tableBagX, potions[1].getY());
+			} else
+				potions[1].setVisible(true);
+			if (Client.networkWorld.player.bag.getNumberOf(Element.POTION, Level.THIRD) <= 0)
+				potions[2].setVisible(false);
+			else
+				potions[2].setVisible(true);
+		}
+	}
+
+	public void setPositionParchement() {
+		if (!game.Modality) {
+			if (Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST) <= 0) {
+				parchments[0].setVisible(false);
+				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+			} else {
+				parchments[0].setVisible(true);
+				parchments[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+			}
+			if (Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND) <= 0)
+				parchments[1].setVisible(false);
+			else
+				parchments[1].setVisible(true);
+		} else {
+			if (Client.networkWorld.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST) <= 0) {
+				parchments[0].setVisible(false);
+				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+			} else {
+				parchments[0].setVisible(true);
+				parchments[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
+			}
+			if (Client.networkWorld.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND) <= 0)
+				parchments[1].setVisible(false);
+			else
+				parchments[1].setVisible(true);
+		}
 	}
 
 	@Override

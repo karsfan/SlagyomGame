@@ -13,7 +13,6 @@ import character.Weapon.Type;
 public class Shop extends StaticObject {
 
 	ArrayList<Weapon> weapons;
-	ArrayList<Pack> packs;
 	private Rectangle door;
 
 	public Shop(Point point) {

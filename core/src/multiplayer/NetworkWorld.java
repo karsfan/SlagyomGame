@@ -12,7 +12,7 @@ import staticObjects.StaticObject;
 import world.Map;
 
 public class NetworkWorld {
-	NetworkPlayer player;
+	public NetworkPlayer player;
 	ArrayList <NetworkPlayer> otherPlayers;
 	Map map;
 	Battle battle;
@@ -21,6 +21,7 @@ public class NetworkWorld {
 		otherPlayers = new ArrayList<NetworkPlayer>();
 		map = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village", true);
 		player = new NetworkPlayer(name);
+		player.coins = 100;
 	}
 
 	public LinkedList<Item> getListItems() {
@@ -47,8 +48,9 @@ public class NetworkWorld {
 				break;
 			}
 		}
-		if(!creata){
-			Client.networkWorld.player.collideGym = false;
+		if(!creata){			
+			battle = null;
+			player.collideGym = false;
 		}
 		
 	}

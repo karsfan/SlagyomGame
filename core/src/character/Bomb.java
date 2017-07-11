@@ -1,8 +1,9 @@
 package character;
 
 import battle.CharacterBattle;
-import battle.Enemy;
 import battle.Fighting;
+import gameManager.GameSlagyom;
+import multiplayer.Client;
 import world.Game;
 import world.GameConfig;
 import world.ICollidable;
@@ -94,25 +95,47 @@ public class Bomb extends Weapon implements ICollidable {
 
 	@Override
 	public boolean collide() {
-		Enemy enemy = Game.world.battle.enemy;
-		if (id != "Enemy")
-			if (!((mainX > enemy.getX() + enemy.getWidth() / 2 || enemy.getX() > mainX + getWidth())
-					|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
-							|| enemy.getY() > mainY + getHeight()))) {
-				enemy.decreaseHealth(this);
-				System.out.println("collissione con il nemico");
-				return true;
-			}
-		CharacterBattle player = Game.world.battle.character;
-		if (id != "Player")
-			if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
-					|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
-							|| player.getY() > mainY + getHeight()))) {
-				player.decreaseHealth(this);
-				System.out.println("collissione della bomba con il player");
-				return true;
-			}
-
+		if (!GameSlagyom.Modality) {
+			Fighting enemy = Game.world.battle.enemy;
+			if (id != "Enemy")
+				if (!((mainX > enemy.getX() + enemy.getWidth() / 2 || enemy.getX() > mainX + getWidth())
+						|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
+								|| enemy.getY() > mainY + getHeight()))) {
+					enemy.decreaseHealth(this);
+					System.out.println("collissione con il nemico");
+					return true;
+				}
+			CharacterBattle player = Game.world.battle.character;
+			if (id != "Player")
+				if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
+						|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
+								|| player.getY() > mainY + getHeight()))) {
+					player.decreaseHealth(this);
+					System.out.println("collissione della bomba con il player");
+					return true;
+				}
+		}
+		else
+		{
+			Fighting enemy = Client.networkWorld.battle.enemy;
+			if (id != "Enemy")
+				if (!((mainX > enemy.getX() + enemy.getWidth() / 2 || enemy.getX() > mainX + getWidth())
+						|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
+								|| enemy.getY() > mainY + getHeight()))) {
+					((Fighting) enemy).decreaseHealth(this);
+					System.out.println("collissione con il nemico");
+					return true;
+				}
+			CharacterBattle player = Client.networkWorld.battle.character;
+			if (id != "Player")
+				if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
+						|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
+								|| player.getY() > mainY + getHeight()))) {
+					player.decreaseHealth(this);
+					System.out.println("collissione della bomba con il player");
+					return true;
+				}
+		}
 		return false;
 	}
 

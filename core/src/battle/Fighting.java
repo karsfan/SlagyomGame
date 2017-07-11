@@ -1,6 +1,7 @@
 package battle;
 
 import character.DynamicObjects;
+import character.Weapon;
 
 public class Fighting extends DynamicObjects{
 	
@@ -16,6 +17,9 @@ public class Fighting extends DynamicObjects{
 	public boolean bomba = false;
 	public boolean left = false;
 	public boolean right = true;
+	public int health;
+	public boolean morto = false;
+
 	
 	public Fighting()
 	{
@@ -34,5 +38,16 @@ public class Fighting extends DynamicObjects{
 		velocityX = 10;
 		
 	}
+	public void decreaseHealth(Weapon weapon) {
+	
+	}
+	public void update(float dt) {
+		
+	}
+	public int getHealth() {
+		return 0;
+	}
+
+	
 	
 }

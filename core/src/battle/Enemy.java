@@ -17,11 +17,14 @@ public class Enemy extends Fighting {
 		EASY, MEDIUM, HARD
 	};
 
-	public float health;
 	public Weapon weapon;
 	public ArrayList<Bomb> bombe = new ArrayList<>();
-	public boolean morto = false;
 	public Pack win_bonus;
+	
+	public Pack getWin_bonus() {
+		return win_bonus;
+	}
+
 	public Level level;
 
 	public Enemy(Enemy enemy) {
@@ -89,7 +92,7 @@ public class Enemy extends Fighting {
 		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 	}
 
-	public float getHealth() {
+	public int getHealth() {
 		return health;
 	}
 
@@ -348,5 +351,9 @@ public class Enemy extends Fighting {
 
 	public StateDynamicObject getCurrentState() {
 		return currentState;
+	}
+
+	public ArrayList<Bomb> getBombe() {
+		return bombe;
 	}
 }

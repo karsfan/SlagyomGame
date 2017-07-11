@@ -16,13 +16,6 @@ import world.GameConfig;
 
 public class NetworkPlayer extends Player {
 
-	public Bag bag;
-	public Weapon primary_weapon;
-	public float health;
-	public float power;
-	public int coins;
-	public boolean collideShop = false;
-	public boolean collideGym = false;
 	public int ID = 0;
 	public boolean player = false;
 
@@ -32,7 +25,6 @@ public class NetworkPlayer extends Player {
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
-		power = 100;
 		coins = 0;
 
 		velocity = 100;
@@ -50,7 +42,6 @@ public class NetworkPlayer extends Player {
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
-		power = 100;
 		coins = 0;
 
 		velocity = 100;

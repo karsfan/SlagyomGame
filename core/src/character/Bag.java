@@ -128,15 +128,15 @@ public class Bag {
 		if(item.getElement() == Element.POTION){
 			switch(item.getLevel()){
 			case FIRST:
-				System.out.println(Game.world.battle.character.player.health);
-				Game.world.battle.character.player.health += 15;
-				System.out.println(Game.world.battle.character.player.health);
+				System.out.println(Game.world.battle.character.health);
+				Game.world.battle.character.health += 15;
+				System.out.println(Game.world.battle.character.health);
 				break;
 			case SECOND:
-				Game.world.battle.character.player.health += 25;
+				Game.world.battle.character.health += 25;
 				break;
 			case THIRD:
-				Game.world.battle.character.player.health += 45;
+				Game.world.battle.character.health += 45;
 				break;
 			default:
 				System.out.println("potion non assegnata");

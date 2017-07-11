@@ -2,6 +2,7 @@ package battle;
 
 import java.util.Iterator;
 
+import character.Bag;
 import character.Bomb;
 import character.Player;
 import character.Weapon;
@@ -11,58 +12,59 @@ import world.GameConfig;
 
 public class CharacterBattle extends Fighting implements world.ICollidable {
 
-	public Player player;
-
+	public Bag bag;
+	public Weapon primary_weapon;
+	public float health;
 	public CharacterBattle(Player player) {
 		super();
 		stateTimer = 0;
-
-		this.player = new Player(player);
-
-		this.player.x = 100;
-		this.player.y = GameConfig.mainY_Battle;
+		
+		bag = player.bag;
+		primary_weapon = player.primary_weapon;
+		System.out.println(player.health);
+		this.health = player.health;
+		this.x = 100;
+		this.y = GameConfig.mainY_Battle;
 		if (player.primary_weapon.getType() == Type.Sword)
-			this.player.width = 200;
+			this.width = 200;
 		else
-			this.player.width = 120;
-		this.player.height = 150;
-		this.player.currentState = StateDynamicObject.RUNNINGRIGHT;
-		this.player.previousState = null;
+			this.width = 120;
 		right = true;
+		velocity = 100;
 
 	}
 
 	public void swapWeapon() {
 		Weapon temporary = new Weapon(Game.world.player.primary_weapon.getLevel(),
 				Game.world.player.primary_weapon.getType());
-		Game.world.player.primary_weapon = player.bag.secondary_weapon;
-		player.bag.secondary_weapon = temporary;
-		player.primary_weapon = Game.world.player.primary_weapon;
+		Game.world.player.primary_weapon = bag.secondary_weapon;
+		bag.secondary_weapon = temporary;
+		primary_weapon = Game.world.player.primary_weapon;
 
-		if (player.primary_weapon.getType() == Type.Sword)
-			player.width = 200;
+		if (primary_weapon.getType() == Type.Sword)
+			width = 200;
 		else
-			player.width = 120;
+			width = 120;
 	}
 
 	public float getHealth() {
-		return (float) player.getHealth();
+		return (float) health;
 	}
 
 	public float getX() {
-		return player.getX();
+		return x;
 	}
 
 	public float getY() {
-		return player.getY();
+		return y;
 	}
 
 	public float getHeight() {
-		return player.getHeight();
+		return height;
 	}
 
 	public float getWidth() {
-		return player.getWidth();
+		return width;
 	}
 
 	public void update(float dt) {
@@ -74,24 +76,24 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			fightingTimeCurrent = 0;
 		}
 		dt = 0.35f;
-		if ((jumping || doubleJumping) && player.y + velocityY * dt > GameConfig.mainY_Battle) {
-			player.y += velocityY * dt;
+		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {
+			y += velocityY * dt;
 			// System.out.println(velocityY + " "+ velocityY*dt);
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING, dt);
 
-			if (collide() && player.x < Game.world.battle.enemy.getX())
-				player.x = Game.world.battle.enemy.getX() - player.getWidth() / 2;
-			else if (collide() && player.x > Game.world.battle.enemy.getX())
-				player.x = Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2;
+			if (collide() && x < Game.world.battle.enemy.getX())
+				x = Game.world.battle.enemy.getX() - getWidth() / 2;
+			else if (collide() && x > Game.world.battle.enemy.getX())
+				x = Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2;
 
 		} else {
 			jumping = false;
 			doubleJumping = false;
-			player.y = GameConfig.mainY_Battle;
+			y = GameConfig.mainY_Battle;
 			velocityY = 0;
 		}
-		Iterator<Bomb> it1 = player.bag.bombe.iterator();
+		Iterator<Bomb> it1 = bag.bombe.iterator();
 		while (it1.hasNext()) {
 			Bomb ob = (Bomb) it1.next();
 			if (ob.lanciata == true) {
@@ -107,10 +109,10 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void fightRight(float dt) {
-		player.width += player.primary_weapon.getWidth();
+		width += primary_weapon.getWidth();
 		if (collide())
-			Game.world.battle.enemy.decreaseHealth(player.primary_weapon);
-		player.width -= player.primary_weapon.getWidth();
+			Game.world.battle.enemy.decreaseHealth(primary_weapon);
+		width -= primary_weapon.getWidth();
 
 		setState(StateDynamicObject.FIGHTINGRIGHT, dt);
 		fighting = true;
@@ -118,10 +120,10 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void fightLeft(float dt) {
-		player.x -= player.primary_weapon.getWidth();
+		x -= primary_weapon.getWidth();
 		if (collide())
-			Game.world.battle.enemy.decreaseHealth(player.primary_weapon);
-		player.x += player.primary_weapon.getWidth();
+			Game.world.battle.enemy.decreaseHealth(primary_weapon);
+		x += primary_weapon.getWidth();
 
 		setState(StateDynamicObject.FIGHTINGLEFT, dt);
 		fighting = true;
@@ -142,10 +144,10 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public void movesRight(float dt) {
 		right = true;
 		left = false;
-		if (player.x + player.velocity * dt + player.getWidth() < GameConfig.WIDTH_BATTLE)
-			player.x += player.velocity * dt;
+		if (x + velocity * dt + getWidth() < GameConfig.WIDTH_BATTLE)
+			x += velocity * dt;
 		if (collide())
-			player.x -= player.velocity * dt;
+			x -= velocity * dt;
 		if (!fighting)
 			setState(StateDynamicObject.RUNNINGRIGHT, dt);
 	}
@@ -153,10 +155,10 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public void movesLeft(float dt) {
 		left = true;
 		right = false;
-		if (player.x > 0)
-			player.x -= player.velocity * dt;
+		if (x > 0)
+			x -= velocity * dt;
 		if (collide())
-			player.x += player.velocity * dt;
+			x += velocity * dt;
 		if (!fighting)
 			setState(StateDynamicObject.RUNNINGLEFT, dt);
 	}
@@ -178,9 +180,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void setState(StateDynamicObject state, float dt) {
-		player.previousState = player.currentState;
-		player.currentState = state;
-		if (player.previousState == player.currentState && player.currentState != StateDynamicObject.STANDING)
+		previousState = currentState;
+		currentState = state;
+		if (previousState == currentState && currentState != StateDynamicObject.STANDING)
 			setStateTimer(getStateTimer() + dt);
 		else
 			setStateTimer(0);
@@ -198,16 +200,16 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	@Override
 	public boolean collide() {
 
-		if (!((player.x > Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2
-				|| Game.world.battle.enemy.getX() > player.x + player.width / 2)
-				|| (player.y > Game.world.battle.enemy.getY() + Game.world.battle.enemy.getHeight() / 2
-						|| Game.world.battle.enemy.getY() > player.y + player.height / 2)))
+		if (!((x > Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2
+				|| Game.world.battle.enemy.getX() > x + width / 2)
+				|| (y > Game.world.battle.enemy.getY() + Game.world.battle.enemy.getHeight() / 2
+						|| Game.world.battle.enemy.getY() > y + height / 2)))
 			return true;
 		return false;
 	}
 
 	public Weapon getWeapon() {
-		return player.getWeapon();
+		return primary_weapon;
 	}
 
 	public float getStateTimer() {
@@ -215,15 +217,15 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public StateDynamicObject getPreviousState() {
-		return player.previousState;
+		return previousState;
 	}
 
 	public StateDynamicObject getCurrentState() {
-		return player.currentState;
+		return currentState;
 	}
 
 	public void decreaseHealth(Weapon weapon) {
-		player.health -= weapon.getDamage();
+		health -= weapon.getDamage();
 	}
 
 	public void caricaBomba(float dt) {
@@ -231,7 +233,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void lancia() {
-		Iterator<Bomb> itBomb = player.bag.bombe.iterator();
+		Iterator<Bomb> itBomb = bag.bombe.iterator();
 		while (itBomb.hasNext()) {
 			Bomb bomba = (Bomb) itBomb.next();
 			if (!bomba.lanciata) {

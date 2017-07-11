@@ -85,7 +85,6 @@ public class GameSlagyom extends Game {
 		prefs.putFloat("xCharPosition", world.Game.world.player.x);
 		prefs.putFloat("yCharPosition", world.Game.world.player.y);
 		prefs.putFloat("health", world.Game.world.player.health);
-		prefs.putFloat("power", world.Game.world.player.power);
 		prefs.putInteger("coins", world.Game.world.player.coins);
 
 		prefs.flush();
@@ -99,7 +98,6 @@ public class GameSlagyom extends Game {
 			world.Game.world.player.x = prefs.getFloat("xCharPosition");
 			world.Game.world.player.y = prefs.getFloat("yCharPosition");
 			world.Game.world.player.health = prefs.getFloat("health");
-			world.Game.world.player.power = prefs.getFloat("power");
 			world.Game.world.player.coins = prefs.getInteger("coins");
 
 			for (int i = 0; i < prefs.getInteger("POTION1"); i++) {

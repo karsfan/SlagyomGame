@@ -76,7 +76,7 @@ public class BattleScreen implements Screen {
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
 				tmp1.getHeight());
 
-		Iterator<Bomb> bombIterator = battle.character.player.bag.bombe.iterator();
+		Iterator<Bomb> bombIterator = battle.character.bag.bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.lanciata == true) {

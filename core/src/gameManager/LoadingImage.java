@@ -423,25 +423,25 @@ public class LoadingImage {
 				animation = woman2Animation;
 			break;
 		case "CharacterBattle":
-			if (((CharacterBattle) ob).player.primary_weapon.getType() == Type.Spear) {
-				if (((CharacterBattle) ob).player.primary_weapon.getLevel() == character.Weapon.Level.lev1)
+			if (((CharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
+				if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
 					animation = battleCharacterAnimationSpearLev1;
-				else if (((CharacterBattle) ob).player.primary_weapon.getLevel() == character.Weapon.Level.lev2)
+				else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
 					animation = battleCharacterAnimationSpearLev2;
-				else if (((CharacterBattle) ob).player.primary_weapon.getLevel() == character.Weapon.Level.lev3)
+				else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
 					animation = battleCharacterAnimationSpearLev3;
 			}
-			else if (((CharacterBattle) ob).player.primary_weapon.getType() == Type.Sword){
+			else if (((CharacterBattle) ob).primary_weapon.getType() == Type.Sword){
 				animation = battleCharacterAnimationSwordLev1;
 			}
 			break;
 		case "NetworkCharacterBattle":
-			if (((NetworkCharacterBattle) ob).player.primary_weapon.getType() == Type.Spear) {
-				if (((NetworkCharacterBattle) ob).player.primary_weapon.getLevel() == character.Weapon.Level.lev1)
+			if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
+				if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
 					animation = battleCharacterAnimationSpearLev1;
-				else if (((NetworkCharacterBattle) ob).player.primary_weapon.getLevel() == character.Weapon.Level.lev2)
+				else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
 					animation = battleCharacterAnimationSpearLev2;
-				else if (((NetworkCharacterBattle) ob).player.primary_weapon.getLevel() == character.Weapon.Level.lev3)
+				else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
 					animation = battleCharacterAnimationSpearLev3;
 			}
 			break;
@@ -485,15 +485,15 @@ public class LoadingImage {
 				textureRegion = woman2Stand;
 			break;
 		case "CharacterBattle":
-			if (((CharacterBattle) ob).player.primary_weapon.getType() == Type.Spear) {
-				if (((CharacterBattle) ob).player.primary_weapon.getLevel() == character.Weapon.Level.lev1)
+			if (((CharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
+				if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
 					textureRegion = battleCharacterStand;
-				else if (((CharacterBattle) ob).player.primary_weapon.getLevel() == character.Weapon.Level.lev2)
+				else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
 					textureRegion = battleCharacterStand;
-				else if (((CharacterBattle) ob).player.primary_weapon.getLevel() == character.Weapon.Level.lev3)
+				else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
 					textureRegion = battleCharacterStand;
 			}
-			else if (((CharacterBattle) ob).player.primary_weapon.getType() == Type.Sword){
+			else if (((CharacterBattle) ob).primary_weapon.getType() == Type.Sword){
 				textureRegion = battleCharacterStandSword;
 			}
 			//textureRegion = battleCharacterStand;

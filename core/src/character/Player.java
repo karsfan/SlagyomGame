@@ -24,7 +24,6 @@ public class Player extends DynamicObjects implements ICollidable {
 	public Bag bag;
 	public Weapon primary_weapon;
 	public float health;
-	public float power;
 	public int coins;
 	public boolean collideShop = false;
 	public boolean collideGym = false;
@@ -35,13 +34,11 @@ public class Player extends DynamicObjects implements ICollidable {
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
-		power = 100;
 		coins = 0;
 		// while (!positionCharacter())
 		// ;
 
 		velocity = 100;
-		System.out.println("laknslkn");
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 		stateTimer = 0;
@@ -55,13 +52,12 @@ public class Player extends DynamicObjects implements ICollidable {
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
-		power = 100;
 		coins = 0;
 		// while (!positionCharacter())
 		// ;
 
 		velocity = 100;
-		System.out.println("costukjhds");
+		
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 		stateTimer = 0;
@@ -86,7 +82,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		this.bag = player.bag;
 		this.primary_weapon = player.primary_weapon;
 		this.health = player.health;
-		this.power = player.power;
 		this.coins = player.coins;
 	}
 

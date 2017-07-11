@@ -24,7 +24,6 @@ public class DynamicObjects implements ICollidable{
 
 	public DynamicObjects(float x, float y, StateDynamicObject currentState, StateDynamicObject previousState,
 			float stateTimer, float height, float width, float velocity) {
-		// super();
 		this.x = x;
 		this.y = y;
 		this.currentState = currentState;

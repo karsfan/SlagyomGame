@@ -37,15 +37,18 @@ public class NetworkWorld {
 	}
 
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
-		//boolean creata = false;
+		boolean creata = false;
 		Iterator<Enemy> it1 = preEnemyHouse.enemy.iterator();
 		while (it1.hasNext()) {
 			NetworkEnemy ob = (NetworkEnemy) it1.next();
 			if (!ob.morto) {
-				//creata = true;
+				creata = true;
 				battle = new Battle(Client.networkWorld.player, ob);
 				break;
 			}
+		}
+		if(!creata){
+			Client.networkWorld.player.collideGym = false;
 		}
 		
 	}

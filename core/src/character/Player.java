@@ -20,14 +20,16 @@ import world.GameConfig;
 import world.ICollidable;
 
 public class Player extends DynamicObjects implements ICollidable {
-
+	
+	public String gender; 
 	public Bag bag;
 	public Weapon primary_weapon;
 	public float health;
 	public int coins;
 	public boolean collideShop = false;
 	public boolean collideGym = false;
-
+	
+	
 	public Player(String name) {
 		super();
 		this.name = name;

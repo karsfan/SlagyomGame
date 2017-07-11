@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -23,7 +24,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
 import gameManager.MenuControllerListener;
-import gameManager.ScreenManager;
 import gameManager.ScreenManager.State;
 
 public class NewCharacterScreen implements Screen {
@@ -37,15 +37,17 @@ public class NewCharacterScreen implements Screen {
 	private Sprite backgroundSprite;
 
 	public String charName;
+	public String selectedGender;
 
 	Drawable maleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/male.png")));
 	Drawable maleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/maleok.png")));
 
 	Drawable femaleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/female.png")));
-	Drawable femalokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/femaleok.png")));
-
-	ImageButton male = new ImageButton(maleDraw);
-	ImageButton female = new ImageButton(femaleDraw);
+	Drawable femaleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/femaleok.png")));
+//Drawable up, Drawable down, Drawable checked, Drawable imageUp, Drawable imageDown,
+	//Drawable imageChecked
+	ImageButton male = new ImageButton(new ImageButtonStyle(null, null, maleokDraw, maleDraw, null, maleokDraw));
+	ImageButton female = new ImageButton(new ImageButtonStyle(null, null, femaleokDraw, femaleDraw, null, femaleokDraw));
 
 	Table gender = new Table();
 
@@ -70,32 +72,20 @@ public class NewCharacterScreen implements Screen {
 		mainTable.top();
 
 		charName = "";
-
+		selectedGender = "male";
 		// Create buttons
 
 		final TextField name = new TextField("", MenuScreen.skin);
 		name.setMessageText("Name");
 		name.setFocusTraversal(true);
-		name.setTextFieldListener(new TextFieldListener() {
-			@Override
-			public void keyTyped(TextField textField, char key) {
-				// if ((key == '\r' || key == '\n')){
-				// textField.next(Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) ||
-				// Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT));
-				// }
-			}
-		});
 
 		male.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println("MALE");
-				// gender.clear();
-				// male = new ImageButton(maleokDraw);
-				// female = new ImageButton(femaleDraw);
-
-				// gender.add(male);
-				// gender.add(female).padLeft(20);
+				male.setChecked(true);
+				female.setChecked(false);
+				selectedGender = "male";
 			}
 		});
 
@@ -103,15 +93,9 @@ public class NewCharacterScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				System.out.println("FEMALE");
-				// gender.clear();
-				// female = new ImageButton(femalokDraw);
-				// male = new ImageButton(maleDraw);
-
-				// femaleDraw = femalokDraw;
-				// maleDraw = maleDraw;
-
-				// gender.add(male);
-				// gender.add(female).padLeft(20);
+				female.setChecked(true);
+				male.setChecked(false);
+				selectedGender = "female";
 			}
 		});
 

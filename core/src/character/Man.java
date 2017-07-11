@@ -283,7 +283,9 @@ public class Man extends DynamicObjects implements ICollidable {
 						|| (y > ((DynamicObjects) ob).getY() + ((DynamicObjects) ob).getHeight() / 2
 								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
 					if (ob instanceof Player) {
-						PlayScreen.hud.setDialogText("Ciao! Io sono " + name + "\r\n" + info);
+						PlayScreen.hud.setDialogText("Ciao! Io sono " + name);
+						PlayScreen.hud.textTable.row();
+						PlayScreen.hud.setDialogText(info);
 						collisionWithCharacter = true;
 					}
 					else {

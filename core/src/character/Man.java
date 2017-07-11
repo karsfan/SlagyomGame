@@ -2,11 +2,13 @@ package character;
 
 import java.util.Iterator;
 
+import screens.PlayScreen;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
 import world.Game;
 import world.GameConfig;
 import world.ICollidable;
+import world.World;
 
 public class Man extends DynamicObjects implements ICollidable {
 
@@ -15,9 +17,9 @@ public class Man extends DynamicObjects implements ICollidable {
 	};
 
 	public String name;
+	private String info;
 	public int mainX;
 	public int mainY;
-	private String info;
 	public boolean collision;
 	public boolean collisionWithCharacter;
 	int passi;
@@ -35,8 +37,8 @@ public class Man extends DynamicObjects implements ICollidable {
 		mainX = 100;
 		mainY = 100;
 		velocity = 80;
-		name = "Ciccio";
-		info = "Ciao sono Ciccio";
+		name = World.peopleNames.pop();
+		info = World.dialogues.pop();
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 	}
@@ -54,8 +56,8 @@ public class Man extends DynamicObjects implements ICollidable {
 		mainX = 100;
 		mainY = 100;
 		velocity = 80;
-		name = "Ciccio";
-		info = "Ciao sono Ciccio";
+		name = World.peopleNames.pop();
+		info = World.dialogues.pop();
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 	}
@@ -262,7 +264,6 @@ public class Man extends DynamicObjects implements ICollidable {
 
 	@Override
 	public boolean collide(Object e) {
-
 		Iterator<StaticObject> it = Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
@@ -281,10 +282,15 @@ public class Man extends DynamicObjects implements ICollidable {
 						|| ((DynamicObjects) ob).getX() > x + width / 2)
 						|| (y > ((DynamicObjects) ob).getY() + ((DynamicObjects) ob).getHeight() / 2
 								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
-					if (ob instanceof Player)
+					if (ob instanceof Player) {
+						PlayScreen.hud.setDialogText("Ciao! Io sono " + name);
+						PlayScreen.hud.textTable.row();
+						PlayScreen.hud.setDialogText(info);
 						collisionWithCharacter = true;
-					else
-						collision = true;
+					}
+					else {
+						collision = true;						
+					}
 					return true;
 				}
 			}

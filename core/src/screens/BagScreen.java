@@ -348,7 +348,7 @@ public class BagScreen implements Screen {
 
 		parchmentsLabel.setPosition(120, 425);
 		parchmentsTable.add(parchmentsLabel);
-
+		
 		parchmentsTable.add(parchments[0]);
 		parchmentsTable.add(parchments[1]);
 

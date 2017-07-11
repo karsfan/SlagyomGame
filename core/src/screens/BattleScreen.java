@@ -1,5 +1,6 @@
 package screens;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
@@ -14,6 +15,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import battle.Battle;
 import battle.CharacterBattle;
 import battle.Enemy;
+import battle.Fighting;
+import battle.Pack;
 import character.Bomb;
 import character.DynamicObjects.StateDynamicObject;
 import gameManager.GameSlagyom;
@@ -43,7 +46,6 @@ public class BattleScreen implements Screen {
 		gamePort.apply();
 		gamecam.position.x = battle.character.getX();
 		gamecam.position.y = battle.character.getY();
-		System.out.println(battle.enemy.health);
 		hud = new BattleHud(gameslagyom.batch, battle);
 	}
 
@@ -73,7 +75,7 @@ public class BattleScreen implements Screen {
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp), tmp.getX(), tmp.getY(), tmp.getWidth(),
 				tmp.getHeight());
 
-		Enemy tmp1 = battle.enemy;
+		Fighting tmp1 = battle.enemy;
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
 				tmp1.getHeight());
 
@@ -85,7 +87,8 @@ public class BattleScreen implements Screen {
 						searching.getWidth() + 10, searching.getHeight() + 10);
 			}
 		}
-		Iterator<Bomb> bombIterator1 = battle.enemy.bombe.iterator();
+		Iterator<Bomb> bombIterator1 = ((ArrayList<Bomb>) ((Enemy)battle.enemy).getBombe()).iterator();
+		
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
 			if (searching1.lanciata == true) {
@@ -107,9 +110,9 @@ public class BattleScreen implements Screen {
 			if (battle.update(dt)) {
 				if (battle.character.getHealth() <= 0) {
 					youLose = true;
-					if (battle.enemy.win_bonus.getNumberOf("POTIONLEV3") > 0) {
+					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3") > 0) {
 						potion = new Label(
-								"Potion lev3 x" + Integer.toString(battle.enemy.win_bonus.getNumberOf("POTIONLEV3")),
+								"Potion lev3 x" + Integer.toString(((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3")),
 								MenuScreen.skin);
 						potion.setSize(100, 100);
 						potion.setPosition(gamePort.getWorldWidth() / 4, gamePort.getWorldHeight() / 2.5f);
@@ -117,9 +120,9 @@ public class BattleScreen implements Screen {
 					}
 				} else {
 					youWin = true;
-					if (battle.enemy.win_bonus.getNumberOf("POTIONLEV1") > 0) {
+					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {
 						potion = new Label(
-								"Potion lev1 x" + Integer.toString(battle.enemy.win_bonus.getNumberOf("POTIONLEV1")),
+								"Potion lev1 x" + Integer.toString(((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1")),
 								MenuScreen.skin);
 						potion.setSize(100, 100);
 						potion.setPosition(gamePort.getWorldWidth() / 4, gamePort.getWorldHeight() / 3);
@@ -159,6 +162,7 @@ public class BattleScreen implements Screen {
 		} else {
 			if (battle.character.bomba) {
 				battle.character.lancia();
+				System.out.println("lancia");
 				battle.character.bomba = false;
 				battle.character.forza = 50;
 			}

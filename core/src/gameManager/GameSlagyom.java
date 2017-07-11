@@ -25,7 +25,7 @@ public class GameSlagyom extends Game {
 	LoadingMusic musicLoader;
 	public Preferences prefs;
 	public SpriteBatch batch;
-	public boolean Modality;
+	public static boolean Modality;
 	@Override
 	public void create() {
 		new LoadingMusic();
@@ -84,7 +84,7 @@ public class GameSlagyom extends Game {
 		}
 		prefs.putFloat("xCharPosition", world.Game.world.player.x);
 		prefs.putFloat("yCharPosition", world.Game.world.player.y);
-		prefs.putFloat("health", world.Game.world.player.health);
+		prefs.putInteger("health", world.Game.world.player.health);
 		prefs.putInteger("coins", world.Game.world.player.coins);
 
 		prefs.flush();
@@ -97,7 +97,7 @@ public class GameSlagyom extends Game {
 			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
 			world.Game.world.player.x = prefs.getFloat("xCharPosition");
 			world.Game.world.player.y = prefs.getFloat("yCharPosition");
-			world.Game.world.player.health = prefs.getFloat("health");
+			world.Game.world.player.health = prefs.getInteger("health");
 			world.Game.world.player.coins = prefs.getInteger("coins");
 
 			for (int i = 0; i < prefs.getInteger("POTION1"); i++) {

@@ -8,8 +8,8 @@ import multiplayer.NetworkPlayer;
 public class Battle {
 
 	public CharacterBattle character;
-	public Enemy enemyOri;
-	public Enemy enemy;
+	public Fighting enemyOri;
+	public Fighting enemy;
 
 	public Battle(Player player, Enemy enemy) {
 		if (player instanceof NetworkPlayer)

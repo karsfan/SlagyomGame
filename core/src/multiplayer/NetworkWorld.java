@@ -15,7 +15,7 @@ public class NetworkWorld {
 	public NetworkPlayer player;
 	ArrayList <NetworkPlayer> otherPlayers;
 	Map map;
-	Battle battle;
+	public Battle battle;
 	
 	public NetworkWorld(String name) {
 		otherPlayers = new ArrayList<NetworkPlayer>();

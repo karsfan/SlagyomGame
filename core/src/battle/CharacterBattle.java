@@ -14,7 +14,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	public Bag bag;
 	public Weapon primary_weapon;
-	public float health;
+	public int health;
 
 	public CharacterBattle(Player player) {
 		super();
@@ -49,8 +49,8 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		}
 	}
 
-	public float getHealth() {
-		return (float) health;
+	public int getHealth() {
+		return health;
 	}
 
 	public float getX() {
@@ -232,19 +232,21 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	public void caricaBomba(float dt) {
 		forza += 100 * dt;
+		System.out.println(forza);
 	}
 
 	public void lancia() {
 		Iterator<Bomb> itBomb = bag.bombe.iterator();
+		System.out.println(bag.bombe.iterator());
 		while (itBomb.hasNext()) {
 			Bomb bomba = (Bomb) itBomb.next();
 			if (!bomba.lanciata) {
 				bomba.lanciata = true;
 				bomba.lancia(forza, this);
 				bomba.id = "Player";
+				System.out.println(bomba.lanciata);
 				break;
 			}
-			// System.out.println(bomba.lanciata);
 		}
 	}
 

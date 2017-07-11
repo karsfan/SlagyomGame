@@ -64,7 +64,7 @@ public class Hud {
 		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/hudBg.png")));
 
 		table.setBackground(hudBG);
-		textTable.setX(viewport.getScreenHeight() - 236);
+		textTable.setX(854 - 236);
 		textTable.setY(15);
 
 		stage.addActor(table);

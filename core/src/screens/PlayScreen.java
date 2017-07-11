@@ -153,7 +153,6 @@ public class PlayScreen implements Screen, ControllerListener {
 			textIndex = 0;
 		}
 		// END TEXT TABLE RENDERING
-
 	}
 
 	/**

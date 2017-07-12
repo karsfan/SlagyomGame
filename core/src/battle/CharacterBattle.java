@@ -15,11 +15,13 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public Bag bag;
 	public Weapon primary_weapon;
 	public int health;
-
+	public boolean male;
+	
 	public CharacterBattle(Player player) {
 		super();
 		stateTimer = 0;
 		bag = player.bag;
+		male = player.male;
 		primary_weapon = player.primary_weapon;
 		this.health = player.health;
 		this.x = 100;

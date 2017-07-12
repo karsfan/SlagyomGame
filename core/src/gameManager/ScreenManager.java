@@ -70,7 +70,7 @@ public class ScreenManager {
 
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC
 			menuScreen.menuMusic.stop();
-			LoadingMusic.backgroundSound.loop(10.0f);
+			LoadingMusic.backgroundSound.loop(100);
 
 			Game.world.semaphore.release();
 			Gdx.input.setInputProcessor(null);

@@ -91,6 +91,7 @@ public class DynamicObjects implements ICollidable{
 			x -= (velocityX * dt);
 			if (collide(this))
 				x += (velocityX * dt);
+			
 
 		}
 		setState(StateDynamicObject.RUNNINGLEFT);
@@ -142,14 +143,15 @@ public class DynamicObjects implements ICollidable{
 
 
 	@Override
-	public synchronized boolean collide(Object e) {
+	public boolean collide(Object e) {
+		
 		return false;
 
 	}
 
 	@Override
 	public boolean collide() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

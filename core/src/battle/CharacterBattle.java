@@ -154,6 +154,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void movesLeft(float dt) {
+		System.out.println(dt*velocity);
 		left = true;
 		right = false;
 		if (x > 0)
@@ -200,7 +201,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	@Override
 	public boolean collide() {
-
+		
 		if (!((x > Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2
 				|| Game.world.battle.enemy.getX() > x + width / 2)
 				|| (y > Game.world.battle.enemy.getY() + Game.world.battle.enemy.getHeight() / 2

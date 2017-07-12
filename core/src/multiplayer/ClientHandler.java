@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import character.DynamicObjects.StateDynamicObject;
 import world.GameConfig;
 
 public class ClientHandler extends Thread {
@@ -30,16 +31,19 @@ public class ClientHandler extends Thread {
 				String receivedMessage = reader.readLine();
 				if (!receivedMessage.contains(" ")) {
 					if (!client.initialize) {
-						System.out.println(client.networkWorld.player.name);
+						// System.out.println(client.networkWorld.player.name);
 						client.networkWorld.player.ID = Integer.parseInt(receivedMessage);
 						client.initialize = true;
 						client.networkWorld.player.player = true;
 						if (client.networkWorld.player.ID % 2 == 0) {
-							client.networkWorld.player.setX((int) (GameConfig.WIDTH / 2 - client.networkWorld.player.ID * 40));
+							client.networkWorld.player
+									.setX((int) (GameConfig.WIDTH / 2 - client.networkWorld.player.ID * 40));
 							client.networkWorld.player.setY((int) (GameConfig.HEIGHT / 2));
 						} else {
-							client.networkWorld.player.setX((int) (GameConfig.WIDTH / 2 + client.networkWorld.player.ID * 40));
-							client.networkWorld.player.setY((int) (GameConfig.HEIGHT / 2 - client.networkWorld.player.ID * 40));
+							client.networkWorld.player
+									.setX((int) (GameConfig.WIDTH / 2 + client.networkWorld.player.ID * 40));
+							client.networkWorld.player
+									.setY((int) (GameConfig.HEIGHT / 2 - client.networkWorld.player.ID * 40));
 						}
 					} else if (receivedMessage.equals("ok"))
 						System.out.println("OK, PLAY");
@@ -62,7 +66,8 @@ public class ClientHandler extends Thread {
 				} else {
 					// System.out.println(receivedMessage);
 					NetworkMessage message = new NetworkMessage(receivedMessage);
-					//System.out.println("Leggo "+receivedMessage+"sono "+client.networkWorld.player.ID);
+					// System.out.println("Leggo "+receivedMessage+"sono
+					// "+client.networkWorld.player.ID);
 					for (NetworkPlayer player : client.networkWorld.otherPlayers) {
 						if (message.action == 0) {
 							if (player.ID == message.ID) {
@@ -75,20 +80,25 @@ public class ClientHandler extends Thread {
 					}
 					if (message.action == 1) {
 						if (client.networkWorld.player.ID == message.ID) {
-							System.out.println("Sono "+client.networkWorld.player.ID+"Ricevo che devo combattere con "+message.IDreceiver);
 							client.networkWorld.player.readyToFight = true;
 						} else if (client.networkWorld.player.ID == message.IDreceiver) {
-							System.out.println("Sono "+client.networkWorld.player.ID+"   Ricevo che devo combattere con "+message.ID);
 							client.networkWorld.player.IDOtherPlayer = message.ID;
 							client.networkWorld.player.readyToFight = true;
 						}
-					}
-					else if(message.action == 2){
-						if(client.networkWorld.player.ID == message.IDreceiver){
-							System.out.println(message.x +" "+message.y+" "+message.currentState);
-							client.networkWorld.battle.enemy.x= message.x;
-							client.networkWorld.battle.enemy.x= message.y;
+					} else if (message.action == 2) {
+						if (client.networkWorld.player.ID == message.IDreceiver) {
+							client.networkWorld.battle.enemy.y = message.y;
 							client.networkWorld.battle.enemy.setState(message.currentState);
+							if (message.currentState == StateDynamicObject.RUNNINGLEFT){
+								client.networkWorld.battle.enemy.movesLeft(message.x);
+							}else if (message.currentState == StateDynamicObject.RUNNINGRIGHT){
+								client.networkWorld.battle.enemy.movesRight(message.x);
+							}else if (message.currentState == StateDynamicObject.FIGHTINGLEFT){
+								((NetworkCharacterBattle)client.networkWorld.battle.enemy).fightLeft(message.x);
+							}else if (message.currentState == StateDynamicObject.FIGHTINGRIGHT){
+								((NetworkCharacterBattle)client.networkWorld.battle.enemy).fightRight(message.x);
+							}
+							
 						}
 					}
 				}

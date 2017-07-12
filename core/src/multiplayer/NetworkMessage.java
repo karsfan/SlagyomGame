@@ -5,8 +5,8 @@ import character.DynamicObjects.StateDynamicObject;
 public class NetworkMessage {
 	int action;
 	int ID;
-	int x;
-	int y;
+	float x;
+	float  y;
 	int IDreceiver;
 	StateDynamicObject currentState;
 
@@ -51,19 +51,10 @@ public class NetworkMessage {
 		action = Integer.parseInt(actionString);
 		ID = Integer.parseInt(IDstring);
 		IDreceiver = Integer.parseInt(IDreceiverString);
-		x = convert(xString);
-		y = convert(yString);
+		x = Float.parseFloat(xString);
+		y = Float.parseFloat(yString);
 		
 		System.out.println("Messaggio "+actionString+" "+ID+" "+x+" "+y);
 	}
 
-	private int convert(String sCode) {
-		char[] tmp = sCode.toCharArray();
-		int result = 0;
-		for (int i = 0; i < tmp.length - 2; i++) {
-			result *= 10;
-			result += tmp[i] - '0';
-		}
-		return result;
-	}
 }

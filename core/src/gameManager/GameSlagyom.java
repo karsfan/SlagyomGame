@@ -105,7 +105,7 @@ public class GameSlagyom extends Game {
 				Item potion = new Item(Element.POTION, Level.FIRST);
 				world.Game.world.player.bag.add(potion);
 			}
-
+/**/
 			for (int i = 0; i < prefs.getInteger("POTION2"); i++) {
 				Item potion = new Item(Element.POTION, Level.SECOND);
 				world.Game.world.player.bag.add(potion);

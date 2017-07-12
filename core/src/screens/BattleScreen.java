@@ -22,9 +22,14 @@ import character.Bomb;
 import character.DynamicObjects.StateDynamicObject;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
+import gameManager.LoadingMusic;
 import gameManager.ScreenManager.State;
 import hud.BattleHud;
 import multiplayer.NetworkCharacterBattle;
+import staticObjects.Item;
+import staticObjects.Item.Level;
+import staticObjects.StaticObject.Element;
+import world.Game;
 
 public class BattleScreen implements Screen {
 
@@ -35,7 +40,7 @@ public class BattleScreen implements Screen {
 	public Battle battle;
 	boolean youWin = false;
 	boolean youLose = false;
-	
+
 	Table packTable;
 	Label bluePotion;
 	Label redPotion;
@@ -111,7 +116,6 @@ public class BattleScreen implements Screen {
 			gameslagyom.batch.draw(LoadingImage.getYouLoseImage(), 0, 0);
 	}
 
-
 	public void update(float dt) {
 
 		if (!youWin && !youLose) {
@@ -130,11 +134,15 @@ public class BattleScreen implements Screen {
 					}
 				} else {
 					youWin = true;
+					LoadingMusic.cashSound.play(1.5f);
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {
 						bluePotion = new Label(
 								"Blue potion x" + Integer.toString(
 										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1")),
 								MenuScreen.skin);
+						for (int i = 0; i < ((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1"); i++) {
+							Game.world.player.bag.add(new Item(Element.POTION, Level.FIRST));
+						}
 						bluePotion.setPosition(440, 410);
 						packTable.add(bluePotion);
 					}
@@ -156,8 +164,8 @@ public class BattleScreen implements Screen {
 					}
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("COIN") > 0) {
 						coin = new Label(
-								"Coins x" + Integer.toString(
-										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("COIN")),
+								"Coins x" + Integer
+										.toString(((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("COIN")),
 								MenuScreen.skin);
 						coin.setPosition(800, 410);
 						packTable.add(coin);

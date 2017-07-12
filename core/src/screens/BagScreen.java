@@ -545,6 +545,7 @@ public class BagScreen implements Screen {
 		if (!game.Modality) {
 			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
 				potions[0].setVisible(false);
+				potions[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 				potions[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 				potions[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 			} else {

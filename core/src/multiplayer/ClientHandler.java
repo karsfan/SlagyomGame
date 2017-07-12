@@ -101,6 +101,15 @@ public class ClientHandler extends Thread {
 							}
 						}
 					}
+					else if(message.action == 10){
+						for(NetworkPlayer otherPlayer : client.networkWorld.otherPlayers){
+							if(otherPlayer.ID == message.ID)
+							{
+								client.networkWorld.otherPlayers.remove(otherPlayer);
+								break;
+							}
+						}
+					}
 				}
 
 			} catch (IOException e) {

@@ -46,8 +46,10 @@ public class ServerHandler extends Thread {
 				
 			} catch (IOException e) {
 				System.out.println("Not connected");
+				writer.println(10+ " "+ ID + " "+0+" "+0 +" "+0+";"+"111111"+";");
+				writer.flush();
 				server.connected.remove(this);
-				e.printStackTrace();
+				//e.printStackTrace();
 				break;
 			}
 		}

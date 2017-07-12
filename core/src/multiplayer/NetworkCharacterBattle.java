@@ -38,17 +38,24 @@ public class NetworkCharacterBattle extends CharacterBattle {
 			y += velocityY * dt;
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING, dt);
-			if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
+			if (Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle) {
+				if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
+					if (collide() && x < Client.networkWorld.battle.enemy.getX())
+						x = (Client.networkWorld.battle.enemy.getX() - getWidth() / 2);
+					else if (collide() && x > Client.networkWorld.battle.enemy.getX())
+						x = (Client.networkWorld.battle.enemy.getX() + Client.networkWorld.battle.enemy.getWidth() / 2);
+				} else {
+					if (collide() && x < Client.networkWorld.battle.character.getX())
+						x = (Client.networkWorld.battle.character.getX() - getWidth() / 2);
+					else if (collide() && x > Client.networkWorld.battle.character.getX())
+						x = (Client.networkWorld.battle.character.getX()
+								+ Client.networkWorld.battle.character.getWidth() / 2);
+				}
+			}else{
 				if (collide() && x < Client.networkWorld.battle.enemy.getX())
 					x = (Client.networkWorld.battle.enemy.getX() - getWidth() / 2);
 				else if (collide() && x > Client.networkWorld.battle.enemy.getX())
 					x = (Client.networkWorld.battle.enemy.getX() + Client.networkWorld.battle.enemy.getWidth() / 2);
-			} else {
-				if (collide() && x < Client.networkWorld.battle.character.getX())
-					x = (Client.networkWorld.battle.character.getX() - getWidth() / 2);
-				else if (collide() && x > Client.networkWorld.battle.character.getX())
-					x = (Client.networkWorld.battle.character.getX()
-							+ Client.networkWorld.battle.character.getWidth() / 2);
 			}
 		} else {
 			jumping = false;
@@ -88,11 +95,15 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	@Override
 	public void fightRight(float dt) {
 		width += primary_weapon.getWidth();
-		if (collide())
-			if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
-				Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+		if (collide()) {
+			if (Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle) {
+				if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
+					Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+				} else
+					Client.networkWorld.battle.character.decreaseHealth(primary_weapon);
 			} else
-				Client.networkWorld.battle.character.decreaseHealth(primary_weapon);
+				Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+		}
 		width -= primary_weapon.getWidth();
 
 		setState(StateDynamicObject.FIGHTINGRIGHT, dt);
@@ -103,11 +114,15 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	@Override
 	public void fightLeft(float dt) {
 		x -= primary_weapon.getWidth();
-		if (collide())
-			if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
-				Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+		if (collide()) {
+			if (Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle) {
+				if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
+					Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+				} else
+					Client.networkWorld.battle.character.decreaseHealth(primary_weapon);
 			} else
-				Client.networkWorld.battle.character.decreaseHealth(primary_weapon);
+				Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+		}
 		x += primary_weapon.getWidth();
 
 		setState(StateDynamicObject.FIGHTINGLEFT, dt);

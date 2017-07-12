@@ -13,8 +13,8 @@ import world.Map;
 
 public class NetworkWorld {
 	public NetworkPlayer player;
-	ArrayList <NetworkPlayer> otherPlayers;
-	Map map;
+	ArrayList<NetworkPlayer> otherPlayers;
+	public Map map;
 	public Battle battle;
 	
 	public NetworkWorld(String name) {
@@ -27,13 +27,12 @@ public class NetworkWorld {
 	public LinkedList<Item> getListItems() {
 		return map.getListItems();
 	}
-	
 
 	public LinkedList<StaticObject> getListTile() {
 		return map.getListTile();
 	}
-	
-	public ArrayList <NetworkPlayer> getOtherPlayersList () {
+
+	public ArrayList<NetworkPlayer> getOtherPlayersList() {
 		return otherPlayers;
 	}
 
@@ -48,12 +47,23 @@ public class NetworkWorld {
 				break;
 			}
 		}
-		if(!creata){			
+		if (!creata) {
 			battle = null;
 			player.collideGym = false;
 		}
-		
+
 	}
 
+	public void createBattle(int iDOtherPlayer) {
+		Iterator<NetworkPlayer> otherP = otherPlayers.iterator();
+		while (otherP.hasNext()) {
+			NetworkPlayer ob = otherP.next();
+			if (ob.ID == iDOtherPlayer) {
+				battle = new Battle(player, ob);
+				break;
+			}
+		}
+
+	}
 
 }

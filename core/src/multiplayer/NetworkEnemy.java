@@ -49,9 +49,9 @@ public class NetworkEnemy extends Enemy {
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING);
 			if (collide() && x < Client.networkWorld.battle.character.getX())
-				x = Client.networkWorld.battle.character.getX() - getWidth() / 2;
+				x = (int) (Client.networkWorld.battle.character.getX() - getWidth() / 2);
 			else if (collide() && x > Client.networkWorld.battle.character.getX())
-				x = Client.networkWorld.battle.character.getX() + Client.networkWorld.battle.character.getWidth() / 2;
+				x = (int) (Client.networkWorld.battle.character.getX() + Client.networkWorld.battle.character.getWidth() / 2);
 		} else {
 			jumping = false;
 			doubleJumping = false;

@@ -1,6 +1,5 @@
 package screens;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
@@ -70,7 +69,7 @@ public class BattleScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		update(delta);
+		//update(delta);
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -101,6 +100,17 @@ public class BattleScreen implements Screen {
 						searching.getWidth() + 10, searching.getHeight() + 10);
 			}
 		}
+<<<<<<< HEAD
+//		Iterator<Bomb> bombIterator1 = ((ArrayList<Bomb>) ((Enemy)battle.enemy).getBombe()).iterator();
+//		
+//		while (bombIterator1.hasNext()) {
+//			Bomb searching1 = (Bomb) bombIterator1.next();
+//			if (searching1.lanciata == true) {
+//				gameslagyom.batch.draw(LoadingImage.getTileImage(searching1), searching1.getMainX(),
+//						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
+//			}
+//		}
+=======
 		Iterator<Bomb> bombIterator1 = ((ArrayList<Bomb>) ((Enemy) battle.enemy).getBombe()).iterator();
 
 		while (bombIterator1.hasNext()) {
@@ -110,6 +120,7 @@ public class BattleScreen implements Screen {
 						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
 			}
 		}
+>>>>>>> d4aec36ceefe7d4aa175a9cbe0ea152f252fc681
 		if (youWin)
 			gameslagyom.batch.draw(LoadingImage.getYouWinImage(), 0, 0);
 		else if (youLose)
@@ -117,7 +128,7 @@ public class BattleScreen implements Screen {
 	}
 
 	public void update(float dt) {
-
+		
 		if (!youWin && !youLose) {
 			handleInput(dt);
 			hud.update(dt);

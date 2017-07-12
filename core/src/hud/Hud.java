@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import gameManager.GameSlagyom;
+import multiplayer.Client;
 import screens.MenuScreen;
 import world.Game;
 
@@ -35,26 +37,33 @@ public class Hud {
 	public static Skin skinBar;
 	ProgressBar barPlayer;
 	Integer health;
+	GameSlagyom gameSlagyom;
 
-	public Hud(SpriteBatch sb) {
+	public Hud(GameSlagyom gameSlagyom) {
 		atlasBar = new TextureAtlas("menu/golden-spiral/golden-ui-skin.atlas");
 		skinBar = new Skin(Gdx.files.internal("menu/golden-spiral/golden-ui-skin.json"), atlasBar);
-		
-		spriteBatch = sb;
+		this.gameSlagyom = gameSlagyom;
+		spriteBatch = gameSlagyom.batch;
 		viewport = new FitViewport(1920, 1080);
-		stage = new Stage(viewport, sb);
-		
+		stage = new Stage(viewport, spriteBatch);
+
 		barPlayer = new ProgressBar(0.1f, 1f, 0.1f, false, skinBar);
 		barPlayer.setBounds(100, 500, 40, 15);
-		//barPlayer.setPosition(100, 500);
-		//barEnemy.setPosition(300, 500);
+		// barPlayer.setPosition(100, 500);
+		// barEnemy.setPosition(300, 500);
 		Table table = new Table();
 		table.top(); // la allinea sopra al centro
 		table.setFillParent(true);
-
-		nameLabel = new Label(Game.world.player.name, MenuScreen.skin);
-		coinsLabel = new Label(String.format("%3d", Game.world.player.coins), MenuScreen.skin);
-		villageLabel = new Label(String.format(Game.world.getMap().getNameVillage()), MenuScreen.skin);
+		if (!gameSlagyom.Modality) {
+			nameLabel = new Label(Game.world.player.name, MenuScreen.skin);
+			coinsLabel = new Label(String.format("%3d", Game.world.player.coins), MenuScreen.skin);
+			villageLabel = new Label(String.format(Game.world.getMap().getNameVillage()), MenuScreen.skin);
+		}
+		else{
+			nameLabel = new Label(Client.networkWorld.player.name, MenuScreen.skin);
+			coinsLabel = new Label(String.format("%3d", Client.networkWorld.player.coins), MenuScreen.skin);
+			villageLabel = new Label(String.format(Client.networkWorld.map.getNameVillage()), MenuScreen.skin);
+		}
 
 		table.add(nameLabel).expandX().pad(20);
 		table.add(villageLabel).expandX().pad(20);
@@ -72,8 +81,14 @@ public class Hud {
 	}
 
 	public void update() {
-		villageLabel.setText(String.format(Game.world.getMap().getNameVillage()));	
+		if(!gameSlagyom.Modality){
+		villageLabel.setText(String.format(Game.world.getMap().getNameVillage()));
 		coinsLabel.setText(String.format("%03d", Game.world.player.coins));
+		}
+		else{
+			villageLabel.setText(String.format(Client.networkWorld.map.getNameVillage()));
+			coinsLabel.setText(String.format("%03d", Client.networkWorld.player.coins));
+		}
 	}
 
 	public void setDialogText(String text) {

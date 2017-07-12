@@ -19,7 +19,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public CharacterBattle(Player player) {
 		super();
 		stateTimer = 0;
-
+		System.out.println(player.health);
 		bag = player.bag;
 		primary_weapon = player.primary_weapon;
 		this.health = player.health;
@@ -53,11 +53,11 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		return health;
 	}
 
-	public float getX() {
+	public int getX() {
 		return x;
 	}
 
-	public float getY() {
+	public int getY() {
 		return y;
 	}
 
@@ -85,9 +85,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			setState(StateDynamicObject.JUMPING, dt);
 
 			if (collide() && x < Game.world.battle.enemy.getX())
-				x = Game.world.battle.enemy.getX() - getWidth() / 2;
+				x = (int) (Game.world.battle.enemy.getX() - getWidth() / 2);
 			else if (collide() && x > Game.world.battle.enemy.getX())
-				x = Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2;
+				x = (int) (Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2);
 
 		} else {
 			jumping = false;

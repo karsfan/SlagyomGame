@@ -35,11 +35,11 @@ public class ClientHandler extends Thread {
 						client.initialize = true;
 						client.networkWorld.player.player = true;
 						if (client.networkWorld.player.ID % 2 == 0) {
-							client.networkWorld.player.setX(GameConfig.WIDTH / 2 - client.networkWorld.player.ID * 40);
-							client.networkWorld.player.setY(GameConfig.HEIGHT / 2);
+							client.networkWorld.player.setX((int) (GameConfig.WIDTH / 2 - client.networkWorld.player.ID * 40));
+							client.networkWorld.player.setY((int) (GameConfig.HEIGHT / 2));
 						} else {
-							client.networkWorld.player.setX(GameConfig.WIDTH / 2 + client.networkWorld.player.ID * 40);
-							client.networkWorld.player.setY(GameConfig.HEIGHT / 2 - client.networkWorld.player.ID * 40);
+							client.networkWorld.player.setX((int) (GameConfig.WIDTH / 2 + client.networkWorld.player.ID * 40));
+							client.networkWorld.player.setY((int) (GameConfig.HEIGHT / 2 - client.networkWorld.player.ID * 40));
 						}
 					} else if (receivedMessage.equals("ok"))
 						System.out.println("OK, PLAY");
@@ -49,30 +49,46 @@ public class ClientHandler extends Thread {
 							NetworkPlayer otherPlayer = new NetworkPlayer();
 							otherPlayer.ID = ID;
 							if (ID % 2 == 0) {
-								otherPlayer.setX(GameConfig.WIDTH / 2 - ID * 40);
-								otherPlayer.setY(GameConfig.HEIGHT / 2);
+								otherPlayer.setX((int) (GameConfig.WIDTH / 2 - ID * 40));
+								otherPlayer.setY((int) (GameConfig.HEIGHT / 2));
 							} else {
-								otherPlayer.setX(GameConfig.WIDTH / 2 + ID * 40);
-								otherPlayer.setY(GameConfig.HEIGHT / 2 - ID * 40);
+								otherPlayer.setX((int) (GameConfig.WIDTH / 2 + ID * 40));
+								otherPlayer.setY((int) (GameConfig.HEIGHT / 2 - ID * 40));
 							}
 							client.networkWorld.otherPlayers.add(otherPlayer);
 							System.out.println("Creo un personaggio");
 						}
 					}
-				}
-				else
-				{
-					//System.out.println(receivedMessage);
+				} else {
+					// System.out.println(receivedMessage);
 					NetworkMessage message = new NetworkMessage(receivedMessage);
-					
-					for(NetworkPlayer player : client.networkWorld.otherPlayers)
-					{
-						if(player.ID == message.ID)
-						{
-							player.x = message.x;
-							player.y = message.y;
-							player.setState(message.currentState);
-							break;
+					//System.out.println("Leggo "+receivedMessage+"sono "+client.networkWorld.player.ID);
+					for (NetworkPlayer player : client.networkWorld.otherPlayers) {
+						if (message.action == 0) {
+							if (player.ID == message.ID) {
+								player.x = message.x;
+								player.y = message.y;
+								player.setState(message.currentState);
+								break;
+							}
+						}
+					}
+					if (message.action == 1) {
+						if (client.networkWorld.player.ID == message.ID) {
+							System.out.println("Sono "+client.networkWorld.player.ID+"Ricevo che devo combattere con "+message.IDreceiver);
+							client.networkWorld.player.readyToFight = true;
+						} else if (client.networkWorld.player.ID == message.IDreceiver) {
+							System.out.println("Sono "+client.networkWorld.player.ID+"   Ricevo che devo combattere con "+message.ID);
+							client.networkWorld.player.IDOtherPlayer = message.ID;
+							client.networkWorld.player.readyToFight = true;
+						}
+					}
+					else if(message.action == 2){
+						if(client.networkWorld.player.ID == message.IDreceiver){
+							System.out.println(message.x +" "+message.y+" "+message.currentState);
+							client.networkWorld.battle.enemy.x= message.x;
+							client.networkWorld.battle.enemy.x= message.y;
+							client.networkWorld.battle.enemy.setState(message.currentState);
 						}
 					}
 				}

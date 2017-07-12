@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-
 import battle.Enemy.Level;
 import staticObjects.EnemyHome;
 import staticObjects.BossHome;
@@ -23,6 +22,7 @@ public class Map {
 	public String mapPath;
 	public boolean current;
 	public boolean online;
+
 	public Map(String path, boolean villageCurrent, String nameVillage, boolean online) {
 		this.nameVillage = nameVillage;
 		current = villageCurrent;
@@ -111,7 +111,7 @@ public class Map {
 			pointTable = new Point(((int) (point.getX() + 64 / 32)), (int) Math.abs((point.getY() - 64 / 32)));
 			table = new StaticObject("TABLE", point);
 			table.setPoint(pointTable);
-			table.setInfo("In questo shop potrai trovare tutto quello che ti serve per sconfiggere i tuoi nemici!!");
+			table.setInfo("Welcome to the market! Buy all you need");
 			listStaticObjects.add(table);
 			break;
 		case "PREENEMYHOME":
@@ -122,8 +122,7 @@ public class Map {
 			pointTable = new Point(((int) (point.getX() + 96 / 32)), (int) Math.abs((point.getY() - 96 / 32)));
 			table = new StaticObject("TABLE", point);
 			table.setPoint(pointTable);
-			table.setInfo(
-					"In questa Pre-Enemy House ci sono nemici con cui ti potrai allenare");
+			table.setInfo("Welcome to the GYM! You have to train before fighting against the Boss!");
 			listStaticObjects.add(table);
 			break;
 		case "TEMPLE":
@@ -134,21 +133,19 @@ public class Map {
 			pointTable = new Point(((int) (point.getX() + 128 / 32)), (int) Math.abs((point.getY() - 96 / 32)));
 			table = new StaticObject("TABLE", point);
 			table.setPoint(pointTable);
-			table.setInfo(
-					"In questo Tempio ci sono nemici che dovrai sconfiggere per poter affrontare il capo villaggio!");
+			table.setInfo("You have to defeat against some enemies before fighting against the boss!");
 			listStaticObjects.add(table);
 			break;
-			
+
 		case "CASTLE":
 			pointTable = new Point(((int) (point.getX() + 160 / 32)), (int) Math.abs((point.getY() - 160 / 32)));
 			table = new StaticObject("TABLE", point);
 			table.setPoint(pointTable);
 			listStaticObjects.add(table);
+			table.setInfo("If you're ready, open the door to fight against the boss");
 			if (current == true) {
-				table.setInfo("In questa castello c'e' il capo del villaggio");
 				staticObject = new BossHome(Level.MEDIUM, Element.CASTLE);
 			} else {
-				table.setInfo("In questa castello c'e' il capo del villaggio");
 				staticObject = new BossHome(Level.HARD, Element.CASTLE);
 			}
 			break;

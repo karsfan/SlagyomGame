@@ -13,6 +13,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	public boolean player = false;
 	public int ID;
 	public int IDOtherPlayer;
+
 	public NetworkCharacterBattle(NetworkPlayer player) {
 		super(player);
 		this.player = player.player;
@@ -102,12 +103,20 @@ public class NetworkCharacterBattle extends CharacterBattle {
 
 	@Override
 	public boolean collide() {
-
-		if (!((x > Client.networkWorld.battle.enemy.getX() + Client.networkWorld.battle.enemy.getWidth() / 2
-				|| Client.networkWorld.battle.enemy.getX() > x + width / 2)
-				|| (y > Client.networkWorld.battle.enemy.getY() + Client.networkWorld.battle.enemy.getHeight() / 2
-						|| Client.networkWorld.battle.enemy.getY() > y + height / 2)))
-			return true;
+		if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
+			if (!((x > Client.networkWorld.battle.enemy.getX() + Client.networkWorld.battle.enemy.getWidth() / 2
+					|| Client.networkWorld.battle.enemy.getX() > x + width / 2)
+					|| (y > Client.networkWorld.battle.enemy.getY() + Client.networkWorld.battle.enemy.getHeight() / 2
+							|| Client.networkWorld.battle.enemy.getY() > y + height / 2)))
+				return true;
+		} else {
+			if (!((x > Client.networkWorld.battle.character.getX() + Client.networkWorld.battle.character.getWidth() / 2
+					|| Client.networkWorld.battle.character.getX() > x + width / 2)
+					|| (y > Client.networkWorld.battle.character.getY()
+							+ Client.networkWorld.battle.character.getHeight() / 2
+							|| Client.networkWorld.battle.character.getY() > y + height / 2)))
+				return true;
+		}
 		return false;
 	}
 

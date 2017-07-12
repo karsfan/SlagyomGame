@@ -110,7 +110,7 @@ public class LoadingImage {
 	@SuppressWarnings("unchecked")
 	public LoadingImage() {
 		// TILES IMAGES
-		title = new Texture ("res/title.png");
+		title = new Texture("res/title.png");
 		homeImage = new Texture("res/home.png");
 		templeImage = new Texture("res/bigHome.png");
 		threeImage = new Texture("res/three.png");
@@ -443,7 +443,7 @@ public class LoadingImage {
 			}
 			break;
 		case "NetworkCharacterBattle":
-			if (((NetworkCharacterBattle) ob).player)
+			if (((NetworkCharacterBattle) ob).player) {
 				if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
 					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
 						animation = battleCharacterAnimationSpearLev1;
@@ -451,8 +451,9 @@ public class LoadingImage {
 						animation = battleCharacterAnimationSpearLev2;
 					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
 						animation = battleCharacterAnimationSpearLev3;
-				} else
-					animation = enemyAnimation;
+				}
+			} else
+				animation = enemyAnimation;
 			break;
 		case "Enemy":
 			animation = enemyAnimation;

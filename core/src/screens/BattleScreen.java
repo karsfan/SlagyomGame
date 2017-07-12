@@ -120,14 +120,6 @@ public class BattleScreen implements Screen {
 			if (battle.update(dt)) {
 				if (battle.character.getHealth() <= 0) {
 					youLose = true;
-					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3") > 0) {
-						bluePotion = new Label(
-								"Potion lev3 x" + Integer.toString(
-										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3")),
-								MenuScreen.skin);
-						packTable.add(bluePotion);
-						hud.stage.addActor(packTable);
-					}
 				} else {
 					youWin = true;
 					Game.world.player.bag.addPack((Pack) ((Enemy) battle.enemy).getWin_bonus());

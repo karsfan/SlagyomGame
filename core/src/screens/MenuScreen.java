@@ -33,6 +33,7 @@ public class MenuScreen implements Screen {
 	private OrthographicCamera camera;
 
 	private Texture background;
+	private Texture titleBackground = new Texture ("res/title.png");
 	private Sprite backgroundSprite;
 
 	static TextureAtlas atlas;
@@ -168,7 +169,7 @@ public class MenuScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
-		game.batch.draw( new Texture ("res/title.png"), 0, 310);
+		game.batch.draw(titleBackground, 0, 310);
 		game.batch.end();
 
 		stage.act(delta);

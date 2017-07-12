@@ -173,8 +173,10 @@ public class MenuScreen implements Screen {
 
 		stage.act(delta);
 		stage.draw();
-		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) 
+		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+			System.out.println("IFOASFIASMFASOI");
 			game.loadGame(nameLoad.getText());
+		}
 		
 	}
 

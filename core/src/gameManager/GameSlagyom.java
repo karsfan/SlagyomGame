@@ -163,10 +163,10 @@ public class GameSlagyom extends Game {
 			while (numDynamicObjects >= 0) {
 				DynamicObjects add;
 				if (prefs.getString("DynamicObject " + numDynamicObjects).equals("Man")) {
-					add = new Man(prefs.getInteger("X " + numDynamicObjects), prefs.getInteger("Y " + numDynamicObjects));
+					add = new Man(prefs.getFloat("X " + numDynamicObjects), prefs.getFloat("Y " + numDynamicObjects));
 					world.Game.world.getListDynamicObjects().add(add);
 				} else if (prefs.getString("DynamicObject " + numDynamicObjects).equals("Woman")) {
-					add = new Woman(prefs.getInteger("X " + numDynamicObjects), prefs.getInteger("Y " + numDynamicObjects),
+					add = new Woman(prefs.getFloat("X " + numDynamicObjects), prefs.getFloat("Y " + numDynamicObjects),
 							prefs.getString("WomanType " + numDynamicObjects));
 					world.Game.world.getListDynamicObjects().add(add);
 				}

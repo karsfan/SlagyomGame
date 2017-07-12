@@ -3,6 +3,8 @@ package character;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import battle.Enemy;
+import battle.Pack;
 import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
@@ -101,7 +103,22 @@ public class Bag {
 			}
 		}
 	}
+	
+	public void addPack (Pack pack) {
+		for (int i = 0; i < pack.getNumberOf("POTIONLEV1"); i++) 
+			add(new Item(Element.POTION, Level.FIRST));
+		for (int i = 0; i < pack.getNumberOf("POTIONLEV2"); i++) 
+			add(new Item(Element.POTION, Level.SECOND));
+		for (int i = 0; i < pack.getNumberOf("POTIONLEV3"); i++) 
+			add(new Item(Element.POTION, Level.THIRD));
+		for (int i = 0; i < pack.getNumberOf("PARCHLEV1"); i++) 
+			Game.world.player.bag.add(new Item(Element.PARCHMENT, Level.FIRST));
+		for (int i = 0; i < pack.getNumberOf("PARCHLEV2"); i++) 
+			Game.world.player.bag.add(new Item(Element.PARCHMENT, Level.SECOND));
 
+		Game.world.player.coins += pack.getNumberOf("COIN");
+	}
+	
 	public void add(Object object) {
 			if (object instanceof Bomb) {
 				Bomb bomb = new Bomb(((Bomb) object).getLevel(), ((Bomb) object).getType());

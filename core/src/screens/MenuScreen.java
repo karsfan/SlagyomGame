@@ -140,7 +140,7 @@ public class MenuScreen implements Screen {
 		});
 
 		// Add buttons to table
-		mainTable.add(playButton).pad(5).padTop(viewport.getWorldHeight() / 3);
+		mainTable.add(playButton).pad(5).padTop(viewport.getWorldHeight() / 3 + 30);
 		mainTable.row();
 		mainTable.add(continueButton).pad(5);
 		mainTable.row();

@@ -133,15 +133,13 @@ public class BattleScreen implements Screen {
 					}
 				} else {
 					youWin = true;
+					Game.world.player.bag.addPack((Pack) ((Enemy) battle.enemy).getWin_bonus());
 					LoadingMusic.cashSound.play(1.5f);
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {
 						bluePotion = new Label(
 								"Blue potion x" + Integer.toString(
 										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1")),
 								MenuScreen.skin);
-						for (int i = 0; i < ((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1"); i++) {
-							Game.world.player.bag.add(new Item(Element.POTION, Level.FIRST));
-						}
 						bluePotion.setPosition(440, 410);
 						packTable.add(bluePotion);
 					}

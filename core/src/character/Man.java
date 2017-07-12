@@ -43,7 +43,7 @@ public class Man extends DynamicObjects implements ICollidable {
 		previousState = StateDynamicObject.STANDING;
 	}
 
-	public Man(int x, int y) {
+	public Man(float x, float y) {
 		super();
 		collision = false;
 		collisionWithCharacter = false;

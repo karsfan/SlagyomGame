@@ -44,35 +44,40 @@ public class Pack {
 		case "COIN":
 			for (int i = 0; i < items.size(); i++)
 				if (items.get(i).getElement() == Element.COIN)
-					number++;
+					number += 5;
 			break;
 		case "POTIONLEV1":
 			for (int i = 0; i < items.size(); i++)
-				if (items.get(i).getElement() == Element.POTION && items.get(i).getLevel() == staticObjects.Item.Level.FIRST)
+				if (items.get(i).getElement() == Element.POTION
+						&& items.get(i).getLevel() == staticObjects.Item.Level.FIRST)
 					number++;
 			break;
 		case "POTIONLEV2":
 			for (int i = 0; i < items.size(); i++)
-				if (items.get(i).getElement() == Element.POTION && items.get(i).getLevel() == staticObjects.Item.Level.SECOND)
+				if (items.get(i).getElement() == Element.POTION
+						&& items.get(i).getLevel() == staticObjects.Item.Level.SECOND)
 					number++;
 			break;
 		case "POTIONLEV3":
 			for (int i = 0; i < items.size(); i++)
-				if (items.get(i).getElement() == Element.POTION && items.get(i).getLevel() == staticObjects.Item.Level.THIRD)
+				if (items.get(i).getElement() == Element.POTION
+						&& items.get(i).getLevel() == staticObjects.Item.Level.THIRD)
 					number++;
 			break;
 		case "PARCHLEV1":
 			for (int i = 0; i < items.size(); i++)
-				if (items.get(i).getElement() == Element.PARCHMENT && items.get(i).getLevel() == staticObjects.Item.Level.FIRST)
+				if (items.get(i).getElement() == Element.PARCHMENT
+						&& items.get(i).getLevel() == staticObjects.Item.Level.FIRST)
 					number++;
 			break;
 		case "PARCHLEV2":
 			for (int i = 0; i < items.size(); i++)
-				if (items.get(i).getElement() == Element.PARCHMENT && items.get(i).getLevel() == staticObjects.Item.Level.SECOND)
+				if (items.get(i).getElement() == Element.PARCHMENT
+						&& items.get(i).getLevel() == staticObjects.Item.Level.SECOND)
 					number++;
 			break;
 		}
-		
+
 		return number;
 	}
 }

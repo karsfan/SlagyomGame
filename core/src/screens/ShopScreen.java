@@ -201,6 +201,8 @@ public class ShopScreen implements Screen {
 				buying = false;
 				optionsTable.add(LoadingImage.rightArrow);
 				optionsTable.add(LoadingImage.leftArrow);
+				optionsTable.add(LoadingImage.close);
+
 			}
 		});
 
@@ -233,6 +235,16 @@ public class ShopScreen implements Screen {
 				buying = false;
 			}
 		});
+		
+		LoadingImage.close.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (!game.Modality)
+					game.screenManager.swapScreen(State.PLAYING);
+				else
+					game.screenManager.swapScreen(State.MULTIPLAYERGAME);
+			}
+		});
 
 		buyButton.setPosition(573, 90);
 		level3n.setMaxLength(3);
@@ -252,6 +264,7 @@ public class ShopScreen implements Screen {
 		LoadingImage.emptyShopIcon.setPosition(141, 43);
 		LoadingImage.rightArrow.setPosition(283, 274);
 		LoadingImage.leftArrow.setPosition(115, 274);
+		LoadingImage.close.setPosition(101, 450);
 		coins.setPosition(199, 274);
 		returnButton.setPosition(573, 50);
 		LoadingImage.emptyShopIcon.setVisible(true);
@@ -261,6 +274,7 @@ public class ShopScreen implements Screen {
 		optionsTable.add(returnButton);
 		optionsTable.add(LoadingImage.rightArrow);
 		optionsTable.add(LoadingImage.leftArrow);
+		optionsTable.add(LoadingImage.close);
 		optionsTable.add(LoadingImage.emptyShopIcon);
 		// END OPTIONS TABLE
 

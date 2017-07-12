@@ -47,7 +47,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 		previousState = StateDynamicObject.STANDING;
 	}
 
-	public Woman(int x, int y, String type) {
+	public Woman(float x, float y, String type) {
 		super();
 		collision = false;
 		collisionWithCharacter = false;

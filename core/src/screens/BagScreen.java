@@ -92,6 +92,7 @@ public class BagScreen implements Screen {
 		use = new TextButton("Use", MenuScreen.skin);
 		delete = new TextButton("Delete", MenuScreen.skin);
 		exit = new TextButton("Return", MenuScreen.skin);
+		weapons = new TextButton("Weapon", MenuScreen.skin);
 		use.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -147,6 +148,7 @@ public class BagScreen implements Screen {
 		LoadingImage.emptyBagIcon.setPosition(141, 43);
 		LoadingImage.rightArrow.setPosition(283, 254);
 		LoadingImage.leftArrow.setPosition(115, 254);
+		LoadingImage.close.setPosition(101, 450);
 		LoadingImage.emptyBagIcon.setVisible(true);
 
 		use.setPosition(ScreenConfig.optionTableX, ScreenConfig.optionTableFirstY);
@@ -159,6 +161,7 @@ public class BagScreen implements Screen {
 		optionsTable.add(LoadingImage.emptyBagIcon);
 		optionsTable.add(LoadingImage.rightArrow);
 		optionsTable.add(LoadingImage.leftArrow);
+		optionsTable.add(LoadingImage.close);
 		optionsTable.add(LoadingImage.emptyBagIcon);
 
 		optionsTable.add(use);
@@ -193,6 +196,16 @@ public class BagScreen implements Screen {
 			}
 		});
 
+		LoadingImage.close.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (!game.Modality)
+					game.screenManager.swapScreen(State.PLAYING);
+				else
+					game.screenManager.swapScreen(State.MULTIPLAYERGAME);
+			}
+		});
+
 		// END OPTIONS TABLE
 
 		// POTIONS TABLE
@@ -201,7 +214,7 @@ public class BagScreen implements Screen {
 
 		potionsTable.setLayoutEnabled(false);
 		potions = new TextButton[3];
-		
+
 		potions[0] = new TextButton("Blue potion  x", MenuScreen.skin);
 		potions[1] = new TextButton("Red potion  x", MenuScreen.skin);
 		potions[2] = new TextButton("Green potion  x", MenuScreen.skin);
@@ -235,7 +248,7 @@ public class BagScreen implements Screen {
 		potionsLabel.setPosition(149, 425);
 		potionsTable.add(potionsLabel);
 
-		//setPositionPotion();
+		// setPositionPotion();
 		potionsTable.add(potions[0]);
 		potionsTable.add(potions[1]);
 		potionsTable.add(potions[2]);
@@ -289,14 +302,14 @@ public class BagScreen implements Screen {
 
 		weaponsTable.setVisible(false);
 		weaponsTable.setLayoutEnabled(false);
-
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 		if (!game.Modality) {
-			if (Game.world.player.bag.secondary_weapon != null)
+			if (Game.world.player.bag.secondary_weapon != null) 
 				weapons = new TextButton(Game.world.player.bag.secondary_weapon.getType().toString() + " "
 						+ Game.world.player.bag.secondary_weapon.getLevel().toString(), MenuScreen.skin);
-			else
+			else 
 				weapons = new TextButton("", MenuScreen.skin);
+			
 		} else {
 			if (Client.networkWorld.player.bag.secondary_weapon != null)
 				weapons = new TextButton(
@@ -352,7 +365,7 @@ public class BagScreen implements Screen {
 
 		parchmentsLabel.setPosition(120, 425);
 		parchmentsTable.add(parchmentsLabel);
-		
+
 		parchmentsTable.add(parchments[0]);
 		parchmentsTable.add(parchments[1]);
 
@@ -412,7 +425,10 @@ public class BagScreen implements Screen {
 		game.batch.end();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			game.screenManager.swapScreen(State.PAUSE);
+			if (!game.Modality)
+				game.screenManager.swapScreen(State.PLAYING);
+			else
+				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
 		}
 
 		if (currentPocket == Pocket.POTIONS) {

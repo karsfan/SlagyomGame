@@ -103,6 +103,7 @@ public class LoadingImage {
 	public static ImageButton emptyShopIcon;
 	public static ImageButton leftArrow;
 	public static ImageButton rightArrow;
+	public static ImageButton close;
 	public static ImageButton howMuch;
 
 	// AUDIO & MUSIC
@@ -153,6 +154,7 @@ public class LoadingImage {
 		rightArrow = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/rightArrow.png"))));
 		leftArrow = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/leftArrow.png"))));
+		close = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/close.png"))));
 
 		emptyBagIcon = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/emptyIcon.png"))));

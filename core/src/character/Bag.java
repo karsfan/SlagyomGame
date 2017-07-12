@@ -9,13 +9,11 @@ import staticObjects.StaticObject.Element;
 import world.Game;
 
 public class Bag {
-	int capacity;
 	public ArrayList<Item> items;
 	public Weapon secondary_weapon;
 	public ArrayList<Bomb> bombe;
 
 	public Bag() {
-		capacity = 50;
 		secondary_weapon = null;
 		items = new ArrayList<Item>();
 		bombe = new ArrayList<Bomb>();
@@ -104,8 +102,7 @@ public class Bag {
 		}
 	}
 
-	public boolean add(Object object) {
-		if (items.size() + bombe.size() < capacity) {
+	public void add(Object object) {
 			if (object instanceof Bomb) {
 				Bomb bomb = new Bomb(((Bomb) object).getLevel(), ((Bomb) object).getType());
 				bombe.add(bomb);
@@ -119,9 +116,6 @@ public class Bag {
 			else if (object instanceof Weapon) {
 				secondary_weapon = new Weapon(((Weapon) object).getLevel(), ((Weapon) object).getType());
 			}
-			return true;
-		}
-		return false;
 	}
 
 	public void useItem(Item item) {

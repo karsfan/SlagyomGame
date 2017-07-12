@@ -25,9 +25,6 @@ import gameManager.LoadingMusic;
 import gameManager.ScreenManager.State;
 import hud.BattleHud;
 import multiplayer.NetworkCharacterBattle;
-import staticObjects.Item;
-import staticObjects.Item.Level;
-import staticObjects.StaticObject.Element;
 import world.Game;
 
 public class BattleScreen implements Screen {

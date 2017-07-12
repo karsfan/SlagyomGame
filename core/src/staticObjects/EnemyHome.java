@@ -18,7 +18,7 @@ public class EnemyHome extends StaticObject {
 		element = type;
 		enemy = new ArrayList<Enemy>();
 		if (type == Element.TEMPLE) {
-			Enemy enemyOne = new Enemy(Level.HARD);
+			Enemy enemyOne = new Enemy(levelEnemy);
 			Enemy enemyTwo = new Enemy(levelEnemy);
 			Enemy enemyThree = new Enemy(levelEnemy);
 			if (Game.enemy != null) {

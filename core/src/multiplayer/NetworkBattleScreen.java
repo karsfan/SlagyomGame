@@ -15,7 +15,7 @@ import gameManager.ScreenManager.State;
 import screens.BattleScreen;
 
 public class NetworkBattleScreen extends BattleScreen {
-	Client client;
+	public Client client;
 
 	public NetworkBattleScreen(GameSlagyom gameslagyom, Battle battle, Client client) {
 		super(gameslagyom, battle);

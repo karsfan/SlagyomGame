@@ -344,10 +344,9 @@ public class Woman extends DynamicObjects implements ICollidable {
 	}
 
 	public void update(float dt) {
-
+		
 		if (collision || collisionWithCharacter)
 			changeDirection(getCurrentState());
-
 		else if (currentState == StateDynamicObject.RUNNINGLEFT)
 			movesLeft(dt);
 		else if (currentState == StateDynamicObject.RUNNINGRIGHT)

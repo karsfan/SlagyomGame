@@ -7,6 +7,7 @@ import character.Weapon;
 import character.Player;
 import character.Weapon.Level;
 import character.Weapon.Type;
+import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
 import staticObjects.StaticObject;
@@ -21,6 +22,8 @@ public class NetworkPlayer extends Player {
 	public boolean readyToFight = false;
 	public boolean isFighting = false;
 	public boolean collideWithOtherPlayer = false;
+	public boolean collisionWithObject = false;
+	public Item itemPicked;
 	public NetworkPlayer(String name) {
 		super(name, true);
 		this.name = name;
@@ -145,15 +148,26 @@ public class NetworkPlayer extends Player {
 						|| (y > ((NetworkPlayer) ob).getY() + ((NetworkPlayer) ob).getHeight() / 2
 								|| ((NetworkPlayer) ob).getY() > y + height / 2))) {
 					collideWithOtherPlayer = true;
-//					Client.writer.println(
-//							1 + " " + ID + " " + 0 + " " + 0 + " " + 0 + ";" + ((NetworkPlayer) ob).ID + ";");
-//					Client.writer.flush();
 					IDOtherPlayer = ((NetworkPlayer) ob).ID;
-					System.out.println(ID + "collisione con " + IDOtherPlayer);
+					//System.out.println(ID + "collisione con " + IDOtherPlayer);
 					return true;
 				}
 			}
 		}
+		Iterator<Item> it2 = Client.networkWorld.getListItems().iterator();
+		while (it2.hasNext()) {
+			Object ob = (Object) it2.next();
+			if (ob instanceof Item) {
+				if (((Item) ob).collide(this)) {
+					if (pickItem((Item) ob)) {
+						collisionWithObject = true;
+						itemPicked = (Item) ob;
+						return false;
+					} 
+				}
+			}
+		}
+		collisionWithObject = false;
 		collideWithOtherPlayer = false;
 		return false;
 	}

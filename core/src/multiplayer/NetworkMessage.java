@@ -55,7 +55,7 @@ public class NetworkMessage {
 			currentState = StateDynamicObject.JUMPING;
 			break;
 		default:
-			System.out.println("Errore codifica currentState nel messaggio. CurrentState: "+currentStateString);
+			//System.out.println("Errore codifica currentState nel messaggio. CurrentState: "+currentStateString);
 			break;
 		}
 		action = Integer.parseInt(actionString);
@@ -64,7 +64,7 @@ public class NetworkMessage {
 		x = Float.parseFloat(xString);
 		y = Float.parseFloat(yString);
 		
-		System.out.println("Messaggio "+actionString+" "+ID+" "+x+" "+y+currentState);
+		//System.out.println("Messaggio "+actionString+" "+ID+" "+x+" "+y+currentState);
 	}
 
 }

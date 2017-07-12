@@ -39,6 +39,7 @@ public class Hud {
 	Integer health;
 	GameSlagyom gameSlagyom;
 
+	@SuppressWarnings("static-access")
 	public Hud(GameSlagyom gameSlagyom) {
 		atlasBar = new TextureAtlas("menu/golden-spiral/golden-ui-skin.atlas");
 		skinBar = new Skin(Gdx.files.internal("menu/golden-spiral/golden-ui-skin.json"), atlasBar);
@@ -80,6 +81,7 @@ public class Hud {
 		stage.addActor(textTable);
 	}
 
+	@SuppressWarnings("static-access")
 	public void update() {
 		if(!gameSlagyom.modalityMultiplayer){
 		villageLabel.setText(String.format(Game.world.getMap().getNameVillage()));

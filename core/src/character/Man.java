@@ -2,7 +2,6 @@ package character;
 
 import java.util.Iterator;
 
-import screens.PlayScreen;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
 import world.Game;
@@ -89,6 +88,8 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesRight(float dt) {
+		if(dt*velocity>=2)
+		System.out.println(dt*velocity);
 		if (x + velocity * dt < GameConfig.WIDTH - width / 2) {
 			x += velocity * dt;
 			if (collide(this)) {

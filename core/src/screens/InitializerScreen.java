@@ -4,14 +4,10 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -19,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -36,10 +31,10 @@ public class InitializerScreen implements Screen {
 
 	private Texture background;
 	private Sprite backgroundSprite;
-	private BitmapFont bf_loadProgress;
-	private long progress = 0;
-	private long startTime = 0;
-	private ShapeRenderer mShapeRenderer;
+//	private BitmapFont bf_loadProgress;
+//	private long progress = 0;
+//	private long startTime = 0;
+//	private ShapeRenderer mShapeRenderer;
 	final Label name;
 	final TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
 	final TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);
@@ -139,10 +134,10 @@ public class InitializerScreen implements Screen {
 		mainTable.row();
 
 		stage.addActor(mainTable);
-		bf_loadProgress = new BitmapFont();
-
-		mShapeRenderer = new ShapeRenderer();
-		startTime = TimeUtils.nanoTime();
+//		bf_loadProgress = new BitmapFont();
+//
+//		mShapeRenderer = new ShapeRenderer();
+//		startTime = TimeUtils.nanoTime();
 
 	}
 
@@ -173,26 +168,26 @@ public class InitializerScreen implements Screen {
 			game.screenManager.currentState = State.PLAYING;
 		}
 	}
-	private void showLoadProgress() {
-		long currentTimeStamp = TimeUtils.nanoTime();
-		if (currentTimeStamp - startTime > TimeUtils.millisToNanos(500)) {
-			startTime = currentTimeStamp;
-			progress = progress + 10;
-		}
-		// Width of progress bar on screen relevant to Screen width
-		float progressBarWidth = ((viewport.getWorldWidth()/2) / 100) * progress;
-
-		//game.batch.begin();
-		bf_loadProgress.draw(game.batch, "Loading " + progress + " / " + 100, 10, 40);
-		//game.batch.end();
-
-		mShapeRenderer.setProjectionMatrix(camera.combined);
-		mShapeRenderer.begin(ShapeType.Filled);
-		mShapeRenderer.setColor(Color.YELLOW);
-		mShapeRenderer.rect(0, 10, progressBarWidth, 10);
-		mShapeRenderer.end();
-
-	}
+//	private void showLoadProgress() {
+//		long currentTimeStamp = TimeUtils.nanoTime();
+//		if (currentTimeStamp - startTime > TimeUtils.millisToNanos(500)) {
+//			startTime = currentTimeStamp;
+//			progress = progress + 10;
+//		}
+//		// Width of progress bar on screen relevant to Screen width
+//		float progressBarWidth = ((viewport.getWorldWidth()/2) / 100) * progress;
+//
+//		//game.batch.begin();
+//		bf_loadProgress.draw(game.batch, "Loading " + progress + " / " + 100, 10, 40);
+//		//game.batch.end();
+//
+//		mShapeRenderer.setProjectionMatrix(camera.combined);
+//		mShapeRenderer.begin(ShapeType.Filled);
+//		mShapeRenderer.setColor(Color.YELLOW);
+//		mShapeRenderer.rect(0, 10, progressBarWidth, 10);
+//		mShapeRenderer.end();
+//
+//	}
 
 	@Override
 	public void resize(int width, int height) {

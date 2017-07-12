@@ -76,6 +76,7 @@ public class ShopScreen implements Screen {
 	boolean scaling = false;
 	public Item itemSelected;
 
+	@SuppressWarnings("static-access")
 	public ShopScreen(final GameSlagyom game) {
 		this.game = game;
 
@@ -557,6 +558,7 @@ public class ShopScreen implements Screen {
 
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);

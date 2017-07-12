@@ -278,7 +278,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		return width;
 	}
 
-	boolean pickItem(Item item) {
+	public boolean pickItem(Item item) {
 		if (item.getElement() != Element.COIN && !item.picked) {
 				bag.add(item);
 				LoadingMusic.itemSound.play(1.0f);

@@ -3,7 +3,6 @@ package battle;
 import java.util.ArrayList;
 
 import battle.Enemy.Level;
-import character.Weapon;
 import staticObjects.Item;
 import staticObjects.StaticObject.Element;
 

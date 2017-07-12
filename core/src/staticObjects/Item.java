@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 import character.Player;
+import gameManager.GameSlagyom;
+import multiplayer.Client;
 import world.Game;
 import world.GameConfig;
 
@@ -28,7 +30,6 @@ public class Item extends StaticObject {
 			shape = new Rectangle((int) x, (int) y, 14, 14);
 			break;
 		case PARCHMENT:
-			System.out.println("akjnmnx a,");
 			shape = new Rectangle((int) x, (int) y, 10, 10);
 			break;
 		default:
@@ -106,6 +107,7 @@ public class Item extends StaticObject {
 		case 0:
 			element = Element.COIN;
 			shape = new Rectangle();
+			this.level = Level.FIRST;
 			shape.width = 11;
 			shape.height = 11;
 			break;
@@ -283,30 +285,60 @@ public class Item extends StaticObject {
 
 	@Override
 	public boolean collide(Object e) {
-		if (!Game.world.getListTile().isEmpty()) {
+		if (!GameSlagyom.modalityMultiplayer) {
+			if (!Game.world.getListTile().isEmpty()) {
 
-			Iterator<StaticObject> it = Game.world.getListTile().iterator();
-			while (it.hasNext()) {
-				Object ob = (Object) it.next();
+				Iterator<StaticObject> it = Game.world.getListTile().iterator();
+				while (it.hasNext()) {
+					Object ob = (Object) it.next();
 
-				if (((StaticObject) ob).getElement() != Element.GROUND
-						&& ((StaticObject) ob).getElement() != Element.ROAD)
-					if (!((shape.x > ((StaticObject) ob).getX() + ((StaticObject) ob).getWidth()
-							|| ((StaticObject) ob).getX() > shape.x + shape.width)
-							|| (shape.y > ((StaticObject) ob).getY() + ((StaticObject) ob).getHeight()
-									|| ((StaticObject) ob).getY() > shape.y + shape.height))) {
-						return true;
-					}
+					if (((StaticObject) ob).getElement() != Element.GROUND
+							&& ((StaticObject) ob).getElement() != Element.ROAD)
+						if (!((shape.x > ((StaticObject) ob).getX() + ((StaticObject) ob).getWidth()
+								|| ((StaticObject) ob).getX() > shape.x + shape.width)
+								|| (shape.y > ((StaticObject) ob).getY() + ((StaticObject) ob).getHeight()
+										|| ((StaticObject) ob).getY() > shape.y + shape.height))) {
+							return true;
+						}
 
+				}
+			}
+
+			if (e instanceof Player) {
+				if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
+						|| ((Player) e).getX() > shape.x + shape.width)
+						|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight()
+								|| ((Player) e).getY() > shape.y + shape.height))) {
+					return true;
+				}
 			}
 		}
+		else{
+			if (!Client.networkWorld.getListTile().isEmpty()) {
 
-		if (e instanceof Player) {
-			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
-					|| ((Player) e).getX() > shape.x + shape.width)
-					|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight()
-							|| ((Player) e).getY() > shape.y + shape.height))) {
-				return true;
+				Iterator<StaticObject> it = Client.networkWorld.getListTile().iterator();
+				while (it.hasNext()) {
+					Object ob = (Object) it.next();
+
+					if (((StaticObject) ob).getElement() != Element.GROUND
+							&& ((StaticObject) ob).getElement() != Element.ROAD)
+						if (!((shape.x > ((StaticObject) ob).getX() + ((StaticObject) ob).getWidth()
+								|| ((StaticObject) ob).getX() > shape.x + shape.width)
+								|| (shape.y > ((StaticObject) ob).getY() + ((StaticObject) ob).getHeight()
+										|| ((StaticObject) ob).getY() > shape.y + shape.height))) {
+							return true;
+						}
+					
+				}
+				
+			}
+			if (e instanceof Player) {
+				if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
+						|| ((Player) e).getX() > shape.x + shape.width)
+						|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight()
+								|| ((Player) e).getY() > shape.y + shape.height))) {
+					return true;
+				}
 			}
 		}
 		return false;

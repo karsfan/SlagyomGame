@@ -9,7 +9,6 @@ public class ThreadWorld extends Thread {
 	public ThreadWorld(World world, Semaphore semaphore) {
 		this.world = world;
 		this.semaphore = semaphore;
-	//	run();
 	}
 
 	@Override

@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 import character.DynamicObjects.StateDynamicObject;
+import staticObjects.Item;
+import staticObjects.StaticObject;
 import world.GameConfig;
 
 public class ClientHandler extends Thread {
@@ -45,9 +47,10 @@ public class ClientHandler extends Thread {
 							client.networkWorld.player
 									.setY((int) (GameConfig.HEIGHT / 2 - client.networkWorld.player.ID * 40));
 						}
-					} else if (receivedMessage.equals("ok"))
+					} else if (receivedMessage.equals("ok")) {
+						client.go = true;
 						System.out.println("OK, PLAY");
-					else {
+					} else {
 						int ID = Integer.parseInt(receivedMessage);
 						if (ID != client.networkWorld.player.ID) {
 							NetworkPlayer otherPlayer = new NetworkPlayer();
@@ -79,6 +82,54 @@ public class ClientHandler extends Thread {
 								if (message.ID == 0)
 									client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 								client.networkWorld.otherPlayers.remove(player);
+								break;
+							}
+						}
+					}
+					if (message.action >= 15 && message.action <= 20) {
+						Item item = null;
+						if (message.action == 15) {
+							item = new Item(message.x, message.y, StaticObject.Element.POTION, Item.Level.FIRST);
+							client.networkWorld.getListItems().add(item);
+						} else if (message.action == 16) {
+							item = new Item(message.x, message.y, StaticObject.Element.POTION, Item.Level.SECOND);
+							client.networkWorld.getListItems().add(item);
+						} else if (message.action == 17) {
+							item = new Item(message.x, message.y, StaticObject.Element.POTION, Item.Level.THIRD);
+							client.networkWorld.getListItems().add(item);
+						} else if (message.action == 18) {
+							item = new Item(message.x, message.y, StaticObject.Element.PARCHMENT, Item.Level.FIRST);
+							client.networkWorld.getListItems().add(item);
+						} else if (message.action == 19) {
+							item = new Item(message.x, message.y, StaticObject.Element.PARCHMENT, Item.Level.SECOND);
+							client.networkWorld.getListItems().add(item);
+						} else if (message.action == 20) {
+							item = new Item(message.x, message.y, StaticObject.Element.COIN, Item.Level.FIRST);
+							client.networkWorld.getListItems().add(item);
+						}
+					} else if (message.action >= 21 && message.action <= 26) {
+						Item item = null;
+						if (message.action == 21) {
+							item = new Item(message.x, message.y, StaticObject.Element.POTION, Item.Level.FIRST);
+						} else if (message.action == 22) {
+							item = new Item(message.x, message.y, StaticObject.Element.POTION, Item.Level.SECOND);
+						} else if (message.action == 23) {
+							item = new Item(message.x, message.y, StaticObject.Element.POTION, Item.Level.THIRD);
+						} else if (message.action == 24) {
+							item = new Item(message.x, message.y, StaticObject.Element.PARCHMENT, Item.Level.FIRST);
+						} else if (message.action == 25) {
+							item = new Item(message.x, message.y, StaticObject.Element.PARCHMENT, Item.Level.SECOND);
+						} else if (message.action == 26) {
+							item = new Item(message.x, message.y, StaticObject.Element.COIN, Item.Level.FIRST);
+						}
+						for (Item itemeliminare : client.networkWorld.getListItems()) {
+							if (itemeliminare.getX() == item.getX() && itemeliminare.getY() == item.getY()
+									&& itemeliminare.getElement() == item.getElement()
+									&& itemeliminare.getLevel() == item.getLevel()) {
+								while (!client.canModify) {
+									System.out.println("Fermo");
+								}
+								client.networkWorld.getListItems().remove(itemeliminare);
 								break;
 							}
 						}

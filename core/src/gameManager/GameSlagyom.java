@@ -95,15 +95,11 @@ public class GameSlagyom extends Game {
 	public void loadGame(String path) {
 		prefs = Gdx.app.getPreferences(path);
 		if (prefs.getString("name") != "") {
-<<<<<<< HEAD
-			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
+
+			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"), prefs.getBoolean("gender"));
 			world.Game.world.player.x = prefs.getInteger("xCharPosition");
 			world.Game.world.player.y = prefs.getInteger("yCharPosition");
-=======
-			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"), prefs.getBoolean("gender"));
-			world.Game.world.player.x = prefs.getFloat("xCharPosition");
-			world.Game.world.player.y = prefs.getFloat("yCharPosition");
->>>>>>> d4aec36ceefe7d4aa175a9cbe0ea152f252fc681
+			
 			world.Game.world.player.health = prefs.getInteger("health");
 			world.Game.world.player.coins = prefs.getInteger("coins");
 			
@@ -111,7 +107,7 @@ public class GameSlagyom extends Game {
 				Item potion = new Item(Element.POTION, Level.FIRST);
 				world.Game.world.player.bag.add(potion);
 			}
-/**/
+
 			for (int i = 0; i < prefs.getInteger("POTION2"); i++) {
 				Item potion = new Item(Element.POTION, Level.SECOND);
 				world.Game.world.player.bag.add(potion);

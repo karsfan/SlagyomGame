@@ -7,7 +7,7 @@ import character.Bomb;
 import world.GameConfig;
 
 public class NetworkEnemy extends Enemy {
-
+	
 	public NetworkEnemy(Enemy enemy) {
 		super(enemy);
 	}

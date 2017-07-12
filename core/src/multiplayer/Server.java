@@ -11,7 +11,7 @@ public class Server {
 	int numPlayer;
 
 	public Server(int port, int numPlayer) {
-		this.numPlayer = 2;
+		this.numPlayer = 4;
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) {

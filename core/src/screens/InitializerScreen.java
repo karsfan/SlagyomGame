@@ -2,6 +2,7 @@ package screens;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -162,7 +163,15 @@ public class InitializerScreen implements Screen {
 
 		stage.act();
 		stage.draw();
-
+		
+		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+			LoadingMusic.pause();
+			LoadingMusic.backgroundSound.loop(10.0f);
+			game.screenManager.menuScreen.menuMusic.stop();
+			game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected));
+			game.setScreen(game.screenManager.playScreen);
+			game.screenManager.currentState = State.PLAYING;
+		}
 	}
 	private void showLoadProgress() {
 		long currentTimeStamp = TimeUtils.nanoTime();

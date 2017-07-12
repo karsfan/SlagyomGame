@@ -2,6 +2,7 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,6 +38,7 @@ public class NewCharacterScreen implements Screen {
 	private Sprite backgroundSprite;
 
 	public String charName;
+	final TextField name;
 	public boolean maleSelected;
 
 	Drawable maleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/male.png")));
@@ -44,10 +46,12 @@ public class NewCharacterScreen implements Screen {
 
 	Drawable femaleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/female.png")));
 	Drawable femaleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/femaleok.png")));
-//Drawable up, Drawable down, Drawable checked, Drawable imageUp, Drawable imageDown,
-	//Drawable imageChecked
+	// Drawable up, Drawable down, Drawable checked, Drawable imageUp, Drawable
+	// imageDown,
+	// Drawable imageChecked
 	ImageButton male = new ImageButton(new ImageButtonStyle(null, null, maleokDraw, maleDraw, null, maleokDraw));
-	ImageButton female = new ImageButton(new ImageButtonStyle(null, null, femaleokDraw, femaleDraw, null, femaleokDraw));
+	ImageButton female = new ImageButton(
+			new ImageButtonStyle(null, null, femaleokDraw, femaleDraw, null, femaleokDraw));
 
 	Table gender = new Table();
 
@@ -75,7 +79,7 @@ public class NewCharacterScreen implements Screen {
 		maleSelected = true;
 		// Create buttons
 
-		final TextField name = new TextField("", MenuScreen.skin);
+		name = new TextField("", MenuScreen.skin);
 		name.setMessageText("Name");
 		name.setFocusTraversal(true);
 
@@ -150,6 +154,12 @@ public class NewCharacterScreen implements Screen {
 
 		stage.act();
 		stage.draw();
+
+		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+			charName = name.getText().toUpperCase();
+			if (!charName.isEmpty())
+				game.screenManager.swapScreen(gameManager.ScreenManager.State.WELCOME);
+		}
 
 	}
 

@@ -3,6 +3,7 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
+import gameManager.LoadingImage;
 
 
 public class MenuScreen implements Screen {
@@ -38,6 +41,7 @@ public class MenuScreen implements Screen {
 
 	public TextButton musicButton;
 	public TextButton returnButton;
+	public TextField nameLoad;
 	public Music menuMusic;
 
 	public MenuScreen(final GameSlagyom game) {
@@ -84,7 +88,7 @@ public class MenuScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 			
-				final TextField nameLoad = new TextField("", MenuScreen.skin);
+				nameLoad = new TextField("", MenuScreen.skin);
 				nameLoad.setMessageText("Saved game");
 				nameLoad.setFocusTraversal(true);
 				mainTable.clear();
@@ -99,6 +103,7 @@ public class MenuScreen implements Screen {
 						
 					}
 				});
+
 				mainTable.add(cont).pad(5);
 				mainTable.row();
 				mainTable.add(multiplayerButton).pad(5);
@@ -148,6 +153,7 @@ public class MenuScreen implements Screen {
 		// Add table to stage
 		stage.addActor(mainTable);
 		//Controllers.addListener(new MenuControllerListener(mainTable));
+		
 	}
 
 	@Override
@@ -162,11 +168,14 @@ public class MenuScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
+		game.batch.draw( new Texture ("res/title.png"), 0, 310);
 		game.batch.end();
 
 		stage.act(delta);
 		stage.draw();
-
+		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) 
+			game.loadGame(nameLoad.getText());
+		
 	}
 
 	@Override
@@ -195,6 +204,7 @@ public class MenuScreen implements Screen {
 	public void dispose() {
 		skin.dispose();
 		atlas.dispose();
+		
 	}
 
 }

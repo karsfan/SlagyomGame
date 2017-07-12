@@ -88,7 +88,7 @@ public class ScreenManager {
 			Gdx.input.setInputProcessor(newCharacterScreen.stage);
 
 		} else if (currentState == State.WELCOME) {
-			System.out.println(gameSlagyom.screenManager.newCharacterScreen.charName);
+			//System.out.println(gameSlagyom.screenManager.newCharacterScreen.charName);
 			gameSlagyom.prefs = Gdx.app.getPreferences(newCharacterScreen.charName);
 			initializerScreen = new InitializerScreen(gameSlagyom);
 			gameSlagyom.setScreen(initializerScreen);

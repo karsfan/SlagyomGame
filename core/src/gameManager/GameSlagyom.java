@@ -68,6 +68,7 @@ public class GameSlagyom extends Game {
 
 		prefs.putString("map", world.Game.world.getMap().getMapPath());
 		prefs.putString("name", world.Game.world.player.name);
+		prefs.putBoolean("gender", world.Game.world.player.male);
 		prefs.putInteger("POTION1", world.Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST));
 		prefs.putInteger("POTION2", world.Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND));
 		prefs.putInteger("POTION3", world.Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD));
@@ -86,7 +87,7 @@ public class GameSlagyom extends Game {
 		prefs.putInteger("yCharPosition", world.Game.world.player.y);
 		prefs.putInteger("health", world.Game.world.player.health);
 		prefs.putInteger("coins", world.Game.world.player.coins);
-
+		
 		prefs.flush();
 	}
 
@@ -94,12 +95,18 @@ public class GameSlagyom extends Game {
 	public void loadGame(String path) {
 		prefs = Gdx.app.getPreferences(path);
 		if (prefs.getString("name") != "") {
+<<<<<<< HEAD
 			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
 			world.Game.world.player.x = prefs.getInteger("xCharPosition");
 			world.Game.world.player.y = prefs.getInteger("yCharPosition");
+=======
+			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"), prefs.getBoolean("gender"));
+			world.Game.world.player.x = prefs.getFloat("xCharPosition");
+			world.Game.world.player.y = prefs.getFloat("yCharPosition");
+>>>>>>> d4aec36ceefe7d4aa175a9cbe0ea152f252fc681
 			world.Game.world.player.health = prefs.getInteger("health");
 			world.Game.world.player.coins = prefs.getInteger("coins");
-
+			
 			for (int i = 0; i < prefs.getInteger("POTION1"); i++) {
 				Item potion = new Item(Element.POTION, Level.FIRST);
 				world.Game.world.player.bag.add(potion);

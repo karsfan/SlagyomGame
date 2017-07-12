@@ -8,6 +8,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -33,7 +34,13 @@ public class BattleScreen implements Screen {
 	public Battle battle;
 	boolean youWin = false;
 	boolean youLose = false;
-	Label potion;
+	
+	Table packTable;
+	Label bluePotion;
+	Label redPotion;
+	Label greenPotion;
+	Label parchmentLev1;
+	Label parchmentLev2;
 	Label bomb;
 	Label coin;
 
@@ -46,6 +53,8 @@ public class BattleScreen implements Screen {
 		gamecam.position.x = battle.character.getX();
 		gamecam.position.y = battle.character.getY();
 		hud = new BattleHud(gameslagyom.batch, battle);
+		packTable = new Table();
+		packTable.setLayoutEnabled(false);
 	}
 
 	@Override
@@ -86,6 +95,7 @@ public class BattleScreen implements Screen {
 						searching.getWidth() + 10, searching.getHeight() + 10);
 			}
 		}
+<<<<<<< HEAD
 //		Iterator<Bomb> bombIterator1 = ((ArrayList<Bomb>) ((Enemy)battle.enemy).getBombe()).iterator();
 //		
 //		while (bombIterator1.hasNext()) {
@@ -95,11 +105,23 @@ public class BattleScreen implements Screen {
 //						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
 //			}
 //		}
+=======
+		Iterator<Bomb> bombIterator1 = ((ArrayList<Bomb>) ((Enemy) battle.enemy).getBombe()).iterator();
+
+		while (bombIterator1.hasNext()) {
+			Bomb searching1 = (Bomb) bombIterator1.next();
+			if (searching1.lanciata == true) {
+				gameslagyom.batch.draw(LoadingImage.getTileImage(searching1), searching1.getMainX(),
+						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
+			}
+		}
+>>>>>>> d4aec36ceefe7d4aa175a9cbe0ea152f252fc681
 		if (youWin)
 			gameslagyom.batch.draw(LoadingImage.getYouWinImage(), 0, 0);
 		else if (youLose)
 			gameslagyom.batch.draw(LoadingImage.getYouLoseImage(), 0, 0);
 	}
+
 
 	public void update(float dt) {
 		
@@ -110,32 +132,73 @@ public class BattleScreen implements Screen {
 				if (battle.character.getHealth() <= 0) {
 					youLose = true;
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3") > 0) {
-						potion = new Label(
-								"Potion lev3 x" + Integer.toString(((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3")),
+						bluePotion = new Label(
+								"Potion lev3 x" + Integer.toString(
+										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3")),
 								MenuScreen.skin);
-						potion.setSize(100, 100);
-						potion.setPosition(gamePort.getWorldWidth() / 4, gamePort.getWorldHeight() / 2.5f);
-						hud.stage.addActor(potion);
+						packTable.add(bluePotion);
+						hud.stage.addActor(packTable);
 					}
 				} else {
 					youWin = true;
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {
-						potion = new Label(
-								"Potion lev1 x" + Integer.toString(((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1")),
+						bluePotion = new Label(
+								"Blue potion x" + Integer.toString(
+										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1")),
 								MenuScreen.skin);
-						potion.setSize(100, 100);
-						potion.setPosition(gamePort.getWorldWidth() / 4, gamePort.getWorldHeight() / 3);
-						hud.stage.addActor(potion);
+						bluePotion.setPosition(440, 410);
+						packTable.add(bluePotion);
+					}
+					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV2") > 0) {
+						redPotion = new Label(
+								"Red potion x" + Integer.toString(
+										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV2")),
+								MenuScreen.skin);
+						redPotion.setPosition(440, 346);
+						packTable.add(redPotion);
+					}
+					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3") > 0) {
+						greenPotion = new Label(
+								"Green potion x" + Integer.toString(
+										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3")),
+								MenuScreen.skin);
+						greenPotion.setPosition(440, 282);
+						packTable.add(greenPotion);
+					}
+					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("COIN") > 0) {
+						coin = new Label(
+								"Coins x" + Integer.toString(
+										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("COIN")),
+								MenuScreen.skin);
+						coin.setPosition(800, 410);
+						packTable.add(coin);
+					}
+					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("PARCHLEV1") > 0) {
+						parchmentLev1 = new Label(
+								"Parch. lev1 x" + Integer.toString(
+										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("PARCHLEV1")),
+								MenuScreen.skin);
+						parchmentLev1.setPosition(800, 346);
+						packTable.add(parchmentLev1);
+					}
+					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("PARCHLEV2") > 0) {
+						parchmentLev2 = new Label(
+								"Parch. lev2 x" + Integer.toString(
+										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("PARCHLEV2")),
+								MenuScreen.skin);
+						parchmentLev1.setPosition(800, 282);
+						packTable.add(parchmentLev2);
 					}
 				}
 			}
+			hud.stage.addActor(packTable);
+
 		}
 		if (youWin || youLose)
 			if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-				if (battle.character instanceof NetworkCharacterBattle){
+				if (battle.character instanceof NetworkCharacterBattle) {
 					gameslagyom.screenManager.swapScreen(State.MULTIPLAYERGAME);
-				}
-				else
+				} else
 					gameslagyom.screenManager.swapScreen(State.PLAYING);
 			}
 
@@ -151,8 +214,8 @@ public class BattleScreen implements Screen {
 
 	private void moveCharacter(float dt) {
 
-		if(Gdx.input.isKeyJustPressed(Keys.O)){
-			System.out.println("SWap");
+		if (Gdx.input.isKeyJustPressed(Keys.O)) {
+			System.out.println("Swap");
 			battle.character.swapWeapon();
 		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {

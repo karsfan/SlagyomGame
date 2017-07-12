@@ -20,19 +20,20 @@ import world.GameConfig;
 import world.ICollidable;
 
 public class Player extends DynamicObjects implements ICollidable {
-	
-	public String gender; 
+
+	public String gender;
 	public Bag bag;
 	public Weapon primary_weapon;
 	public int health;
 	public int coins;
 	public boolean collideShop = false;
 	public boolean collideGym = false;
-	
-	
-	public Player(String name) {
+	public boolean male;
+
+	public Player(String name, boolean male) {
 		super();
 		this.name = name;
+		this.male = male;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
@@ -46,11 +47,12 @@ public class Player extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		height = 30;
 		width = 30;
+		System.out.println(male);
 	}
 
 	public Player() {
 		super();
-		 //this.name = name;
+		// this.name = name;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
@@ -59,12 +61,14 @@ public class Player extends DynamicObjects implements ICollidable {
 		// ;
 
 		velocity = 100;
-		
+
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 		stateTimer = 0;
 		height = 30;
 		width = 30;
+
+		System.out.println(male);
 	}
 
 	public boolean positionCharacter() {
@@ -276,11 +280,10 @@ public class Player extends DynamicObjects implements ICollidable {
 
 	boolean pickItem(Item item) {
 		if (item.getElement() != Element.COIN && !item.picked) {
-			if (bag.add(item)) {
+				bag.add(item);
 				LoadingMusic.itemSound.play(1.0f);
 				item.setPicked(true);
 				return true;
-			}
 		} else {
 			if (!item.picked) {
 				coins += 5;
@@ -289,8 +292,6 @@ public class Player extends DynamicObjects implements ICollidable {
 			item.setPicked(true);
 			return true;
 		}
-		return false;
-
 	}
 
 	@Override
@@ -359,8 +360,14 @@ public class Player extends DynamicObjects implements ICollidable {
 						|| ((DynamicObjects) ob).getX() > x + width / 2)
 						|| (y > ((DynamicObjects) ob).getY() + ((DynamicObjects) ob).getHeight() / 2
 								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
+					if (ob instanceof Man) {
+						((Man) ob).collisionWithCharacter = true;
+					}
+					if (ob instanceof Woman)
+						((Woman) ob).collisionWithCharacter = true;
 					return true;
 				}
+
 			}
 		}
 

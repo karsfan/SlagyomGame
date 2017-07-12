@@ -23,7 +23,7 @@ public class NetworkPlayer extends Player {
 	public boolean isFighting = false;
 	public boolean collideWithOtherPlayer = false;
 	public NetworkPlayer(String name) {
-		super(name);
+		super(name, true);
 		this.name = name;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);

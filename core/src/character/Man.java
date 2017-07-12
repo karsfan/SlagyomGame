@@ -17,7 +17,7 @@ public class Man extends DynamicObjects implements ICollidable {
 	};
 
 	public String name;
-	private String info;
+	public String info;
 	public int mainX;
 	public int mainY;
 	public boolean collision;
@@ -37,7 +37,7 @@ public class Man extends DynamicObjects implements ICollidable {
 		mainX = 100;
 		mainY = 100;
 		velocity = 80;
-		name = World.peopleNames.pop();
+		name = World.manNames.pop();
 		info = World.dialogues.pop();
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
@@ -56,7 +56,7 @@ public class Man extends DynamicObjects implements ICollidable {
 		mainX = 100;
 		mainY = 100;
 		velocity = 80;
-		name = World.peopleNames.pop();
+		name = World.manNames.pop();
 		info = World.dialogues.pop();
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
@@ -284,7 +284,6 @@ public class Man extends DynamicObjects implements ICollidable {
 								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
 					if (ob instanceof Player) {
 						collisionWithCharacter = true;
-						PlayScreen.hud.setDialogText(name + ": "+ info);
 					}
 					else {
 						collision = true;						

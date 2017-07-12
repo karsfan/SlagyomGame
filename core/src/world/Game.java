@@ -10,9 +10,9 @@ public class Game {
 	
 	public static Class<? extends Enemy> enemy = null;
 
-	public Game(String name) {
+	public Game(String name, boolean male) {
 
-		world = new World(name);
+		world = new World(name, male);
 
 		while (!world.addDynamicObject())
 			;
@@ -28,9 +28,9 @@ public class Game {
 
 	
 	// constructor for loadGame
-	public Game(String path, String name) {
+	public Game(String path, String name, boolean male) {
 
-		world = new World(path, name);
+		world = new World(path, name, male);
 		world.player.positionCharacter();
 		//player = new Player(name);
 		//world.getListDynamicObjects().add(player);
@@ -40,14 +40,14 @@ public class Game {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Game(String text, GameSlagyom game2, String charName) {
+	public Game(String text, GameSlagyom game2, String charName, boolean male) {
 		try {
 			enemy = ((Class<? extends Enemy>) Class.forName("enemy.Ai." + text));
 		} catch (ClassNotFoundException e) {
 			// e.printStackTrace();
 			System.out.println("Impossibile trovare la classe enemy.Ai." + text);
 		}
-		world = new World(charName);
+		world = new World(charName, male);
 
 		while (!world.addDynamicObject())
 			;

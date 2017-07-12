@@ -23,7 +23,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import character.DynamicObjects;
+import character.Man;
 import character.Player;
+import character.Woman;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.LoadingMusic;
@@ -55,11 +57,14 @@ public class PlayScreen implements Screen, ControllerListener {
 	 *            that are you playing
 	 * @param name
 	 *            of the player
+	 * @param male
+	 *            true if the player's gender is male
+	 * 
 	 */
-	public PlayScreen(GameSlagyom game, String name) {
+	public PlayScreen(GameSlagyom game, String name, boolean male) {
 		new LoadingImage();
 
-		new Game(name);
+		new Game(name, male);
 		this.game = game;
 
 		gamecam = new OrthographicCamera();
@@ -84,11 +89,13 @@ public class PlayScreen implements Screen, ControllerListener {
 	 *            map's path
 	 * @param name
 	 *            of the player
+	 * @param male
+	 *            true if the player's gender is male
 	 */
-	public PlayScreen(GameSlagyom game, String path, String name) {
+	public PlayScreen(GameSlagyom game, String path, String name, boolean male) {
 		new LoadingImage();
 
-		new Game(path, name);
+		new Game(path, name, male);
 		this.game = game;
 		this.game.Modality = false;
 		gamecam = new OrthographicCamera();
@@ -100,13 +107,14 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		stop = true;
 		Controllers.addListener(this);
+		System.out.println();
 
 	}
-
-	public PlayScreen(String text, GameSlagyom game, String charName) {
+	
+	public PlayScreen(String text, GameSlagyom game, String charName, boolean male) {
 
 		new LoadingImage();
-		new Game(text, game, charName);
+		new Game(text, game, charName, male);
 		this.game = game;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
@@ -197,7 +205,8 @@ public class PlayScreen implements Screen, ControllerListener {
 				 * if (movesGamePad) { if (directionGamepad ==
 				 * PovDirection.east) Game.world.player.movesRight(dt); else if
 				 * (directionGamepad == PovDirection.north) {
-				 * Game.world.player.movesUp(dt); if (Game.world.player.collideShop) {
+				 * Game.world.player.movesUp(dt); if
+				 * (Game.world.player.collideShop) {
 				 * game.screenManager.swapScreen(it.slagyom.ScreenManager.State.
 				 * SHOP); Game.world.semaphore.acquire();
 				 * Game.world.player.collideShop = false; } } else if
@@ -205,11 +214,13 @@ public class PlayScreen implements Screen, ControllerListener {
 				 * Game.world.player.movesLeft(dt); else if (directionGamepad ==
 				 * PovDirection.south) Game.world.player.movesDown(dt); else if
 				 * (directionGamepad == PovDirection.northEast)
-				 * Game.world.player.movesNorthEast(dt); else if (directionGamepad ==
-				 * PovDirection.northWest) Game.world.player.movesNorthWest(dt); else
-				 * if (directionGamepad == PovDirection.southEast)
-				 * Game.world.player.movesSouthEast(dt); else if (directionGamepad ==
-				 * PovDirection.southWest) Game.world.player.movesSouthWest(dt);
+				 * Game.world.player.movesNorthEast(dt); else if
+				 * (directionGamepad == PovDirection.northWest)
+				 * Game.world.player.movesNorthWest(dt); else if
+				 * (directionGamepad == PovDirection.southEast)
+				 * Game.world.player.movesSouthEast(dt); else if
+				 * (directionGamepad == PovDirection.southWest)
+				 * Game.world.player.movesSouthWest(dt);
 				 * 
 				 * }
 				 */
@@ -275,10 +286,10 @@ public class PlayScreen implements Screen, ControllerListener {
 			hud.showDialog = false;
 			hideDialog();
 			if (stop) {
-				// Game.world.semaphore.release();
 				Game.world.getThread().start();
 				stop = false;
 			}
+
 		}
 	}
 
@@ -292,6 +303,7 @@ public class PlayScreen implements Screen, ControllerListener {
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 		}
+		
 		ListIterator<Item> it2 = Game.world.getListItems().listIterator();
 		while (it2.hasNext()) {
 			Object ob = (Object) it2.next();
@@ -300,12 +312,36 @@ public class PlayScreen implements Screen, ControllerListener {
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 		}
+		
 		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
-			if (ob instanceof DynamicObjects)
+			if (ob instanceof DynamicObjects) {
 				game.batch.draw(LoadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
+				if (ob instanceof Man)
+					if (((Man) ob).collisionWithCharacter) {
+						hud.showDialog = true;
+						hud.setDialogText(((Man) ob).name + ": " + ((Man) ob).info);
+						// try {
+						// Game.world.semaphore.acquire();
+						// stop = true;
+						// } catch (InterruptedException e) {
+						// e.printStackTrace();
+						// }
+					}
+				if (ob instanceof Woman)
+					if (((Woman) ob).collisionWithCharacter) {
+						hud.showDialog = true;
+						hud.setDialogText(((Woman) ob).name + ": " + ((Woman) ob).info);
+						// try {
+						// Game.world.semaphore.acquire();
+						// stop = true;
+						// } catch (InterruptedException e) {
+						// e.printStackTrace();
+						// }
+					}
+			}
 			if (ob instanceof Player)
 				game.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
 						14, 13);

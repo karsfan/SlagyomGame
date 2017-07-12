@@ -14,6 +14,7 @@ import battle.Enemy;
 import character.DynamicObjects;
 import character.Woman;
 import character.DynamicObjects.StateDynamicObject;
+import character.Player;
 import character.Weapon.Type;
 import character.Woman.WomanType;
 import multiplayer.NetworkCharacterBattle;
@@ -26,6 +27,7 @@ import staticObjects.StaticObject.Element;
 public class LoadingImage {
 
 	public Texture texture;
+	public static Texture title;
 	private static Texture homeImage;
 	private static Texture templeImage;
 	private static Texture threeImage;
@@ -43,6 +45,7 @@ public class LoadingImage {
 	private static Texture forest2Image;
 	private static Texture tableImage;
 	private static Texture coinImage;
+	private static Texture parchmentImage;
 	private static Texture battleBackground;
 	private static Texture bluPotionImage;
 	private static Texture redPotionImage;
@@ -107,6 +110,7 @@ public class LoadingImage {
 	@SuppressWarnings("unchecked")
 	public LoadingImage() {
 		// TILES IMAGES
+		title = new Texture ("res/title.png");
 		homeImage = new Texture("res/home.png");
 		templeImage = new Texture("res/bigHome.png");
 		threeImage = new Texture("res/three.png");
@@ -132,6 +136,7 @@ public class LoadingImage {
 		bluPotionImage = new Texture("res/bluePotion.png");
 		greenPotionImage = new Texture("res/greenPotion.png");
 		redPotionImage = new Texture("res/redPotion.png");
+		parchmentImage = new Texture("res/pickParchment.png");
 		pointer = new Texture("res/pointer.png");
 
 		// BAG AND SHOP ITEM IMAGES
@@ -405,7 +410,10 @@ public class LoadingImage {
 
 		switch (a.getSimpleName()) {
 		case "Player":
-			animation = playerAnimation;
+			if (((Player) ob).male)
+				animation = playerAnimation;
+			else
+				animation = woman1Animation;
 			break;
 		case "NetworkPlayer":
 			if (((NetworkPlayer) ob).player)
@@ -468,7 +476,10 @@ public class LoadingImage {
 		TextureRegion textureRegion = null;
 		switch (a.getSimpleName()) {
 		case "Player":
-			textureRegion = playerStand;
+			if (((Player) ob).male)
+				textureRegion = playerStand;
+			else
+				textureRegion = woman1Stand;
 			break;
 		case "NetworkPlayer":
 			if (((NetworkPlayer) ob).player)
@@ -581,6 +592,7 @@ public class LoadingImage {
 				texture = coinImage;
 				break;
 			case PARCHMENT:
+				texture = parchmentImage;
 				break;
 			case POTION:
 				if (((Item) ob).getLevel() == Level.FIRST)

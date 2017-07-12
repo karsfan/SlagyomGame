@@ -49,7 +49,7 @@ public class Item extends StaticObject {
 
 	public Item() {
 		Random rand = new Random();
-		int r = rand.nextInt(2);
+		int r = rand.nextInt(3);
 		switch (r) {
 		case 0:
 			element = Element.COIN;
@@ -82,10 +82,16 @@ public class Item extends StaticObject {
 		case 2:
 			element = Element.PARCHMENT;
 			shape = new Rectangle();
-			shape.width = 10;
-			shape.height = 10;
+			shape.width = 15;
+			shape.height = 15;
 			positionItem();
-			System.out.println("qkjb");
+			r = rand.nextInt(2);
+			if (r == 0) {
+				level = Level.FIRST;
+			}
+			if (r == 1) {
+				level = Level.SECOND;
+			}
 			break;
 		default:
 			System.out.println("QUO");
@@ -95,7 +101,7 @@ public class Item extends StaticObject {
 
 	public Item(battle.Enemy.Level level) {
 		Random rand = new Random();
-		int r = rand.nextInt(2);
+		int r = rand.nextInt(3);
 		switch (r) {
 		case 0:
 			element = Element.COIN;
@@ -127,8 +133,8 @@ public class Item extends StaticObject {
 		case 2:
 			element = Element.PARCHMENT;
 			shape = new Rectangle();
-			shape.width = 10;
-			shape.height = 10;
+			shape.width = 15;
+			shape.height = 15;
 			switch (level) {
 			case EASY:
 				this.level = Level.FIRST;
@@ -181,7 +187,7 @@ public class Item extends StaticObject {
 			default:
 				break;
 			}
-			shape = new Rectangle((int) x, (int) y, 10, 10);
+			shape = new Rectangle((int) x, (int) y, 15, 15);
 			break;
 		default:
 			System.out.println("Errore letture Item da File");
@@ -283,18 +289,8 @@ public class Item extends StaticObject {
 			while (it.hasNext()) {
 				Object ob = (Object) it.next();
 
-				if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob)
-						.getElement() != Element.ROAD)/*
-														 * && ((Tile)
-														 * ob).getElement() !=
-														 * Element.FLOOR &&
-														 * ((Tile)
-														 * ob).getElement() !=
-														 * Element.FLOOR2 &&
-														 * ((Tile)
-														 * ob).getElement() !=
-														 * Element.FLOOR3)
-														 */
+				if (((StaticObject) ob).getElement() != Element.GROUND
+						&& ((StaticObject) ob).getElement() != Element.ROAD)
 					if (!((shape.x > ((StaticObject) ob).getX() + ((StaticObject) ob).getWidth()
 							|| ((StaticObject) ob).getX() > shape.x + shape.width)
 							|| (shape.y > ((StaticObject) ob).getY() + ((StaticObject) ob).getHeight()

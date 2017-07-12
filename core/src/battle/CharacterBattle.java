@@ -85,9 +85,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			setState(StateDynamicObject.JUMPING, dt);
 
 			if (collide() && x < Game.world.battle.enemy.getX())
-				x = (int) (Game.world.battle.enemy.getX() - getWidth() / 2);
+				x =  (Game.world.battle.enemy.getX() - getWidth() / 2);
 			else if (collide() && x > Game.world.battle.enemy.getX())
-				x = (int) (Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2);
+				x =  (Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2);
 
 		} else {
 			jumping = false;

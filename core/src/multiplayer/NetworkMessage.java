@@ -53,6 +53,7 @@ public class NetworkMessage {
 		IDreceiver = Integer.parseInt(IDreceiverString);
 		x = convert(xString);
 		y = convert(yString);
+		
 		System.out.println("Messaggio "+actionString+" "+ID+" "+x+" "+y);
 	}
 

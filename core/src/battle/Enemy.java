@@ -20,7 +20,7 @@ public class Enemy extends Fighting {
 	public Weapon weapon;
 	public ArrayList<Bomb> bombe = new ArrayList<>();
 	public Pack win_bonus;
-	
+
 	public Pack getWin_bonus() {
 		return win_bonus;
 	}
@@ -110,7 +110,7 @@ public class Enemy extends Fighting {
 	}
 
 	public void update(float dt) {
-		
+
 		if (!fighting && !jumping && !doubleJumping) {
 
 			switch (level) {
@@ -141,9 +141,9 @@ public class Enemy extends Fighting {
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING);
 			if (collide() && x < Game.world.battle.character.getX())
-				x = (int) (Game.world.battle.character.getX() - getWidth() / 2);
+				x = (Game.world.battle.character.getX() - getWidth() / 2);
 			else if (collide() && x > Game.world.battle.character.getX())
-				x = (int) (Game.world.battle.character.getX() + Game.world.battle.character.getWidth() / 2);
+				x = (Game.world.battle.character.getX() + Game.world.battle.character.getWidth() / 2);
 		} else {
 			jumping = false;
 			doubleJumping = false;
@@ -193,8 +193,9 @@ public class Enemy extends Fighting {
 	public void lanciaBomb(float dt) {
 		if (left && !bombe.isEmpty()) {
 			int velocityy = 200;
-			//calcolo della gittata
-			velocityy = (int) Math.sqrt(((x-Game.world.battle.character.getX())*GameConfig.gravity)/((2*Math.cos(30 * (Math.PI / 180))*Math.sin(90 * (Math.PI / 180)))));
+			// calcolo della gittata
+			velocityy = (int) Math.sqrt(((x - Game.world.battle.character.getX()) * GameConfig.gravity)
+					/ ((2 * Math.cos(30 * (Math.PI / 180)) * Math.sin(90 * (Math.PI / 180)))));
 			Iterator<Bomb> it1 = bombe.iterator();
 			while (it1.hasNext()) {
 				Bomb ob = (Bomb) it1.next();

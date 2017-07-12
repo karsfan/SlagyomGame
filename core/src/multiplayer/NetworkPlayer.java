@@ -3,7 +3,6 @@ package multiplayer;
 import java.util.Iterator;
 
 import character.Bag;
-import character.DynamicObjects;
 import character.Weapon;
 import character.Player;
 import character.Weapon.Level;

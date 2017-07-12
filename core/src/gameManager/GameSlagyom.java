@@ -82,8 +82,8 @@ public class GameSlagyom extends Game {
 			prefs.putString("SecondaryWeapon", world.Game.world.player.bag.secondary_weapon.getType().toString());
 			prefs.putString("SecondaryWeaponLevel", world.Game.world.player.bag.secondary_weapon.level.toString());
 		}
-		prefs.putFloat("xCharPosition", world.Game.world.player.x);
-		prefs.putFloat("yCharPosition", world.Game.world.player.y);
+		prefs.putInteger("xCharPosition", world.Game.world.player.x);
+		prefs.putInteger("yCharPosition", world.Game.world.player.y);
 		prefs.putInteger("health", world.Game.world.player.health);
 		prefs.putInteger("coins", world.Game.world.player.coins);
 
@@ -95,8 +95,8 @@ public class GameSlagyom extends Game {
 		prefs = Gdx.app.getPreferences(path);
 		if (prefs.getString("name") != "") {
 			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"));
-			world.Game.world.player.x = prefs.getFloat("xCharPosition");
-			world.Game.world.player.y = prefs.getFloat("yCharPosition");
+			world.Game.world.player.x = prefs.getInteger("xCharPosition");
+			world.Game.world.player.y = prefs.getInteger("yCharPosition");
 			world.Game.world.player.health = prefs.getInteger("health");
 			world.Game.world.player.coins = prefs.getInteger("coins");
 
@@ -160,10 +160,10 @@ public class GameSlagyom extends Game {
 			while (numDynamicObjects >= 0) {
 				DynamicObjects add;
 				if (prefs.getString("DynamicObject " + numDynamicObjects).equals("Man")) {
-					add = new Man(prefs.getFloat("X " + numDynamicObjects), prefs.getFloat("Y " + numDynamicObjects));
+					add = new Man(prefs.getInteger("X " + numDynamicObjects), prefs.getInteger("Y " + numDynamicObjects));
 					world.Game.world.getListDynamicObjects().add(add);
 				} else if (prefs.getString("DynamicObject " + numDynamicObjects).equals("Woman")) {
-					add = new Woman(prefs.getFloat("X " + numDynamicObjects), prefs.getFloat("Y " + numDynamicObjects),
+					add = new Woman(prefs.getInteger("X " + numDynamicObjects), prefs.getInteger("Y " + numDynamicObjects),
 							prefs.getString("WomanType " + numDynamicObjects));
 					world.Game.world.getListDynamicObjects().add(add);
 				}

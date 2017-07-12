@@ -2,6 +2,7 @@ package gameManager;
 
 import com.badlogic.gdx.Gdx;
 
+import multiplayer.NetworkBattleScreen;
 import multiplayer.NetworkPlayScreen;
 import screens.BagScreen;
 import screens.BattleScreen;
@@ -19,7 +20,7 @@ public class ScreenManager {
 	GameSlagyom gameSlagyom;
 
 	public static enum State {
-		MENU, NEWGAME, OPTIONMENU, MULTIPLAYERMENU, MULTIPLAYERGAME, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP, 
+		MENU, NEWGAME, OPTIONMENU, MULTIPLAYERMENU, MULTIPLAYERGAME, MULTIPLAYERBATTLE, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP,
 	};
 
 	public State currentState;
@@ -36,6 +37,7 @@ public class ScreenManager {
 	public ShopScreen shopScreen;
 	public MultiplayerScreen multiplayerScreen;
 	public NetworkPlayScreen networkPlayScreen;
+	public NetworkBattleScreen networkBattleScreen;
 
 	public ScreenManager(GameSlagyom gameSlagyom) {
 		this.gameSlagyom = gameSlagyom;
@@ -109,9 +111,11 @@ public class ScreenManager {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);
 			Gdx.input.setInputProcessor(shopScreen.stage);
-		}
-		else if (currentState == State.MULTIPLAYERGAME) {
+		} else if (currentState == State.MULTIPLAYERGAME) {
 			gameSlagyom.setScreen(networkPlayScreen);
+			Gdx.input.setInputProcessor(null);
+		} else if (currentState == State.MULTIPLAYERBATTLE) {
+			gameSlagyom.setScreen(networkBattleScreen);
 			Gdx.input.setInputProcessor(null);
 		}
 	}

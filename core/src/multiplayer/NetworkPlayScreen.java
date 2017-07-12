@@ -12,11 +12,7 @@ import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -36,8 +32,8 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 	public Viewport gamePort;
 	public GameSlagyom game;
 	public static Hud hud;
-	private static Drawable noDialog = null;
-	private static float textTimer;
+	//private static Drawable noDialog = null;
+	//private static float textTimer;
 	public Client client;
 	public int j = 0;
 
@@ -57,9 +53,8 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 		gamePort.apply();
 
-		// hud = new Hud(game.batch);
-
 		client = new Client(name);
+		hud = new Hud(game);
 		gamecam.position.x = client.networkWorld.player.getX();
 		gamecam.position.y = client.networkWorld.player.getY();
 		// Controllers.addListener(this);
@@ -68,6 +63,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 	@Override
 	public void render(float delta) {
+
 		update(delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -76,12 +72,12 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 		game.batch.begin();
 		draw();
 		game.batch.end();
-		// hud.update();
+		hud.update();
 
-		// hud.stage.draw();
+		hud.stage.draw();
 
 		// TEXT TABLE RENDERING
-		textTimer += delta;
+		//textTimer += delta;
 		// if (hud.showDialog) {
 		// if (textTimer > 0.08f) {
 		// textTimer = 0;
@@ -107,15 +103,15 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 	}
 
-	public static void drawDialog(final String text) {
-		Drawable dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
-		// if (hud.showDialog) {
-		// Label dialogLabel = new Label(text, MenuScreen.skin);
-		// hud.textTable.setSize(236 * 3, 47 * 4);
-		// hud.textTable.setBackground(dialog);
-		// hud.textTable.add(dialogLabel).top();
-		// }
-	}
+//	public static void drawDialog(final String text) {
+//		Drawable dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
+//		// if (hud.showDialog) {
+//		// Label dialogLabel = new Label(text, MenuScreen.skin);
+//		// hud.textTable.setSize(236 * 3, 47 * 4);
+//		// hud.textTable.setBackground(dialog);
+//		// hud.textTable.add(dialogLabel).top();
+//		// }
+//	}
 
 	public static void hideDialog() {
 		// hud.textTable.clear();
@@ -185,6 +181,14 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 			}
 
 		}
+		if (client.networkWorld.player.readyToFight && !client.networkWorld.player.isFighting) {
+			System.out.println("Sono "+ client.networkWorld.player.ID+"inizio la battaglia contro "+client.networkWorld.player.IDOtherPlayer);
+			client.networkWorld.createBattle(client.networkWorld.player.IDOtherPlayer);
+			game.screenManager.networkBattleScreen= new NetworkBattleScreen(game, client.networkWorld.battle, client);
+			game.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYERBATTLE);
+			client.networkWorld.player.readyToFight = false;
+			client.networkWorld.player.isFighting = true;
+		}
 
 	}
 
@@ -216,11 +220,6 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 				game.batch.draw(LoadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
 			}
-			/*
-			 * if (ob instanceof Player) game.batch.draw(LoadingImage.pointer,
-			 * ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
-			 * 14, 13);
-			 */
 		}
 		game.batch.draw(LoadingImage.getFrame(client.networkWorld.player), client.networkWorld.player.getX(),
 				client.networkWorld.player.getY(), client.networkWorld.player.getWidth(),

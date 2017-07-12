@@ -4,16 +4,20 @@ import java.util.Iterator;
 
 import battle.CharacterBattle;
 import character.Bomb;
-import character.Player;
 import character.Weapon;
 import character.Weapon.Type;
 import world.Game;
 import world.GameConfig;
 
 public class NetworkCharacterBattle extends CharacterBattle {
-
-	public NetworkCharacterBattle(Player character1) {
-		super(character1);
+	public boolean player = false;
+	public int ID;
+	public int IDOtherPlayer;
+	public NetworkCharacterBattle(NetworkPlayer player) {
+		super(player);
+		this.player = player.player;
+		this.ID = player.ID;
+		this.IDOtherPlayer = player.IDOtherPlayer;
 	}
 
 	@Override
@@ -33,9 +37,9 @@ public class NetworkCharacterBattle extends CharacterBattle {
 			setState(StateDynamicObject.JUMPING, dt);
 
 			if (collide() && x < Game.world.battle.enemy.getX())
-				x = Client.networkWorld.battle.enemy.getX() - getWidth() / 2;
+				x = (int) (Client.networkWorld.battle.enemy.getX() - getWidth() / 2);
 			else if (collide() && x > Client.networkWorld.battle.enemy.getX())
-				x = Client.networkWorld.battle.enemy.getX() + Client.networkWorld.battle.enemy.getWidth() / 2;
+				x = (int) (Client.networkWorld.battle.enemy.getX() + Client.networkWorld.battle.enemy.getWidth() / 2);
 
 		} else {
 			jumping = false;

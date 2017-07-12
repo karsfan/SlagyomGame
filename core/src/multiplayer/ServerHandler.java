@@ -33,7 +33,17 @@ public class ServerHandler extends Thread {
 	public void run() {
 		while (true) {
 			try {
-				server.send(reader.readLine());
+				String receivedMessage= reader.readLine();
+				if(receivedMessage.contains(" ")){
+					NetworkMessage message = new NetworkMessage(receivedMessage);
+					if(message.action == 2){
+						server.send(receivedMessage, message.IDreceiver);	
+					}
+					else{
+						server.send(reader.readLine());						
+					}
+				}
+				
 			} catch (IOException e) {
 				System.out.println("Not connected");
 				server.connected.remove(this);

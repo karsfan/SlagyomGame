@@ -62,4 +62,14 @@ public class Server {
 		// serverSocket.close();
 	}
 
+	public void send(String message, int iDreceiver) {
+		for (ServerHandler serverHandler : connected) {
+			if (serverHandler.ID == iDreceiver) {
+				serverHandler.writer.println(message);
+				serverHandler.writer.flush();
+				break;
+			}
+		}
+	}
+
 }

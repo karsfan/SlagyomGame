@@ -141,9 +141,9 @@ public class Enemy extends Fighting {
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING);
 			if (collide() && x < Game.world.battle.character.getX())
-				x = Game.world.battle.character.getX() - getWidth() / 2;
+				x = (int) (Game.world.battle.character.getX() - getWidth() / 2);
 			else if (collide() && x > Game.world.battle.character.getX())
-				x = Game.world.battle.character.getX() + Game.world.battle.character.getWidth() / 2;
+				x = (int) (Game.world.battle.character.getX() + Game.world.battle.character.getWidth() / 2);
 		} else {
 			jumping = false;
 			doubleJumping = false;

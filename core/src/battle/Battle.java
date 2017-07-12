@@ -13,7 +13,7 @@ public class Battle {
 
 	public Battle(Player player, Enemy enemy) {
 		if (player instanceof NetworkPlayer)
-			this.character = new NetworkCharacterBattle(player);
+			this.character = new NetworkCharacterBattle((NetworkPlayer) player);
 		else
 			this.character = new CharacterBattle(player);
 		enemyOri = enemy;
@@ -24,10 +24,17 @@ public class Battle {
 		// this.enemy = enemy;
 	}
 
+	public Battle(NetworkPlayer player, NetworkPlayer ob) {
+		character = new NetworkCharacterBattle(player);
+		enemy = new NetworkCharacterBattle(ob);
+		enemy.x = 700;
+		//tem.out.println("Sono"+player.ID+" "+ob.ID);
+	}
+
 	public boolean update(float dt) {
 
 		if (enemy.health <= 0) {
-			enemyOri.morto = true;
+			//enemyOri.morto = true;
 			return true;
 		}
 		if (character.getHealth() <= 0) {

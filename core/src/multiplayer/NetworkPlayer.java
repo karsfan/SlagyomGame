@@ -18,7 +18,10 @@ public class NetworkPlayer extends Player {
 
 	public int ID = 0;
 	public boolean player = false;
-
+	public int IDOtherPlayer;
+	public boolean readyToFight = false;
+	public boolean isFighting = false;
+	public boolean collideWithOtherPlayer = false;
 	public NetworkPlayer(String name) {
 		super(name);
 		this.name = name;
@@ -53,12 +56,12 @@ public class NetworkPlayer extends Player {
 		width = 30;
 	}
 
-	public void setY(float f) {
+	public void setY(int f) {
 		y = f;
 
 	}
 
-	public void setX(float f) {
+	public void setX(int f) {
 		x = f;
 
 	}
@@ -130,7 +133,6 @@ public class NetworkPlayer extends Player {
 								return true;
 							}
 						}
-
 						return true;
 					}
 			}
@@ -139,14 +141,21 @@ public class NetworkPlayer extends Player {
 		while (otherPlayer.hasNext()) {
 			Object ob = (Object) otherPlayer.next();
 			if (ob instanceof NetworkPlayer) {
-				if (!((x > ((DynamicObjects) ob).getX() + ((DynamicObjects) ob).getWidth() / 2
-						|| ((DynamicObjects) ob).getX() > x + width / 2)
-						|| (y > ((DynamicObjects) ob).getY() + ((DynamicObjects) ob).getHeight() / 2
-								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
+				if (!((x > ((NetworkPlayer) ob).getX() + ((NetworkPlayer) ob).getWidth() / 2
+						|| ((NetworkPlayer) ob).getX() > x + width / 2)
+						|| (y > ((NetworkPlayer) ob).getY() + ((NetworkPlayer) ob).getHeight() / 2
+								|| ((NetworkPlayer) ob).getY() > y + height / 2))) {
+					collideWithOtherPlayer = true;
+//					Client.writer.println(
+//							1 + " " + ID + " " + 0 + " " + 0 + " " + 0 + ";" + ((NetworkPlayer) ob).ID + ";");
+//					Client.writer.flush();
+					IDOtherPlayer = ((NetworkPlayer) ob).ID;
+					System.out.println(ID + "collisione con " + IDOtherPlayer);
 					return true;
 				}
 			}
 		}
+		collideWithOtherPlayer = false;
 		return false;
 	}
 

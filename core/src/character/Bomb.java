@@ -95,7 +95,7 @@ public class Bomb extends Weapon implements ICollidable {
 
 	@Override
 	public boolean collide() {
-		if (!GameSlagyom.Modality) {
+		if (!GameSlagyom.modalityMultiplayer) {
 			Fighting enemy = Game.world.battle.enemy;
 			if (id != "Enemy")
 				if (!((mainX > enemy.getX() + enemy.getWidth() / 2 || enemy.getX() > mainX + getWidth())

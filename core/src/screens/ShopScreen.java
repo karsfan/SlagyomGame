@@ -112,7 +112,7 @@ public class ShopScreen implements Screen {
 		optionsTable.setLayoutEnabled(false);
 
 		returnButton = new TextButton("Return", MenuScreen.skin);
-		if (!game.Modality)
+		if (!game.modalityMultiplayer)
 			coins = new Label("" + Game.world.player.coins, MenuScreen.skin);
 		else
 			coins = new Label("" + Client.networkWorld.player.coins, MenuScreen.skin);
@@ -121,7 +121,7 @@ public class ShopScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				boolean buy = false;
 				if ((potionsTable.isVisible() || parchmentsTable.isVisible()) && level2n.getText() != null) {
-					if (!game.Modality) {
+					if (!game.modalityMultiplayer) {
 						int tmp = (int) (Game.world.player.coins
 								- (Integer.parseInt(level2n.getText())) * itemSelected.price);
 						if (tmp >= 0) {
@@ -141,7 +141,7 @@ public class ShopScreen implements Screen {
 						}
 					}
 				} else if (weaponsTable.isVisible()) {
-					if (!game.Modality) {
+					if (!game.modalityMultiplayer) {
 						int tmp = (int) (Game.world.player.coins - weaponSelected.price);
 						if (tmp >= 0) {
 							buy = true;
@@ -157,7 +157,7 @@ public class ShopScreen implements Screen {
 						}
 					}
 				} else if (bombsTable.isVisible() && level2n.getText() != null) {
-					if (!game.Modality) {
+					if (!game.modalityMultiplayer) {
 						int tmp = (int) (Game.world.player.coins
 								- (Integer.parseInt(level2n.getText())) * weaponSelected.price);
 						if (tmp >= 0) {
@@ -182,7 +182,7 @@ public class ShopScreen implements Screen {
 				if (buy)
 					LoadingMusic.cashSound.play(1.5f);
 				else {
-					if (!game.Modality)
+					if (!game.modalityMultiplayer)
 						refreshedCoins = Game.world.player.coins;
 					else
 						refreshedCoins = Client.networkWorld.player.coins;
@@ -239,7 +239,7 @@ public class ShopScreen implements Screen {
 		LoadingImage.close.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (!game.Modality)
+				if (!game.modalityMultiplayer)
 					game.screenManager.swapScreen(State.PLAYING);
 				else
 					game.screenManager.swapScreen(State.MULTIPLAYERGAME);
@@ -578,7 +578,7 @@ public class ShopScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE))
-			if (!game.Modality)
+			if (!game.modalityMultiplayer)
 				game.screenManager.swapScreen(State.PLAYING);
 			else
 				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
@@ -615,7 +615,7 @@ public class ShopScreen implements Screen {
 		if (scaling) {
 			if (coinsTimer > 0.008f) {
 				coinsTimer = 0;
-				if (!game.Modality) {
+				if (!game.modalityMultiplayer) {
 					if (Game.world.player.coins > refreshedCoins) {
 						coins.setText((String.valueOf(Game.world.player.coins -= 1)));
 					} else

@@ -47,13 +47,13 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 	public NetworkPlayScreen(GameSlagyom game, String name) {
 		new LoadingImage();
 		this.game = game;
-		this.game.Modality = true;
+		this.game.modalityMultiplayer = true;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
 
 		gamePort.apply();
 
-		client = new Client(name);
+		client = new Client(name, game);
 		hud = new Hud(game);
 		gamecam.position.x = client.networkWorld.player.getX();
 		gamecam.position.y = client.networkWorld.player.getY();

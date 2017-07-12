@@ -98,7 +98,7 @@ public class BagScreen implements Screen {
 			public void clicked(InputEvent event, float x, float y) {
 				if (game.screenManager.getPreviousState() == State.BATTLE)
 					if (potionsTable.isVisible()) {
-						if (!game.Modality)
+						if (!game.modalityMultiplayer)
 							Game.world.player.bag.useItem(itemSelected);
 						setTextPotions();
 					}
@@ -109,21 +109,21 @@ public class BagScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (potionsTable.isVisible()) {
-					if (!game.Modality)
+					if (!game.modalityMultiplayer)
 						Game.world.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
 					else
 						Client.networkWorld.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
 					setTextPotions();
 				}
 				if (parchmentsTable.isVisible()) {
-					if (!game.Modality)
+					if (!game.modalityMultiplayer)
 						Game.world.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
 					else
 						Client.networkWorld.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
 					setTextParchment();
 				}
 				if (bombsTable.isVisible()) {
-					if (!game.Modality)
+					if (!game.modalityMultiplayer)
 						Game.world.player.bag.removeBomb(weaponSelected.getLevel());
 					else
 						Client.networkWorld.player.bag.removeBomb(weaponSelected.getLevel());
@@ -199,7 +199,7 @@ public class BagScreen implements Screen {
 		LoadingImage.close.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (!game.Modality) {
+				if (!game.modalityMultiplayer) {
 					if (game.screenManager.previousState == State.BATTLE)
 						game.screenManager.swapScreen(State.BATTLE);
 					else
@@ -306,7 +306,7 @@ public class BagScreen implements Screen {
 		weaponsTable.setVisible(false);
 		weaponsTable.setLayoutEnabled(false);
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
-		if (!game.Modality) {
+		if (!game.modalityMultiplayer) {
 			if (Game.world.player.bag.secondary_weapon != null)
 				weapons = new TextButton(Game.world.player.bag.secondary_weapon.getType().toString() + " "
 						+ Game.world.player.bag.secondary_weapon.getLevel().toString(), MenuScreen.skin);
@@ -428,7 +428,7 @@ public class BagScreen implements Screen {
 		game.batch.end();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			if (!game.Modality) {
+			if (!game.modalityMultiplayer) {
 				if (game.screenManager.previousState == State.BATTLE)
 					game.screenManager.swapScreen(State.BATTLE);
 				else
@@ -446,13 +446,13 @@ public class BagScreen implements Screen {
 		} else if (currentPocket == Pocket.WEAPONS) {
 			weaponsTable.setVisible(true);
 			bombsTable.setVisible(false);
-			if (!game.Modality)
+			if (!game.modalityMultiplayer)
 				if (Game.world.player.bag.secondary_weapon != null)
 					weapons.setVisible(true);
 				else
 					weapons.setVisible(false);
-			else if (game.Modality)
-				if (Client.networkWorld.player.bag.secondary_weapon != null && game.Modality)
+			else if (game.modalityMultiplayer)
+				if (Client.networkWorld.player.bag.secondary_weapon != null && game.modalityMultiplayer)
 					weapons.setVisible(true);
 				else
 					weapons.setVisible(false);
@@ -476,7 +476,7 @@ public class BagScreen implements Screen {
 	}
 
 	public void setTextParchment() {
-		if (!game.Modality) {
+		if (!game.modalityMultiplayer) {
 			parchments[0]
 					.setText("Parchment lev1  x" + Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
 			parchments[1]
@@ -490,7 +490,7 @@ public class BagScreen implements Screen {
 	}
 
 	public void setTextPotions() {
-		if (!game.Modality) {
+		if (!game.modalityMultiplayer) {
 			potions[0].setText("Blue potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST));
 			potions[1].setText("Red potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.SECOND));
 			potions[2].setText("Green potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD));
@@ -505,7 +505,7 @@ public class BagScreen implements Screen {
 	}
 
 	public void setTextBomb() {
-		if (!game.Modality) {
+		if (!game.modalityMultiplayer) {
 			bombs[0].setText("Bomb lev1   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
 			bombs[1].setText("Bomb lev2   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
 			bombs[2].setText("Bomb lev3   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
@@ -520,7 +520,7 @@ public class BagScreen implements Screen {
 	}
 
 	public void setPositionBomb() {
-		if (!game.Modality) {
+		if (!game.modalityMultiplayer) {
 			if (Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1) <= 0) {
 				bombs[0].setVisible(false);
 				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
@@ -564,7 +564,7 @@ public class BagScreen implements Screen {
 	}
 
 	public void setPositionPotion() {
-		if (!game.Modality) {
+		if (!game.modalityMultiplayer) {
 			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
 				potions[0].setVisible(false);
 				potions[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
@@ -609,7 +609,7 @@ public class BagScreen implements Screen {
 	}
 
 	public void setPositionParchement() {
-		if (!game.Modality) {
+		if (!game.modalityMultiplayer) {
 			if (Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST) <= 0) {
 				parchments[0].setVisible(false);
 				parchments[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);

@@ -77,7 +77,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		hud = new Hud(game);
 
 		Controllers.addListener(this);
-		this.game.Modality = false;
+		this.game.modalityMultiplayer = false;
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		new Game(path, name, male);
 		this.game = game;
-		this.game.Modality = false;
+		this.game.modalityMultiplayer = false;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
 
@@ -122,7 +122,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam.position.x = Game.world.player.getX();
 		gamecam.position.y = Game.world.player.getY();
 		hud = new Hud(game);
-		this.game.Modality = false;
+		this.game.modalityMultiplayer = false;
 	}
 
 	@Override

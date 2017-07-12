@@ -64,7 +64,7 @@ public class ClientHandler extends Thread {
 						}
 					}
 				} else {
-					
+
 					NetworkMessage message = new NetworkMessage(receivedMessage);
 					for (NetworkPlayer player : client.networkWorld.otherPlayers) {
 						if (message.action == 0) {
@@ -72,6 +72,13 @@ public class ClientHandler extends Thread {
 								player.x = message.x;
 								player.y = message.y;
 								player.setState(message.currentState);
+								break;
+							}
+						} else if (message.action == 10) {
+							if (player.ID == message.ID) {
+								if (message.ID == 0)
+									client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+								client.networkWorld.otherPlayers.remove(player);
 								break;
 							}
 						}
@@ -87,27 +94,23 @@ public class ClientHandler extends Thread {
 						if (client.networkWorld.player.ID == message.IDreceiver) {
 							client.networkWorld.battle.enemy.y = message.y;
 							client.networkWorld.battle.enemy.setState(message.currentState);
-							if (message.currentState == StateDynamicObject.RUNNINGLEFT){
+							if (message.currentState == StateDynamicObject.RUNNINGLEFT) {
 								client.networkWorld.battle.enemy.movesLeft(message.x);
-							}else if (message.currentState == StateDynamicObject.RUNNINGRIGHT){
+							} else if (message.currentState == StateDynamicObject.RUNNINGRIGHT) {
 								client.networkWorld.battle.enemy.movesRight(message.x);
-							}else if (message.currentState == StateDynamicObject.FIGHTINGLEFT){
+							} else if (message.currentState == StateDynamicObject.FIGHTINGLEFT) {
 								System.out.println("fightLeft");
-								((NetworkCharacterBattle)client.networkWorld.battle.enemy).fightLeft(message.x);
-							}else if (message.currentState == StateDynamicObject.FIGHTINGRIGHT){
-								((NetworkCharacterBattle)client.networkWorld.battle.enemy).fightRight(message.x);
-							}else if(message.currentState == StateDynamicObject.JUMPING){
-								((NetworkCharacterBattle)client.networkWorld.battle.enemy).jump(message.x);
+								((NetworkCharacterBattle) client.networkWorld.battle.enemy).fightLeft(message.x);
+							} else if (message.currentState == StateDynamicObject.FIGHTINGRIGHT) {
+								((NetworkCharacterBattle) client.networkWorld.battle.enemy).fightRight(message.x);
+							} else if (message.currentState == StateDynamicObject.JUMPING) {
+								((NetworkCharacterBattle) client.networkWorld.battle.enemy).jump(message.x);
 							}
 						}
-					}
-					else if(message.action == 10){
-						for(NetworkPlayer otherPlayer : client.networkWorld.otherPlayers){
-							if(otherPlayer.ID == message.ID)
-							{
-								client.networkWorld.otherPlayers.remove(otherPlayer);
-								break;
-							}
+
+					} else if (message.action == 9) {
+						if (client.networkWorld.player.ID == message.IDreceiver) {
+							client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 						}
 					}
 				}

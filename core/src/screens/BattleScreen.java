@@ -50,7 +50,7 @@ public class BattleScreen implements Screen {
 		this.gameslagyom = gameslagyom;
 		this.battle = battle;
 		gamecam = new OrthographicCamera();
-		gamePort = new ExtendViewport(854, 480, gamecam);
+		gamePort = new ExtendViewport(1440, 960, gamecam);
 		gamePort.apply();
 		gamecam.position.x = battle.character.getX();
 		gamecam.position.y = battle.character.getY();

@@ -92,7 +92,7 @@ public class PauseScreen implements Screen {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (!game.Modality) {
+				if (!game.modalityMultiplayer) {
 					Game.world.getThread().stop();
 					game.screenManager.playScreen.dispose();
 				}
@@ -170,6 +170,10 @@ public class PauseScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+//			Client.writer.println(8 + " " + ((NetworkCharacterBattle) Client.networkWorld.battle.character).ID + " "
+//					+ 0 + " " + Client.networkWorld.battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.FIGHTINGLEFT + ";"
+//					+ ((NetworkCharacterBattle) Client.networkWorld.battle.character).IDOtherPlayer + ";");
+//			Client.writer.flush();
 			game.screenManager.swapScreen(game.screenManager.getPreviousState());
 		}
 

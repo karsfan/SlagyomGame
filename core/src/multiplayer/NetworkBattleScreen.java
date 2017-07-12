@@ -73,14 +73,16 @@ public class NetworkBattleScreen extends BattleScreen {
 	public void update(float dt) {
 		battle.update(dt);
 		hud.update(dt);
-		//System.out.println("update netBattleScreen");
+		// System.out.println("update netBattleScreen");
 		handleInput(dt);
 
 	}
 
 	private void handleInput(float dt) {
-
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			client.writer.println(9 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + 0 + " " + 0 + " " + 0
+					+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+			client.writer.flush();
 			gameslagyom.screenManager.swapScreen(State.PAUSE);
 		}
 		moveCharacter(dt);
@@ -105,43 +107,41 @@ public class NetworkBattleScreen extends BattleScreen {
 
 			if (Gdx.input.isKeyJustPressed(Keys.S))
 				battle.character.setState(StateDynamicObject.DEFENDING, dt);
-			
+
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				battle.character.jump(dt);
-				client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
-						+ dt + " " + battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.JUMPING + ";"
+				client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+						+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.JUMPING + ";"
 						+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 				client.writer.flush();
 			} else if (Gdx.input.isKeyPressed(Keys.LEFT) && !battle.character.fighting) {
-				if (Gdx.input.isKeyJustPressed(Keys.A)){
+				if (Gdx.input.isKeyJustPressed(Keys.A)) {
 					battle.character.fightLeft(dt);
-					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
-							+ dt + " " + battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.FIGHTINGRIGHT+ ";"
-							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.FIGHTINGRIGHT
+							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
-				}
-				else{
+				} else {
 					battle.character.movesLeft(dt);
-					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
-							+ dt + " " + battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGRIGHT + ";"
-							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGRIGHT
+							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}
 			} else if (Gdx.input.isKeyPressed(Keys.RIGHT) && !battle.character.fighting) {
-				if (Gdx.input.isKeyJustPressed(Keys.A)){
+				if (Gdx.input.isKeyJustPressed(Keys.A)) {
 					battle.character.fightRight(dt);
-					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
-							+ dt + " " + battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.FIGHTINGLEFT + ";"
-							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.FIGHTINGLEFT
+							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
-				}
-				else {
+				} else {
 					battle.character.movesRight(dt);
-					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
-							+ dt + " " + battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGLEFT + ";"
-							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGLEFT
+							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
-					
+
 				}
 			} else {
 				battle.character.stand();

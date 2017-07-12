@@ -4,22 +4,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import gameManager.GameSlagyom;
+
 public class Client {
 	public static NetworkWorld networkWorld;
 	Socket socket;
-	public PrintWriter writer;
+	public  PrintWriter writer;
 	public ClientHandler clientHandler;
-
+	GameSlagyom gameSlagyom;
 	boolean initialize = false;
 
-	public Client(String name) {
+	public Client(String name, GameSlagyom gameSlagyom) {
 		try {
 			socket = new Socket("localhost", 5555);
 			writer = new PrintWriter(socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		this.gameSlagyom = gameSlagyom;
 		networkWorld = new NetworkWorld(name);
 		clientHandler = new ClientHandler(socket, this);
 		clientHandler.start();

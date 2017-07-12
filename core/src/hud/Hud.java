@@ -54,7 +54,7 @@ public class Hud {
 		Table table = new Table();
 		table.top(); // la allinea sopra al centro
 		table.setFillParent(true);
-		if (!gameSlagyom.Modality) {
+		if (!gameSlagyom.modalityMultiplayer) {
 			nameLabel = new Label(Game.world.player.name, MenuScreen.skin);
 			coinsLabel = new Label(String.format("%3d", Game.world.player.coins), MenuScreen.skin);
 			villageLabel = new Label(String.format(Game.world.getMap().getNameVillage()), MenuScreen.skin);
@@ -81,7 +81,7 @@ public class Hud {
 	}
 
 	public void update() {
-		if(!gameSlagyom.Modality){
+		if(!gameSlagyom.modalityMultiplayer){
 		villageLabel.setText(String.format(Game.world.getMap().getNameVillage()));
 		coinsLabel.setText(String.format("%03d", Game.world.player.coins));
 		}

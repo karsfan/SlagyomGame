@@ -24,7 +24,7 @@ public class ScreenManager {
 	};
 
 	public State currentState;
-	private State previousState;
+	public State previousState;
 
 	public MenuScreen menuScreen;
 	public NewCharacterScreen newCharacterScreen;
@@ -54,7 +54,7 @@ public class ScreenManager {
 			setPreviousState(currentState);
 		setCurrentState(newState);
 
-		if (currentState == State.PLAYING || currentState == State.BATTLE)
+		if (currentState == State.PLAYING || currentState == State.BATTLE || currentState == State.MULTIPLAYERGAME || currentState == State.MULTIPLAYERBATTLE)
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.noCursor, 0, 0));
 		else
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.cursor, 0, 0));

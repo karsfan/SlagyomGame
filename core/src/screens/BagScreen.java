@@ -199,9 +199,12 @@ public class BagScreen implements Screen {
 		LoadingImage.close.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (!game.Modality)
-					game.screenManager.swapScreen(State.PLAYING);
-				else
+				if (!game.Modality) {
+					if (game.screenManager.previousState == State.BATTLE)
+						game.screenManager.swapScreen(State.BATTLE);
+					else
+						game.screenManager.swapScreen(State.PLAYING);
+				} else
 					game.screenManager.swapScreen(State.MULTIPLAYERGAME);
 			}
 		});
@@ -304,12 +307,12 @@ public class BagScreen implements Screen {
 		weaponsTable.setLayoutEnabled(false);
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 		if (!game.Modality) {
-			if (Game.world.player.bag.secondary_weapon != null) 
+			if (Game.world.player.bag.secondary_weapon != null)
 				weapons = new TextButton(Game.world.player.bag.secondary_weapon.getType().toString() + " "
 						+ Game.world.player.bag.secondary_weapon.getLevel().toString(), MenuScreen.skin);
-			else 
+			else
 				weapons = new TextButton("", MenuScreen.skin);
-			
+
 		} else {
 			if (Client.networkWorld.player.bag.secondary_weapon != null)
 				weapons = new TextButton(
@@ -425,9 +428,12 @@ public class BagScreen implements Screen {
 		game.batch.end();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			if (!game.Modality)
-				game.screenManager.swapScreen(State.PLAYING);
-			else
+			if (!game.Modality) {
+				if (game.screenManager.previousState == State.BATTLE)
+					game.screenManager.swapScreen(State.BATTLE);
+				else
+					game.screenManager.swapScreen(State.PLAYING);
+			} else
 				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
 		}
 

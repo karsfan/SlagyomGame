@@ -71,6 +71,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void update(float dt) {
+		System.out.println("quiiiiiiiiii");
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += dt;
 			setState(getCurrentState(), dt);
@@ -156,7 +157,6 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void movesLeft(float dt) {
-		System.out.println(dt*velocity);
 		left = true;
 		right = false;
 		if (x > 0)
@@ -170,14 +170,12 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public void jump(float dt) {
 		if (!jumping && !doubleJumping) {
 			jumping = true;
-			// velocityY = 400;
 			velocityY = 100;
 			velocityX = 10;
 			setState(StateDynamicObject.JUMPING, dt);
 		} else if (jumping && !doubleJumping) {
 			jumping = false;
-			doubleJumping = true;
-			// velocityY = 400;
+			doubleJumping = true;			
 			velocityY = 100;
 			velocityX = 10;
 		}
@@ -192,7 +190,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			setStateTimer(0);
 	}
 
-	private void setStateTimer(float f) {
+	public void setStateTimer(float f) {
 		stateTimer = f;
 	}
 

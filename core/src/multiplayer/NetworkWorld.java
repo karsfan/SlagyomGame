@@ -59,7 +59,7 @@ public class NetworkWorld {
 		while (otherP.hasNext()) {
 			NetworkPlayer ob = otherP.next();
 			if (ob.ID == iDOtherPlayer) {
-				battle = new Battle(player, ob);
+				battle = new NetworkBattle(player, ob);
 				break;
 			}
 		}

@@ -6,13 +6,14 @@ import battle.CharacterBattle;
 import character.Bomb;
 import character.Weapon;
 import character.Weapon.Type;
-import world.Game;
 import world.GameConfig;
 
 public class NetworkCharacterBattle extends CharacterBattle {
 	public boolean player = false;
 	public int ID;
 	public int IDOtherPlayer;
+	public boolean fightingLeft = false;
+	public boolean fightingRight = false;
 
 	public NetworkCharacterBattle(NetworkPlayer player) {
 		super(player);
@@ -29,19 +30,26 @@ public class NetworkCharacterBattle extends CharacterBattle {
 		} else if (fighting && fightingTimeCurrent > fightingTime) {
 			fighting = false;
 			fightingTimeCurrent = 0;
+			fightingLeft = false;
+			fightingRight = false;
 		}
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {
 			y += velocityY * dt;
-			// System.out.println(velocityY + " "+ velocityY*dt);
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING, dt);
-
-			if (collide() && x < Game.world.battle.enemy.getX())
-				x = (int) (Client.networkWorld.battle.enemy.getX() - getWidth() / 2);
-			else if (collide() && x > Client.networkWorld.battle.enemy.getX())
-				x = (int) (Client.networkWorld.battle.enemy.getX() + Client.networkWorld.battle.enemy.getWidth() / 2);
-
+			if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
+				if (collide() && x < Client.networkWorld.battle.enemy.getX())
+					x = (Client.networkWorld.battle.enemy.getX() - getWidth() / 2);
+				else if (collide() && x > Client.networkWorld.battle.enemy.getX())
+					x = (Client.networkWorld.battle.enemy.getX() + Client.networkWorld.battle.enemy.getWidth() / 2);
+			} else {
+				if (collide() && x < Client.networkWorld.battle.character.getX())
+					x = (Client.networkWorld.battle.character.getX() - getWidth() / 2);
+				else if (collide() && x > Client.networkWorld.battle.character.getX())
+					x = (Client.networkWorld.battle.character.getX()
+							+ Client.networkWorld.battle.character.getWidth() / 2);
+			}
 		} else {
 			jumping = false;
 			doubleJumping = false;
@@ -81,24 +89,30 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	public void fightRight(float dt) {
 		width += primary_weapon.getWidth();
 		if (collide())
-			Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+			if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
+				Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+			} else
+				Client.networkWorld.battle.character.decreaseHealth(primary_weapon);
 		width -= primary_weapon.getWidth();
 
 		setState(StateDynamicObject.FIGHTINGRIGHT, dt);
 		fighting = true;
-
+		fightingRight = true;
 	}
 
 	@Override
 	public void fightLeft(float dt) {
 		x -= primary_weapon.getWidth();
 		if (collide())
-			Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+			if (ID != ((NetworkCharacterBattle) Client.networkWorld.battle.enemy).ID) {
+				Client.networkWorld.battle.enemy.decreaseHealth(primary_weapon);
+			} else
+				Client.networkWorld.battle.character.decreaseHealth(primary_weapon);
 		x += primary_weapon.getWidth();
 
 		setState(StateDynamicObject.FIGHTINGLEFT, dt);
 		fighting = true;
-
+		fightingLeft = true;
 	}
 
 	@Override
@@ -120,4 +134,13 @@ public class NetworkCharacterBattle extends CharacterBattle {
 		return false;
 	}
 
+	public void setState(StateDynamicObject state, float dt) {
+		previousState = currentState;
+
+		currentState = state;
+		if (previousState == currentState && currentState != StateDynamicObject.STANDING)
+			setStateTimer(getStateTimer() + dt);
+		else
+			setStateTimer(0);
+	}
 }

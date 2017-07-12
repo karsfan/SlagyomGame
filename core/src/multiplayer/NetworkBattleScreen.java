@@ -24,7 +24,7 @@ public class NetworkBattleScreen extends BattleScreen {
 
 	@Override
 	public void render(float delta) {
-		 update(delta);
+		update(delta);
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -71,48 +71,9 @@ public class NetworkBattleScreen extends BattleScreen {
 	}
 
 	public void update(float dt) {
-
-		// if (!youWin && !youLose) {
-		// handleInput(dt);
-		// hud.update(dt);
-		// if (battle.update(dt)) {
-		// if (battle.character.getHealth() <= 0) {
-		// youLose = true;
-		// if (((Pack) ((Enemy)
-		// battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3") > 0) {
-		// potion = new Label(
-		// "Potion lev3 x" + Integer.toString(((Pack) ((Enemy)
-		// battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV3")),
-		// MenuScreen.skin);
-		// potion.setSize(100, 100);
-		// potion.setPosition(gamePort.getWorldWidth() / 4,
-		// gamePort.getWorldHeight() / 2.5f);
-		// hud.stage.addActor(potion);
-		// }
-		// } else {
-		// youWin = true;
-		// if (((Pack) ((Enemy)
-		// battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {
-		// potion = new Label(
-		// "Potion lev1 x" + Integer.toString(((Pack) ((Enemy)
-		// battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1")),
-		// MenuScreen.skin);
-		// potion.setSize(100, 100);
-		// potion.setPosition(gamePort.getWorldWidth() / 4,
-		// gamePort.getWorldHeight() / 3);
-		// hud.stage.addActor(potion);
-		// }
-		// }
-		// }
-		// }
-		// if (youWin || youLose)
-		// if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-		// if (battle.character instanceof NetworkCharacterBattle){
-		// gameslagyom.screenManager.swapScreen(State.MULTIPLAYERGAME);
-		// }
-		// else
-		// gameslagyom.screenManager.swapScreen(State.PLAYING);
-		// }
+		battle.update(dt);
+		hud.update(dt);
+		//System.out.println("update netBattleScreen");
 		handleInput(dt);
 
 	}
@@ -144,18 +105,18 @@ public class NetworkBattleScreen extends BattleScreen {
 
 			if (Gdx.input.isKeyJustPressed(Keys.S))
 				battle.character.setState(StateDynamicObject.DEFENDING, dt);
-
+			
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				battle.character.jump(dt);
 				client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
 						+ dt + " " + battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.JUMPING + ";"
 						+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 				client.writer.flush();
-			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+			} else if (Gdx.input.isKeyPressed(Keys.LEFT) && !battle.character.fighting) {
 				if (Gdx.input.isKeyJustPressed(Keys.A)){
 					battle.character.fightLeft(dt);
 					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
-							+ dt + " " + battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGRIGHT + ";"
+							+ dt + " " + battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.FIGHTINGRIGHT+ ";"
 							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}
@@ -166,7 +127,7 @@ public class NetworkBattleScreen extends BattleScreen {
 							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}
-			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			} else if (Gdx.input.isKeyPressed(Keys.RIGHT) && !battle.character.fighting) {
 				if (Gdx.input.isKeyJustPressed(Keys.A)){
 					battle.character.fightRight(dt);
 					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " "

@@ -64,10 +64,8 @@ public class ClientHandler extends Thread {
 						}
 					}
 				} else {
-					// System.out.println(receivedMessage);
+					
 					NetworkMessage message = new NetworkMessage(receivedMessage);
-					// System.out.println("Leggo "+receivedMessage+"sono
-					// "+client.networkWorld.player.ID);
 					for (NetworkPlayer player : client.networkWorld.otherPlayers) {
 						if (message.action == 0) {
 							if (player.ID == message.ID) {
@@ -94,11 +92,13 @@ public class ClientHandler extends Thread {
 							}else if (message.currentState == StateDynamicObject.RUNNINGRIGHT){
 								client.networkWorld.battle.enemy.movesRight(message.x);
 							}else if (message.currentState == StateDynamicObject.FIGHTINGLEFT){
+								System.out.println("fightLeft");
 								((NetworkCharacterBattle)client.networkWorld.battle.enemy).fightLeft(message.x);
 							}else if (message.currentState == StateDynamicObject.FIGHTINGRIGHT){
 								((NetworkCharacterBattle)client.networkWorld.battle.enemy).fightRight(message.x);
+							}else if(message.currentState == StateDynamicObject.JUMPING){
+								((NetworkCharacterBattle)client.networkWorld.battle.enemy).jump(message.x);
 							}
-							
 						}
 					}
 				}

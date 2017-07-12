@@ -28,11 +28,11 @@ public class Battle {
 		character = new NetworkCharacterBattle(player);
 		enemy = new NetworkCharacterBattle(ob);
 		enemy.x = 700;
-		//tem.out.println("Sono"+player.ID+" "+ob.ID);
+		
 	}
 
 	public boolean update(float dt) {
-
+		//System.out.println("update battle");
 		if (enemy.health <= 0) {
 			//enemyOri.morto = true;
 			return true;

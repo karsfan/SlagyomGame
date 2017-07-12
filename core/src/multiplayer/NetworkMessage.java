@@ -45,7 +45,17 @@ public class NetworkMessage {
 		case "RUNNINGDOWN":
 			currentState = StateDynamicObject.RUNNINGDOWN;
 			break;
+		case "FIGHTINGLEFT":
+			currentState = StateDynamicObject.FIGHTINGLEFT;
+			break;
+		case "FIGHTINGRIGHT":
+			currentState = StateDynamicObject.FIGHTINGRIGHT;
+			break;
+		case "JUMPING":
+			currentState = StateDynamicObject.JUMPING;
+			break;
 		default:
+			System.out.println("Errore codifica currentState nel messaggio. CurrentState: "+currentStateString);
 			break;
 		}
 		action = Integer.parseInt(actionString);
@@ -54,7 +64,7 @@ public class NetworkMessage {
 		x = Float.parseFloat(xString);
 		y = Float.parseFloat(yString);
 		
-		System.out.println("Messaggio "+actionString+" "+ID+" "+x+" "+y);
+		//System.out.println("Messaggio "+actionString+" "+ID+" "+x+" "+y+currentState);
 	}
 
 }

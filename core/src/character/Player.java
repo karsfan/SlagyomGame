@@ -95,11 +95,11 @@ public class Player extends DynamicObjects implements ICollidable {
 		return health;
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 

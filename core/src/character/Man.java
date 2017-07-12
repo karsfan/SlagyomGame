@@ -76,11 +76,11 @@ public class Man extends DynamicObjects implements ICollidable {
 		return info;
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int  getY() {
+	public float  getY() {
 		return y;
 	}
 

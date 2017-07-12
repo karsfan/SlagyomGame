@@ -83,8 +83,8 @@ public class GameSlagyom extends Game {
 			prefs.putString("SecondaryWeapon", world.Game.world.player.bag.secondary_weapon.getType().toString());
 			prefs.putString("SecondaryWeaponLevel", world.Game.world.player.bag.secondary_weapon.level.toString());
 		}
-		prefs.putInteger("xCharPosition", world.Game.world.player.x);
-		prefs.putInteger("yCharPosition", world.Game.world.player.y);
+		prefs.putFloat("xCharPosition", world.Game.world.player.x);
+		prefs.putFloat("yCharPosition", world.Game.world.player.y);
 		prefs.putInteger("health", world.Game.world.player.health);
 		prefs.putInteger("coins", world.Game.world.player.coins);
 		
@@ -97,8 +97,8 @@ public class GameSlagyom extends Game {
 		if (prefs.getString("name") != "") {
 
 			screenManager.playScreen = new PlayScreen(this, prefs.getString("map"), prefs.getString("name"), prefs.getBoolean("gender"));
-			world.Game.world.player.x = prefs.getInteger("xCharPosition");
-			world.Game.world.player.y = prefs.getInteger("yCharPosition");
+			world.Game.world.player.x = prefs.getFloat("xCharPosition");
+			world.Game.world.player.y = prefs.getFloat("yCharPosition");
 			
 			world.Game.world.player.health = prefs.getInteger("health");
 			world.Game.world.player.coins = prefs.getInteger("coins");

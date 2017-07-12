@@ -13,8 +13,8 @@ public class DynamicObjects implements ICollidable{
 	};
 
 	public String name;
-	public int x;
-	public int y;
+	public float x;
+	public float y;
 	public StateDynamicObject currentState;
 	public StateDynamicObject previousState;
 	public float stateTimer;
@@ -22,7 +22,7 @@ public class DynamicObjects implements ICollidable{
 	public float width;
 	public float velocity;
 
-	public DynamicObjects(int x, int y, StateDynamicObject currentState, StateDynamicObject previousState,
+	public DynamicObjects(float x, float y, StateDynamicObject currentState, StateDynamicObject previousState,
 			float stateTimer, float height, float width, float velocity) {
 		this.x = x;
 		this.y = y;
@@ -38,11 +38,11 @@ public class DynamicObjects implements ICollidable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 

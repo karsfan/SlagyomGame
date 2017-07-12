@@ -94,11 +94,11 @@ public class Woman extends DynamicObjects implements ICollidable {
 		return info;
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 

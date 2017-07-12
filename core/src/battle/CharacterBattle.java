@@ -53,11 +53,11 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		return health;
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 

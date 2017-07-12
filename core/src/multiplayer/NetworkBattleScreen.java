@@ -160,7 +160,7 @@ public class NetworkBattleScreen extends BattleScreen {
 					battle.character.movesRight(dt);
 					//System.out.println("qui");
 					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
-							+ (int)battle.character.x + " " + battle.character.y + " " + battle.character.currentState + ";"
+							+ battle.character.x + " " + battle.character.y + " " + battle.character.currentState + ";"
 							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}

@@ -19,7 +19,6 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public CharacterBattle(Player player) {
 		super();
 		stateTimer = 0;
-		System.out.println(player.health);
 		bag = player.bag;
 		primary_weapon = player.primary_weapon;
 		this.health = player.health;

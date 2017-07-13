@@ -5,14 +5,18 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import battle.Battle;
 import character.Bomb;
+import character.DynamicObjects;
 import character.DynamicObjects.StateDynamicObject;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
+import gameManager.LoadingMusic;
 import gameManager.ScreenManager.State;
 import screens.BattleScreen;
+import screens.MenuScreen;
 
 public class NetworkBattleScreen extends BattleScreen {
 	public Client client;
@@ -41,8 +45,11 @@ public class NetworkBattleScreen extends BattleScreen {
 		NetworkCharacterBattle tmp = (NetworkCharacterBattle) battle.character;
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp), tmp.getX(), tmp.getY(), tmp.getWidth(),
 				tmp.getHeight());
-
-		NetworkCharacterBattle tmp1 = (NetworkCharacterBattle) battle.enemy;
+		DynamicObjects tmp1;
+		if (battle.enemy instanceof NetworkCharacterBattle)
+			tmp1 = (NetworkCharacterBattle) battle.enemy;
+		else
+			tmp1 = (NetworkEnemy) battle.enemy;
 		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
 				tmp1.getHeight());
 
@@ -54,9 +61,12 @@ public class NetworkBattleScreen extends BattleScreen {
 						searching.getWidth() + 10, searching.getHeight() + 10);
 			}
 		}
-
-		Iterator<Bomb> bombIterator1 = tmp1.bag.bombe.iterator();
-
+		Iterator<Bomb> bombIterator1 = null;
+		if (battle.enemy instanceof NetworkCharacterBattle)
+			bombIterator1 = ((NetworkCharacterBattle) tmp1).bag.bombe.iterator();
+		else
+			bombIterator1 = ((NetworkEnemy) tmp1).getBombe().iterator();
+		
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
 			if (searching1.lanciata == true) {
@@ -64,17 +74,85 @@ public class NetworkBattleScreen extends BattleScreen {
 						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
 			}
 		}
-		// if (youWin)
-		// gameslagyom.batch.draw(LoadingImage.getYouWinImage(), 0, 0);
-		// else if (youLose)
-		// gameslagyom.batch.draw(LoadingImage.getYouLoseImage(), 0, 0);
+		if (youWin)
+			gameslagyom.batch.draw(LoadingImage.getYouWinImage(), 0, 0);
+		else if (youLose)
+			gameslagyom.batch.draw(LoadingImage.getYouLoseImage(), 0, 0);
 	}
 
+	@Override
 	public void update(float dt) {
-		battle.update(dt);
-		hud.update(dt);
-		// System.out.println("update netBattleScreen");
-		handleInput(dt);
+		System.out.println("Update NetBattleScreen");
+		if (!youWin && !youLose) {
+			handleInput(dt);
+			hud.update(dt);
+			if (battle.update(dt)) {
+				if (battle.character.getHealth() <= 0) {
+					youLose = true;
+				} else {
+					youWin = true;
+					Client.networkWorld.player.bag.addPack(((NetworkBattle) battle).win_bonus);
+					LoadingMusic.cashSound.play(1.5f);
+
+					if (((NetworkBattle) battle).win_bonus.getNumberOf("POTIONLEV1") > 0) {
+						bluePotion = new Label(
+								"Blue potion x" + Integer
+										.toString(((NetworkBattle) battle).win_bonus.getNumberOf("POTIONLEV1")),
+								MenuScreen.skin);
+						bluePotion.setPosition(440, 410);
+						packTable.add(bluePotion);
+					}
+					if (((NetworkBattle) battle).win_bonus.getNumberOf("POTIONLEV2") > 0) {
+						redPotion = new Label(
+								"Red potion x" + Integer
+										.toString(((NetworkBattle) battle).win_bonus.getNumberOf("POTIONLEV2")),
+								MenuScreen.skin);
+						redPotion.setPosition(440, 346);
+						packTable.add(redPotion);
+					}
+					if (((NetworkBattle) battle).win_bonus.getNumberOf("POTIONLEV3") > 0) {
+						greenPotion = new Label(
+								"Green potion x" + Integer
+										.toString(((NetworkBattle) battle).win_bonus.getNumberOf("POTIONLEV3")),
+								MenuScreen.skin);
+						greenPotion.setPosition(440, 282);
+						packTable.add(greenPotion);
+					}
+					if (((NetworkBattle) battle).win_bonus.getNumberOf("COIN") > 0) {
+						coin = new Label(
+								"Coins x" + Integer.toString(((NetworkBattle) battle).win_bonus.getNumberOf("COIN")),
+								MenuScreen.skin);
+						coin.setPosition(800, 410);
+						packTable.add(coin);
+					}
+					if (((NetworkBattle) battle).win_bonus.getNumberOf("PARCHLEV1") > 0) {
+						parchmentLev1 = new Label(
+								"Parch. lev1 x"
+										+ Integer.toString(((NetworkBattle) battle).win_bonus.getNumberOf("PARCHLEV1")),
+								MenuScreen.skin);
+						parchmentLev1.setPosition(800, 346);
+						packTable.add(parchmentLev1);
+					}
+					if (((NetworkBattle) battle).win_bonus.getNumberOf("PARCHLEV2") > 0) {
+						parchmentLev2 = new Label(
+								"Parch. lev2 x"
+										+ Integer.toString(((NetworkBattle) battle).win_bonus.getNumberOf("PARCHLEV2")),
+								MenuScreen.skin);
+						parchmentLev1.setPosition(800, 282);
+						packTable.add(parchmentLev2);
+					}
+				}
+			}
+			hud.stage.addActor(packTable);
+
+		}
+		if (youWin || youLose)
+			if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+				if (battle.character instanceof NetworkCharacterBattle) {
+					gameslagyom.screenManager.swapScreen(State.MULTIPLAYERGAME);
+				} else
+					gameslagyom.screenManager.swapScreen(State.PLAYING);
+			}
 
 	}
 
@@ -104,10 +182,8 @@ public class NetworkBattleScreen extends BattleScreen {
 				battle.character.bomba = false;
 				battle.character.forza = 50;
 			}
-
 			if (Gdx.input.isKeyJustPressed(Keys.S))
 				battle.character.setState(StateDynamicObject.DEFENDING, dt);
-
 			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				battle.character.jump(dt);
 				client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
@@ -141,7 +217,6 @@ public class NetworkBattleScreen extends BattleScreen {
 							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGLEFT
 							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
-
 				}
 			} else {
 				battle.character.stand();

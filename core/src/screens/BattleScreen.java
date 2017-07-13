@@ -34,17 +34,17 @@ public class BattleScreen implements Screen {
 	public GameSlagyom gameslagyom;
 	public BattleHud hud;
 	public Battle battle;
-	boolean youWin = false;
-	boolean youLose = false;
+	public boolean youWin = false;
+	public boolean youLose = false;
 
-	Table packTable;
-	Label bluePotion;
-	Label redPotion;
-	Label greenPotion;
-	Label parchmentLev1;
-	Label parchmentLev2;
-	Label bomb;
-	Label coin;
+	public Table packTable;
+	public Label bluePotion;
+	public Label redPotion;
+	public Label greenPotion;
+	public Label parchmentLev1;
+	public Label parchmentLev2;
+	public Label bomb;
+	public Label coin;
 
 	public BattleScreen(GameSlagyom gameslagyom, Battle battle) {
 		this.gameslagyom = gameslagyom;
@@ -122,7 +122,8 @@ public class BattleScreen implements Screen {
 					youLose = true;
 				} else {
 					youWin = true;
-					Game.world.player.bag.addPack((Pack) ((Enemy) battle.enemy).getWin_bonus());
+					
+					battle.character.bag.addPack((Pack) ((Enemy) battle.enemy).getWin_bonus());
 					LoadingMusic.cashSound.play(1.5f);
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {
 						bluePotion = new Label(

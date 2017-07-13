@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 
@@ -56,6 +57,7 @@ public class LoadingImage {
 	public static Texture pointer;
 	public static Pixmap cursor;
 	public static Pixmap noCursor;
+	public static Drawable dialog;
 
 	public static TextureRegion battleCharacterStand;
 	public static TextureRegion battleFemaleCharacterStand;
@@ -140,6 +142,7 @@ public class LoadingImage {
 		castleImage = new Texture("res/castle.png");
 		youWinImage = new Texture("res/youWin.png");
 		youLoseImage = new Texture("res/youLose.png");
+		dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
 		// WORLD ITEM IMAGES
 		coinImage = new Texture("res/coin.png");
 		bluPotionImage = new Texture("res/bluePotion.png");

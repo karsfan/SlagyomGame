@@ -170,11 +170,10 @@ public class PlayScreen implements Screen, ControllerListener {
 	 *            that you want to show
 	 */
 	public static void drawDialog(final String text) {
-		Drawable dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
 		if (hud.showDialog) {
 			Label dialogLabel = new Label(text, MenuScreen.skin);
 			hud.textTable.setSize(236 * 3, 47 * 4);
-			hud.textTable.setBackground(dialog);
+			hud.textTable.setBackground(LoadingImage.dialog);
 			hud.textTable.add(dialogLabel).top();
 		}
 	}

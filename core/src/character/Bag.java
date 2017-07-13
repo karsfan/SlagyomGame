@@ -35,11 +35,16 @@ public class Bag {
 
 	}
 
-	public void deleteParchments(Item item) {
+	public void deleteParchments(Level itemLevel) {
 		Iterator<Item> itParchment = items.iterator();
-		while (itParchment.hasNext()) {
+		int parchmentRemoved = 0;
+		if(itemLevel == Level.FIRST)
+			parchmentRemoved = 10;
+		else if(itemLevel == Level.SECOND)
+			parchmentRemoved = 20;
+		while (itParchment.hasNext() && parchmentRemoved >0) {
 			Item it = (Item) itParchment.next();
-			if (it == item) {
+			if (it.getElement() == Element.PARCHMENT && it.getLevel() == itemLevel) {
 				itParchment.remove();
 				continue;
 			}

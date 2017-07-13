@@ -63,7 +63,7 @@ public class BagScreen implements Screen {
 	public Weapon weaponSelected;
 
 	TextButton[] potions;
-	TextButton weapons;
+	TextButton[] weapons;
 	TextButton[] bombs;
 	TextButton[] parchments;
 
@@ -92,7 +92,8 @@ public class BagScreen implements Screen {
 		use = new TextButton("Use", MenuScreen.skin);
 		delete = new TextButton("Delete", MenuScreen.skin);
 		exit = new TextButton("Return", MenuScreen.skin);
-		weapons = new TextButton("Weapon", MenuScreen.skin);
+		weapons = new TextButton[2];
+		weaponsTable = new Table();
 		use.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -102,8 +103,13 @@ public class BagScreen implements Screen {
 							Game.world.player.bag.useItem(itemSelected);
 						setTextPotions();
 					}
-
+				if(weaponsTable.isVisible()){
+					if(Game.world.player.primary_weapon.upgrade(Game.world.player.bag))
+						weapons[0].setText(Game.world.player.primary_weapon.getType().toString()+" "+
+								Game.world.player.primary_weapon.getLevel());
+				}
 			}
+			
 		});
 		delete.addListener(new ClickListener() {
 			@Override
@@ -131,8 +137,12 @@ public class BagScreen implements Screen {
 				}
 
 				if (weaponsTable.isVisible()) {
-					Game.world.player.bag.secondary_weapon = null;
-					weapons.setText("");
+					if (!game.modalityMultiplayer) {
+						if (Game.world.player.bag.secondary_weapon == weaponSelected)
+							Game.world.player.bag.secondary_weapon = null;
+					}
+					setTextWeapon();
+					// weapons.setText("");
 				}
 			}
 		});
@@ -300,39 +310,70 @@ public class BagScreen implements Screen {
 		// END BOMBS TABLE
 
 		// WEAPON TABLE
-		weaponsTable = new Table();
+		
 		Label weaponsLabel;
 
 		weaponsTable.setVisible(false);
 		weaponsTable.setLayoutEnabled(false);
+		weapons[0] = new TextButton("Weapon ", MenuScreen.skin);
+		weapons[1] = new TextButton("Weapon ", MenuScreen.skin);
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 		if (!game.modalityMultiplayer) {
-			if (Game.world.player.bag.secondary_weapon != null)
-				weapons = new TextButton(Game.world.player.bag.secondary_weapon.getType().toString() + " "
+			if (Game.world.player.bag.secondary_weapon != null) {
+				weapons[1] = new TextButton(Game.world.player.bag.secondary_weapon.getType().toString() + " "
 						+ Game.world.player.bag.secondary_weapon.getLevel().toString(), MenuScreen.skin);
-			else
-				weapons = new TextButton("", MenuScreen.skin);
+			} else
+				weapons[1] = new TextButton("", MenuScreen.skin);
+			if (Game.world.player.primary_weapon != null) {
+				weapons[0] = new TextButton(Game.world.player.primary_weapon.getType().toString() + " "
+						+ Game.world.player.primary_weapon.getLevel().toString(), MenuScreen.skin);
+			} else
+				weapons[0] = new TextButton("", MenuScreen.skin);
 
 		} else {
 			if (Client.networkWorld.player.bag.secondary_weapon != null)
-				weapons = new TextButton(
+				weapons[1] = new TextButton(
 						Client.networkWorld.player.bag.secondary_weapon.getType().toString() + " "
 								+ Client.networkWorld.player.bag.secondary_weapon.getLevel().toString(),
 						MenuScreen.skin);
 			else
-				weapons = new TextButton("", MenuScreen.skin);
+				weapons[1] = new TextButton("", MenuScreen.skin);
+			if (Client.networkWorld.player.primary_weapon != null)
+				weapons[0] = new TextButton(Client.networkWorld.player.primary_weapon.getType().toString() + " "
+						+ Client.networkWorld.player.primary_weapon.getLevel().toString(), MenuScreen.skin);
+			else
+				weapons[0] = new TextButton("", MenuScreen.skin);
 		}
-		weapons.addListener(new ClickListener() {
+		weapons[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				showInfo(LoadingImage.spear);
+				if (!GameSlagyom.modalityMultiplayer)
+					weaponSelected = new Weapon(Game.world.player.primary_weapon.getLevel(),
+							Game.world.player.primary_weapon.getType());
+				else
+					weaponSelected = new Weapon(Client.networkWorld.player.primary_weapon.getLevel(),
+							Client.networkWorld.player.primary_weapon.getType());
+			}
+		});
+		weapons[1].addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showInfo(LoadingImage.spear);
+				if (!GameSlagyom.modalityMultiplayer)
+					weaponSelected = new Weapon(Game.world.player.bag.secondary_weapon.getLevel(),
+							Game.world.player.bag.secondary_weapon.getType());
+				else
+					weaponSelected = new Weapon(Client.networkWorld.player.bag.secondary_weapon.getLevel(),
+							Client.networkWorld.player.bag.secondary_weapon.getType());
 			}
 		});
 
 		weaponsLabel.setPosition(140, 425);
 		weaponsTable.add(weaponsLabel);
 
-		weapons.setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+		weapons[0].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
+		weapons[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 		weaponsTable.add(weapons);
 
 		// END WEAPONS TABLE
@@ -384,6 +425,23 @@ public class BagScreen implements Screen {
 		Controllers.addListener(new MenuControllerListener(weaponsTable));
 		Controllers.addListener(new MenuControllerListener(parchmentsTable));
 		Controllers.addListener(new MenuControllerListener(optionsTable));
+	}
+
+	@SuppressWarnings("static-access")
+	protected void setTextWeapon() {
+		if (!game.modalityMultiplayer) {
+			weapons[0].setText(Game.world.player.primary_weapon.getType().toString() + " "
+					+ Game.world.player.primary_weapon.getLevel().toString());
+			if (Game.world.player.bag.secondary_weapon != null)
+				weapons[1].setText(Game.world.player.bag.secondary_weapon.getType().toString() + " "
+						+ Game.world.player.bag.secondary_weapon.getLevel().toString());
+		} else {
+			weapons[0].setText(Client.networkWorld.player.primary_weapon.getType().toString() + " "
+					+ Client.networkWorld.player.primary_weapon.getLevel().toString());
+			if (Client.networkWorld.player.bag.secondary_weapon != null)
+				weapons[1].setText(Client.networkWorld.player.bag.secondary_weapon.getType().toString() + " "
+						+ Client.networkWorld.player.bag.secondary_weapon.getLevel().toString());
+		}
 	}
 
 	private void showInfo(ImageButton icon) {
@@ -449,14 +507,14 @@ public class BagScreen implements Screen {
 			bombsTable.setVisible(false);
 			if (!game.modalityMultiplayer)
 				if (Game.world.player.bag.secondary_weapon != null)
-					weapons.setVisible(true);
+					weapons[1].setVisible(true);
 				else
-					weapons.setVisible(false);
+					weapons[1].setVisible(false);
 			else if (game.modalityMultiplayer)
 				if (Client.networkWorld.player.bag.secondary_weapon != null && game.modalityMultiplayer)
-					weapons.setVisible(true);
+					weapons[1].setVisible(true);
 				else
-					weapons.setVisible(false);
+					weapons[1].setVisible(false);
 			potionsTable.setVisible(false);
 			parchmentsTable.setVisible(false);
 		} else if (currentPocket == Pocket.PARCHMENTS) {

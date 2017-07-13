@@ -71,7 +71,6 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void update(float dt) {
-		System.out.println("quiiiiiiiiii");
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += dt;
 			setState(getCurrentState(), dt);

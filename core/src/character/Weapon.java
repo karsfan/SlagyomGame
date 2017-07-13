@@ -2,6 +2,10 @@ package character;
 
 import java.util.Random;
 
+
+import staticObjects.Item;
+import staticObjects.StaticObject.Element;
+
 public class Weapon {
 	public enum Type {
 		Sword, Bow, Spear, Freccia, Bomba
@@ -67,7 +71,8 @@ public class Weapon {
 			break;
 		}
 	}
-	//constructor per inizializzare leggendo da file il salvataggio
+
+	// constructor per inizializzare leggendo da file il salvataggio
 	public Weapon(String type, String level) {
 		switch (type) {
 		case "Sword":
@@ -141,6 +146,7 @@ public class Weapon {
 	}
 
 	public void setWeapon(Type type, Level level) {
+		this.level = level;
 		switch (type) {
 		case Sword:
 			switch (level) {
@@ -232,13 +238,28 @@ public class Weapon {
 			break;
 		default:
 			break;
-
 		}
 	}
-	/*
-	 * public void upgrade(Bag bag) { if (level < 3) { level++; powerPoints =
-	 * level * 20; damage += 20; bag.deleteParchments(level); } }
-	 */
+
+	public boolean upgrade(Bag bag) {
+
+		if (level != Level.lev3) {
+			if (level == Level.lev1) {
+				if (bag.getNumberOf(Element.PARCHMENT, Item.Level.FIRST) >= 10) {
+					setWeapon(type, Level.lev2);
+					bag.deleteParchments(Item.Level.FIRST);
+					return true;
+				}
+			} else if (level == Level.lev2) {
+				if (bag.getNumberOf(Element.PARCHMENT, Item.Level.FIRST) >= 20) {
+					setWeapon(type, Level.lev3);
+					bag.deleteParchments(Item.Level.SECOND);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	public float getDamage() {
 		return damage;

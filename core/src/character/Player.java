@@ -107,6 +107,7 @@ public class Player extends DynamicObjects implements ICollidable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 
 	public void pickParchment(Item parchment) {
 		bag.add(parchment);

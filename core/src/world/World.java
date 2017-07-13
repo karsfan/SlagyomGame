@@ -51,7 +51,6 @@ public class World {
 		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village one");
 		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getPath(), false, "Village two");
 		player = new Player(name, male);
-		while(!player.positionCharacter()){}
 		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));
 

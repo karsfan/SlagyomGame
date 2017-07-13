@@ -79,7 +79,7 @@ public class Man extends DynamicObjects implements ICollidable {
 		return x;
 	}
 
-	public float  getY() {
+	public float getY() {
 		return y;
 	}
 
@@ -88,8 +88,7 @@ public class Man extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesRight(float dt) {
-		if(dt*velocity>=2)
-		System.out.println(dt*velocity);
+
 		if (x + velocity * dt < GameConfig.WIDTH - width / 2) {
 			x += velocity * dt;
 			if (collide(this)) {
@@ -285,9 +284,8 @@ public class Man extends DynamicObjects implements ICollidable {
 								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
 					if (ob instanceof Player) {
 						collisionWithCharacter = true;
-					}
-					else {
-						collision = true;						
+					} else {
+						collision = true;
 					}
 					return true;
 				}

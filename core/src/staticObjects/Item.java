@@ -24,13 +24,13 @@ public class Item extends StaticObject {
 		switch (element) {
 		case COIN:
 			this.level = Level.FIRST;
-			shape = new Rectangle((int) x, (int) y, 14, 14);
+			shape = new Rectangle((int) x, (int) y, 11, 11);
 			break;
 		case POTION:
 			shape = new Rectangle((int) x, (int) y, 14, 14);
 			break;
 		case PARCHMENT:
-			shape = new Rectangle((int) x, (int) y, 10, 10);
+			shape = new Rectangle((int) x, (int) y, 15, 15);
 			break;
 		default:
 			System.out.println("Qui");

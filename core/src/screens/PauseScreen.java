@@ -89,13 +89,22 @@ public class PauseScreen implements Screen {
 			}
 		});
 		menuButton.addListener(new ClickListener() {
-			@SuppressWarnings("deprecation")
+			@SuppressWarnings({ "deprecation", "static-access" })
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (!game.modalityMultiplayer) {
 					Game.world.getThread().stop();
 					game.screenManager.playScreen.dispose();
 				}
+				// else {
+				// int i =
+				// game.screenManager.networkPlayScreen.client.networkWorld.player.ID;
+				// System.out.println(game.screenManager.networkPlayScreen.client.networkWorld.player.ID);
+				// game.screenManager.multiplayerScreen.server
+				// .send(10 + " " + i + " " + 0 + " " + 0 + " " + 0 + ";" +
+				// "111111" + ";");
+				// game.screenManager.multiplayerScreen.server.connected.remove(ServerHandler.class);
+				// }
 				game.screenManager.menuScreen = new MenuScreen(game);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 			}
@@ -170,10 +179,13 @@ public class PauseScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-//			Client.writer.println(8 + " " + ((NetworkCharacterBattle) Client.networkWorld.battle.character).ID + " "
-//					+ 0 + " " + Client.networkWorld.battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.FIGHTINGLEFT + ";"
-//					+ ((NetworkCharacterBattle) Client.networkWorld.battle.character).IDOtherPlayer + ";");
-//			Client.writer.flush();
+		
+//			game.screenManager.networkBattleScreen.client.writer.println(
+//					8 + " " + ((NetworkCharacterBattle) game.screenManager.networkBattleScreen.client.networkWorld.battle.character).ID
+//							+ " " + 0 + " " + 0 + " " + 0 + ";"
+//							+ ((NetworkCharacterBattle) game.screenManager.networkBattleScreen.client.networkWorld.battle.character).IDOtherPlayer
+//							+ ";");
+			//game.screenManager.networkBattleScreen.client.writer.flush();
 			game.screenManager.swapScreen(game.screenManager.getPreviousState());
 		}
 

@@ -32,9 +32,8 @@ public class Battle {
 	}
 
 	public boolean update(float dt) {
-		//System.out.println("update battle");
 		if (enemy.health <= 0) {
-			//enemyOri.morto = true;
+			enemyOri.morto = true;
 			return true;
 		}
 		if (character.getHealth() <= 0) {

@@ -15,8 +15,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
-import gameManager.ScreenManager;
-import gameManager.ScreenManager.State;
 import world.GameConfig;
 
 public class OptionScreen implements Screen {

@@ -43,7 +43,7 @@ public class NetworkWorld {
 			NetworkEnemy ob = (NetworkEnemy) it1.next();
 			if (!ob.morto) {
 				creata = true;
-				battle = new Battle(Client.networkWorld.player, ob);
+				battle = new NetworkBattle(Client.networkWorld.player, ob);
 				break;
 			}
 		}

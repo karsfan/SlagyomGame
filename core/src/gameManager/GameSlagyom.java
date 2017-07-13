@@ -25,7 +25,7 @@ public class GameSlagyom extends Game {
 	LoadingMusic musicLoader;
 	public Preferences prefs;
 	public SpriteBatch batch;
-	public static  boolean modalityMultiplayer;
+	public static boolean modalityMultiplayer;
 	@Override
 	public void create() {
 		new LoadingMusic();

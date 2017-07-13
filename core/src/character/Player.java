@@ -47,7 +47,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		height = 30;
 		width = 30;
-		System.out.println(male);
 	}
 
 	public Player() {
@@ -67,8 +66,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		height = 30;
 		width = 30;
-
-		System.out.println(male);
 	}
 
 	public boolean positionCharacter() {
@@ -278,7 +275,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		return width;
 	}
 
-	boolean pickItem(Item item) {
+	public boolean pickItem(Item item) {
 		if (item.getElement() != Element.COIN && !item.picked) {
 				bag.add(item);
 				LoadingMusic.itemSound.play(1.0f);

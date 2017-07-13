@@ -36,7 +36,8 @@ public class ServerHandler extends Thread {
 				String receivedMessage= reader.readLine();
 				if(receivedMessage.contains(" ")){
 					NetworkMessage message = new NetworkMessage(receivedMessage);
-					if(message.action == 2){
+					if(message.action == 2 || message.action == 9 || message.action == 8){
+						System.out.println(receivedMessage);
 						server.send(receivedMessage, message.IDreceiver);	
 					}
 					else{

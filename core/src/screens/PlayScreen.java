@@ -61,6 +61,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	 *            true if the player's gender is male
 	 * 
 	 */
+	@SuppressWarnings("static-access")
 	public PlayScreen(GameSlagyom game, String name, boolean male) {
 		new LoadingImage();
 
@@ -92,6 +93,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	 * @param male
 	 *            true if the player's gender is male
 	 */
+	@SuppressWarnings("static-access")
 	public PlayScreen(GameSlagyom game, String path, String name, boolean male) {
 		new LoadingImage();
 
@@ -111,6 +113,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	}
 	
+	@SuppressWarnings("static-access")
 	public PlayScreen(String text, GameSlagyom game, String charName, boolean male) {
 
 		new LoadingImage();
@@ -138,6 +141,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		hud.update();
 
 		hud.stage.draw();
+		
 		// TEXT TABLE RENDERING
 		textTimer += delta;
 		if (hud.showDialog) {
@@ -268,12 +272,7 @@ public class PlayScreen implements Screen, ControllerListener {
 					game.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 				}
 
-				else if (Gdx.input.isKeyJustPressed(Keys.Y)) {
-
-					// Game.world.createBattle();
-					Game.world.semaphore.acquire();
-					game.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
-				} else if (Gdx.input.isKeyJustPressed(Keys.B)) {
+				 else if (Gdx.input.isKeyJustPressed(Keys.B)) {
 					Game.world.nextLevel();
 				} // else
 					// Game.character.setState(StateDynamicObject.STANDING);

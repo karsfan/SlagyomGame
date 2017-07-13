@@ -38,7 +38,7 @@ public class World {
 	public static Stack<String> dialogues;
 	public static Stack<String> manNames;
 	public static Stack<String> womanNames;
-	
+
 	private FileReader fileReader;
 	private Scanner input;
 
@@ -51,10 +51,10 @@ public class World {
 		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village one", false);
 		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getPath(), false, "Village two", false);
 		player = new Player(name, male);
-
+		while(!player.positionCharacter()){}
 		getListDynamicObjects().add(player);
 		setThread(new ThreadWorld(this, semaphore));
-		
+
 		manNames = new Stack<String>();
 		womanNames = new Stack<String>();
 		dialogues = new Stack<String>();
@@ -110,7 +110,6 @@ public class World {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
 
 	}
 

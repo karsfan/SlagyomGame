@@ -32,11 +32,11 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 	public Viewport gamePort;
 	public GameSlagyom game;
 	public static Hud hud;
-	//private static Drawable noDialog = null;
-	//private static float textTimer;
+	// private static Drawable noDialog = null;
+	// private static float textTimer;
 	public Client client;
 	public int j = 0;
-
+	
 	private boolean stop = false;
 	public int i = 0;
 
@@ -63,21 +63,21 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 	@Override
 	public void render(float delta) {
-
-		update(delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.setProjectionMatrix(gamecam.combined);
 
 		game.batch.begin();
-		draw();
+		if (client.go)
+			draw();
 		game.batch.end();
 		hud.update();
 
 		hud.stage.draw();
+		update(delta);
 
 		// TEXT TABLE RENDERING
-		//textTimer += delta;
+		// textTimer += delta;
 		// if (hud.showDialog) {
 		// if (textTimer > 0.08f) {
 		// textTimer = 0;
@@ -103,15 +103,16 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 	}
 
-//	public static void drawDialog(final String text) {
-//		Drawable dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
-//		// if (hud.showDialog) {
-//		// Label dialogLabel = new Label(text, MenuScreen.skin);
-//		// hud.textTable.setSize(236 * 3, 47 * 4);
-//		// hud.textTable.setBackground(dialog);
-//		// hud.textTable.add(dialogLabel).top();
-//		// }
-//	}
+	// public static void drawDialog(final String text) {
+	// Drawable dialog = new TextureRegionDrawable(new TextureRegion(new
+	// Texture("res/dialogBox.png")));
+	// // if (hud.showDialog) {
+	// // Label dialogLabel = new Label(text, MenuScreen.skin);
+	// // hud.textTable.setSize(236 * 3, 47 * 4);
+	// // hud.textTable.setBackground(dialog);
+	// // hud.textTable.add(dialogLabel).top();
+	// // }
+	// }
 
 	public static void hideDialog() {
 		// hud.textTable.clear();
@@ -151,7 +152,6 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 			else if (Gdx.input.isKeyPressed(Keys.UP) || (directionGamepad == PovDirection.north && movesGamePad)) {
 				client.movesUp(dt);
 				if (client.networkWorld.player.collideShop) {
-					// client.networkWorld.world.semaphore.acquire();
 					game.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
 					client.networkWorld.player.collideShop = false;
 				}
@@ -176,15 +176,15 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 			} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 				LoadingMusic.pause();
-				// Game.world.semaphore.acquire();
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 			}
 
 		}
 		if (client.networkWorld.player.readyToFight && !client.networkWorld.player.isFighting) {
-			System.out.println("Sono "+ client.networkWorld.player.ID+"inizio la battaglia contro "+client.networkWorld.player.IDOtherPlayer);
+//			System.out.println("Sono " + client.networkWorld.player.ID + "inizio la battaglia contro "
+//					+ client.networkWorld.player.IDOtherPlayer);
 			client.networkWorld.createBattle(client.networkWorld.player.IDOtherPlayer);
-			game.screenManager.networkBattleScreen= new NetworkBattleScreen(game, client.networkWorld.battle, client);
+			game.screenManager.networkBattleScreen = new NetworkBattleScreen(game, client.networkWorld.battle, client);
 			game.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYERBATTLE);
 			client.networkWorld.player.readyToFight = false;
 			client.networkWorld.player.isFighting = true;
@@ -195,7 +195,6 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 	@SuppressWarnings("static-access")
 	public synchronized void draw() {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) client.networkWorld.getListTile().listIterator();
-
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject)
@@ -203,6 +202,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 		}
+		client.canModify = false;
 		ListIterator<Item> it2 = client.networkWorld.getListItems().listIterator();
 		while (it2.hasNext()) {
 			Object ob = (Object) it2.next();
@@ -213,7 +213,6 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 		}
 		Iterator<NetworkPlayer> it1 = client.networkWorld.getOtherPlayersList().iterator();
 		while (it1.hasNext()) {
-			// System.out.println("disegno");
 			Object ob = (Object) it1.next();
 			if (ob instanceof NetworkPlayer) {
 
@@ -221,6 +220,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
 			}
 		}
+		client.canModify = true;
 		game.batch.draw(LoadingImage.getFrame(client.networkWorld.player), client.networkWorld.player.getX(),
 				client.networkWorld.player.getY(), client.networkWorld.player.getWidth(),
 				client.networkWorld.player.getHeight());
@@ -232,7 +232,6 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
-		// gamePort.setScreenSize(width, height);
 		// controlli per la posizione della camera
 		if (gamePort.getWorldWidth() / 2 + client.networkWorld.player.getX() - GameConfig.WIDTH > 0
 				&& !(client.networkWorld.player.getX() - gamePort.getWorldWidth() / 2 < 0))

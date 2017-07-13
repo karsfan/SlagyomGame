@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import battle.Pack;
 import character.Player;
 import character.Weapon;
 import character.Weapon.Level;

@@ -29,7 +29,6 @@ import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
 import world.Game;
-import world.GameConfig;
 
 public class BagScreen implements Screen {
 	private enum Pocket {
@@ -68,6 +67,7 @@ public class BagScreen implements Screen {
 	TextButton[] bombs;
 	TextButton[] parchments;
 
+	@SuppressWarnings("static-access")
 	public BagScreen(final GameSlagyom game) {
 		this.game = game;
 		itemSelected = new Item(null, null);
@@ -415,6 +415,7 @@ public class BagScreen implements Screen {
 
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
@@ -475,6 +476,7 @@ public class BagScreen implements Screen {
 		stage.draw();
 	}
 
+	@SuppressWarnings("static-access")
 	public void setTextParchment() {
 		if (!game.modalityMultiplayer) {
 			parchments[0]
@@ -489,6 +491,7 @@ public class BagScreen implements Screen {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public void setTextPotions() {
 		if (!game.modalityMultiplayer) {
 			potions[0].setText("Blue potion  x" + Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST));
@@ -504,6 +507,7 @@ public class BagScreen implements Screen {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public void setTextBomb() {
 		if (!game.modalityMultiplayer) {
 			bombs[0].setText("Bomb lev1   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
@@ -519,6 +523,7 @@ public class BagScreen implements Screen {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public void setPositionBomb() {
 		if (!game.modalityMultiplayer) {
 			if (Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1) <= 0) {
@@ -563,6 +568,7 @@ public class BagScreen implements Screen {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public void setPositionPotion() {
 		if (!game.modalityMultiplayer) {
 			if (Game.world.player.bag.getNumberOf(Element.POTION, Level.FIRST) <= 0) {
@@ -608,6 +614,7 @@ public class BagScreen implements Screen {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public void setPositionParchement() {
 		if (!game.modalityMultiplayer) {
 			if (Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST) <= 0) {

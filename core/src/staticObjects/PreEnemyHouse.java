@@ -9,7 +9,6 @@ import battle.Enemy;
 import battle.Enemy.Level;
 import character.Player;
 import multiplayer.NetworkEnemy;
-import multiplayer.NetworkPlayer;
 import world.Game;
 
 public class PreEnemyHouse extends StaticObject {

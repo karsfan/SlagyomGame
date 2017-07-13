@@ -93,7 +93,6 @@ public class NetworkBattleScreen extends BattleScreen {
 					youWin = true;
 					Client.networkWorld.player.bag.addPack(((NetworkBattle) battle).win_bonus);
 					LoadingMusic.cashSound.play(1.5f);
-
 					if (((NetworkBattle) battle).win_bonus.getNumberOf("POTIONLEV1") > 0) {
 						bluePotion = new Label(
 								"Blue potion x" + Integer

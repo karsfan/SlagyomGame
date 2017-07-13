@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import battle.Enemy;
 import battle.Enemy.Level;
 import character.Player;
+import gameManager.GameSlagyom;
+import multiplayer.NetworkEnemy;
 import world.Game;
 
 public class EnemyHome extends StaticObject {
@@ -18,35 +20,49 @@ public class EnemyHome extends StaticObject {
 		element = type;
 		enemy = new ArrayList<Enemy>();
 		if (type == Element.TEMPLE) {
-			Enemy enemyOne = new Enemy(levelEnemy);
-			Enemy enemyTwo = new Enemy(levelEnemy);
-			Enemy enemyThree = new Enemy(levelEnemy);
-			if (Game.enemy != null) {
-				try {
-					enemyOne = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
-					enemyTwo = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
-					enemyThree = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
-				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			if (!GameSlagyom.modalityMultiplayer) {
+				Enemy enemyOne = new Enemy(levelEnemy);
+				Enemy enemyTwo = new Enemy(levelEnemy);
+				Enemy enemyThree = new Enemy(levelEnemy);
+				if (Game.enemy != null) {
+					try {
+						enemyOne = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
+						enemyTwo = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
+						enemyThree = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
+					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				enemy.add(enemyOne);
+				enemy.add(enemyTwo);
+				enemy.add(enemyThree);
+			} else {
+				for (int i = 0; i < 10; i++) {
+					NetworkEnemy tmp = new NetworkEnemy(Level.MEDIUM);
+					enemy.add(tmp);
 				}
 			}
-			enemy.add(enemyOne);
-			enemy.add(enemyTwo);
-			enemy.add(enemyThree);
 		} else {
-			Enemy boss = new Enemy(levelEnemy);
-			if (Game.enemy != null) {
-				try {
-					boss = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
-				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			if (!GameSlagyom.modalityMultiplayer) {
+				Enemy boss = new Enemy(levelEnemy);
+				if (Game.enemy != null) {
+					try {
+						boss = Game.enemy.getConstructor(Level.class).newInstance(levelEnemy);
+					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				enemy.add(boss);
+			} else {
+				for (int i = 0; i < 3; i++) {
+					NetworkEnemy tmp = new NetworkEnemy(Level.HARD);
+					enemy.add(tmp);
 				}
 			}
-			enemy.add(boss);
 		}
 	}
 

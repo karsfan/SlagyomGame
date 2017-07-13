@@ -3,6 +3,7 @@ package multiplayer;
 import java.util.Random;
 
 import battle.Battle;
+import battle.Enemy;
 import battle.Enemy.Level;
 import battle.Pack;
 import character.DynamicObjects.StateDynamicObject;
@@ -10,7 +11,7 @@ import character.DynamicObjects.StateDynamicObject;
 public class NetworkBattle extends Battle {
 	public Pack win_bonus;
 
-	public NetworkBattle(NetworkPlayer player, NetworkEnemy enemy) {
+	public NetworkBattle(NetworkPlayer player, Enemy enemy) {
 		super(player, enemy);
 		win_bonus = enemy.win_bonus;
 	}

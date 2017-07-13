@@ -129,7 +129,6 @@ public class Item extends StaticObject {
 				break;
 			default:
 				break;
-
 			}
 			break;
 		case 2:

@@ -25,7 +25,6 @@ import gameManager.LoadingMusic;
 import gameManager.ScreenManager.State;
 import hud.BattleHud;
 import multiplayer.NetworkCharacterBattle;
-import world.Game;
 
 public class BattleScreen implements Screen {
 
@@ -122,7 +121,6 @@ public class BattleScreen implements Screen {
 					youLose = true;
 				} else {
 					youWin = true;
-					
 					battle.character.bag.addPack((Pack) ((Enemy) battle.enemy).getWin_bonus());
 					LoadingMusic.cashSound.play(1.5f);
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {
@@ -170,7 +168,7 @@ public class BattleScreen implements Screen {
 								"Parch. lev2 x" + Integer.toString(
 										((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("PARCHLEV2")),
 								MenuScreen.skin);
-						parchmentLev1.setPosition(800, 282);
+						parchmentLev2.setPosition(800, 282);
 						packTable.add(parchmentLev2);
 					}
 				}

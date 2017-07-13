@@ -7,11 +7,14 @@ import character.Weapon;
 import character.Player;
 import character.Weapon.Level;
 import character.Weapon.Type;
+import staticObjects.BossHome;
+import staticObjects.EnemyHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
+import world.Game;
 import world.GameConfig;
 
 public class NetworkPlayer extends Player {
@@ -24,6 +27,7 @@ public class NetworkPlayer extends Player {
 	public boolean collideWithOtherPlayer = false;
 	public boolean collisionWithObject = false;
 	public Item itemPicked;
+
 	public NetworkPlayer(String name) {
 		super(name, true);
 		this.name = name;
@@ -134,6 +138,18 @@ public class NetworkPlayer extends Player {
 								collideShop = true;
 								return true;
 							}
+						} else if (((StaticObject) ob).getElement() == Element.TEMPLE) {
+							if (((EnemyHome) ob).collideDoor(this)) {
+								collideGym = true;
+								Client.networkWorld.createBattle((EnemyHome) ob);
+								return true;
+							}
+						} else if (((StaticObject) ob).getElement() == Element.CASTLE) {
+							if (((BossHome) ob).collideDoor(this)) {
+								collideGym = true;
+								Client.networkWorld.createBattle((BossHome) ob);
+								return true;
+							}
 						}
 						return true;
 					}
@@ -149,7 +165,8 @@ public class NetworkPlayer extends Player {
 								|| ((NetworkPlayer) ob).getY() > y + height / 2))) {
 					collideWithOtherPlayer = true;
 					IDOtherPlayer = ((NetworkPlayer) ob).ID;
-					//System.out.println(ID + "collisione con " + IDOtherPlayer);
+					// System.out.println(ID + "collisione con " +
+					// IDOtherPlayer);
 					return true;
 				}
 			}
@@ -163,7 +180,7 @@ public class NetworkPlayer extends Player {
 						collisionWithObject = true;
 						itemPicked = (Item) ob;
 						return false;
-					} 
+					}
 				}
 			}
 		}

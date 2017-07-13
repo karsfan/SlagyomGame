@@ -7,7 +7,7 @@ import staticObjects.Item;
 import staticObjects.StaticObject.Element;
 
 public class Pack {
-	ArrayList<Item> items;
+	public ArrayList<Item> items;
 
 	public Pack(Level level) {
 		items = new ArrayList<Item>();
@@ -43,7 +43,7 @@ public class Pack {
 		case "COIN":
 			for (int i = 0; i < items.size(); i++)
 				if (items.get(i).getElement() == Element.COIN)
-					number += 5;
+					number ++;
 			break;
 		case "POTIONLEV1":
 			for (int i = 0; i < items.size(); i++)

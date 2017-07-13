@@ -54,6 +54,7 @@ public class Bomb extends Weapon implements ICollidable {
 		velocityY = (int) (velocity * Math.sin(90 * (Math.PI / 180)));
 
 	}
+	
 
 	public int getMainX() {
 		return mainX;
@@ -78,7 +79,7 @@ public class Bomb extends Weapon implements ICollidable {
 	public void update(float dt) {
 
 		mainX += velocityX * dt;
-		mainY += velocityY * dt - GameConfig.gravity * dt * dt;
+		mainY += velocityY * dt - 0.5f*GameConfig.gravity * dt * dt;
 
 		velocityY -= GameConfig.gravity * dt;
 		if (mainY <= GameConfig.mainY_Battle)

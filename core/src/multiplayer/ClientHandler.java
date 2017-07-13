@@ -70,7 +70,7 @@ public class ClientHandler extends Thread {
 
 					NetworkMessage message = new NetworkMessage(receivedMessage);
 					for (NetworkPlayer player : client.networkWorld.otherPlayers) {
-						if (message.action == 0) {
+						if (message.action == 0 ) {
 							if (player.ID == message.ID) {
 								player.x = message.x;
 								player.y = message.y;
@@ -83,6 +83,11 @@ public class ClientHandler extends Thread {
 									client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 								client.networkWorld.otherPlayers.remove(player);
 								break;
+							}
+						}else if(message.action>=21 && message.action<=26){
+							if (player.ID == message.ID) {
+								player.setState(message.currentState);
+								
 							}
 						}
 					}

@@ -18,6 +18,7 @@ public class Client {
 	boolean initialize = false;
 	public boolean go = false;
 	public boolean canModify = true;
+
 	public Client(String name, GameSlagyom gameSlagyom) {
 		try {
 			socket = new Socket("localhost", 5555);
@@ -53,17 +54,23 @@ public class Client {
 	public void sendCollisionItem() {
 		Item item = networkWorld.player.itemPicked;
 		if (item.getElement() == Element.POTION && item.getLevel() == Level.FIRST)
-			writer.println(21 + " " + 0 + " " + item.getX() + " " + item.getY() + " " + 0 + ";" + 0 + ";");
+			writer.println(21 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
 		else if (item.getElement() == Element.POTION && item.getLevel() == Level.SECOND)
-			writer.println(22 + " " + 0 + " " + item.getX() + " " + item.getY() + " " + 0 + ";" + 0 + ";");
+			writer.println(22 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
 		else if (item.getElement() == Element.POTION && item.getLevel() == Level.THIRD)
-			writer.println(23 + " " + 0 + " " + item.getX() + " " + item.getY() + " " + 0 + ";" + 0 + ";");
+			writer.println(23 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
 		else if (item.getElement() == Element.PARCHMENT && item.getLevel() == Level.FIRST)
-			writer.println(24 + " " + 0 + " " + item.getX() + " " + item.getY() + " " + 0 + ";" + 0 + ";");
+			writer.println(24 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
 		else if (item.getElement() == Element.PARCHMENT && item.getLevel() == Level.SECOND)
-			writer.println(25 + " " + 0 + " " + item.getX() + " " + item.getY() + " " + 0 + ";" + 0 + ";");
+			writer.println(25 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
 		else if (item.getElement() == Element.COIN)
-			writer.println(26 + " " + 0 + " " + item.getX() + " " + item.getY() + " " + 0 + ";" + 0 + ";");
+			writer.println(26 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
 		writer.flush();
 	}
 

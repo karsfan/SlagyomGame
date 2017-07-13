@@ -47,7 +47,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		height = 30;
 		width = 30;
-		System.out.println(male);
 	}
 
 	public Player() {
@@ -67,8 +66,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		height = 30;
 		width = 30;
-
-		System.out.println(male);
 	}
 
 	public boolean positionCharacter() {

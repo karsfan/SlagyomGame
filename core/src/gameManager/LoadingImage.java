@@ -54,36 +54,36 @@ public class LoadingImage {
 	private static Texture youWinImage;
 	private static Texture youLoseImage;
 	private static Texture castleImage;
-	public static Texture pointer;
+	public Texture pointer;
 	public static Pixmap cursor;
 	public static Pixmap noCursor;
 	public static Drawable dialog;
 
-	public static TextureRegion battleCharacterStand;
-	public static TextureRegion battleFemaleCharacterStand;
-	public static TextureRegion battleCharacterStandSword;
-	public static TextureRegion battleFemaleCharacterStandSword;
-	public static Animation<TextureRegion>[] battleCharacterAnimationSpearLev1;
-	public static Animation<TextureRegion>[] battleFemaleCharacterAnimationSpearLev1;
-	public static Animation<TextureRegion>[] battleCharacterAnimationSpearLev2;
-	public static Animation<TextureRegion>[] battleFemaleCharacterAnimationSpearLev2;
-	public static Animation<TextureRegion>[] battleCharacterAnimationSpearLev3;
-	public static Animation<TextureRegion>[] battleFemaleCharacterAnimationSpearLev3;
-	public static Animation<TextureRegion>[] battleCharacterAnimationSwordLev1;
-	public static Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev1;
-	public static Animation<TextureRegion>[] battleCharacterAnimationSwordLev2;
-	public static Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev2;
-	public static Animation<TextureRegion>[] battleCharacterAnimationSwordLev3;
-	public static Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev3;
+	public  TextureRegion battleCharacterStand;
+	public TextureRegion battleFemaleCharacterStand;
+	public TextureRegion battleCharacterStandSword;
+	public TextureRegion battleFemaleCharacterStandSword;
+	public Animation<TextureRegion>[] battleCharacterAnimationSpearLev1;
+	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSpearLev1;
+	public Animation<TextureRegion>[] battleCharacterAnimationSpearLev2;
+	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSpearLev2;
+	public Animation<TextureRegion>[] battleCharacterAnimationSpearLev3;
+	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSpearLev3;
+	public Animation<TextureRegion>[] battleCharacterAnimationSwordLev1;
+	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev1;
+	public Animation<TextureRegion>[] battleCharacterAnimationSwordLev2;
+	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev2;
+	public Animation<TextureRegion>[] battleCharacterAnimationSwordLev3;
+	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev3;
+	
+	public TextureRegion playerStand;
+	public Animation<TextureRegion>[] playerAnimation;
 
-	public static TextureRegion playerStand;
-	public static Animation<TextureRegion>[] playerAnimation;
+	public TextureRegion enemyStand;
+	public Animation<TextureRegion>[] enemyAnimation;
 
-	public static TextureRegion enemyStand;
-	public static Animation<TextureRegion>[] enemyAnimation;
-
-	public static TextureRegion man1Stand;
-	public static Animation<TextureRegion>[] man1Animation;
+	public TextureRegion man1Stand;
+	public Animation<TextureRegion>[] man1Animation;
 
 	// private static TextureRegion man2Stand;
 	public Animation<TextureRegion>[] man2Animation;
@@ -353,7 +353,7 @@ public class LoadingImage {
 		return battleBackground;
 	}
 
-	public static TextureRegion getBattleFrame(Object ob) {
+	public  TextureRegion getBattleFrame(Object ob) {
 		TextureRegion region = new TextureRegion();
 		StateDynamicObject state = null;
 		float stateTimer = 0;
@@ -391,7 +391,7 @@ public class LoadingImage {
 		return region;
 	}
 
-	public static TextureRegion getFrame(Object ob) {
+	public TextureRegion getFrame(Object ob) {
 		TextureRegion region;
 		switch (((DynamicObjects) ob).getCurrentState()) {
 		case RUNNINGRIGHT:
@@ -420,14 +420,14 @@ public class LoadingImage {
 		return region;
 	}
 
-	public static void setFrameDurationCharacter(float frameDuration) {
+	public  void setFrameDurationCharacter(float frameDuration) {
 		playerAnimation[0].setFrameDuration(frameDuration);
 		playerAnimation[1].setFrameDuration(frameDuration);
 		playerAnimation[2].setFrameDuration(frameDuration);
 		playerAnimation[3].setFrameDuration(frameDuration);
 	}
 
-	public static Animation<TextureRegion>[] getAnimation(Object ob) {
+	public  Animation<TextureRegion>[] getAnimation(Object ob) {
 		Class<? extends Object> a = ob.getClass();
 		Animation<TextureRegion>[] animation = null;
 
@@ -506,7 +506,7 @@ public class LoadingImage {
 		return animation;
 	}
 
-	public static TextureRegion getFrameStand(Object ob) {
+	public  TextureRegion getFrameStand(Object ob) {
 		Class<? extends Object> a = ob.getClass();
 		TextureRegion textureRegion = null;
 		switch (a.getSimpleName()) {
@@ -577,7 +577,7 @@ public class LoadingImage {
 		return textureRegion;
 	}
 
-	public static Texture getTileImage(Object ob) {
+	public Texture getTileImage(Object ob) {
 
 		Texture texture = null;
 		if (ob instanceof StaticObject) {

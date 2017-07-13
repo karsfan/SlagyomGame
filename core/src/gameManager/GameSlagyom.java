@@ -26,9 +26,11 @@ public class GameSlagyom extends Game {
 	public Preferences prefs;
 	public SpriteBatch batch;
 	public static boolean modalityMultiplayer;
+	public LoadingImage loadingImage;
 	@Override
 	public void create() {
 		new LoadingMusic();
+		loadingImage = new LoadingImage();
 		batch = new SpriteBatch();
 		modalityMultiplayer = false;
 		screenManager = new ScreenManager(this);

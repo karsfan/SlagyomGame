@@ -140,10 +140,10 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 			if (Gdx.input.isKeyPressed(Keys.Z)) {
 				client.networkWorld.player.setVelocity(150f);
-				LoadingImage.setFrameDurationCharacter(0.1f);
+				game.loadingImage.setFrameDurationCharacter(0.1f);
 			} else {
 				client.networkWorld.player.setVelocity(100);
-				LoadingImage.setFrameDurationCharacter(0.2f);
+				game.loadingImage.setFrameDurationCharacter(0.2f);
 			}
 			if (Gdx.input.isKeyPressed(Keys.LEFT))
 				client.movesLeft(dt);
@@ -198,7 +198,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject)
-				game.batch.draw(LoadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
+				game.batch.draw(game.loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 		}
@@ -207,7 +207,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 		while (it2.hasNext()) {
 			Object ob = (Object) it2.next();
 			if (ob instanceof StaticObject)
-				game.batch.draw(LoadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
+				game.batch.draw(game.loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 		}
@@ -216,15 +216,15 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 			Object ob = (Object) it1.next();
 			if (ob instanceof NetworkPlayer) {
 
-				game.batch.draw(LoadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
+				game.batch.draw(game.loadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
 			}
 		}
 		client.canModify = true;
-		game.batch.draw(LoadingImage.getFrame(client.networkWorld.player), client.networkWorld.player.getX(),
+		game.batch.draw(game.loadingImage.getFrame(client.networkWorld.player), client.networkWorld.player.getX(),
 				client.networkWorld.player.getY(), client.networkWorld.player.getWidth(),
 				client.networkWorld.player.getHeight());
-		game.batch.draw(LoadingImage.pointer, client.networkWorld.player.getX(), client.networkWorld.player.getY() + 30,
+		game.batch.draw(game.loadingImage.pointer, client.networkWorld.player.getX(), client.networkWorld.player.getY() + 30,
 				14, 13);
 	}
 

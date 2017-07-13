@@ -46,7 +46,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	PovDirection directionGamepad = null;
 	boolean movesGamePad = false;
-
+	LoadingImage loadingImage;
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -60,8 +60,8 @@ public class PlayScreen implements Screen, ControllerListener {
 	 */
 	@SuppressWarnings("static-access")
 	public PlayScreen(GameSlagyom game, String name, boolean male) {
-		new LoadingImage();
-
+		
+		this.loadingImage = game.loadingImage;
 		new Game(name, male);
 		this.game = game;
 
@@ -92,7 +92,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	 */
 	@SuppressWarnings("static-access")
 	public PlayScreen(GameSlagyom game, String path, String name, boolean male) {
-		new LoadingImage();
+		
 
 		new Game(path, name, male);
 		this.game = game;
@@ -113,7 +113,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	@SuppressWarnings("static-access")
 	public PlayScreen(String text, GameSlagyom game, String charName, boolean male) {
 
-		new LoadingImage();
+		
 		new Game(text, game, charName, male);
 		this.game = game;
 		gamecam = new OrthographicCamera();
@@ -227,10 +227,10 @@ public class PlayScreen implements Screen, ControllerListener {
 
 				if (Gdx.input.isKeyPressed(Keys.Z)) {
 					Game.world.player.setVelocity(150f);
-					LoadingImage.setFrameDurationCharacter(0.1f);
+					loadingImage.setFrameDurationCharacter(0.1f);
 				} else {
 					Game.world.player.setVelocity(100);
-					LoadingImage.setFrameDurationCharacter(0.2f);
+					loadingImage.setFrameDurationCharacter(0.2f);
 				}
 				if (Gdx.input.isKeyPressed(Keys.LEFT))
 					Game.world.player.movesLeft(dt);
@@ -294,7 +294,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject)
-				game.batch.draw(LoadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
+				game.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 		}
@@ -303,7 +303,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		while (it2.hasNext()) {
 			Object ob = (Object) it2.next();
 			if (ob instanceof StaticObject)
-				game.batch.draw(LoadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
+				game.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 		}
@@ -312,7 +312,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
 			if (ob instanceof DynamicObjects) {
-				game.batch.draw(LoadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
+				game.batch.draw(loadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
 				if (ob instanceof Man)
 					if (((Man) ob).collisionWithCharacter) {
@@ -338,7 +338,7 @@ public class PlayScreen implements Screen, ControllerListener {
 					}
 			}
 			if (ob instanceof Player)
-				game.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
+				game.batch.draw(game.loadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
 						14, 13);
 		}
 

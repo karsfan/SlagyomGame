@@ -81,18 +81,18 @@ public class BattleScreen implements Screen {
 		gameslagyom.batch.draw(LoadingImage.getBattleBgImage(), 0, 0);
 
 		CharacterBattle tmp = battle.character;
-		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp), tmp.getX(), tmp.getY(), tmp.getWidth(),
+		gameslagyom.batch.draw(gameslagyom.loadingImage.getBattleFrame(tmp), tmp.getX(), tmp.getY(), tmp.getWidth(),
 				tmp.getHeight());
 
 		Fighting tmp1 = battle.enemy;
-		gameslagyom.batch.draw(LoadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
+		gameslagyom.batch.draw(gameslagyom.loadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
 				tmp1.getHeight());
 
 		Iterator<Bomb> bombIterator = tmp.bag.bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.lanciata == true) {
-				gameslagyom.batch.draw(LoadingImage.getTileImage(searching), searching.getMainX(), searching.getMainY(),
+				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching), searching.getMainX(), searching.getMainY(),
 						searching.getWidth() + 10, searching.getHeight() + 10);
 			}
 		}
@@ -101,7 +101,7 @@ public class BattleScreen implements Screen {
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
 			if (searching1.lanciata == true) {
-				gameslagyom.batch.draw(LoadingImage.getTileImage(searching1), searching1.getMainX(),
+				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching1), searching1.getMainX(),
 						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
 			}
 		}

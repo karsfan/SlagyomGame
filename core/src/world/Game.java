@@ -33,11 +33,8 @@ public class Game {
 	public Game(String path, String name, boolean male) {
 		System.out.println(path);
 		world = new World(path, name, male);
-<<<<<<< HEAD
 		//world.player.positionCharacter();
-=======
 //		world.player.positionCharacter();
->>>>>>> f9a7cb937188b86483025816301e87b63457db8c
 		//player = new Player(name);
 		//world.getListDynamicObjects().add(player);
 		// while(!world.addDynamicObject());

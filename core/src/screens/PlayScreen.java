@@ -49,6 +49,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	boolean movesgamePad = false;
 	LoadingImage loadingImage;
 	Game game;
+
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -61,7 +62,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	 * 
 	 */
 	@SuppressWarnings("static-access")
-	public PlayScreen(GameSlagyom gameslagyom,  String name, boolean male) {
+	public PlayScreen(GameSlagyom gameslagyom, String name, boolean male) {
 
 		this.loadingImage = gameslagyom.loadingImage;
 		game = new Game(name, male);
@@ -133,13 +134,8 @@ public class PlayScreen implements Screen, ControllerListener {
 		gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
 
 		gameSlagyom.batch.begin();
-		try {
-			draw();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Cuncurrent nel draw");
-			e.printStackTrace();
-		}
+
+		draw();
 		drawMiniMap();
 
 		gameSlagyom.batch.end();
@@ -196,9 +192,9 @@ public class PlayScreen implements Screen, ControllerListener {
 	@SuppressWarnings("static-access")
 	public void update(float dt) {
 		moveCharacter(dt);
-		if(game.world.player.collideCoin)
+		if (game.world.player.collideCoin)
 			gameSlagyom.loadingMusic.coinSound.play();
-		if(game.world.player.collideItem)
+		if (game.world.player.collideItem)
 			gameSlagyom.loadingMusic.itemSound.play();
 		if ((game.world.player.getX() - gamePort.getWorldWidth() / 2 > 0
 				&& game.world.player.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
@@ -254,14 +250,14 @@ public class PlayScreen implements Screen, ControllerListener {
 				else if (Gdx.input.isKeyPressed(Keys.UP) || (directiongamepad == PovDirection.north && movesgamePad)) {
 					game.world.player.movesUp(dt);
 					if (game.world.player.collideShop) {
-					//	game.world.semaphore.acquire();
+						// game.world.semaphore.acquire();
 						gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
 						game.world.player.collideShop = false;
 					}
 					if (game.world.player.collideGym) {
 						gameSlagyom.screenManager.battlescreen = new BattleScreen(gameSlagyom, game.world.battle);
 						gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
-						//game.world.semaphore.acquire();
+						// game.world.semaphore.acquire();
 						game.world.player.collideGym = false;
 					}
 
@@ -280,7 +276,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 					gameSlagyom.loadingMusic.pause();
-					//game.world.semaphore.acquire();
+					// game.world.semaphore.acquire();
 					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 				}
 
@@ -291,12 +287,11 @@ public class PlayScreen implements Screen, ControllerListener {
 			}
 		} catch (InterruptedException e) {
 		}
-		
+
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			hud.showDialog = false;
 			hideDialog();
 			if (stop) {
-				//game.world.getThread().start();
 				stop = false;
 			}
 		}
@@ -306,10 +301,9 @@ public class PlayScreen implements Screen, ControllerListener {
 	public float miniMapRadius = (float) 63.5;
 
 	@SuppressWarnings("static-access")
-	public synchronized void draw() throws InterruptedException {
+	public synchronized void draw() {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) game.world.getListTile().listIterator();
 
-		
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject) {
@@ -318,13 +312,12 @@ public class PlayScreen implements Screen, ControllerListener {
 						(float) ((StaticObject) ob).shape.getHeight());
 			}
 		}
-		synchronized ( game.world.getListItems()) {
+		synchronized (game.world.getListItems()) {
 			ListIterator<Item> it2 = game.world.getListItems().listIterator();
 			while (it2.hasNext()) {
 				Object ob = (Object) it2.next();
-				if (ob instanceof StaticObject) 
-					gameSlagyom.batch.draw(loadingImage.getTileImage(ob), 
-							(float) ((StaticObject) ob).shape.getX(),
+				if (ob instanceof StaticObject)
+					gameSlagyom.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 							(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 							(float) ((StaticObject) ob).shape.getHeight());
 			}
@@ -333,8 +326,9 @@ public class PlayScreen implements Screen, ControllerListener {
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
 			if (ob instanceof DynamicObjects) {
-				gameSlagyom.batch.draw(loadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
-						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
+				gameSlagyom.batch.draw(loadingImage.getFrame(ob), ((DynamicObjects) ob).getX(),
+						((DynamicObjects) ob).getY(), ((DynamicObjects) ob).getWidth(),
+						((DynamicObjects) ob).getHeight());
 				if (ob instanceof Man)
 					if (((Man) ob).collisionWithCharacter) {
 						hud.showDialog = true;
@@ -347,8 +341,8 @@ public class PlayScreen implements Screen, ControllerListener {
 					}
 			}
 			if (ob instanceof Player)
-				gameSlagyom.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
-						14, 13);
+				gameSlagyom.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(),
+						((DynamicObjects) ob).getY() + 30, 14, 13);
 
 		}
 
@@ -356,8 +350,8 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	@SuppressWarnings("static-access")
 	public void drawMiniMap() {
-		gameSlagyom.batch.draw(LoadingImage.miniMap, (float) gamecam.position.x + 260, (float) gamecam.position.y - 225, 127,
-				127);
+		gameSlagyom.batch.draw(LoadingImage.miniMap, (float) gamecam.position.x + 260, (float) gamecam.position.y - 225,
+				127, 127);
 
 		ListIterator<StaticObject> itMiniMapStatic = (ListIterator<StaticObject>) game.world.getListTile()
 				.listIterator();
@@ -372,7 +366,8 @@ public class PlayScreen implements Screen, ControllerListener {
 
 				if ((miniX - miniMapRadius) * (miniX - miniMapRadius)
 						+ (miniY - miniMapRadius) * (miniY - miniMapRadius) < miniMapRadius * miniMapRadius)
-					if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.THREE) {
+					if (((StaticObject) ob).getElement() != Element.GROUND
+							&& ((StaticObject) ob).getElement() != Element.THREE) {
 						gameSlagyom.batch.draw(loadingImage.getTileImage(ob), gamecam.position.x + 260 + miniX,
 								gamecam.position.y - 225 + miniY,
 								(float) ((StaticObject) ob).shape.getWidth() / miniMapScale,
@@ -400,15 +395,15 @@ public class PlayScreen implements Screen, ControllerListener {
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
-		// gamePort.setScreenSize(width, height);
+		
 		// controlli per la posizione della camera
 		if (gamePort.getWorldWidth() / 2 + game.world.player.getX() - GameConfig.WIDTH > 0
 				&& !(game.world.player.getX() - gamePort.getWorldWidth() / 2 < 0))
 			gamecam.position.x = GameConfig.WIDTH - gamePort.getWorldWidth() / 2;
 		else if (game.world.player.getX() - gamePort.getWorldWidth() / 2 < 0) {
-
 			gamecam.position.x = gamePort.getWorldWidth() / 2;
 		}
+		
 		if (gamePort.getWorldHeight() / 2 + game.world.player.getY() - GameConfig.HEIGHT > 0)
 			gamecam.position.y = GameConfig.HEIGHT - gamePort.getWorldHeight() / 2;
 		else if (game.world.player.getY() - gamePort.getWorldHeight() / 2 < 0) {

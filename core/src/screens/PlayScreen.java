@@ -49,6 +49,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	PovDirection directionGamepad = null;
 	boolean movesGamePad = false;
 	LoadingImage loadingImage;
+
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -62,7 +63,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	 */
 	@SuppressWarnings("static-access")
 	public PlayScreen(GameSlagyom game, String name, boolean male) {
-		
+
 		this.loadingImage = game.loadingImage;
 		new Game(name, male);
 		this.game = game;
@@ -94,7 +95,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	 */
 	@SuppressWarnings("static-access")
 	public PlayScreen(GameSlagyom game, String path, String name, boolean male) {
-		
 
 		new Game(path, name, male);
 		this.game = game;
@@ -111,11 +111,10 @@ public class PlayScreen implements Screen, ControllerListener {
 		System.out.println();
 
 	}
-	
+
 	@SuppressWarnings("static-access")
 	public PlayScreen(String text, GameSlagyom game, String charName, boolean male) {
 
-		
 		new Game(text, game, charName, male);
 		this.game = game;
 		gamecam = new OrthographicCamera();
@@ -136,11 +135,12 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		game.batch.begin();
 		draw();
+
 		game.batch.end();
 		hud.update();
 
 		hud.stage.draw();
-		
+
 		// TEXT TABLE RENDERING
 		textTimer += delta;
 		if (hud.showDialog) {
@@ -271,7 +271,7 @@ public class PlayScreen implements Screen, ControllerListener {
 					game.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 				}
 
-				 else if (Gdx.input.isKeyJustPressed(Keys.B)) {
+				else if (Gdx.input.isKeyJustPressed(Keys.B)) {
 					Game.world.nextLevel();
 				} // else
 					// Game.character.setState(StateDynamicObject.STANDING);
@@ -290,12 +290,11 @@ public class PlayScreen implements Screen, ControllerListener {
 		}
 	}
 
-	public int miniMapScale = 5;
+	public float miniMapScale = 7;
+	public float miniMapRadius = (float) 63.5;
+
 	public synchronized void draw() {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) Game.world.getListTile().listIterator();
-//		game.batch.draw(new Texture("res/miniMap.png"), (float) Game.world.player.getX(), (float) Game.world.player.getY(), 127, 127);
-//		gamecam.position.x = Game.world.player.getX();
-
 
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
@@ -303,11 +302,24 @@ public class PlayScreen implements Screen, ControllerListener {
 				game.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
-				game.batch.draw(LoadingImage.miniMap, (float) gamecam.position.x + 280, (float) gamecam.position.y - 230, 127, 127);
 
+				
+
+				// MINI-MAP
+				float miniX = (float) (((StaticObject) ob).shape.getX() * 127 / 1440);
+				float miniY = (float) (((StaticObject) ob).shape.getY() * 127 / 960);
+
+				if ((miniX - miniMapRadius) * (miniX - miniMapRadius)
+						+ (miniY - miniMapRadius) * (miniY - miniMapRadius) < miniMapRadius * miniMapRadius)
+					if (((StaticObject) ob).getElement() != Element.GROUND) {
+						game.batch.draw(loadingImage.getTileImage(ob), gamecam.position.x + 260 + miniX,
+								gamecam.position.y - 225 + miniY,
+								(float) ((StaticObject) ob).shape.getWidth() / miniMapScale,
+								(float) ((StaticObject) ob).shape.getHeight() / miniMapScale);
+					}
 			}
 		}
-		
+
 		ListIterator<Item> it2 = Game.world.getListItems().listIterator();
 		while (it2.hasNext()) {
 			Object ob = (Object) it2.next();
@@ -316,7 +328,7 @@ public class PlayScreen implements Screen, ControllerListener {
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 		}
-		
+
 		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -327,28 +339,23 @@ public class PlayScreen implements Screen, ControllerListener {
 					if (((Man) ob).collisionWithCharacter) {
 						hud.showDialog = true;
 						hud.setDialogText(((Man) ob).name + ": " + ((Man) ob).info);
-						// try {
-						// Game.world.semaphore.acquire();
-						// stop = true;
-						// } catch (InterruptedException e) {
-						// e.printStackTrace();
-						// }
 					}
 				if (ob instanceof Woman)
 					if (((Woman) ob).collisionWithCharacter) {
 						hud.showDialog = true;
 						hud.setDialogText(((Woman) ob).name + ": " + ((Woman) ob).info);
-						// try {
-						// Game.world.semaphore.acquire();
-						// stop = true;
-						// } catch (InterruptedException e) {
-						// e.printStackTrace();
-						// }
 					}
 			}
-			if (ob instanceof Player)
-				game.batch.draw(game.loadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
+			if (ob instanceof Player) {
+				game.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
 						14, 13);
+
+				// MINI-MAP PLAYER
+				float miniX = (float) (((DynamicObjects) ob).getX() * 127 / 1440);
+				float miniY = (float) (((DynamicObjects) ob).getY() * 127 / 960);
+				game.batch.draw(LoadingImage.pointer, gamecam.position.x + 260 + miniX, gamecam.position.y - 225 + miniY,
+						(float) ((DynamicObjects) ob).getWidth() / 7, (float) ((DynamicObjects) ob).getHeight() / 7);
+			}
 		}
 
 	}

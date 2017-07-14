@@ -55,7 +55,7 @@ public class LoadingImage {
 	private static Texture youLoseImage;
 	private static Texture castleImage;
 	public static Texture miniMap;
-	public Texture pointer;
+	public static Texture pointer;
 	public static Pixmap cursor;
 	public static Pixmap noCursor;
 	public static Drawable dialog;

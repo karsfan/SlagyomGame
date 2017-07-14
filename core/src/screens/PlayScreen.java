@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -278,8 +279,8 @@ public class PlayScreen implements Screen, ControllerListener {
 					// Game.character.setState(StateDynamicObject.STANDING);
 			}
 		} catch (InterruptedException e) {
-
 		}
+		
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			hud.showDialog = false;
 			hideDialog();
@@ -287,7 +288,6 @@ public class PlayScreen implements Screen, ControllerListener {
 				Game.world.getThread().start();
 				stop = false;
 			}
-
 		}
 	}
 
@@ -296,7 +296,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	public synchronized void draw() {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) Game.world.getListTile().listIterator();
-
+		
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject) {

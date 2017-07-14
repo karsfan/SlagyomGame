@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -495,8 +496,8 @@ public class ShopScreen implements Screen {
 
 		Label parchmentsLabel = new Label("Parchments", MenuScreen.skin);
 		parchments = new TextButton[2];
-		parchments[0] = new TextButton("Parchment1 $4", MenuScreen.skin);
-		parchments[1] = new TextButton("Parchment2 $9", MenuScreen.skin);
+		parchments[0] = new TextButton("Parchment lev1 $4", MenuScreen.skin);
+		parchments[1] = new TextButton("Parchment lev2 $9", MenuScreen.skin);
 
 		parchments[0].addListener(new ClickListener() {
 			@Override
@@ -510,12 +511,12 @@ public class ShopScreen implements Screen {
 		parchments[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.parchment);
+				showInfo(LoadingImage.parchment2);
 				itemSelected = new Item(Element.PARCHMENT, Level.SECOND);
 				setBuyingTable();
 			}
 		});
-
+		
 		parchmentsLabel.setPosition(120, 425);
 		parchments[0].setPosition(350, 420);
 		parchments[1].setPosition(350, 370);
@@ -561,6 +562,10 @@ public class ShopScreen implements Screen {
 	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
+		if (Gdx.input.justTouched())
+			LoadingMusic.selectionSound.play();
+
+		
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -570,7 +575,7 @@ public class ShopScreen implements Screen {
 			selectionBackgroundSprite.draw(game.batch);
 			buyBackgroundSprite.draw(game.batch);
 		}
-
+		
 		else
 			backgroundSprite.draw(game.batch);
 

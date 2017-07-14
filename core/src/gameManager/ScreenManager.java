@@ -69,6 +69,7 @@ public class ScreenManager {
 			gameSlagyom.setScreen(getPlayScreen());
 
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC
+			LoadingMusic.battleMusic.pause();
 			menuScreen.menuMusic.stop();
 			LoadingMusic.backgroundSound.loop(100);
 
@@ -99,6 +100,8 @@ public class ScreenManager {
 			// it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
 			LoadingMusic.backgroundSound.pause();
+			LoadingMusic.battleMusic.setVolume((float) 0.07);
+			LoadingMusic.battleMusic.play();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
 			LoadingMusic.pause();

@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import battle.Battle;
 import gameManager.LoadingImage;
+import gameManager.LoadingMusic;
 import screens.MenuScreen;
 import staticObjects.Item;
 import staticObjects.Item.Level;
@@ -42,7 +43,7 @@ public class BattleHud {
 	ProgressBar barPlayer;
 	ProgressBar barEnemy;
 	ProgressBar playerPower;
-	
+
 	Battle battle;
 	Table table;
 	Table potionTable;
@@ -67,7 +68,7 @@ public class BattleHud {
 
 		barPlayer = new ProgressBar(0.1f, healthCharacter, 0.1f, false, MenuScreen.skin);
 		barEnemy = new ProgressBar(0.1f, healthEnemy, 0.1f, false, MenuScreen.skin);
-		playerPower = new ProgressBar(0.1f, 100, 0.1f, false, MenuScreen.skin);
+		playerPower = new ProgressBar(this.battle.character.forza, 300, 0.1f, false, MenuScreen.skin);
 
 		/*
 		 * barPlayer.setBounds(this.viewport.getWorldWidth() / 13,
@@ -103,7 +104,7 @@ public class BattleHud {
 		greenPotion.setPosition(1022, 20);
 		redPotion.setPosition(1153, 20);
 		playerPower.setPosition(200, 40);
-		
+
 		// bluePotion.setFontScale((float) 0.8);
 		potionTable.add(bluePotion);
 		potionTable.add(greenPotion);
@@ -118,17 +119,27 @@ public class BattleHud {
 		barPlayer.setValue(healthCharacter.intValue());
 		healthEnemy = (int) this.battle.enemy.getHealth();
 		barEnemy.setValue(healthEnemy.intValue());
+		playerPower.setValue(this.battle.character.forza);
 
 		bluePotion.setText("x" + String.valueOf(this.battle.character.bag.getNumberOf(Element.POTION, Level.FIRST)));
 		greenPotion.setText("x" + String.valueOf(this.battle.character.bag.getNumberOf(Element.POTION, Level.SECOND)));
 		redPotion.setText("x" + String.valueOf(this.battle.character.bag.getNumberOf(Element.POTION, Level.THIRD)));
 		if (this.battle.character.health < 300) {
-			if (Gdx.input.isKeyJustPressed(Keys.NUM_1))
+			if (Gdx.input.isKeyJustPressed(Keys.NUM_1)
+					&& this.battle.character.bag.getNumberOf(Element.POTION, Level.FIRST) > 0) {
 				this.battle.character.bag.useItem(new Item(Element.POTION, Level.FIRST));
-			if (Gdx.input.isKeyJustPressed(Keys.NUM_2))
+				LoadingMusic.upgradeSound.play();
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.NUM_2)
+					&& this.battle.character.bag.getNumberOf(Element.POTION, Level.SECOND) > 0) {
 				this.battle.character.bag.useItem(new Item(Element.POTION, Level.SECOND));
-			if (Gdx.input.isKeyJustPressed(Keys.NUM_3))
+				LoadingMusic.upgradeSound.play();
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.NUM_3)
+					&& this.battle.character.bag.getNumberOf(Element.POTION, Level.THIRD) > 0) {
 				this.battle.character.bag.useItem(new Item(Element.POTION, Level.THIRD));
+				LoadingMusic.upgradeSound.play();
+			}
 		}
 	}
 }

@@ -31,7 +31,7 @@ public class Game {
 	public Game(String path, String name, boolean male) {
 
 		world = new World(path, name, male);
-		world.player.positionCharacter();
+//		world.player.positionCharacter();
 		//player = new Player(name);
 		//world.getListDynamicObjects().add(player);
 		// while(!world.addDynamicObject());

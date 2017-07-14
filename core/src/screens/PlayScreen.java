@@ -101,7 +101,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		this.game.modalityMultiplayer = false;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
-
+		this.loadingImage = game.loadingImage;
 		gamecam.position.x = Game.world.player.getX();
 		gamecam.position.y = Game.world.player.getY();
 		hud = new Hud(game);

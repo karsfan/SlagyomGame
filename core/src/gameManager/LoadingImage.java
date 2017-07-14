@@ -221,10 +221,10 @@ public class LoadingImage {
 		createBattleFrame(texture, battleFemaleCharacterAnimationSpearLev1, battleFemaleCharacterStand);
 
 		texture = new Texture("Character/sword.png");
-		createBattleFrameBig(texture, battleCharacterAnimationSwordLev1, battleCharacterStandSword);
+		createBattleFrameBig(texture, battleCharacterAnimationSwordLev1, battleCharacterStandSword, 7);
 		
-		texture = new Texture("Character/Female/sword.png");
-		createBattleFrameBig(texture, battleFemaleCharacterAnimationSwordLev1, battleFemaleCharacterStandSword);
+		texture = new Texture("Character/female/sword.png");
+		createBattleFrameBig(texture, battleFemaleCharacterAnimationSwordLev1, battleFemaleCharacterStandSword, 7);
 
 		texture = new Texture("Enemy/spear.png");
 		createBattleFrame(texture, enemyAnimation, enemyStand);
@@ -272,32 +272,32 @@ public class LoadingImage {
 
 	}
 
-	private void createBattleFrameBig(Texture texture, Animation<TextureRegion>[] arrayAnimation, TextureRegion stand) {
+	private void createBattleFrameBig(Texture texture, Animation<TextureRegion>[] arrayAnimation, TextureRegion stand, int frame) {
 		Array<TextureRegion> frames = new Array<TextureRegion>();
 		Animation<TextureRegion> right;
 		Animation<TextureRegion> left;
 		Animation<TextureRegion> fightingRight;
 		Animation<TextureRegion> fightingLeft;
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i <= frame ; i++) {
 			frames.add(new TextureRegion(texture, i * 190, 65, 120, 65));
 		}
 		right = new Animation<TextureRegion>(0.2f, frames);
 		frames.clear();
 
-		for (int i = 5; i != 0; i--) {
+		for (int i = frame; i != 0; i--) {
 			frames.add(new TextureRegion(texture, i * 190, 0, 120, 65));
 		}
 		left = new Animation<TextureRegion>(0.2f, frames);
 		frames.clear();
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i <= frame; i++) {
 			frames.add(new TextureRegion(texture, i * 190, 195, 120, 65));
 		}
 		fightingRight = new Animation<TextureRegion>(0.2f, frames);
 		frames.clear();
 
-		for (int i = 5; i != 0; i--) {
+		for (int i = frame; i != 0; i--) {
 			frames.add(new TextureRegion(texture, i * 190, 130, 120, 65));
 		}
 		fightingLeft = new Animation<TextureRegion>(0.2f, frames);

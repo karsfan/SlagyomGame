@@ -47,7 +47,7 @@ public class World {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
-
+		System.out.println(getClass().getResource("/res/map/map.txt").getPath());
 		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village one");
 		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getPath(), false, "Village two");
 		player = new Player(name, male);
@@ -74,6 +74,7 @@ public class World {
 		people = new ArrayList<DynamicObjects>();
 
 		maps = new Map[2];
+		System.out.println(path);
 		maps[0] = new Map(path, true, "Village one");
 		maps[1] = new Map(path, false, "Village two");
 		player = new Player(name, male);

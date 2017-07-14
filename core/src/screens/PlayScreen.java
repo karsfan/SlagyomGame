@@ -13,6 +13,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -29,6 +30,7 @@ import gameManager.LoadingMusic;
 import hud.Hud;
 import staticObjects.Item;
 import staticObjects.StaticObject;
+import staticObjects.StaticObject.Element;
 import world.Game;
 import world.GameConfig;
 
@@ -288,15 +290,22 @@ public class PlayScreen implements Screen, ControllerListener {
 		}
 	}
 
+	public int miniMapScale = 5;
 	public synchronized void draw() {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) Game.world.getListTile().listIterator();
+//		game.batch.draw(new Texture("res/miniMap.png"), (float) Game.world.player.getX(), (float) Game.world.player.getY(), 127, 127);
+//		gamecam.position.x = Game.world.player.getX();
+
 
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
-			if (ob instanceof StaticObject)
+			if (ob instanceof StaticObject) {
 				game.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
+				game.batch.draw(LoadingImage.miniMap, (float) gamecam.position.x + 280, (float) gamecam.position.y - 230, 127, 127);
+
+			}
 		}
 		
 		ListIterator<Item> it2 = Game.world.getListItems().listIterator();

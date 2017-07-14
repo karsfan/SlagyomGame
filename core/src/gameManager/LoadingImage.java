@@ -54,6 +54,7 @@ public class LoadingImage {
 	private static Texture youWinImage;
 	private static Texture youLoseImage;
 	private static Texture castleImage;
+	public static Texture miniMap;
 	public Texture pointer;
 	public static Pixmap cursor;
 	public static Pixmap noCursor;
@@ -150,6 +151,8 @@ public class LoadingImage {
 		redPotionImage = new Texture("res/redPotion.png");
 		parchmentImage = new Texture("res/pickParchment.png");
 		pointer = new Texture("res/pointer.png");
+		miniMap = new Texture("res/miniMap.png");
+
 
 		// BAG AND SHOP ITEM IMAGES
 		bluePotion = new ImageButton(

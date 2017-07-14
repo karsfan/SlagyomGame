@@ -19,6 +19,7 @@ import gameManager.GameSlagyom;
 import multiplayer.Client;
 import screens.MenuScreen;
 import world.Game;
+import world.GameConfig;
 
 public class Hud {
 
@@ -91,7 +92,9 @@ public class Hud {
 			villageLabel.setText(String.format(Client.networkWorld.map.getNameVillage()));
 			coinsLabel.setText(String.format("%03d", Client.networkWorld.player.coins));
 		}
+
 	}
+
 
 	public void setDialogText(String text) {
 		showDialog = true;

@@ -48,7 +48,7 @@ public class World {
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
 		System.out.println(getClass().getResource("/res/map/map.txt").getPath());
-		maps[0] = new Map(getClass().getResource("/res/map/map.txt").getPath(), true, "Village one");
+		maps[0] = new Map(getClass().getResource("/res/map/village1.txt").getPath(), true, "Village one");
 		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getPath(), false, "Village two");
 		player = new Player(name, male);
 		getListDynamicObjects().add(player);

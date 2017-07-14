@@ -143,9 +143,7 @@ public class Item extends StaticObject {
 			case MEDIUM:
 				this.level = Level.SECOND;
 				break;
-			case HARD:
-				this.level = Level.THIRD;
-				break;
+			
 			default:
 				break;
 			}
@@ -183,8 +181,6 @@ public class Item extends StaticObject {
 				this.level = Level.FIRST;
 			case "SECOND":
 				this.level = Level.SECOND;
-			case "THIRD":
-				this.level = Level.THIRD;
 			default:
 				break;
 			}

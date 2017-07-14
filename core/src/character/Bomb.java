@@ -11,11 +11,11 @@ import world.ICollidable;
 public class Bomb extends Weapon implements ICollidable {
 
 	public boolean morta = false;
-	int mainX;
-	int mainY;
-	int velocityX;
-	int velocityY;
-	int velocity;
+	public int mainX;
+	public int mainY;
+	public int velocityX;
+	public int velocityY;
+	public int velocity;
 	public String id;
 	public boolean lanciata = false;
 

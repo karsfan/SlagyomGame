@@ -13,6 +13,7 @@ import world.GameConfig;
 public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	public Bag bag;
+	public String name;
 	public Weapon primary_weapon;
 	public int health;
 	public boolean male;
@@ -20,6 +21,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public CharacterBattle(Player player) {
 		super();
 		stateTimer = 0;
+		name = player.name;
 		bag = player.bag;
 		male = player.male;
 		primary_weapon = player.primary_weapon;

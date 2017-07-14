@@ -218,13 +218,17 @@ public class BattleScreen implements Screen {
 				battle.character.jump(dt);
 
 			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-				if (Gdx.input.isKeyJustPressed(Keys.A))
+				if (Gdx.input.isKeyJustPressed(Keys.A)) {
+					LoadingMusic.swordSound.play();
 					battle.character.fightLeft(dt);
+				}
 				else
 					battle.character.movesLeft(dt);
 			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-				if (Gdx.input.isKeyJustPressed(Keys.A))
+				if (Gdx.input.isKeyJustPressed(Keys.A)) {
+					LoadingMusic.swordSound.play();					
 					battle.character.fightRight(dt);
+				}
 				else
 					battle.character.movesRight(dt);
 			} else {

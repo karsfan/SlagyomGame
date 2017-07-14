@@ -135,6 +135,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		game.batch.begin();
 		draw();
+		drawMiniMap();
 
 		game.batch.end();
 		hud.update();
@@ -302,29 +303,15 @@ public class PlayScreen implements Screen, ControllerListener {
 				game.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
-
-				
-
-				// MINI-MAP
-				float miniX = (float) (((StaticObject) ob).shape.getX() * 127 / 1440);
-				float miniY = (float) (((StaticObject) ob).shape.getY() * 127 / 960);
-
-				if ((miniX - miniMapRadius) * (miniX - miniMapRadius)
-						+ (miniY - miniMapRadius) * (miniY - miniMapRadius) < miniMapRadius * miniMapRadius)
-					if (((StaticObject) ob).getElement() != Element.GROUND) {
-						game.batch.draw(loadingImage.getTileImage(ob), gamecam.position.x + 260 + miniX,
-								gamecam.position.y - 225 + miniY,
-								(float) ((StaticObject) ob).shape.getWidth() / miniMapScale,
-								(float) ((StaticObject) ob).shape.getHeight() / miniMapScale);
-					}
 			}
 		}
 
 		ListIterator<Item> it2 = Game.world.getListItems().listIterator();
 		while (it2.hasNext()) {
 			Object ob = (Object) it2.next();
-			if (ob instanceof StaticObject)
-				game.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
+			if (ob instanceof StaticObject) 
+				game.batch.draw(loadingImage.getTileImage(ob), 
+						(float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 		}
@@ -346,18 +333,53 @@ public class PlayScreen implements Screen, ControllerListener {
 						hud.setDialogText(((Woman) ob).name + ": " + ((Woman) ob).info);
 					}
 			}
-			if (ob instanceof Player) {
+			if (ob instanceof Player)
 				game.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
 						14, 13);
 
-				// MINI-MAP PLAYER
-				float miniX = (float) (((DynamicObjects) ob).getX() * 127 / 1440);
-				float miniY = (float) (((DynamicObjects) ob).getY() * 127 / 960);
-				game.batch.draw(LoadingImage.pointer, gamecam.position.x + 260 + miniX, gamecam.position.y - 225 + miniY,
-						(float) ((DynamicObjects) ob).getWidth() / 7, (float) ((DynamicObjects) ob).getHeight() / 7);
+		}
+
+	}
+
+	public void drawMiniMap() {
+		game.batch.draw(LoadingImage.miniMap, (float) gamecam.position.x + 260, (float) gamecam.position.y - 225, 127,
+				127);
+
+		ListIterator<StaticObject> itMiniMapStatic = (ListIterator<StaticObject>) Game.world.getListTile()
+				.listIterator();
+		Iterator<DynamicObjects> itMiniMapDynamic = Game.world.getListDynamicObjects().iterator();
+
+		while (itMiniMapStatic.hasNext()) {
+			Object ob = (Object) itMiniMapStatic.next();
+			if (ob instanceof StaticObject) {
+				// MINI-MAP
+				float miniX = (float) (((StaticObject) ob).shape.getX() * 127 / 1440);
+				float miniY = (float) (((StaticObject) ob).shape.getY() * 127 / 960);
+
+				if ((miniX - miniMapRadius) * (miniX - miniMapRadius)
+						+ (miniY - miniMapRadius) * (miniY - miniMapRadius) < miniMapRadius * miniMapRadius)
+					if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.THREE) {
+						game.batch.draw(loadingImage.getTileImage(ob), gamecam.position.x + 260 + miniX,
+								gamecam.position.y - 225 + miniY,
+								(float) ((StaticObject) ob).shape.getWidth() / miniMapScale,
+								(float) ((StaticObject) ob).shape.getHeight() / miniMapScale);
+					}
 			}
 		}
 
+		while (itMiniMapDynamic.hasNext()) {
+			Object ob = (Object) itMiniMapDynamic.next();
+			if (ob instanceof Player) {
+				// MINI-MAP PLAYER
+				float miniX = (float) (((DynamicObjects) ob).getX() * 127 / 1440);
+				float miniY = (float) (((DynamicObjects) ob).getY() * 127 / 960);
+				if ((miniX - miniMapRadius) * (miniX - miniMapRadius)
+						+ (miniY - miniMapRadius) * (miniY - miniMapRadius) < miniMapRadius * miniMapRadius)
+					game.batch.draw(LoadingImage.miniMapPointer, gamecam.position.x + 260 + miniX,
+							gamecam.position.y - 225 + miniY, (float) ((DynamicObjects) ob).getWidth() / 4,
+							(float) ((DynamicObjects) ob).getHeight() / 4);
+			}
+		}
 	}
 
 	@Override

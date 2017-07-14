@@ -147,9 +147,7 @@ public class Bag {
 		if (item.getElement() == Element.POTION) {
 			switch (item.getLevel()) {
 			case FIRST:
-				System.out.println(Game.world.battle.character.health);
 				Game.world.battle.character.health += 15;
-				System.out.println(Game.world.battle.character.health);
 				break;
 			case SECOND:
 				Game.world.battle.character.health += 25;

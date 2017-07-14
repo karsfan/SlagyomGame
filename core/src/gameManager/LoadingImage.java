@@ -46,7 +46,8 @@ public class LoadingImage {
 	private static Texture forest2Image;
 	private static Texture tableImage;
 	private static Texture coinImage;
-	private static Texture parchmentImage;
+	private static Texture parchment1Image;
+	private static Texture parchment2Image;
 	private static Texture battleBackground;
 	private static Texture bluPotionImage;
 	private static Texture redPotionImage;
@@ -56,6 +57,8 @@ public class LoadingImage {
 	private static Texture castleImage;
 	public static Texture miniMap;
 	public static Texture pointer;
+	public static Texture miniMapPointer;
+
 	public static Pixmap cursor;
 	public static Pixmap noCursor;
 	public static Drawable dialog;
@@ -144,15 +147,17 @@ public class LoadingImage {
 		youWinImage = new Texture("res/youWin.png");
 		youLoseImage = new Texture("res/youLose.png");
 		dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
+		
 		// WORLD ITEM IMAGES
 		coinImage = new Texture("res/coin.png");
 		bluPotionImage = new Texture("res/bluePotion.png");
 		greenPotionImage = new Texture("res/greenPotion.png");
 		redPotionImage = new Texture("res/redPotion.png");
-		parchmentImage = new Texture("res/pickParchment.png");
+		parchment1Image = new Texture("res/pickParchment.png");
+		parchment2Image = new Texture("res/pickParchment2.png");
 		pointer = new Texture("res/pointer.png");
 		miniMap = new Texture("res/miniMap.png");
-
+		miniMapPointer = new Texture("res/miniMapPointer.png");
 
 		// BAG AND SHOP ITEM IMAGES
 		bluePotion = new ImageButton(
@@ -642,7 +647,10 @@ public class LoadingImage {
 				texture = coinImage;
 				break;
 			case PARCHMENT:
-				texture = parchmentImage;
+				if (((Item) ob).getLevel() == Level.FIRST)
+					texture = parchment1Image;
+				if (((Item) ob).getLevel() == Level.SECOND)
+					texture = parchment2Image;
 				break;
 			case POTION:
 				if (((Item) ob).getLevel() == Level.FIRST)

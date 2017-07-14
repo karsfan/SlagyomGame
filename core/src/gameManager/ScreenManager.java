@@ -98,6 +98,7 @@ public class ScreenManager {
 			// battlescreen = new BattleScreen(gameSlagyom,
 			// it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
+			LoadingMusic.backgroundSound.pause();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
 			LoadingMusic.pause();

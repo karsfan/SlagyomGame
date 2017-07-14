@@ -98,7 +98,7 @@ public class BagScreen implements Screen {
 		use.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				LoadingMusic.selectionSound.play();
+				game.loadingMusic.selectionSound.play();
 				if (game.screenManager.getPreviousState() == State.BATTLE)
 					if (potionsTable.isVisible()) {
 						if (!game.modalityMultiplayer)
@@ -480,7 +480,7 @@ public class BagScreen implements Screen {
 	public void render(float delta) {
 
 		if (Gdx.input.justTouched())
-			LoadingMusic.selectionSound.play();
+			game.loadingMusic.selectionSound.play();
 
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

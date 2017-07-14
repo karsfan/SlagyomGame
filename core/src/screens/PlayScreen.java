@@ -305,16 +305,11 @@ public class PlayScreen implements Screen, ControllerListener {
 	public float miniMapScale = 7;
 	public float miniMapRadius = (float) 63.5;
 
-<<<<<<< HEAD
 	@SuppressWarnings("static-access")
 	public synchronized void draw() throws InterruptedException {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) game.world.getListTile().listIterator();
 
-=======
-	public synchronized void draw() {
-		ListIterator<StaticObject> it = (ListIterator<StaticObject>) Game.world.getListTile().listIterator();
 		
->>>>>>> f9a7cb937188b86483025816301e87b63457db8c
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject) {

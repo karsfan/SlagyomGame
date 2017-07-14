@@ -54,9 +54,9 @@ public class ScreenManager {
 		setCurrentState(newState);
 
 		if (currentState == State.PLAYING || currentState == State.BATTLE || currentState == State.MULTIPLAYERGAME || currentState == State.MULTIPLAYERBATTLE)
-			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.noCursor, 0, 0));
+			Gdx.graphics.setCursor(Gdx.graphics.newCursor(gameSlagyom.loadingImage.noCursor, 0, 0));
 		else
-			Gdx.graphics.setCursor(Gdx.graphics.newCursor(LoadingImage.cursor, 0, 0));
+			Gdx.graphics.setCursor(Gdx.graphics.newCursor(gameSlagyom.loadingImage.cursor, 0, 0));
 
 		if (currentState == State.MENU) {
 			// LoadingMusic.mainMusic.play();
@@ -68,7 +68,7 @@ public class ScreenManager {
 			gameSlagyom.setScreen(getPlayScreen());
 
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC
-			LoadingMusic.battleMusic.pause();
+			gameSlagyom.loadingMusic.battleMusic.pause();
 			menuScreen.menuMusic.stop();
 			
 
@@ -98,13 +98,9 @@ public class ScreenManager {
 			// battlescreen = new BattleScreen(gameSlagyom,
 			// it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
-<<<<<<< HEAD
 			gameSlagyom.loadingMusic.backgroundSound.pause();
-=======
-			LoadingMusic.backgroundSound.pause();
-			LoadingMusic.battleMusic.setVolume((float) 0.07);
-			LoadingMusic.battleMusic.play();
->>>>>>> f9a7cb937188b86483025816301e87b63457db8c
+			gameSlagyom.loadingMusic.battleMusic.setVolume((float) 0.07);
+			gameSlagyom.loadingMusic.battleMusic.play();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
 			gameSlagyom.loadingMusic.pause();

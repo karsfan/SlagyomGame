@@ -563,7 +563,7 @@ public class ShopScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		if (Gdx.input.justTouched())
-			LoadingMusic.selectionSound.play();
+			game.loadingMusic.selectionSound.play();
 
 		
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);

@@ -52,7 +52,7 @@ public class BattleScreen implements Screen {
 		gamePort.apply();
 		gamecam.position.x = battle.character.getX();
 		gamecam.position.y = battle.character.getY();
-		hud = new BattleHud(gameslagyom.batch, battle);
+		hud = new BattleHud(gameslagyom, battle);
 		packTable = new Table();
 		packTable.setLayoutEnabled(false);
 	}

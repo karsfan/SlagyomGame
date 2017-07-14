@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import battle.Battle;
+import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.LoadingMusic;
 import screens.MenuScreen;
@@ -51,14 +52,14 @@ public class BattleHud {
 	Label bluePotion;
 	Label greenPotion;
 	Label redPotion;
-
-	public BattleHud(SpriteBatch sb, Battle battle) {
+	GameSlagyom gameSlagyom;
+	public BattleHud(GameSlagyom gameSlagyom, Battle battle) {
 		table = new Table();
 		potionTable = new Table();
-
-		spriteBatch = sb;
+		this.gameSlagyom = gameSlagyom;
+		spriteBatch = gameSlagyom.batch;
 		viewport = new FitViewport(1440, 960);
-		stage = new Stage(viewport, sb);
+		stage = new Stage(viewport, gameSlagyom.batch);
 		this.battle = battle;
 		healthCharacter = (int) this.battle.character.getHealth();
 		healthEnemy = (int) this.battle.enemy.getHealth();
@@ -128,17 +129,17 @@ public class BattleHud {
 			if (Gdx.input.isKeyJustPressed(Keys.NUM_1)
 					&& this.battle.character.bag.getNumberOf(Element.POTION, Level.FIRST) > 0) {
 				this.battle.character.bag.useItem(new Item(Element.POTION, Level.FIRST));
-				LoadingMusic.upgradeSound.play();
+				gameSlagyom.loadingMusic.upgradeSound.play();
 			}
 			if (Gdx.input.isKeyJustPressed(Keys.NUM_2)
 					&& this.battle.character.bag.getNumberOf(Element.POTION, Level.SECOND) > 0) {
 				this.battle.character.bag.useItem(new Item(Element.POTION, Level.SECOND));
-				LoadingMusic.upgradeSound.play();
+				gameSlagyom.loadingMusic.upgradeSound.play();
 			}
 			if (Gdx.input.isKeyJustPressed(Keys.NUM_3)
 					&& this.battle.character.bag.getNumberOf(Element.POTION, Level.THIRD) > 0) {
 				this.battle.character.bag.useItem(new Item(Element.POTION, Level.THIRD));
-				LoadingMusic.upgradeSound.play();
+				gameSlagyom.loadingMusic.upgradeSound.play();
 			}
 		}
 	}

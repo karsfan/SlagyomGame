@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import character.DynamicObjects;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
-import gameManager.LoadingMusic;
 import hud.Hud;
 import screens.BattleScreen;
 import staticObjects.Item;
@@ -175,7 +174,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 				gamecam.position.y = client.networkWorld.player.getY();
 
 			} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-				LoadingMusic.pause();
+				game.loadingMusic.pause();
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 			}
 

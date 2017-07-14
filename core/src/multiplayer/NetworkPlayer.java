@@ -176,11 +176,10 @@ public class NetworkPlayer extends Player {
 			Object ob = (Object) it2.next();
 			if (ob instanceof Item) {
 				if (((Item) ob).collide(this)) {
-					if (pickItem((Item) ob)) {
-						collisionWithObject = true;
-						itemPicked = (Item) ob;
-						return false;
-					}
+					bag.add(ob);
+					collisionWithObject = true;
+					itemPicked = (Item) ob;
+					return false;
 				}
 			}
 		}

@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 
 import character.Weapon.Level;
 import character.Weapon.Type;
-import gameManager.LoadingMusic;
 import screens.PlayScreen;
 import staticObjects.EnemyHome;
 import staticObjects.BossHome;
@@ -29,7 +28,8 @@ public class Player extends DynamicObjects implements ICollidable {
 	public boolean collideShop = false;
 	public boolean collideGym = false;
 	public boolean male;
-
+	public boolean collideCoin = false;
+	public boolean collideItem = false;
 	public Player(String name, boolean male) {
 		super();
 		this.name = name;
@@ -74,7 +74,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		rand = (int) (Math.random() * GameConfig.HEIGHT);
 		y = rand;
 		if (collide(this)) {
-			return false;
+			positionCharacter();
 		}
 		return true;
 	}
@@ -107,7 +107,6 @@ public class Player extends DynamicObjects implements ICollidable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 
 	public void pickParchment(Item parchment) {
 		bag.add(parchment);
@@ -276,22 +275,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		return width;
 	}
 
-	public boolean pickItem(Item item) {
-		if (item.getElement() != Element.COIN && !item.picked) {
-				bag.add(item);
-				LoadingMusic.itemSound.play(1.0f);
-				item.setPicked(true);
-				return true;
-		} else {
-			if (!item.picked) {
-				coins += 5;
-				LoadingMusic.coinSound.play(0.4f);
-			}
-			item.setPicked(true);
-			return true;
-		}
-	}
-
 	@Override
 	public synchronized boolean collide(Object e) {
 		Iterator<StaticObject> it = Game.world.getListTile().iterator();
@@ -333,23 +316,6 @@ public class Player extends DynamicObjects implements ICollidable {
 
 		}
 
-		Iterator<Item> it2 = Game.world.getListItems().iterator();
-		while (it2.hasNext()) {
-			Object ob = (Object) it2.next();
-			if (ob instanceof Item) {
-				if (((Item) ob).collide(this)) {
-					if (pickItem((Item) ob)) {
-						// PlayScreen.pickAnimation((Item) ob, ((Item)
-						// ob).getX(), ((Item) ob).getY());
-						it2.remove();
-						return false;
-					} else {
-						PlayScreen.hud.setDialogText("Zaino pieno! " + "Per raccogliere abbandona qualcosa.");
-						return true;
-					}
-				}
-			}
-		}
 		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
@@ -368,7 +334,29 @@ public class Player extends DynamicObjects implements ICollidable {
 
 			}
 		}
-
+		synchronized (Game.world.getListItems()) {
+			Iterator<Item> it2 = Game.world.getListItems().iterator();
+			while (it2.hasNext()) {
+				Object ob = (Object) it2.next();
+				if (ob instanceof Item) {
+					if (((Item) ob).collide(this)) {
+						if (((Item) ob).getElement() == Element.COIN){
+							coins++;
+							collideCoin = true;
+						}
+						else{
+							bag.add(ob);
+							collideItem = true;}
+						((Item) ob).picked = true;
+						return false;
+					}
+				}
+			}
+		}
+		collideCoin = false;
+		collideGym = false;
+		collideShop = false;
+		collideItem = false;
 		return false;
 	}
 

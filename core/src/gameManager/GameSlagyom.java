@@ -22,14 +22,14 @@ import staticObjects.StaticObject.Element;
 public class GameSlagyom extends Game {
 
 	public ScreenManager screenManager;
-	LoadingMusic musicLoader;
 	public Preferences prefs;
 	public SpriteBatch batch;
 	public static boolean modalityMultiplayer;
 	public LoadingImage loadingImage;
+	public LoadingMusic loadingMusic;
 	@Override
 	public void create() {
-		new LoadingMusic();
+		loadingMusic = new LoadingMusic();
 		loadingImage = new LoadingImage();
 		batch = new SpriteBatch();
 		modalityMultiplayer = false;

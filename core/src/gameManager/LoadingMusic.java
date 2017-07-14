@@ -5,13 +5,13 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 public class LoadingMusic {
-	public static Music mainMusic;
-	public static Sound backgroundSound;
-	public static Sound tickSound;
-	public static Sound coinSound;
-	public static Sound itemSound;
-	public static Sound cashSound;
-	public static Sound swordSound;
+	public   Music mainMusic;
+	public Sound backgroundSound;
+	public Sound tickSound;
+	public Sound coinSound;
+	public Sound itemSound;
+	public Sound cashSound;
+	public Sound swordSound;
 
 
 	public LoadingMusic() {
@@ -24,7 +24,7 @@ public class LoadingMusic {
 		swordSound = Gdx.audio.newSound(Gdx.files.internal("res/audio/sword.ogg"));
 	}
 
-	public static void pause() {
+	public  void pause() {
 		if (mainMusic.isPlaying())
 			mainMusic.pause();
 		backgroundSound.pause();

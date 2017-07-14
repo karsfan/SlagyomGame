@@ -14,7 +14,6 @@ import screens.OptionScreen;
 import screens.PauseScreen;
 import screens.PlayScreen;
 import screens.ShopScreen;
-import world.Game;
 
 public class ScreenManager {
 	GameSlagyom gameSlagyom;
@@ -65,14 +64,14 @@ public class ScreenManager {
 			Gdx.input.setInputProcessor(menuScreen.stage);
 
 		} else if (currentState == State.PLAYING) {
-			LoadingMusic.pause();
+			gameSlagyom.loadingMusic.pause();
 			gameSlagyom.setScreen(getPlayScreen());
 
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC
 			menuScreen.menuMusic.stop();
-			LoadingMusic.backgroundSound.loop(100);
+			
 
-			Game.world.semaphore.release();
+			//Game.world.semaphore.release();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.MULTIPLAYERMENU) {
 			gameSlagyom.setScreen(multiplayerScreen);
@@ -98,10 +97,10 @@ public class ScreenManager {
 			// battlescreen = new BattleScreen(gameSlagyom,
 			// it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
-			LoadingMusic.backgroundSound.pause();
+			gameSlagyom.loadingMusic.backgroundSound.pause();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
-			LoadingMusic.pause();
+			gameSlagyom.loadingMusic.pause();
 			gameSlagyom.setScreen(pauseScreen);
 			Gdx.input.setInputProcessor(pauseScreen.stage);
 		} else if (currentState == State.BAG) {

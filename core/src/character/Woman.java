@@ -118,7 +118,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 			changeDirection(getCurrentState());
 		}
-		if (passi < 50000) {
+		if (passi < 50) {
 			passi++;
 			setState(StateDynamicObject.RUNNINGRIGHT, dt);
 		} else {
@@ -154,7 +154,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 			changeDirection(getCurrentState());
 		}
-		if (passi < 50000) {
+		if (passi < 50) {
 			passi++;
 			setState(StateDynamicObject.RUNNINGLEFT, dt);
 		} else {
@@ -191,7 +191,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 			changeDirection(getCurrentState());
 		}
 
-		if (passi < 50000) {
+		if (passi < 50) {
 			passi++;
 			setState(StateDynamicObject.RUNNINGUP, dt);
 		} else {
@@ -228,7 +228,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 			changeDirection(getCurrentState());
 		}
-		if (passi < 50000) {
+		if (passi < 50) {
 			passi++;
 			setState(StateDynamicObject.RUNNINGDOWN, dt);
 		} else {
@@ -344,7 +344,6 @@ public class Woman extends DynamicObjects implements ICollidable {
 	}
 
 	public void update(float dt) {
-		
 		if (collision || collisionWithCharacter)
 			changeDirection(getCurrentState());
 		else if (currentState == StateDynamicObject.RUNNINGLEFT)
@@ -356,7 +355,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 		else if (currentState == StateDynamicObject.RUNNINGDOWN)
 			movesDown(dt);
 		else if (currentState == StateDynamicObject.STANDING && !collisionWithCharacter) {
-			if (passi < 50000) {
+			if (passi < 50) {
 				passi++;
 				setState(StateDynamicObject.STANDING, dt);
 			} else {

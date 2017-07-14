@@ -13,7 +13,6 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -26,7 +25,6 @@ import character.Player;
 import character.Woman;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
-import gameManager.LoadingMusic;
 import hud.Hud;
 import staticObjects.Item;
 import staticObjects.StaticObject;
@@ -38,7 +36,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	public OrthographicCamera gamecam;
 	public Viewport gamePort;
-	public GameSlagyom game;
+	public GameSlagyom gameSlagyom;
 	public static Hud hud;
 	private static Drawable noDialog = null;
 
@@ -46,10 +44,10 @@ public class PlayScreen implements Screen, ControllerListener {
 	public int textIndex = 0;
 	private boolean stop = false;
 
-	PovDirection directionGamepad = null;
-	boolean movesGamePad = false;
+	PovDirection directiongamepad = null;
+	boolean movesgamePad = false;
 	LoadingImage loadingImage;
-
+	Game game;
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -62,23 +60,24 @@ public class PlayScreen implements Screen, ControllerListener {
 	 * 
 	 */
 	@SuppressWarnings("static-access")
-	public PlayScreen(GameSlagyom game, String name, boolean male) {
+	public PlayScreen(GameSlagyom gameslagyom,  String name, boolean male) {
 
-		this.loadingImage = game.loadingImage;
-		new Game(name, male);
-		this.game = game;
+		this.loadingImage = gameslagyom.loadingImage;
+		game = new Game(name, male);
+		this.gameSlagyom = gameslagyom;
 
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
 
 		gamePort.apply();
 
-		gamecam.position.x = Game.world.player.getX();
-		gamecam.position.y = Game.world.player.getY();
-		hud = new Hud(game);
+		gamecam.position.x = game.world.player.getX();
+		gamecam.position.y = game.world.player.getY();
+		hud = new Hud(gameslagyom);
 
 		Controllers.addListener(this);
-		this.game.modalityMultiplayer = false;
+		gameslagyom.modalityMultiplayer = false;
+		gameslagyom.loadingMusic.backgroundSound.loop(100);
 	}
 
 	/**
@@ -94,50 +93,55 @@ public class PlayScreen implements Screen, ControllerListener {
 	 *            true if the player's gender is male
 	 */
 	@SuppressWarnings("static-access")
-	public PlayScreen(GameSlagyom game, String path, String name, boolean male) {
+	public PlayScreen(GameSlagyom gameSlagyom, String path, String name, boolean male) {
 
-		new Game(path, name, male);
-		this.game = game;
-		this.game.modalityMultiplayer = false;
+		game = new Game(path, name, male);
+		this.gameSlagyom = gameSlagyom;
+		this.gameSlagyom.modalityMultiplayer = false;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
-		this.loadingImage = game.loadingImage;
-		gamecam.position.x = Game.world.player.getX();
-		gamecam.position.y = Game.world.player.getY();
-		hud = new Hud(game);
+		this.loadingImage = gameSlagyom.loadingImage;
+		gamecam.position.x = game.world.player.getX();
+		gamecam.position.y = game.world.player.getY();
+		hud = new Hud(gameSlagyom);
 
 		stop = true;
 		Controllers.addListener(this);
-		System.out.println();
-
+		gameSlagyom.loadingMusic.backgroundSound.loop(100);
 	}
 
 	@SuppressWarnings("static-access")
-	public PlayScreen(String text, GameSlagyom game, String charName, boolean male) {
+	public PlayScreen(String text, GameSlagyom gameSlagyom, String charName, boolean male) {
 
-		new Game(text, game, charName, male);
-		this.game = game;
+		game = new Game(text, gameSlagyom, charName, male);
+		this.gameSlagyom = gameSlagyom;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
 		gamePort.apply();
-		gamecam.position.x = Game.world.player.getX();
-		gamecam.position.y = Game.world.player.getY();
-		hud = new Hud(game);
-		this.game.modalityMultiplayer = false;
+		gamecam.position.x = game.world.player.getX();
+		gamecam.position.y = game.world.player.getY();
+		hud = new Hud(gameSlagyom);
+		this.gameSlagyom.modalityMultiplayer = false;
+		gameSlagyom.loadingMusic.backgroundSound.loop(100);
 	}
 
 	@Override
 	public void render(float delta) {
-		update(delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		game.batch.setProjectionMatrix(gamecam.combined);
+		gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
 
-		game.batch.begin();
-		draw();
+		gameSlagyom.batch.begin();
+		try {
+			draw();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Cuncurrent nel draw");
+			e.printStackTrace();
+		}
 		drawMiniMap();
 
-		game.batch.end();
+		gameSlagyom.batch.end();
 		hud.update();
 
 		hud.stage.draw();
@@ -152,7 +156,7 @@ public class PlayScreen implements Screen, ControllerListener {
 						hud.textTable.row();
 					if (textIndex % 75 == 0) {
 						hud.textTable.clear();
-						LoadingMusic.tickSound.play(1.0f);
+						gameSlagyom.loadingMusic.tickSound.play(1.0f);
 					}
 					drawDialog(String.valueOf(hud.textDialog.charAt(textIndex)));
 					textIndex++;
@@ -165,6 +169,7 @@ public class PlayScreen implements Screen, ControllerListener {
 			textIndex = 0;
 		}
 		// END TEXT TABLE RENDERING
+		update(delta);
 	}
 
 	/**
@@ -187,95 +192,101 @@ public class PlayScreen implements Screen, ControllerListener {
 		hud.textTable.setBackground(noDialog);
 	}
 
+	@SuppressWarnings("static-access")
 	public void update(float dt) {
 		moveCharacter(dt);
-		if ((Game.world.player.getX() - gamePort.getWorldWidth() / 2 > 0
-				&& Game.world.player.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
-			gamecam.position.x = Game.world.player.getX();
+		if(game.world.player.collideCoin)
+			gameSlagyom.loadingMusic.coinSound.play();
+		if(game.world.player.collideItem)
+			gameSlagyom.loadingMusic.itemSound.play();
+		if ((game.world.player.getX() - gamePort.getWorldWidth() / 2 > 0
+				&& game.world.player.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
+			gamecam.position.x = game.world.player.getX();
 
-		if (Game.world.player.getY() - gamePort.getWorldHeight() / 2 > 0
-				&& Game.world.player.getY() + gamePort.getWorldHeight() / 2 < GameConfig.HEIGHT)
-			gamecam.position.y = Game.world.player.getY();
+		if (game.world.player.getY() - gamePort.getWorldHeight() / 2 > 0
+				&& game.world.player.getY() + gamePort.getWorldHeight() / 2 < GameConfig.HEIGHT)
+			gamecam.position.y = game.world.player.getY();
 
 		gamecam.update();
-
+		game.world.update(dt);
 	}
 
+	@SuppressWarnings("static-access")
 	private void moveCharacter(float dt) {
 		try {
 			if (!stop) {
 				/*
-				 * if (movesGamePad) { if (directionGamepad ==
-				 * PovDirection.east) Game.world.player.movesRight(dt); else if
-				 * (directionGamepad == PovDirection.north) {
-				 * Game.world.player.movesUp(dt); if
-				 * (Game.world.player.collideShop) {
+				 * if (movesgamePad) { if (directiongamepad ==
+				 * PovDirection.east) game.world.player.movesRight(dt); else if
+				 * (directiongamepad == PovDirection.north) {
+				 * game.world.player.movesUp(dt); if
+				 * (game.world.player.collideShop) {
 				 * game.screenManager.swapScreen(it.slagyom.ScreenManager.State.
-				 * SHOP); Game.world.semaphore.acquire();
-				 * Game.world.player.collideShop = false; } } else if
-				 * (directionGamepad == PovDirection.west)
-				 * Game.world.player.movesLeft(dt); else if (directionGamepad ==
-				 * PovDirection.south) Game.world.player.movesDown(dt); else if
-				 * (directionGamepad == PovDirection.northEast)
-				 * Game.world.player.movesNorthEast(dt); else if
-				 * (directionGamepad == PovDirection.northWest)
-				 * Game.world.player.movesNorthWest(dt); else if
-				 * (directionGamepad == PovDirection.southEast)
-				 * Game.world.player.movesSouthEast(dt); else if
-				 * (directionGamepad == PovDirection.southWest)
-				 * Game.world.player.movesSouthWest(dt);
+				 * SHOP); game.world.semaphore.acquire();
+				 * game.world.player.collideShop = false; } } else if
+				 * (directiongamepad == PovDirection.west)
+				 * game.world.player.movesLeft(dt); else if (directiongamepad ==
+				 * PovDirection.south) game.world.player.movesDown(dt); else if
+				 * (directiongamepad == PovDirection.northEast)
+				 * game.world.player.movesNorthEast(dt); else if
+				 * (directiongamepad == PovDirection.northWest)
+				 * game.world.player.movesNorthWest(dt); else if
+				 * (directiongamepad == PovDirection.southEast)
+				 * game.world.player.movesSouthEast(dt); else if
+				 * (directiongamepad == PovDirection.southWest)
+				 * game.world.player.movesSouthWest(dt);
 				 * 
 				 * }
 				 */
 
 				if (Gdx.input.isKeyPressed(Keys.Z)) {
-					Game.world.player.setVelocity(150f);
+					game.world.player.setVelocity(150f);
 					loadingImage.setFrameDurationCharacter(0.1f);
 				} else {
-					Game.world.player.setVelocity(100);
+					game.world.player.setVelocity(100);
 					loadingImage.setFrameDurationCharacter(0.2f);
 				}
 				if (Gdx.input.isKeyPressed(Keys.LEFT))
-					Game.world.player.movesLeft(dt);
+					game.world.player.movesLeft(dt);
 				else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-					Game.world.player.movesRight(dt);
-				else if (Gdx.input.isKeyPressed(Keys.UP) || (directionGamepad == PovDirection.north && movesGamePad)) {
-					Game.world.player.movesUp(dt);
-					if (Game.world.player.collideShop) {
-						Game.world.semaphore.acquire();
-						game.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
-						Game.world.player.collideShop = false;
+					game.world.player.movesRight(dt);
+				else if (Gdx.input.isKeyPressed(Keys.UP) || (directiongamepad == PovDirection.north && movesgamePad)) {
+					game.world.player.movesUp(dt);
+					if (game.world.player.collideShop) {
+					//	game.world.semaphore.acquire();
+						gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
+						game.world.player.collideShop = false;
 					}
-					if (Game.world.player.collideGym) {
-						game.screenManager.battlescreen = new BattleScreen(game, world.Game.world.battle);
-						game.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
-						Game.world.semaphore.acquire();
-						Game.world.player.collideGym = false;
+					if (game.world.player.collideGym) {
+						gameSlagyom.screenManager.battlescreen = new BattleScreen(gameSlagyom, game.world.battle);
+						gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
+						//game.world.semaphore.acquire();
+						game.world.player.collideGym = false;
 					}
 
 				} else if (Gdx.input.isKeyPressed(Keys.DOWN))
-					Game.world.player.movesDown(dt);
+					game.world.player.movesDown(dt);
 
 				else if (Gdx.input.isKeyJustPressed(Keys.C)) {
 					gamecam.zoom -= 0.2;
-					gamecam.position.x = Game.world.player.getX();
-					gamecam.position.y = Game.world.player.getY();
+					gamecam.position.x = game.world.player.getX();
+					gamecam.position.y = game.world.player.getY();
 
 				} else if (Gdx.input.isKeyJustPressed(Keys.V)) {
 					gamecam.zoom += 0.2;
-					gamecam.position.x = Game.world.player.getX();
-					gamecam.position.y = Game.world.player.getY();
+					gamecam.position.x = game.world.player.getX();
+					gamecam.position.y = game.world.player.getY();
 
 				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-					LoadingMusic.pause();
-					Game.world.semaphore.acquire();
-					game.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
+					gameSlagyom.loadingMusic.pause();
+					//game.world.semaphore.acquire();
+					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 				}
 
 				else if (Gdx.input.isKeyJustPressed(Keys.B)) {
-					Game.world.nextLevel();
+					game.world.nextLevel();
 				} // else
-					// Game.character.setState(StateDynamicObject.STANDING);
+					// game.character.setState(StateDynamicObject.STANDING);
 			}
 		} catch (InterruptedException e) {
 
@@ -284,7 +295,7 @@ public class PlayScreen implements Screen, ControllerListener {
 			hud.showDialog = false;
 			hideDialog();
 			if (stop) {
-				Game.world.getThread().start();
+				//game.world.getThread().start();
 				stop = false;
 			}
 
@@ -294,33 +305,34 @@ public class PlayScreen implements Screen, ControllerListener {
 	public float miniMapScale = 7;
 	public float miniMapRadius = (float) 63.5;
 
-	public synchronized void draw() {
-		ListIterator<StaticObject> it = (ListIterator<StaticObject>) Game.world.getListTile().listIterator();
+	@SuppressWarnings("static-access")
+	public synchronized void draw() throws InterruptedException {
+		ListIterator<StaticObject> it = (ListIterator<StaticObject>) game.world.getListTile().listIterator();
 
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject) {
-				game.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
+				gameSlagyom.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
 			}
 		}
-
-		ListIterator<Item> it2 = Game.world.getListItems().listIterator();
-		while (it2.hasNext()) {
-			Object ob = (Object) it2.next();
-			if (ob instanceof StaticObject) 
-				game.batch.draw(loadingImage.getTileImage(ob), 
-						(float) ((StaticObject) ob).shape.getX(),
-						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
-						(float) ((StaticObject) ob).shape.getHeight());
+		synchronized ( game.world.getListItems()) {
+			ListIterator<Item> it2 = game.world.getListItems().listIterator();
+			while (it2.hasNext()) {
+				Object ob = (Object) it2.next();
+				if (ob instanceof StaticObject) 
+					gameSlagyom.batch.draw(loadingImage.getTileImage(ob), 
+							(float) ((StaticObject) ob).shape.getX(),
+							(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
+							(float) ((StaticObject) ob).shape.getHeight());
+			}
 		}
-
-		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();
+		Iterator<DynamicObjects> it1 = game.world.getListDynamicObjects().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
 			if (ob instanceof DynamicObjects) {
-				game.batch.draw(loadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
+				gameSlagyom.batch.draw(loadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
 						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
 				if (ob instanceof Man)
 					if (((Man) ob).collisionWithCharacter) {
@@ -334,20 +346,21 @@ public class PlayScreen implements Screen, ControllerListener {
 					}
 			}
 			if (ob instanceof Player)
-				game.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
+				gameSlagyom.batch.draw(LoadingImage.pointer, ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY() + 30,
 						14, 13);
 
 		}
 
 	}
 
+	@SuppressWarnings("static-access")
 	public void drawMiniMap() {
-		game.batch.draw(LoadingImage.miniMap, (float) gamecam.position.x + 260, (float) gamecam.position.y - 225, 127,
+		gameSlagyom.batch.draw(LoadingImage.miniMap, (float) gamecam.position.x + 260, (float) gamecam.position.y - 225, 127,
 				127);
 
-		ListIterator<StaticObject> itMiniMapStatic = (ListIterator<StaticObject>) Game.world.getListTile()
+		ListIterator<StaticObject> itMiniMapStatic = (ListIterator<StaticObject>) game.world.getListTile()
 				.listIterator();
-		Iterator<DynamicObjects> itMiniMapDynamic = Game.world.getListDynamicObjects().iterator();
+		Iterator<DynamicObjects> itMiniMapDynamic = game.world.getListDynamicObjects().iterator();
 
 		while (itMiniMapStatic.hasNext()) {
 			Object ob = (Object) itMiniMapStatic.next();
@@ -359,7 +372,7 @@ public class PlayScreen implements Screen, ControllerListener {
 				if ((miniX - miniMapRadius) * (miniX - miniMapRadius)
 						+ (miniY - miniMapRadius) * (miniY - miniMapRadius) < miniMapRadius * miniMapRadius)
 					if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.THREE) {
-						game.batch.draw(loadingImage.getTileImage(ob), gamecam.position.x + 260 + miniX,
+						gameSlagyom.batch.draw(loadingImage.getTileImage(ob), gamecam.position.x + 260 + miniX,
 								gamecam.position.y - 225 + miniY,
 								(float) ((StaticObject) ob).shape.getWidth() / miniMapScale,
 								(float) ((StaticObject) ob).shape.getHeight() / miniMapScale);
@@ -375,28 +388,29 @@ public class PlayScreen implements Screen, ControllerListener {
 				float miniY = (float) (((DynamicObjects) ob).getY() * 127 / 960);
 				if ((miniX - miniMapRadius) * (miniX - miniMapRadius)
 						+ (miniY - miniMapRadius) * (miniY - miniMapRadius) < miniMapRadius * miniMapRadius)
-					game.batch.draw(LoadingImage.miniMapPointer, gamecam.position.x + 260 + miniX,
+					gameSlagyom.batch.draw(LoadingImage.miniMapPointer, gamecam.position.x + 260 + miniX,
 							gamecam.position.y - 225 + miniY, (float) ((DynamicObjects) ob).getWidth() / 4,
 							(float) ((DynamicObjects) ob).getHeight() / 4);
 			}
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
 		// gamePort.setScreenSize(width, height);
 		// controlli per la posizione della camera
-		if (gamePort.getWorldWidth() / 2 + Game.world.player.getX() - GameConfig.WIDTH > 0
-				&& !(Game.world.player.getX() - gamePort.getWorldWidth() / 2 < 0))
+		if (gamePort.getWorldWidth() / 2 + game.world.player.getX() - GameConfig.WIDTH > 0
+				&& !(game.world.player.getX() - gamePort.getWorldWidth() / 2 < 0))
 			gamecam.position.x = GameConfig.WIDTH - gamePort.getWorldWidth() / 2;
-		else if (Game.world.player.getX() - gamePort.getWorldWidth() / 2 < 0) {
+		else if (game.world.player.getX() - gamePort.getWorldWidth() / 2 < 0) {
 
 			gamecam.position.x = gamePort.getWorldWidth() / 2;
 		}
-		if (gamePort.getWorldHeight() / 2 + Game.world.player.getY() - GameConfig.HEIGHT > 0)
+		if (gamePort.getWorldHeight() / 2 + game.world.player.getY() - GameConfig.HEIGHT > 0)
 			gamecam.position.y = GameConfig.HEIGHT - gamePort.getWorldHeight() / 2;
-		else if (Game.world.player.getY() - gamePort.getWorldHeight() / 2 < 0) {
+		else if (game.world.player.getY() - gamePort.getWorldHeight() / 2 < 0) {
 			gamecam.position.y = gamePort.getWorldHeight() / 2;
 		}
 
@@ -462,28 +476,28 @@ public class PlayScreen implements Screen, ControllerListener {
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		// TODO Auto-generated method stub
 		if (value == PovDirection.east) {
-			movesGamePad = true;
-			directionGamepad = value;
+			movesgamePad = true;
+			directiongamepad = value;
 			return true;
 		} else if (value == PovDirection.north) {
-			movesGamePad = true;
-			directionGamepad = value;
+			movesgamePad = true;
+			directiongamepad = value;
 			return true;
 		} else if (value == PovDirection.south) {
-			movesGamePad = true;
-			directionGamepad = value;
+			movesgamePad = true;
+			directiongamepad = value;
 			return true;
 		} else if (value == PovDirection.west) {
-			movesGamePad = true;
-			directionGamepad = value;
+			movesgamePad = true;
+			directiongamepad = value;
 			return true;
 		} else if (value == PovDirection.northEast || value == PovDirection.northWest || value == PovDirection.southWest
 				|| value == PovDirection.southEast) {
-			movesGamePad = true;
-			directionGamepad = value;
+			movesgamePad = true;
+			directiongamepad = value;
 			return true;
 		}
-		movesGamePad = false;
+		movesgamePad = false;
 		return false;
 	}
 

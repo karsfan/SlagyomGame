@@ -29,8 +29,8 @@ public class World {
 	public Player player;
 	public Map[] maps;
 	public Battle battle;
-	private ThreadWorld thread;
-	public Semaphore semaphore;
+	//private ThreadWorld thread;
+	//public Semaphore semaphore;
 	int level;
 	float timerItem = 0;
 	public boolean remove = false;
@@ -43,7 +43,7 @@ public class World {
 	private Scanner input;
 
 	public World(String name, boolean male) {
-		semaphore = new Semaphore(1);
+		//semaphore = new Semaphore(1);
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
@@ -52,7 +52,7 @@ public class World {
 		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getPath(), false, "Village two");
 		player = new Player(name, male);
 		getListDynamicObjects().add(player);
-		setThread(new ThreadWorld(this, semaphore));
+		//setThread(new ThreadWorld(this, semaphore));
 
 		manNames = new Stack<String>();
 		womanNames = new Stack<String>();
@@ -70,7 +70,7 @@ public class World {
 
 	public World(String path, String name, boolean male) {
 		level = 0;
-		semaphore = new Semaphore(0);
+	//	semaphore = new Semaphore(0);
 		people = new ArrayList<DynamicObjects>();
 
 		maps = new Map[2];
@@ -80,7 +80,7 @@ public class World {
 		player = new Player(name, male);
 
 		getListDynamicObjects().add(player);
-		setThread(new ThreadWorld(this, semaphore));
+		//setThread(new ThreadWorld(this, semaphore));
 
 		manNames = new Stack<String>();
 		womanNames = new Stack<String>();
@@ -146,16 +146,26 @@ public class World {
 
 	public void update(float dt) {
 		timerItem += dt;
+		
 		Iterator<DynamicObjects> it1 = people.iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
-			if (ob instanceof Woman) {
+			if (ob instanceof Woman) {		
 				((Woman) ob).update(dt);
 			}
 			if (ob instanceof Man)
 				((Man) ob).update(dt);
 		}
-
+		
+		LinkedList<Item> daEliminare = new LinkedList<Item>();
+		Iterator<Item> it2 = getListItems().iterator();
+		while (it2.hasNext()) {
+			Item ob = it2.next();
+			if (ob.isPicked())
+				daEliminare.add(ob);
+		}
+		getListItems().removeAll(daEliminare);
+		
 		if (timerItem >= 60) {
 			Item item = new Item();
 			getMap().getListItems().add(item);
@@ -194,7 +204,7 @@ public class World {
 		if (level < 1) {
 			level++;
 
-			semaphore.acquire();
+		//	semaphore.acquire();
 			people = new ArrayList<DynamicObjects>();
 			getMap().setCurrent(false);
 			maps[level].setCurrent(true);
@@ -202,18 +212,16 @@ public class World {
 			while (!addDynamicObject())
 				;
 			addItems();
-			semaphore.release();
+			//semaphore.release();
 		}
 
 	}
 
-	public ThreadWorld getThread() {
-		return thread;
-	}
+	
 
-	public void setThread(ThreadWorld thread) {
-		this.thread = thread;
-	}
+//	public void setThread(ThreadWorld thread) {
+//		this.thread = thread;
+//	}
 
 	public void createBattle(EnemyHome enemyHome) {
 		Iterator<StaticObject> it = getListTile().iterator();

@@ -21,7 +21,6 @@ import character.Bomb;
 import character.DynamicObjects.StateDynamicObject;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
-import gameManager.LoadingMusic;
 import gameManager.ScreenManager.State;
 import hud.BattleHud;
 import multiplayer.NetworkCharacterBattle;
@@ -122,7 +121,7 @@ public class BattleScreen implements Screen {
 				} else {
 					youWin = true;
 					battle.character.bag.addPack((Pack) ((Enemy) battle.enemy).getWin_bonus());
-					LoadingMusic.cashSound.play(1.5f);
+					gameslagyom.loadingMusic.cashSound.play(1.5f);
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {
 						bluePotion = new Label(
 								"Blue potion x" + Integer.toString(
@@ -219,14 +218,14 @@ public class BattleScreen implements Screen {
 
 			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.A)) {
-					LoadingMusic.swordSound.play();
+					gameslagyom.loadingMusic.swordSound.play();
 					battle.character.fightLeft(dt);
 				}
 				else
 					battle.character.movesLeft(dt);
 			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.A)) {
-					LoadingMusic.swordSound.play();					
+					gameslagyom.loadingMusic.swordSound.play();					
 					battle.character.fightRight(dt);
 				}
 				else

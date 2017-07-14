@@ -181,7 +181,7 @@ public class ShopScreen implements Screen {
 					}
 				}
 				if (buy)
-					LoadingMusic.cashSound.play(1.5f);
+					game.loadingMusic.cashSound.play(1.5f);
 				else {
 					if (!game.modalityMultiplayer)
 						refreshedCoins = Game.world.player.coins;

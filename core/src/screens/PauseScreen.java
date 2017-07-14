@@ -89,11 +89,11 @@ public class PauseScreen implements Screen {
 			}
 		});
 		menuButton.addListener(new ClickListener() {
-			@SuppressWarnings({ "deprecation", "static-access" })
+			@SuppressWarnings({ "static-access" })
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (!game.modalityMultiplayer) {
-					Game.world.getThread().stop();
+					//Game.world.getThread().stop();
 					game.screenManager.playScreen.dispose();
 				}
 				// else {

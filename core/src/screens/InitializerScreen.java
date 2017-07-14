@@ -63,12 +63,14 @@ public class InitializerScreen implements Screen {
 		// Create buttons
 		// Add listeners to buttons
 		defaultLevelButton.addListener(new ClickListener() {
+			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				LoadingMusic.pause();
-				LoadingMusic.backgroundSound.loop(10.0f);
+				game.loadingMusic.pause();
+				game.loadingMusic.backgroundSound.loop(10.0f);
 				game.screenManager.menuScreen.menuMusic.stop();
-				game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected));
+				game.screenManager.playScreen = new PlayScreen(game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected);
+				game.screenManager.setPlayScreen(game.screenManager.playScreen);
 				game.setScreen(game.screenManager.playScreen);
 				game.screenManager.currentState = State.PLAYING;
 				//Gdx.input.setInputProcessor(null);
@@ -146,6 +148,7 @@ public class InitializerScreen implements Screen {
 
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
@@ -160,8 +163,8 @@ public class InitializerScreen implements Screen {
 		stage.draw();
 		
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			LoadingMusic.pause();
-			LoadingMusic.backgroundSound.loop(10.0f);
+			game.loadingMusic.pause();
+			game.loadingMusic.backgroundSound.loop(10.0f);
 			game.screenManager.menuScreen.menuMusic.stop();
 			game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected));
 			game.setScreen(game.screenManager.playScreen);

@@ -21,17 +21,19 @@ public class Game {
 		//world.player = new Player(name);
 		//world.player.positionCharacter();
 		//world.getListDynamicObjects().add(player);
-		world.player.positionCharacter();
-		world.getThread().start();
+		//world.player.positionCharacter();
+		world.player.x = 500;
+		world.player.y = 500;
+		//world.getThread().start();
 		
 	}
 
 	
 	// constructor for loadGame
 	public Game(String path, String name, boolean male) {
-
+		System.out.println(path);
 		world = new World(path, name, male);
-		world.player.positionCharacter();
+		//world.player.positionCharacter();
 		//player = new Player(name);
 		//world.getListDynamicObjects().add(player);
 		// while(!world.addDynamicObject());
@@ -53,9 +55,11 @@ public class Game {
 			;
 		while (!world.addItems())
 			;
+		
 		//player = new Player(charName);
 		//world.getListDynamicObjects().add(player);
-		world.getThread().start();
+		world.player.positionCharacter();
+		//world.getThread().start();
 
 	}
 

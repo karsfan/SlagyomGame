@@ -63,7 +63,7 @@ public class LoadingImage {
 	public static Pixmap noCursor;
 	public static Drawable dialog;
 
-	public  TextureRegion battleCharacterStand;
+	public TextureRegion battleCharacterStand;
 	public TextureRegion battleFemaleCharacterStand;
 	public TextureRegion battleCharacterStandSword;
 	public TextureRegion battleFemaleCharacterStandSword;
@@ -79,7 +79,7 @@ public class LoadingImage {
 	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev2;
 	public Animation<TextureRegion>[] battleCharacterAnimationSwordLev3;
 	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev3;
-	
+
 	public TextureRegion playerStand;
 	public Animation<TextureRegion>[] playerAnimation;
 
@@ -95,11 +95,11 @@ public class LoadingImage {
 	// private static TextureRegion man3Stand;
 	public Animation<TextureRegion>[] man3Animation;
 
-	public static TextureRegion woman1Stand;
-	public static Animation<TextureRegion>[] woman1Animation;
+	public TextureRegion woman1Stand;
+	public Animation<TextureRegion>[] woman1Animation;
 
-	private static TextureRegion woman2Stand;
-	public static Animation<TextureRegion>[] woman2Animation;
+	private TextureRegion woman2Stand;
+	public Animation<TextureRegion>[] woman2Animation;
 
 	// private static TextureRegion woman3Stand;
 	public Animation<TextureRegion>[] woman3Animation;
@@ -148,7 +148,7 @@ public class LoadingImage {
 		youWinImage = new Texture("res/youWin.png");
 		youLoseImage = new Texture("res/youLose.png");
 		dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
-		
+
 		// WORLD ITEM IMAGES
 		coinImage = new Texture("res/coin.png");
 		bluPotionImage = new Texture("res/bluePotion.png");
@@ -229,7 +229,7 @@ public class LoadingImage {
 
 		texture = new Texture("Character/sword.png");
 		createBattleFrameBig(texture, battleCharacterAnimationSwordLev1, battleCharacterStandSword, 7);
-		
+
 		texture = new Texture("Character/female/sword.png");
 		createBattleFrameBig(texture, battleFemaleCharacterAnimationSwordLev1, battleFemaleCharacterStandSword, 7);
 
@@ -279,14 +279,15 @@ public class LoadingImage {
 
 	}
 
-	private void createBattleFrameBig(Texture texture, Animation<TextureRegion>[] arrayAnimation, TextureRegion stand, int frame) {
+	private void createBattleFrameBig(Texture texture, Animation<TextureRegion>[] arrayAnimation, TextureRegion stand,
+			int frame) {
 		Array<TextureRegion> frames = new Array<TextureRegion>();
 		Animation<TextureRegion> right;
 		Animation<TextureRegion> left;
 		Animation<TextureRegion> fightingRight;
 		Animation<TextureRegion> fightingLeft;
 
-		for (int i = 0; i <= frame ; i++) {
+		for (int i = 0; i <= frame; i++) {
 			frames.add(new TextureRegion(texture, i * 190, 65, 120, 65));
 		}
 		right = new Animation<TextureRegion>(0.2f, frames);
@@ -363,7 +364,7 @@ public class LoadingImage {
 		return battleBackground;
 	}
 
-	public  TextureRegion getBattleFrame(Object ob) {
+	public TextureRegion getBattleFrame(Object ob) {
 		TextureRegion region = new TextureRegion();
 		StateDynamicObject state = null;
 		float stateTimer = 0;
@@ -395,6 +396,7 @@ public class LoadingImage {
 			region = getFrameStand(ob);
 			break;
 		default:
+			getFrameStand(ob).setRegion(getAnimation(ob)[0].getKeyFrame(0, true));
 			region = getFrameStand(ob);
 			break;
 		}
@@ -421,23 +423,25 @@ public class LoadingImage {
 			getFrameStand(ob).setRegion(getAnimation(ob)[3].getKeyFrame(0, true));
 			break;
 		case STANDING:
+			getFrameStand(ob).setRegion(getAnimation(ob)[0].getKeyFrame(0, true));
 			region = getFrameStand(ob);
 			break;
 		default:
+			getFrameStand(ob).setRegion(getAnimation(ob)[0].getKeyFrame(0, true));
 			region = getFrameStand(ob);
 			break;
 		}
 		return region;
 	}
 
-	public  void setFrameDurationCharacter(float frameDuration) {
+	public void setFrameDurationCharacter(float frameDuration) {
 		playerAnimation[0].setFrameDuration(frameDuration);
 		playerAnimation[1].setFrameDuration(frameDuration);
 		playerAnimation[2].setFrameDuration(frameDuration);
 		playerAnimation[3].setFrameDuration(frameDuration);
 	}
 
-	public  Animation<TextureRegion>[] getAnimation(Object ob) {
+	public Animation<TextureRegion>[] getAnimation(Object ob) {
 		Class<? extends Object> a = ob.getClass();
 		Animation<TextureRegion>[] animation = null;
 
@@ -472,8 +476,7 @@ public class LoadingImage {
 						animation = battleCharacterAnimationSpearLev2;
 					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
 						animation = battleCharacterAnimationSpearLev3;
-				}
-				else {
+				} else {
 					if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
 						animation = battleFemaleCharacterAnimationSpearLev1;
 					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
@@ -481,9 +484,9 @@ public class LoadingImage {
 					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
 						animation = battleFemaleCharacterAnimationSpearLev3;
 				}
-					
+
 			} else if (((CharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
-				if (((CharacterBattle) ob).male) 
+				if (((CharacterBattle) ob).male)
 					animation = battleCharacterAnimationSwordLev1;
 				else
 					animation = battleFemaleCharacterAnimationSwordLev1;
@@ -508,18 +511,17 @@ public class LoadingImage {
 		case "NetworkEnemy":
 			animation = enemyAnimation;
 			break;
-
 		default:
-
-			System.out.println("Errore in getAnimation");
+			if (ob instanceof Enemy)
+				animation = enemyAnimation;
+			else
+				System.out.println("Errore in getAnimation");
 			break;
 		}
-		if (ob instanceof Enemy)
-			animation = enemyAnimation;
 		return animation;
 	}
 
-	public  TextureRegion getFrameStand(Object ob) {
+	public TextureRegion getFrameStand(Object ob) {
 		Class<? extends Object> a = ob.getClass();
 		TextureRegion textureRegion = null;
 		switch (a.getSimpleName()) {
@@ -582,11 +584,12 @@ public class LoadingImage {
 			textureRegion = enemyStand;
 			break;
 		default:
-			System.out.println("Errore in getFrameStand");
+			if (ob instanceof Enemy)
+				textureRegion = enemyStand;
+			else
+				System.out.println("Errore in getFrameStand");
 			break;
 		}
-		if (ob instanceof Enemy)
-			textureRegion = enemyStand;
 		return textureRegion;
 	}
 

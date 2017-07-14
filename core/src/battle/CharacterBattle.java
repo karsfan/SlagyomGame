@@ -26,6 +26,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		male = player.male;
 		primary_weapon = player.primary_weapon;
 		this.health = player.health;
+		System.out.println(health);
 		this.x = 100;
 		this.y = GameConfig.mainY_Battle;
 		if (player.primary_weapon.getType() == Type.Sword)

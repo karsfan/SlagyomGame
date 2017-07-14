@@ -63,7 +63,6 @@ public class InitializerScreen implements Screen {
 		// Create buttons
 		// Add listeners to buttons
 		defaultLevelButton.addListener(new ClickListener() {
-			@SuppressWarnings("static-access")
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.loadingMusic.pause();
@@ -80,17 +79,6 @@ public class InitializerScreen implements Screen {
 		chooseLevelButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				/*JFrame f = new JFrame();
-				JFileChooser fc = new JFileChooser();
-				String path = null;
-				f.setVisible(true);
-				f.toFront();
-				f.setVisible(false);
-				int res = fc.showSaveDialog(f);
-				f.dispose();
-				if (res == JFileChooser.APPROVE_OPTION) {
-					path = (fc.getSelectedFile().getAbsolutePath());
-				}*/
 				final TextField nameAI = new TextField("", MenuScreen.skin);
 				nameAI.setMessageText("Name");
 				nameAI.setFocusTraversal(true);

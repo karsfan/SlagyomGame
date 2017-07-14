@@ -38,13 +38,13 @@ public class Game {
 			System.out.println("Impossibile trovare la classe enemy.Ai." + text);
 		}
 		world = new World(charName, male);
-
 		while (!world.addDynamicObject())
 			;
 		while (!world.addItems())
 			;
+		world.player.x = 500;
+		world.player.y = 500;
 		
-		world.player.positionCharacter();
 	}
 
 

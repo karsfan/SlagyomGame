@@ -117,6 +117,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		game = new Game(text, gameSlagyom, charName, male);
 		this.gameSlagyom = gameSlagyom;
+		this.loadingImage = gameSlagyom.loadingImage;
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
 		gamePort.apply();
@@ -134,10 +135,8 @@ public class PlayScreen implements Screen, ControllerListener {
 		gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
 
 		gameSlagyom.batch.begin();
-
 		draw();
 		drawMiniMap();
-
 		gameSlagyom.batch.end();
 		hud.update();
 

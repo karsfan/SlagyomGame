@@ -67,9 +67,9 @@ public class BattleHud {
 		atlasBar = new TextureAtlas("menu/glassy/glassy-ui.atlas");
 		skinBar = new Skin(Gdx.files.internal("menu/glassy/glassy-ui.json"), atlasBar);
 
-		barPlayer = new ProgressBar(0.1f, healthCharacter, 0.1f, false, MenuScreen.skin);
-		barEnemy = new ProgressBar(0.1f, healthEnemy, 0.1f, false, MenuScreen.skin);
-		playerPower = new ProgressBar(this.battle.character.forza, 300, 0.1f, false, MenuScreen.skin);
+		barPlayer = new ProgressBar(0.1f, 300, 0.1f, false, MenuScreen.skin);
+		barEnemy = new ProgressBar(0.1f, 300, 0.1f, false, MenuScreen.skin);
+		playerPower = new ProgressBar(this.battle.character.forza, 150, 0.1f, false, MenuScreen.skin);
 
 		/*
 		 * barPlayer.setBounds(this.viewport.getWorldWidth() / 13,

@@ -110,6 +110,7 @@ public class LoadingImage {
 	public static ImageButton greenPotion;
 	public static ImageButton bomb;
 	public static ImageButton parchment;
+	public static ImageButton parchment2;
 	public static ImageButton spear;
 	public static ImageButton sword;
 	public static ImageButton bow;
@@ -170,6 +171,7 @@ public class LoadingImage {
 		bow = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/bow.png"))));
 		bomb = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/bomb.png"))));
 		parchment = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/parchment.png"))));
+		parchment2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/parchment2.png"))));
 		rightArrow = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/rightArrow.png"))));
 		leftArrow = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/leftArrow.png"))));
@@ -481,7 +483,10 @@ public class LoadingImage {
 				}
 					
 			} else if (((CharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
-				animation = battleCharacterAnimationSwordLev1;
+				if (((CharacterBattle) ob).male) 
+					animation = battleCharacterAnimationSwordLev1;
+				else
+					animation = battleFemaleCharacterAnimationSwordLev1;
 			}
 			break;
 		case "NetworkCharacterBattle":

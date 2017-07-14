@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import character.Weapon;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
+import gameManager.LoadingMusic;
 import gameManager.MenuControllerListener;
 import gameManager.ScreenConfig;
 import gameManager.ScreenManager.State;
@@ -97,19 +98,20 @@ public class BagScreen implements Screen {
 		use.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				LoadingMusic.selectionSound.play();
 				if (game.screenManager.getPreviousState() == State.BATTLE)
 					if (potionsTable.isVisible()) {
 						if (!game.modalityMultiplayer)
 							Game.world.player.bag.useItem(itemSelected);
 						setTextPotions();
 					}
-				if(weaponsTable.isVisible()){
-					if(Game.world.player.primary_weapon.upgrade(Game.world.player.bag))
-						weapons[0].setText(Game.world.player.primary_weapon.getType().toString()+" "+
-								Game.world.player.primary_weapon.getLevel());
+				if (weaponsTable.isVisible()) {
+					if (Game.world.player.primary_weapon.upgrade(Game.world.player.bag))
+						weapons[0].setText(Game.world.player.primary_weapon.getType().toString() + " "
+								+ Game.world.player.primary_weapon.getLevel());
 				}
 			}
-			
+
 		});
 		delete.addListener(new ClickListener() {
 			@Override
@@ -310,7 +312,7 @@ public class BagScreen implements Screen {
 		// END BOMBS TABLE
 
 		// WEAPON TABLE
-		
+
 		Label weaponsLabel;
 
 		weaponsTable.setVisible(false);
@@ -388,7 +390,7 @@ public class BagScreen implements Screen {
 		parchmentsLabel = new Label("Parchments", MenuScreen.skin);
 		parchments = new TextButton[2];
 		parchments[0] = new TextButton("Parchment lev1  x", MenuScreen.skin);
-		parchments[1] = new TextButton("Parchment lev1  x", MenuScreen.skin);
+		parchments[1] = new TextButton("Parchment lev2  x", MenuScreen.skin);
 		setTextParchment();
 
 		parchments[0].addListener(new ClickListener() {
@@ -402,7 +404,7 @@ public class BagScreen implements Screen {
 		parchments[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.parchment);
+				showInfo(LoadingImage.parchment2);
 				itemSelected = new Item(Element.PARCHMENT, Level.SECOND);
 			}
 		});
@@ -476,6 +478,10 @@ public class BagScreen implements Screen {
 	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
+
+		if (Gdx.input.justTouched())
+			LoadingMusic.selectionSound.play();
+
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();

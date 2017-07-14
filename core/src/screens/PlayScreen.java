@@ -14,6 +14,7 @@ import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -289,8 +290,8 @@ public class PlayScreen implements Screen, ControllerListener {
 					// game.character.setState(StateDynamicObject.STANDING);
 			}
 		} catch (InterruptedException e) {
-
 		}
+		
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			hud.showDialog = false;
 			hideDialog();
@@ -298,17 +299,22 @@ public class PlayScreen implements Screen, ControllerListener {
 				//game.world.getThread().start();
 				stop = false;
 			}
-
 		}
 	}
 
 	public float miniMapScale = 7;
 	public float miniMapRadius = (float) 63.5;
 
+<<<<<<< HEAD
 	@SuppressWarnings("static-access")
 	public synchronized void draw() throws InterruptedException {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) game.world.getListTile().listIterator();
 
+=======
+	public synchronized void draw() {
+		ListIterator<StaticObject> it = (ListIterator<StaticObject>) Game.world.getListTile().listIterator();
+		
+>>>>>>> f9a7cb937188b86483025816301e87b63457db8c
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject) {

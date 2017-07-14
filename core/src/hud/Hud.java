@@ -1,11 +1,13 @@
 package hud;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
+import gameManager.LoadingImage;
 import multiplayer.Client;
 import screens.MenuScreen;
 import world.Game;
@@ -73,11 +76,10 @@ public class Hud {
 		table.row(); // nuova colonna
 
 		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/hudBg.png")));
-
+		
 		table.setBackground(hudBG);
 		textTable.setX(854 - 236);
 		textTable.setY(15);
-
 		stage.addActor(table);
 		stage.addActor(textTable);
 	}
@@ -92,7 +94,6 @@ public class Hud {
 			villageLabel.setText(String.format(Client.networkWorld.map.getNameVillage()));
 			coinsLabel.setText(String.format("%03d", Client.networkWorld.player.coins));
 		}
-
 	}
 
 

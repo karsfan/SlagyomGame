@@ -68,6 +68,7 @@ public class ScreenManager {
 			gameSlagyom.setScreen(getPlayScreen());
 
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC
+			LoadingMusic.battleMusic.pause();
 			menuScreen.menuMusic.stop();
 			
 
@@ -97,7 +98,13 @@ public class ScreenManager {
 			// battlescreen = new BattleScreen(gameSlagyom,
 			// it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
+<<<<<<< HEAD
 			gameSlagyom.loadingMusic.backgroundSound.pause();
+=======
+			LoadingMusic.backgroundSound.pause();
+			LoadingMusic.battleMusic.setVolume((float) 0.07);
+			LoadingMusic.battleMusic.play();
+>>>>>>> f9a7cb937188b86483025816301e87b63457db8c
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
 			gameSlagyom.loadingMusic.pause();

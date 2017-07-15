@@ -103,7 +103,6 @@ public class Hud {
 
 	}
 
-
 	@SuppressWarnings("static-access")
 	public void update() {
 		if (!gameSlagyom.modalityMultiplayer) {
@@ -122,17 +121,6 @@ public class Hud {
 
 	public void updateNight(float delta) {
 		stage.act(delta);
-		// if (timer <= dayTime) {
-		// timer += delta;
-		// isNight = false;
-		// splash.addAction(Actions.alpha(0f));
-		// splash.addAction(Actions.fadeIn(5f));
-		// }
-		//
-		// if (timer >= dayTime) {
-		// isNight = true;
-		// splash.addAction(Actions.fadeOut(5f)); //120
-		// }
 
 		if (timer <= dayTime) {
 			timer += delta;
@@ -142,18 +130,15 @@ public class Hud {
 			} else {
 				splash.addAction(Actions.fadeOut(dayTime)); // 120
 			}
-		}
-		else {
+		} else {
 			isNight = !isNight;
 			timer = 0;
 		}
-			
-		System.out.println(timer);
 	}
 
 	public void drawAnimation(float x, float y) {
-		coin.setPosition(x, y);
-		coin.addAction(Actions.moveTo(1530, 1037, 0.5f));
+//		coin.setPosition(x, y);
+//		coin.addAction(Actions.moveTo(1530, 1037, 300f));
 	}
 
 }

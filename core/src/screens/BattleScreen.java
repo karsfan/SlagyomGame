@@ -201,12 +201,12 @@ public class BattleScreen implements Screen {
 		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			battle.character.caricaBomba(dt);
-			battle.character.bomba = true;
+			battle.character.lanciaBomba = true;
 		} else {
-			if (battle.character.bomba) {
+			if (battle.character.lanciaBomba) {
 				battle.character.lancia();
 				System.out.println("lancia");
-				battle.character.bomba = false;
+				battle.character.lanciaBomba = false;
 				battle.character.forza = 50;
 			}
 

@@ -236,7 +236,6 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	public void lancia() {
 		Iterator<Bomb> itBomb = bag.bombe.iterator();
-		System.out.println(bag.bombe.iterator());
 		while (itBomb.hasNext()) {
 			Bomb bomba = (Bomb) itBomb.next();
 			if (!bomba.lanciata) {

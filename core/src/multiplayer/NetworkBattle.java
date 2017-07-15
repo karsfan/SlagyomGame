@@ -24,7 +24,8 @@ public class NetworkBattle extends Battle {
 		this.otherPlayer = otherPlayer;
 		character = new NetworkCharacterBattle(player);
 		enemy = new NetworkCharacterBattle(otherPlayer);
-		enemy.x = 700;
+		character.x = 0;
+		enemy.x = 1320;
 		System.out.println(character.health);
 		System.out.println(enemy.health);
 		enemy.currentState = StateDynamicObject.RUNNINGLEFT;

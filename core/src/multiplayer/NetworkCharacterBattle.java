@@ -5,6 +5,7 @@ import java.util.Iterator;
 import battle.CharacterBattle;
 import character.Bomb;
 import character.Weapon;
+import character.Weapon.Level;
 import character.Weapon.Type;
 import world.GameConfig;
 
@@ -14,12 +15,41 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	public int IDOtherPlayer;
 	public boolean fightingLeft = false;
 	public boolean fightingRight = false;
-
+	public Bomb bomb;
+	public boolean bombaLanciata = false;
 	public NetworkCharacterBattle(NetworkPlayer player) {
 		super(player);
 		this.player = player.player;
 		this.ID = player.ID;
 		this.IDOtherPlayer = player.IDOtherPlayer;
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomba));
 	}
 
 	@Override
@@ -169,5 +199,20 @@ public class NetworkCharacterBattle extends CharacterBattle {
 			setStateTimer(getStateTimer() + dt);
 		else
 			setStateTimer(0);
+	}
+	public void lancia() {
+		Iterator<Bomb> itBomb = bag.bombe.iterator();
+		while (itBomb.hasNext()) {
+			Bomb bomba = (Bomb) itBomb.next();
+			if (!bomba.lanciata) {
+				bomba.lanciata = true;
+				bomb = bomba;
+				bomba.lancia(forza, this);
+				bombaLanciata = true;
+				bomba.id = String.valueOf(ID);
+				System.out.println(bomba.lanciata);
+				break;
+			}
+		}
 	}
 }

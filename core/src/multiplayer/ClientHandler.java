@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import character.Bomb;
 import character.DynamicObjects.StateDynamicObject;
+import character.Weapon.Level;
+import character.Weapon.Type;
 import staticObjects.Item;
 import staticObjects.StaticObject;
 import world.GameConfig;
@@ -164,9 +167,20 @@ public class ClientHandler extends Thread {
 							}
 						}
 
-					} else if (message.action == 9) {
-						if (client.networkWorld.player.ID == message.IDreceiver) {
-							client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
+					} else if(message.action == 3){
+						if(client.networkWorld.player.ID == message.IDreceiver){
+							Bomb bomb = null;
+							if(message.x == 1)
+								bomb = new Bomb(Level.lev1, Type.Bomba);
+							else if(message.x == 2)
+								bomb = new Bomb(Level.lev1, Type.Bomba);
+							else if(message.x == 3)
+								bomb = new Bomb(Level.lev1, Type.Bomba);
+							((NetworkCharacterBattle) client.networkWorld.battle.enemy).bag.add(bomb);
+							System.out.println(message.y);
+							System.out.println(client.networkWorld.battle.enemy.x - client.networkWorld.battle.character.x);
+							((NetworkCharacterBattle) client.networkWorld.battle.enemy).forza = (int) message.y;
+							((NetworkCharacterBattle) client.networkWorld.battle.enemy).lancia();
 						}
 					}
 				}

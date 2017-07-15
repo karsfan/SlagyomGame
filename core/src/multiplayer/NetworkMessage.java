@@ -54,6 +54,15 @@ public class NetworkMessage {
 		case "JUMPING":
 			currentState = StateDynamicObject.JUMPING;
 			break;
+		case "lev1":
+			x = 1;
+			break;
+		case "lev2":
+			x = 2;
+			break;
+		case "lev3":
+			x = 3;
+			break;
 		default:
 			//System.out.println("Errore codifica currentState nel messaggio. CurrentState: "+currentStateString);
 			break;

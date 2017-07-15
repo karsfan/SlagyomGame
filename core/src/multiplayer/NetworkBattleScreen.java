@@ -56,8 +56,8 @@ public class NetworkBattleScreen extends BattleScreen {
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.lanciata == true) {
-				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching), searching.getMainX(), searching.getMainY(),
-						searching.getWidth() + 10, searching.getHeight() + 10);
+				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching), searching.getMainX(),
+						searching.getMainY(), searching.getWidth() + 10, searching.getHeight() + 10);
 			}
 		}
 		Iterator<Bomb> bombIterator1 = null;
@@ -65,7 +65,7 @@ public class NetworkBattleScreen extends BattleScreen {
 			bombIterator1 = ((NetworkCharacterBattle) tmp1).bag.bombe.iterator();
 		else
 			bombIterator1 = ((NetworkEnemy) tmp1).getBombe().iterator();
-		
+
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
 			if (searching1.lanciata == true) {
@@ -81,7 +81,7 @@ public class NetworkBattleScreen extends BattleScreen {
 
 	@Override
 	public void update(float dt) {
-		//System.out.println("Update NetBattleScreen");
+		// System.out.println("Update NetBattleScreen");
 		if (!youWin && !youLose) {
 			handleInput(dt);
 			hud.update(dt);
@@ -172,12 +172,20 @@ public class NetworkBattleScreen extends BattleScreen {
 		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			battle.character.caricaBomba(dt);
-			battle.character.bomba = true;
+			battle.character.lanciaBomba = true;
 		} else {
-			if (battle.character.bomba) {
+			if (battle.character.lanciaBomba) {
 				battle.character.lancia();
+				if (((NetworkCharacterBattle) battle.character).bombaLanciata) {
+					client.writer.println(3 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + battle.character.getX()+ " "
+							+ battle.character.forza + " " + ((NetworkCharacterBattle) battle.character).bomb.level + ";"
+							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.flush();
+					System.out.println(client.networkWorld.battle.enemy.x - client.networkWorld.battle.character.x);
+				}
+				((NetworkCharacterBattle)battle.character).bombaLanciata = false;
 				System.out.println("lancia");
-				battle.character.bomba = false;
+				battle.character.lanciaBomba = false;
 				battle.character.forza = 50;
 			}
 			if (Gdx.input.isKeyJustPressed(Keys.S))

@@ -14,7 +14,7 @@ public class Fighting extends DynamicObjects{
 	public float velocityY;
 	public float velocityX;
 	public int forza=50;
-	public boolean bomba = false;
+	public boolean lanciaBomba = false;
 	public boolean left = false;
 	public boolean right = true;
 	public int health;

@@ -183,14 +183,12 @@ public class NetworkBattleScreen extends BattleScreen {
 					client.writer.flush();
 					System.out.println(client.networkWorld.battle.enemy.x - client.networkWorld.battle.character.x);
 				}
-				((NetworkCharacterBattle)battle.character).bombaLanciata = false;
 				System.out.println("lancia");
 				battle.character.lanciaBomba = false;
 				battle.character.forza = 50;
+				((NetworkCharacterBattle)battle.character).bombaLanciata = false;
 			}
-			if (Gdx.input.isKeyJustPressed(Keys.S))
-				battle.character.setState(StateDynamicObject.DEFENDING, dt);
-			if (Gdx.input.isKeyJustPressed(Keys.UP)) {
+			else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				battle.character.jump(dt);
 				client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
 						+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.JUMPING + ";"

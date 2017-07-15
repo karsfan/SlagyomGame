@@ -17,8 +17,8 @@ public class Client {
 	GameSlagyom gameSlagyom;
 	boolean initialize = false;
 	public boolean go = false;
-	//public boolean canModify = true;
-
+	public boolean canModify = false;
+	//public boolean canDraw = true;
 	public Client(String name, GameSlagyom gameSlagyom) {
 		try {
 			socket = new Socket("192.168.1.69", 5555);

@@ -70,7 +70,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		x = rand;
 		rand = (int) (Math.random() * GameConfig.HEIGHT);
 		y = rand;
-		if (collide(this)) {
+		if (collide()) {
 			positionCharacter();
 		}
 		return true;
@@ -142,7 +142,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		if (x < GameConfig.WIDTH - width / 2) {
 			float velocityX = velocity;
 			x += (velocityX * dt);
-			if (collide(this))
+			if (collide())
 				x -= (velocityX * dt);
 		}
 		setState(StateDynamicObject.RUNNINGRIGHT);
@@ -153,7 +153,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		if (x > 5) {
 			float velocityX = velocity;
 			x -= (velocityX * dt);
-			if (collide(this))
+			if (collide())
 				x += (velocityX * dt);
 
 		}
@@ -165,7 +165,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
 			y += (velocity * dt);
 			x += (velocity * dt) / 2;
-			if (collide(this)) {
+			if (collide()) {
 				y -= (velocity * dt);
 				x -= (velocity * dt) / 2;
 
@@ -179,7 +179,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		if (y < GameConfig.HEIGHT - height - 5 && x > 5) {
 			y += (velocity * dt);
 			x -= (velocity * dt) / 2;
-			if (collide(this)) {
+			if (collide()) {
 				y -= (velocity * dt);
 				x += (velocity * dt) / 2;
 
@@ -193,7 +193,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		if (y > 0 - height - 5 && x > 5) {
 			y -= (velocity * dt);
 			x -= (velocity * dt) / 2;
-			if (collide(this)) {
+			if (collide()) {
 				y += (velocity * dt);
 				x += (velocity * dt) / 2;
 
@@ -207,7 +207,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		if (y > 0 && x < GameConfig.WIDTH - width / 2) {
 			y -= (velocity * dt);
 			x += (velocity * dt) / 2;
-			if (collide(this)) {
+			if (collide()) {
 				y += (velocity * dt);
 				x -= (velocity * dt) / 2;
 
@@ -222,7 +222,7 @@ public class Player extends DynamicObjects implements ICollidable {
 			float velocityY = velocity;
 
 			y += (velocityY * dt);
-			if (collide(this)) {
+			if (collide()) {
 				y -= (velocityY * dt);
 			}
 		}
@@ -234,7 +234,7 @@ public class Player extends DynamicObjects implements ICollidable {
 			float velocityY = velocity;
 
 			y -= (velocityY * dt);
-			if (collide(this))
+			if (collide())
 				y += (velocityY * dt);
 		}
 		setState(StateDynamicObject.RUNNINGDOWN);
@@ -273,7 +273,16 @@ public class Player extends DynamicObjects implements ICollidable {
 	}
 
 	@Override
-	public synchronized boolean collide(Object e) {
+	public synchronized boolean collide(Object o) {
+		return false;
+	}
+
+	public void setVelocity(float velocity) {
+		this.velocity = velocity;
+	}
+
+	@Override
+	public boolean collide() {
 		Iterator<StaticObject> it = Game.world.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
@@ -340,14 +349,10 @@ public class Player extends DynamicObjects implements ICollidable {
 						if (((Item) ob).getElement() == Element.COIN) {
 							coins++;
 							collideCoin = true;
-<<<<<<< HEAD
 							PlayScreen.hud.drawAnimation (((Item) ob).getX(), ((Item) ob).getY());
 							System.out.println(((Item) ob).getX() + " " + ((Item) ob).getY() );
 						}
 						else{
-=======
-						} else {
->>>>>>> a5c6906b49250b9bf8994ae1273d37baca29a3d3
 							bag.add(ob);
 							collideItem = true;
 						}
@@ -361,16 +366,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		collideGym = false;
 		collideShop = false;
 		collideItem = false;
-		return false;
-	}
-
-	public void setVelocity(float velocity) {
-		this.velocity = velocity;
-	}
-
-	@Override
-	public boolean collide() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

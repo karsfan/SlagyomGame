@@ -85,7 +85,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 		x = rand;
 		rand = (int) (Math.random() * GameConfig.HEIGHT);
 		y = rand;
-		if (collide(this))
+		if (collide())
 			positionMan();
 		return true;
 	}
@@ -110,8 +110,8 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 		if (x + velocity * dt < GameConfig.WIDTH - width / 2) {
 			x += velocity * dt;
-			if (collide(this)) {
-				// collision = true;
+			if (collide()) {
+				collision = true;
 				x -= velocity * dt;
 			}
 		} else {
@@ -147,7 +147,8 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 		if (x - velocity * dt > 5) {
 			x -= velocity * dt;
-			if (collide(this)) {
+			if (collide()) {
+				collision = true;
 				x += velocity * dt;
 			}
 		} else {
@@ -183,7 +184,8 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 		if (y + velocity * dt < GameConfig.HEIGHT - height - 5) {
 			y += velocity * dt;
-			if (collide(this)) {
+			if (collide()) {
+				collision = true;
 				y -= velocity * dt;
 			}
 		} else {
@@ -220,9 +222,9 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 		if (y - velocity * dt > 0) {
 			y -= velocity * dt;
-			if (collide(this)) {
+			if (collide()) {
 				y += velocity * dt;
-				// collision = true;
+				 collision = true;
 			}
 		} else {
 
@@ -284,39 +286,6 @@ public class Woman extends DynamicObjects implements ICollidable {
 		return width;
 	}
 
-	@Override
-	public boolean collide(Object e) {
-
-		Iterator<StaticObject> it = Game.world.getListTile().iterator();
-		while (it.hasNext()) {
-			Object ob = (Object) it.next();
-			if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)
-				if (((StaticObject) ob).collide(this)) {
-					collision = true;
-					return true;
-				}
-		}
-
-		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();
-		while (it1.hasNext()) {
-			Object ob = (Object) it1.next();
-			if (ob instanceof DynamicObjects && ob != this) {
-				if (!((x > ((DynamicObjects) ob).getX() + ((DynamicObjects) ob).getWidth() / 2
-						|| ((DynamicObjects) ob).getX() > x + width / 2)
-						|| (y > ((DynamicObjects) ob).getY() + ((DynamicObjects) ob).getHeight() / 2
-								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
-					if (ob instanceof Player)
-						collisionWithCharacter = true;
-					else
-						collision = true;
-					return true;
-				}
-			}
-		}
-
-		collision = false;
-		return false;
-	}
 
 	public void changeDirection(StateDynamicObject state) {
 		int rand = (int) (Math.random() * 4);
@@ -376,7 +345,35 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 	@Override
 	public boolean collide() {
-		// TODO Auto-generated method stub
+		Iterator<StaticObject> it = Game.world.getListTile().iterator();
+		while (it.hasNext()) {
+			Object ob = (Object) it.next();
+			if (((StaticObject) ob).getElement() != Element.GROUND && ((StaticObject) ob).getElement() != Element.ROAD)
+				if (((StaticObject) ob).collide(this)) {
+					collision = true;
+					return true;
+				}
+		}
+
+		Iterator<DynamicObjects> it1 = Game.world.getListDynamicObjects().iterator();
+		while (it1.hasNext()) {
+			Object ob = (Object) it1.next();
+			if (ob instanceof DynamicObjects && ob != this) {
+				if (!((x > ((DynamicObjects) ob).getX() + ((DynamicObjects) ob).getWidth() / 2
+						|| ((DynamicObjects) ob).getX() > x + width / 2)
+						|| (y > ((DynamicObjects) ob).getY() + ((DynamicObjects) ob).getHeight() / 2
+								|| ((DynamicObjects) ob).getY() > y + height / 2))) {
+					if (ob instanceof Player) {
+						collisionWithCharacter = true;
+					} else {
+						collision = true;
+					}
+					return true;
+				}
+			}
+		}
+		collisionWithCharacter = false;
+		collision = false;
 		return false;
 	}
 

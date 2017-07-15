@@ -143,7 +143,7 @@ public class Item extends StaticObject {
 			case MEDIUM:
 				this.level = Level.SECOND;
 				break;
-			
+
 			default:
 				break;
 			}
@@ -199,7 +199,7 @@ public class Item extends StaticObject {
 		shape.x = r;
 		r = rand.nextInt((int) GameConfig.HEIGHT);
 		shape.y = r;
-		if (collide(this))
+		if (collide())
 			positionItem();
 	}
 
@@ -280,13 +280,24 @@ public class Item extends StaticObject {
 
 	@Override
 	public boolean collide(Object e) {
+		if (e instanceof Player) {
+			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
+					|| ((Player) e).getX() > shape.x + shape.width)
+					|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight()
+							|| ((Player) e).getY() > shape.y + shape.height))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean collide() {
 		if (!GameSlagyom.modalityMultiplayer) {
 			if (!Game.world.getListTile().isEmpty()) {
-
 				Iterator<StaticObject> it = Game.world.getListTile().iterator();
 				while (it.hasNext()) {
 					Object ob = (Object) it.next();
-
 					if (((StaticObject) ob).getElement() != Element.GROUND
 							&& ((StaticObject) ob).getElement() != Element.ROAD)
 						if (!((shape.x > ((StaticObject) ob).getX() + ((StaticObject) ob).getWidth()
@@ -295,22 +306,10 @@ public class Item extends StaticObject {
 										|| ((StaticObject) ob).getY() > shape.y + shape.height))) {
 							return true;
 						}
-
 				}
 			}
-
-			if (e instanceof Player) {
-				if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
-						|| ((Player) e).getX() > shape.x + shape.width)
-						|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight()
-								|| ((Player) e).getY() > shape.y + shape.height))) {
-					return true;
-				}
-			}
-		}
-		else{
+		} else {
 			if (!Client.networkWorld.getListTile().isEmpty()) {
-
 				Iterator<StaticObject> it = Client.networkWorld.getListTile().iterator();
 				while (it.hasNext()) {
 					Object ob = (Object) it.next();
@@ -323,25 +322,11 @@ public class Item extends StaticObject {
 										|| ((StaticObject) ob).getY() > shape.y + shape.height))) {
 							return true;
 						}
-					
 				}
-				
-			}
-			if (e instanceof Player) {
-				if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
-						|| ((Player) e).getX() > shape.x + shape.width)
-						|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight()
-								|| ((Player) e).getY() > shape.y + shape.height))) {
-					return true;
-				}
+
 			}
 		}
-		return false;
-	}
 
-	@Override
-	public boolean collide() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

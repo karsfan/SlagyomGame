@@ -30,6 +30,7 @@ public class Player extends DynamicObjects implements ICollidable {
 	public boolean male;
 	public boolean collideCoin = false;
 	public boolean collideItem = false;
+	
 	public Player(String name, boolean male) {
 		super();
 		this.name = name;
@@ -38,9 +39,7 @@ public class Player extends DynamicObjects implements ICollidable {
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
 		coins = 25;
-		// while (!positionCharacter())
-		// ;
-
+		
 		velocity = 100;
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
@@ -56,8 +55,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
 		coins = 0;
-		// while (!positionCharacter())
-		// ;
 
 		velocity = 100;
 
@@ -340,15 +337,20 @@ public class Player extends DynamicObjects implements ICollidable {
 				Object ob = (Object) it2.next();
 				if (ob instanceof Item) {
 					if (((Item) ob).collide(this)) {
-						if (((Item) ob).getElement() == Element.COIN){
+						if (((Item) ob).getElement() == Element.COIN) {
 							coins++;
 							collideCoin = true;
+<<<<<<< HEAD
 							PlayScreen.hud.drawAnimation (((Item) ob).getX(), ((Item) ob).getY());
 							System.out.println(((Item) ob).getX() + " " + ((Item) ob).getY() );
 						}
 						else{
+=======
+						} else {
+>>>>>>> a5c6906b49250b9bf8994ae1273d37baca29a3d3
 							bag.add(ob);
-							collideItem = true;}
+							collideItem = true;
+						}
 						((Item) ob).picked = true;
 						return false;
 					}

@@ -141,21 +141,6 @@ public class StaticObject implements ICollidable {
 				return true;
 			}
 		}
-		/*if (e instanceof Player) {
-			if (!((shape.x > ((Player) e).getX() + ((Player) e).getWidth() / 2
-					|| ((Player) e).getX() > shape.x + shape.width)
-					|| (shape.y > ((Player) e).getY() + ((Player) e).getHeight() / 2
-							|| ((Player) e).getY() > shape.y + shape.height))) {
-				return true;
-			}
-		}
-		if (e instanceof Man) {
-			if (!((shape.x > ((Man) e).getX() + ((Man) e).getWidth() / 2 || ((Man) e).getX() > shape.x + shape.width)
-					|| (shape.y > ((Man) e).getY() + ((Man) e).getHeight() / 2
-							|| ((Man) e).getY() > shape.y + shape.height)))
-				return true;
-		}*/
-
 		return false;
 
 	}

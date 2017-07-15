@@ -14,7 +14,6 @@ import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
-import world.Game;
 import world.GameConfig;
 
 public class NetworkPlayer extends Player {
@@ -176,6 +175,7 @@ public class NetworkPlayer extends Player {
 			Object ob = (Object) it2.next();
 			if (ob instanceof Item) {
 				if (((Item) ob).collide(this)) {
+					
 					bag.add(ob);
 					collisionWithObject = true;
 					itemPicked = (Item) ob;

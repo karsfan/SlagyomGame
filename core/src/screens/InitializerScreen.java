@@ -30,10 +30,6 @@ public class InitializerScreen implements Screen {
 
 	private Texture background;
 	private Sprite backgroundSprite;
-//	private BitmapFont bf_loadProgress;
-//	private long progress = 0;
-//	private long startTime = 0;
-//	private ShapeRenderer mShapeRenderer;
 	final Label name;
 	final TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
 	final TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);

@@ -21,7 +21,7 @@ public class Client {
 
 	public Client(String name, GameSlagyom gameSlagyom) {
 		try {
-			socket = new Socket("localhost", 5555);
+			socket = new Socket("192.168.1.69", 5555);
 			writer = new PrintWriter(socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();

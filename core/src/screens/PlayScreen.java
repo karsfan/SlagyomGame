@@ -47,7 +47,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	boolean movesgamePad = false;
 	LoadingImage loadingImage;
 	Game game;
-	
+
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -128,10 +128,10 @@ public class PlayScreen implements Screen, ControllerListener {
 	}
 
 	public PlayScreen(GameSlagyom gameSlagyom) {
-		
+
 		this.loadingImage = gameSlagyom.loadingImage;
 		this.gameSlagyom = gameSlagyom;
-		
+
 		gamecam = new OrthographicCamera();
 		gamePort = new ExtendViewport(854, 480, gamecam);
 
@@ -141,6 +141,9 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	}
 
+	boolean loading = true;
+	float loadingTimer = 0;
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -148,41 +151,54 @@ public class PlayScreen implements Screen, ControllerListener {
 		gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
 
 		gameSlagyom.batch.begin();
-		draw();
-		drawMiniMap();
-//		drawLights();
-		gameSlagyom.batch.end();
-		
-		hud.update();
-		hud.stage.draw();
-		hud.updateNight(delta);
-
-		gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
-		gameSlagyom.batch.begin();
-		drawLights();
-		gameSlagyom.batch.end();
-		
-		// TEXT TABLE RENDERING
-		textTimer += delta;
-		if (hud.showDialog) {
-			if (textTimer > 0.08f) {
-				textTimer = 0;
-				if (textIndex < hud.textDialog.length()) {
-					if (textIndex % 25 == 0)
-						hud.textTable.row();
-					if (textIndex % 75 == 0) {
-						hud.textTable.clear();
-						gameSlagyom.loadingMusic.tickSound.play(1.0f);
-					}
-					drawDialog(String.valueOf(hud.textDialog.charAt(textIndex)));
-					textIndex++;
-				}
-			}
+		loadingTimer += delta;
+		if (loading) {
+			gameSlagyom.batch.draw(gameSlagyom.loadingImage.blackBg, gamecam.position.x - gamePort.getWorldWidth() / 2,
+					gamecam.position.y - gamePort.getWorldHeight() / 2);
+			gameSlagyom.batch.draw(gameSlagyom.loadingImage.loadingAnimation.getKeyFrame(loadingTimer, true),
+					854 / 2 + 310, 480 / 2 + 103);
 		}
 
-		if (!hud.showDialog) {
-			hideDialog();
-			textIndex = 0;
+		if (loadingTimer > 3) {
+			draw();
+			drawMiniMap();
+			loading = false;
+		}
+		// drawLights();
+		gameSlagyom.batch.end();
+
+		if (!loading) {
+			hud.update();
+			hud.stage.draw();
+			hud.updateNight(delta);
+
+			gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
+			gameSlagyom.batch.begin();
+			drawLights();
+			gameSlagyom.batch.end();
+
+			// TEXT TABLE RENDERING
+			textTimer += delta;
+			if (hud.showDialog) {
+				if (textTimer > 0.08f) {
+					textTimer = 0;
+					if (textIndex < hud.textDialog.length()) {
+						if (textIndex % 25 == 0)
+							hud.textTable.row();
+						if (textIndex % 75 == 0) {
+							hud.textTable.clear();
+							gameSlagyom.loadingMusic.tickSound.play(1.0f);
+						}
+						drawDialog(String.valueOf(hud.textDialog.charAt(textIndex)));
+						textIndex++;
+					}
+				}
+			}
+
+			if (!hud.showDialog) {
+				hideDialog();
+				textIndex = 0;
+			}
 		}
 		// END TEXT TABLE RENDERING
 		update(delta);
@@ -329,11 +345,11 @@ public class PlayScreen implements Screen, ControllerListener {
 				gameSlagyom.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
-				if (((StaticObject) ob).getElement() == Element.LAMP ||((StaticObject) ob).getElement() == Element.LIGHTLAMP )
+				if (((StaticObject) ob).getElement() == Element.LAMP
+						|| ((StaticObject) ob).getElement() == Element.LIGHTLAMP)
 					if (hud.timer >= (hud.dayTime * 3) / 5 && !hud.isNight) {
 						((StaticObject) ob).setElement(Element.LIGHTLAMP);
-					}
-					else
+					} else
 						((StaticObject) ob).setElement(Element.LAMP);
 				// if (((StaticObject) ob).getElement() == Element.LIGHTLAMP)
 				// gameSlagyom.batch.draw(loadingImage.lightImage, (float)
@@ -427,12 +443,10 @@ public class PlayScreen implements Screen, ControllerListener {
 			Object ob = (Object) it.next();
 			if (((StaticObject) ob).getElement() == Element.LIGHTLAMP && hud.timer >= (hud.dayTime * 3) / 5) {
 				gameSlagyom.batch.draw(loadingImage.lightImage, ((StaticObject) ob).getX() - 96,
-						((StaticObject) ob).getY() - 54, 192, 192);		
+						((StaticObject) ob).getY() - 54, 192, 192);
 			}
 		}
 	}
-	
-	
 
 	@SuppressWarnings("static-access")
 	@Override

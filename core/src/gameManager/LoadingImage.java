@@ -28,6 +28,7 @@ import staticObjects.StaticObject.Element;
 public class LoadingImage {
 	public Texture texture;
 	public static Texture title;
+	public static Texture blackBg;
 	private static Texture homeImage;
 	private static Texture templeImage;
 	private static Texture threeImage;
@@ -105,6 +106,15 @@ public class LoadingImage {
 
 	// private static TextureRegion woman3Stand;
 	public Animation<TextureRegion>[] woman3Animation;
+	
+	public static Animation<TextureRegion> loadingAnimation;
+	public void loadLoadingTexture() {
+		Array<TextureRegion> frames = new Array<TextureRegion>();
+		for (int i = 0; i < 14; i++) {
+			frames.add(new TextureRegion(new Texture("res/loadingAnimation/" + String.valueOf(i+1)+".png")));
+			loadingAnimation = new Animation <TextureRegion> (0.2f, frames);
+		}
+	}
 
 	// BAG IMAGE BUTTONS
 	public static ImageButton bluePotion;
@@ -129,6 +139,7 @@ public class LoadingImage {
 	public LoadingImage() {		
 		// TILES IMAGES
 		title = new Texture("res/title.png");
+		blackBg = new Texture("res/blackBg.png");
 		homeImage = new Texture("res/home.png");
 		templeImage = new Texture("res/bigHome.png");
 		threeImage = new Texture("res/three.png");
@@ -241,6 +252,8 @@ public class LoadingImage {
 
 		texture = new Texture("Enemy/spear.png");
 		createBattleFrame(texture, enemyAnimation, enemyStand);
+		
+		loadLoadingTexture();
 
 	}
 

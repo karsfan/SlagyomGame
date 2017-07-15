@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
+import gameManager.LoadingImage;
 
 
 public class MenuScreen implements Screen {
@@ -69,7 +70,7 @@ public class MenuScreen implements Screen {
 		mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
-
+		
 		// Create buttons
 		final TextButton playButton = new TextButton("New Game", skin);
 		final TextButton continueButton = new TextButton("Continue game", skin);
@@ -165,11 +166,12 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-
+		
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
+	
 		game.batch.draw(titleBackground, 0, 310);
 		game.batch.end();
 

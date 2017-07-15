@@ -1,6 +1,7 @@
 package gameManager;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -26,7 +27,6 @@ import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
 
 public class LoadingImage {
-
 	public Texture texture;
 	public static Texture title;
 	private static Texture homeImage;
@@ -45,7 +45,7 @@ public class LoadingImage {
 	private static Texture forest1Image;
 	private static Texture forest2Image;
 	private static Texture tableImage;
-	private static Texture coinImage;
+	public static Texture coinImage;
 	private static Texture parchment1Image;
 	private static Texture parchment2Image;
 	private static Texture battleBackground;
@@ -124,7 +124,7 @@ public class LoadingImage {
 	// AUDIO & MUSIC
 
 	@SuppressWarnings("unchecked")
-	public LoadingImage() {
+	public LoadingImage() {		
 		// TILES IMAGES
 		title = new Texture("res/title.png");
 		homeImage = new Texture("res/home.png");
@@ -148,7 +148,7 @@ public class LoadingImage {
 		youWinImage = new Texture("res/youWin.png");
 		youLoseImage = new Texture("res/youLose.png");
 		dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
-		
+
 		// WORLD ITEM IMAGES
 		coinImage = new Texture("res/coin.png");
 		bluPotionImage = new Texture("res/bluePotion.png");
@@ -159,6 +159,7 @@ public class LoadingImage {
 		pointer = new Texture("res/pointer.png");
 		miniMap = new Texture("res/miniMap.png");
 		miniMapPointer = new Texture("res/miniMapPointer.png");
+		
 
 		// BAG AND SHOP ITEM IMAGES
 		bluePotion = new ImageButton(

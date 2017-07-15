@@ -343,6 +343,8 @@ public class Player extends DynamicObjects implements ICollidable {
 						if (((Item) ob).getElement() == Element.COIN){
 							coins++;
 							collideCoin = true;
+							PlayScreen.hud.drawAnimation (((Item) ob).getX(), ((Item) ob).getY());
+							System.out.println(((Item) ob).getX() + " " + ((Item) ob).getY() );
 						}
 						else{
 							bag.add(ob);

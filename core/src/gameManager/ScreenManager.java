@@ -64,14 +64,13 @@ public class ScreenManager {
 			Gdx.input.setInputProcessor(menuScreen.stage);
 
 		} else if (currentState == State.PLAYING) {
-			gameSlagyom.loadingMusic.pause();
+//			gameSlagyom.loadingMusic.pause();
+			gameSlagyom.loadingMusic.backgroundSound.loop(100f);
 			gameSlagyom.setScreen(getPlayScreen());
 
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC
 			gameSlagyom.loadingMusic.battleMusic.pause();
 			menuScreen.menuMusic.stop();
-			
-
 			//Game.world.semaphore.release();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.MULTIPLAYERMENU) {

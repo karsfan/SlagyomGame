@@ -13,7 +13,9 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -79,6 +81,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		Controllers.addListener(this);
 		gameslagyom.modalityMultiplayer = false;
 		gameslagyom.loadingMusic.backgroundSound.loop(100);
+
 	}
 
 	/**
@@ -144,9 +147,8 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		gameSlagyom.batch.end();
 		hud.update();
-
 		hud.stage.draw();
-
+		hud.updateNight(delta);
 		// TEXT TABLE RENDERING
 		textTimer += delta;
 		if (hud.showDialog) {

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,6 +26,7 @@ import world.Game;
 import world.GameConfig;
 
 public class Hud {
+	GameSlagyom gameSlagyom;
 
 	public SpriteBatch spriteBatch;
 	public Stage stage;
@@ -41,7 +43,6 @@ public class Hud {
 	public static Skin skinBar;
 	ProgressBar barPlayer;
 	Integer health;
-	GameSlagyom gameSlagyom;
 
 	@SuppressWarnings("static-access")
 	public Hud(GameSlagyom gameSlagyom) {
@@ -77,13 +78,29 @@ public class Hud {
 
 		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/hudBg.png")));
 		
+		
+		splash.setPosition(0, 0);
+		
+		splash.addAction(Actions.alpha(0f));
+		splash.addAction(Actions.fadeIn(120f));
+		
+//		coin.setPosition(15, 15);
+		coin.setScale(2f);
+
+		stage.addActor(splash);
+		stage.addActor(coin);
+		
 		table.setBackground(hudBG);
 		textTable.setX(854 - 236);
 		textTable.setY(15);
 		stage.addActor(table);
 		stage.addActor(textTable);
+		
 	}
-
+	public static Texture night = new Texture("res/night.png");
+	private Image splash = new Image (night);
+	private Image coin = new Image (LoadingImage.coinImage);
+	
 	@SuppressWarnings("static-access")
 	public void update() {
 		if(!gameSlagyom.modalityMultiplayer){
@@ -96,10 +113,18 @@ public class Hud {
 		}
 	}
 
-
 	public void setDialogText(String text) {
 		showDialog = true;
 		textDialog = text;
+	}
+
+	public void updateNight(float delta) {
+		stage.act(delta);
+	}
+
+	public void drawAnimation(float x, float y) {
+		coin.setPosition(x,y);
+		coin.addAction(Actions.moveTo(1530, 1037, 0.5f));		
 	}
 
 }

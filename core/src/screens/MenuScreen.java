@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -99,7 +100,6 @@ public class MenuScreen implements Screen {
 				cont.addListener(new ClickListener(){
 					public void clicked(InputEvent event, float x, float y) {
 						game.loadGame(nameLoad.getText());
-						
 					}
 				});
 
@@ -115,6 +115,7 @@ public class MenuScreen implements Screen {
 				//game.screenManager.swapScreen(State.PLAYING);
 				//PlayScreen.hud.textTable.clear();
 				//PlayScreen.hud.textDialog = "Game loaded!";
+
 			}
 		});
 		multiplayerButton.addListener(new ClickListener() {
@@ -151,6 +152,8 @@ public class MenuScreen implements Screen {
 
 		// Add table to stage
 		stage.addActor(mainTable);
+		stage.addAction(Actions.alpha(0f));
+		stage.addAction(Actions.fadeIn(2f));
 		//Controllers.addListener(new MenuControllerListener(mainTable));
 		
 	}

@@ -21,42 +21,28 @@ import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import hud.Hud;
 import screens.BattleScreen;
+import screens.PlayScreen;
 import staticObjects.Item;
 import staticObjects.StaticObject;
 import world.GameConfig;
 
-public class NetworkPlayScreen implements Screen, ControllerListener {
+public class NetworkPlayScreen extends PlayScreen {
 
-	public OrthographicCamera gamecam;
-	public Viewport gamePort;
-	public GameSlagyom game;
-	public static Hud hud;
-	// private static Drawable noDialog = null;
-	// private static float textTimer;
 	public Client client;
-	public int j = 0;
-	
+
 	private boolean stop = false;
-	public int i = 0;
 
 	PovDirection directionGamepad = null;
 	boolean movesGamePad = false;
 
 	@SuppressWarnings("static-access")
-	public NetworkPlayScreen(GameSlagyom game, String name) {
-		new LoadingImage();
-		this.game = game;
-		this.game.modalityMultiplayer = true;
-		gamecam = new OrthographicCamera();
-		gamePort = new ExtendViewport(854, 480, gamecam);
-
-		gamePort.apply();
-
-		client = new Client(name, game);
-		hud = new Hud(game);
+	public NetworkPlayScreen(GameSlagyom gameSlagyom, String name) {
+		super(gameSlagyom);
+		gameSlagyom.modalityMultiplayer = true;
+		client = new Client(name, gameSlagyom);
+		hud = new Hud(gameSlagyom);
 		gamecam.position.x = client.networkWorld.player.getX();
 		gamecam.position.y = client.networkWorld.player.getY();
-		// Controllers.addListener(this);
 
 	}
 
@@ -64,16 +50,17 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		game.batch.setProjectionMatrix(gamecam.combined);
+		gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
 
-		game.batch.begin();
+		gameSlagyom.batch.begin();
 		if (client.go)
 			draw();
-		game.batch.end();
+		gameSlagyom.batch.end();
 		hud.update();
 
 		hud.stage.draw();
-		update(delta);
+		if (client.go)
+			update(delta);
 
 		// TEXT TABLE RENDERING
 		// textTimer += delta;
@@ -130,7 +117,7 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 			gamecam.position.y = client.networkWorld.player.getY();
 
 		gamecam.update();
-
+		client.networkWorld.update(dt);
 	}
 
 	@SuppressWarnings("static-access")
@@ -139,10 +126,10 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 
 			if (Gdx.input.isKeyPressed(Keys.Z)) {
 				client.networkWorld.player.setVelocity(150f);
-				game.loadingImage.setFrameDurationCharacter(0.1f);
+				gameSlagyom.loadingImage.setFrameDurationCharacter(0.1f);
 			} else {
 				client.networkWorld.player.setVelocity(100);
-				game.loadingImage.setFrameDurationCharacter(0.2f);
+				gameSlagyom.loadingImage.setFrameDurationCharacter(0.2f);
 			}
 			if (Gdx.input.isKeyPressed(Keys.LEFT))
 				client.movesLeft(dt);
@@ -151,13 +138,13 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 			else if (Gdx.input.isKeyPressed(Keys.UP) || (directionGamepad == PovDirection.north && movesGamePad)) {
 				client.movesUp(dt);
 				if (client.networkWorld.player.collideShop) {
-					game.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
+					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
 					client.networkWorld.player.collideShop = false;
 				}
 
 				if (client.networkWorld.player.collideGym) {
-					game.screenManager.battlescreen = new BattleScreen(game, client.networkWorld.battle);
-					game.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
+					gameSlagyom.screenManager.battlescreen = new BattleScreen(gameSlagyom, client.networkWorld.battle);
+					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
 					client.networkWorld.player.collideGym = false;
 				}
 
@@ -174,17 +161,19 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 				gamecam.position.y = client.networkWorld.player.getY();
 
 			} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-				game.loadingMusic.pause();
-				game.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
+				gameSlagyom.loadingMusic.pause();
+				gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 			}
 
 		}
 		if (client.networkWorld.player.readyToFight && !client.networkWorld.player.isFighting) {
-//			System.out.println("Sono " + client.networkWorld.player.ID + "inizio la battaglia contro "
-//					+ client.networkWorld.player.IDOtherPlayer);
+			// System.out.println("Sono " + client.networkWorld.player.ID +
+			// "inizio la battaglia contro "
+			// + client.networkWorld.player.IDOtherPlayer);
 			client.networkWorld.createBattle(client.networkWorld.player.IDOtherPlayer);
-			game.screenManager.networkBattleScreen = new NetworkBattleScreen(game, client.networkWorld.battle, client);
-			game.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYERBATTLE);
+			gameSlagyom.screenManager.battlescreen = new NetworkBattleScreen(gameSlagyom,
+					client.networkWorld.battle, client);
+			gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
 			client.networkWorld.player.readyToFight = false;
 			client.networkWorld.player.isFighting = true;
 		}
@@ -197,34 +186,35 @@ public class NetworkPlayScreen implements Screen, ControllerListener {
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
 			if (ob instanceof StaticObject)
-				game.batch.draw(game.loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
-						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
-						(float) ((StaticObject) ob).shape.getHeight());
+				gameSlagyom.batch.draw(gameSlagyom.loadingImage.getTileImage(ob),
+						(float) ((StaticObject) ob).shape.getX(), (float) ((StaticObject) ob).shape.getY(),
+						(float) ((StaticObject) ob).shape.getWidth(), (float) ((StaticObject) ob).shape.getHeight());
 		}
-		client.canModify = false;
+		// client.canModify = false;
 		ListIterator<Item> it2 = client.networkWorld.getListItems().listIterator();
 		while (it2.hasNext()) {
 			Object ob = (Object) it2.next();
 			if (ob instanceof StaticObject)
-				game.batch.draw(game.loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
-						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
-						(float) ((StaticObject) ob).shape.getHeight());
+				gameSlagyom.batch.draw(gameSlagyom.loadingImage.getTileImage(ob),
+						(float) ((StaticObject) ob).shape.getX(), (float) ((StaticObject) ob).shape.getY(),
+						(float) ((StaticObject) ob).shape.getWidth(), (float) ((StaticObject) ob).shape.getHeight());
 		}
 		Iterator<NetworkPlayer> it1 = client.networkWorld.getOtherPlayersList().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
 			if (ob instanceof NetworkPlayer) {
 
-				game.batch.draw(game.loadingImage.getFrame(ob), ((DynamicObjects) ob).getX(), ((DynamicObjects) ob).getY(),
-						((DynamicObjects) ob).getWidth(), ((DynamicObjects) ob).getHeight());
+				gameSlagyom.batch.draw(gameSlagyom.loadingImage.getFrame(ob), ((DynamicObjects) ob).getX(),
+						((DynamicObjects) ob).getY(), ((DynamicObjects) ob).getWidth(),
+						((DynamicObjects) ob).getHeight());
 			}
 		}
-		client.canModify = true;
-		game.batch.draw(game.loadingImage.getFrame(client.networkWorld.player), client.networkWorld.player.getX(),
-				client.networkWorld.player.getY(), client.networkWorld.player.getWidth(),
-				client.networkWorld.player.getHeight());
-		game.batch.draw(game.loadingImage.pointer, client.networkWorld.player.getX(), client.networkWorld.player.getY() + 30,
-				14, 13);
+		// client.canModify = true;
+		gameSlagyom.batch.draw(gameSlagyom.loadingImage.getFrame(client.networkWorld.player),
+				client.networkWorld.player.getX(), client.networkWorld.player.getY(),
+				client.networkWorld.player.getWidth(), client.networkWorld.player.getHeight());
+		gameSlagyom.batch.draw(gameSlagyom.loadingImage.pointer, client.networkWorld.player.getX(),
+				client.networkWorld.player.getY() + 30, 14, 13);
 	}
 
 	@SuppressWarnings("static-access")

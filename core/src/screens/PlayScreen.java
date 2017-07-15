@@ -47,7 +47,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	boolean movesgamePad = false;
 	LoadingImage loadingImage;
 	Game game;
-
+	
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -125,6 +125,20 @@ public class PlayScreen implements Screen, ControllerListener {
 		hud = new Hud(gameSlagyom);
 		this.gameSlagyom.modalityMultiplayer = false;
 		gameSlagyom.loadingMusic.backgroundSound.loop(100);
+	}
+
+	public PlayScreen(GameSlagyom gameSlagyom) {
+		
+		this.loadingImage = gameSlagyom.loadingImage;
+		this.gameSlagyom = gameSlagyom;
+		
+		gamecam = new OrthographicCamera();
+		gamePort = new ExtendViewport(854, 480, gamecam);
+
+		gamePort.apply();
+
+		Controllers.addListener(this);
+
 	}
 
 	@Override

@@ -81,8 +81,8 @@ public class MultiplayerScreen implements Screen {
 				multiplayerPort = Integer.parseInt(port.getText());
 				server = new Server(multiplayerPort, 3);
 				new ServerThread(server);
-				game.screenManager.networkPlayScreen = new NetworkPlayScreen(game, name.getText());
-				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
+				game.screenManager.playScreen = new NetworkPlayScreen(game, name.getText());
+				game.screenManager.swapScreen(State.PLAYING);
 			}
 		});
 
@@ -93,8 +93,8 @@ public class MultiplayerScreen implements Screen {
 				multiplayerCharName = name.getText();
 				multiplayerAddress = address.getText();
 				multiplayerPort = Integer.parseInt(port.getText());
-				game.screenManager.networkPlayScreen = new NetworkPlayScreen(game, name.getText());
-				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
+				game.screenManager.playScreen = new NetworkPlayScreen(game, name.getText());
+				game.screenManager.swapScreen(State.PLAYING);
 			}
 		});
 

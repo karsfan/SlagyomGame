@@ -23,6 +23,7 @@ public class Fighting extends DynamicObjects{
 	
 	public Fighting()
 	{
+		health = 300;
 		stateTimer = 0;
 		height = 150;
 		width = 120;

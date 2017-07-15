@@ -131,11 +131,11 @@ public class ClientHandler extends Thread {
 							if (itemeliminare.getX() == item.getX() && itemeliminare.getY() == item.getY()
 									&& itemeliminare.getElement() == item.getElement()
 									&& itemeliminare.getLevel() == item.getLevel()) {
-								while (!client.canModify) {
-									System.out.println("Fermo");
-								}
-								client.networkWorld.getListItems().remove(itemeliminare);
-								break;
+//								while (!client.canModify) {
+//									System.out.println("Fermo");
+//								}
+								itemeliminare.picked = true;
+								//client.networkWorld.getListItems().remove(itemeliminare);
 							}
 						}
 					}

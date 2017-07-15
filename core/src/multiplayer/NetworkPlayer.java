@@ -26,7 +26,7 @@ public class NetworkPlayer extends Player {
 	public boolean collideWithOtherPlayer = false;
 	public boolean collisionWithObject = false;
 	public Item itemPicked;
-
+	
 	public NetworkPlayer(String name) {
 		super(name, true);
 		this.name = name;
@@ -71,54 +71,13 @@ public class NetworkPlayer extends Player {
 
 	}
 
-	public void movesRight(float dt) {
-		if (x < GameConfig.WIDTH - width / 2) {
-			float velocityX = velocity;
-			x += (int) (velocityX * dt);
-			if (collide(this))
-				x -= (int) (velocityX * dt);
-		}
-		setState(StateDynamicObject.RUNNINGRIGHT);
-	}
 
-	public void movesLeft(float dt) {
-
-		if (x > 5) {
-			float velocityX = velocity;
-			x -= (int) (velocityX * dt);
-			if (collide(this))
-				x += (int) (velocityX * dt);
-
-		}
-		setState(StateDynamicObject.RUNNINGLEFT);
-	}
-
-	public void movesUp(float dt) {
-
-		if (y < GameConfig.HEIGHT - height - 5) {
-			float velocityY = velocity;
-
-			y += (int) (velocityY * dt);
-			if (collide(this)) {
-				y -= (int) (velocityY * dt);
-			}
-		}
-		setState(StateDynamicObject.RUNNINGUP);
-	}
-
-	public void movesDown(float dt) {
-		if (y > 0) {
-			float velocityY = velocity;
-
-			y -= (int) (velocityY * dt);
-			if (collide(this))
-				y += (int) (velocityY * dt);
-		}
-		setState(StateDynamicObject.RUNNINGDOWN);
-	}
 
 	@Override
 	public synchronized boolean collide(Object e) {
+		return false;
+	}
+	public boolean collide(){
 		Iterator<StaticObject> it = Client.networkWorld.getListTile().iterator();
 		while (it.hasNext()) {
 			Object ob = (Object) it.next();
@@ -175,7 +134,6 @@ public class NetworkPlayer extends Player {
 			Object ob = (Object) it2.next();
 			if (ob instanceof Item) {
 				if (((Item) ob).collide(this)) {
-					
 					bag.add(ob);
 					collisionWithObject = true;
 					itemPicked = (Item) ob;

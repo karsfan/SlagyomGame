@@ -44,7 +44,7 @@ public class Server {
 				serverHandler.writer.println(i);
 				serverHandler.writer.flush();
 			}
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 2250; i++) {
 			Item item = new Item();
 			for (ServerHandler serverHandler : connected) {
 				if (item.getElement() == Element.POTION && item.getLevel() == Level.FIRST)

@@ -178,7 +178,7 @@ public class BattleScreen implements Screen {
 		if (youWin || youLose)
 			if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 				if (battle.character instanceof NetworkCharacterBattle) {
-					gameslagyom.screenManager.swapScreen(State.MULTIPLAYERGAME);
+					gameslagyom.screenManager.swapScreen(State.PLAYING);
 				} else
 					gameslagyom.screenManager.swapScreen(State.PLAYING);
 			}

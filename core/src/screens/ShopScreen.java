@@ -244,7 +244,7 @@ public class ShopScreen implements Screen {
 				if (!game.modalityMultiplayer)
 					game.screenManager.swapScreen(State.PLAYING);
 				else
-					game.screenManager.swapScreen(State.MULTIPLAYERGAME);
+					game.screenManager.swapScreen(State.PLAYING);
 			}
 		});
 
@@ -588,7 +588,7 @@ public class ShopScreen implements Screen {
 			if (!game.modalityMultiplayer)
 				game.screenManager.swapScreen(State.PLAYING);
 			else
-				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
+				game.screenManager.swapScreen(State.PLAYING);
 		if (currentCategory == Category.POTIONS) {
 			potionsTable.setVisible(true);
 			weaponsTable.setVisible(false);

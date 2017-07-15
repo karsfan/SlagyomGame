@@ -130,17 +130,24 @@ public class ClientHandler extends Thread {
 						} else if (message.action == 26) {
 							item = new Item(message.x, message.y, StaticObject.Element.COIN, Item.Level.FIRST);
 						}
+//						while(!client.canModify){}
+//						//client.canDraw = false;
+//						if(item!=null)
+//							client.networkWorld.getListItems().remove(item);
+						//client.canDraw = true;
 						for (Item itemeliminare : client.networkWorld.getListItems()) {
 							if (itemeliminare.getX() == item.getX() && itemeliminare.getY() == item.getY()
 									&& itemeliminare.getElement() == item.getElement()
 									&& itemeliminare.getLevel() == item.getLevel()) {
-//								while (!client.canModify) {
-//									System.out.println("Fermo");
-//								}
-								itemeliminare.picked = true;
-								//client.networkWorld.getListItems().remove(itemeliminare);
+								while (!client.canModify) {
+									System.out.println("Fermo");
+								}
+								client.canModify = false;
+								client.networkWorld.getListItems().remove(itemeliminare);
+								break;
 							}
 						}
+						client.canModify = true;
 					}
 					if (message.action == 1) {
 						if (client.networkWorld.player.ID == message.ID) {

@@ -111,7 +111,6 @@ public class NetworkPlayScreen extends PlayScreen {
 			gamecam.position.y = client.networkWorld.player.getY();
 
 		gamecam.update();
-		client.networkWorld.update(dt);
 	}
 
 	@SuppressWarnings("static-access")
@@ -184,7 +183,8 @@ public class NetworkPlayScreen extends PlayScreen {
 						(float) ((StaticObject) ob).shape.getX(), (float) ((StaticObject) ob).shape.getY(),
 						(float) ((StaticObject) ob).shape.getWidth(), (float) ((StaticObject) ob).shape.getHeight());
 		}
-		// client.canModify = false;
+		
+		client.canModify = false;
 		ListIterator<Item> it2 = client.networkWorld.getListItems().listIterator();
 		while (it2.hasNext()) {
 			Object ob = (Object) it2.next();
@@ -193,17 +193,16 @@ public class NetworkPlayScreen extends PlayScreen {
 						(float) ((StaticObject) ob).shape.getX(), (float) ((StaticObject) ob).shape.getY(),
 						(float) ((StaticObject) ob).shape.getWidth(), (float) ((StaticObject) ob).shape.getHeight());
 		}
+		client.canModify = true;
 		Iterator<NetworkPlayer> it1 = client.networkWorld.getOtherPlayersList().iterator();
 		while (it1.hasNext()) {
 			Object ob = (Object) it1.next();
 			if (ob instanceof NetworkPlayer) {
-
 				gameSlagyom.batch.draw(gameSlagyom.loadingImage.getFrame(ob), ((DynamicObjects) ob).getX(),
 						((DynamicObjects) ob).getY(), ((DynamicObjects) ob).getWidth(),
 						((DynamicObjects) ob).getHeight());
 			}
 		}
-		// client.canModify = true;
 		gameSlagyom.batch.draw(gameSlagyom.loadingImage.getFrame(client.networkWorld.player),
 				client.networkWorld.player.getX(), client.networkWorld.player.getY(),
 				client.networkWorld.player.getWidth(), client.networkWorld.player.getHeight());

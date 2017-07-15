@@ -116,15 +116,5 @@ public class NetworkWorld {
 		}
 	}
 
-	public void update(float dt) {
-		Iterator<Item> it = getListItems().iterator();
-		LinkedList<Item> daEliminare = new LinkedList<Item>();
-		while (it.hasNext()) {
-			Item ob = it.next();
-			if (ob.picked)
-				daEliminare.add(ob);
-		}
-		getListItems().removeAll(daEliminare);
-	}
 
 }

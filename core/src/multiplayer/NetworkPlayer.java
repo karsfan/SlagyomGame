@@ -14,7 +14,6 @@ import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
-import world.GameConfig;
 
 public class NetworkPlayer extends Player {
 

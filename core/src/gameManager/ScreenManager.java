@@ -2,8 +2,6 @@ package gameManager;
 
 import com.badlogic.gdx.Gdx;
 
-import multiplayer.NetworkBattleScreen;
-import multiplayer.NetworkPlayScreen;
 import screens.BagScreen;
 import screens.BattleScreen;
 import screens.InitializerScreen;
@@ -46,6 +44,7 @@ public class ScreenManager {
 		swapScreen(State.MENU);
 	}
 
+	@SuppressWarnings("static-access")
 	public void swapScreen(State newState) {
 		if (currentState == State.PLAYING || currentState == State.BATTLE )
 			setPreviousState(currentState);

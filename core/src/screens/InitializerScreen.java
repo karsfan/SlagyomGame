@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
-import gameManager.LoadingMusic;
 import gameManager.ScreenManager.State;
 
 public class InitializerScreen implements Screen {

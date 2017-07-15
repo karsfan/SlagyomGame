@@ -4,8 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import character.Player;
 import multiplayer.NetworkCharacterBattle;
-import multiplayer.NetworkEnemy;
-import multiplayer.NetworkPlayer;
 import world.Game;
 
 public class Battle {

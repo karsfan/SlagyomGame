@@ -23,7 +23,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
 import gameManager.MenuControllerListener;
-import world.Game;
 
 public class PauseScreen implements Screen {
 

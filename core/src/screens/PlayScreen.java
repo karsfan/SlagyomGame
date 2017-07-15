@@ -420,6 +420,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	public void drawLights() {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) game.world.getListTile().listIterator();
 		while (it.hasNext()) {

@@ -1,7 +1,6 @@
 package gameManager;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -42,6 +41,9 @@ public class LoadingImage {
 	private static Texture roadImage;
 	private static Texture waterImage;
 	private static Texture rockImage;
+	private static Texture lampImage;
+	private static Texture lightLampImage;
+	public static Texture lightImage;
 	private static Texture forest1Image;
 	private static Texture forest2Image;
 	private static Texture tableImage;
@@ -140,6 +142,9 @@ public class LoadingImage {
 		roadImage = new Texture("res/road.png");
 		waterImage = new Texture("res/water.png");
 		rockImage = new Texture("res/rock.png");
+		lampImage = new Texture("res/lamp.png");
+		lightLampImage = new Texture("res/lightLamp.png");
+		lightImage = new Texture("res/light.png");
 		forest1Image = new Texture("res/forest1.png");
 		forest2Image = new Texture("res/forest2.png");
 		tableImage = new Texture("res/table.png");
@@ -627,6 +632,12 @@ public class LoadingImage {
 				break;
 			case ROCK:
 				texture = rockImage;
+				break;
+			case LAMP:
+				texture = lampImage;
+				break;
+			case LIGHTLAMP:
+				texture = lightLampImage;
 				break;
 			case FLOOR:
 				texture = floorImage;

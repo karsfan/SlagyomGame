@@ -65,7 +65,7 @@ public class ScreenManager {
 
 		} else if (currentState == State.PLAYING) {
 //			gameSlagyom.loadingMusic.pause();
-			gameSlagyom.loadingMusic.backgroundSound.loop(100f);
+//			gameSlagyom.loadingMusic.backgroundSound.loop(100f);
 			gameSlagyom.setScreen(getPlayScreen());
 
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC

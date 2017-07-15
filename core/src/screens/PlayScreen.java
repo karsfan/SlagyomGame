@@ -13,10 +13,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -42,7 +39,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	public GameSlagyom gameSlagyom;
 	public static Hud hud;
 	private static Drawable noDialog = null;
-
 	private static float textTimer;
 	public int textIndex = 0;
 	private boolean stop = false;
@@ -140,10 +136,18 @@ public class PlayScreen implements Screen, ControllerListener {
 		gameSlagyom.batch.begin();
 		draw();
 		drawMiniMap();
+//		drawLights();
 		gameSlagyom.batch.end();
+		
 		hud.update();
 		hud.stage.draw();
 		hud.updateNight(delta);
+
+		gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
+		gameSlagyom.batch.begin();
+		drawLights();
+		gameSlagyom.batch.end();
+		
 		// TEXT TABLE RENDERING
 		textTimer += delta;
 		if (hud.showDialog) {
@@ -311,6 +315,16 @@ public class PlayScreen implements Screen, ControllerListener {
 				gameSlagyom.batch.draw(loadingImage.getTileImage(ob), (float) ((StaticObject) ob).shape.getX(),
 						(float) ((StaticObject) ob).shape.getY(), (float) ((StaticObject) ob).shape.getWidth(),
 						(float) ((StaticObject) ob).shape.getHeight());
+				if (((StaticObject) ob).getElement() == Element.LAMP ||((StaticObject) ob).getElement() == Element.LIGHTLAMP )
+					if (hud.timer >= (hud.dayTime * 3) / 5 && !hud.isNight) {
+						((StaticObject) ob).setElement(Element.LIGHTLAMP);
+					}
+					else
+						((StaticObject) ob).setElement(Element.LAMP);
+				// if (((StaticObject) ob).getElement() == Element.LIGHTLAMP)
+				// gameSlagyom.batch.draw(loadingImage.lightImage, (float)
+				// ((StaticObject) ob).shape.getX(),
+				// (float) ((StaticObject) ob).shape.getY(), 192, 192);
 			}
 		}
 		synchronized (game.world.getListItems()) {
@@ -392,11 +406,24 @@ public class PlayScreen implements Screen, ControllerListener {
 		}
 	}
 
+	public void drawLights() {
+		ListIterator<StaticObject> it = (ListIterator<StaticObject>) game.world.getListTile().listIterator();
+		while (it.hasNext()) {
+			Object ob = (Object) it.next();
+			if (((StaticObject) ob).getElement() == Element.LIGHTLAMP && hud.timer >= (hud.dayTime * 3) / 5) {
+				gameSlagyom.batch.draw(loadingImage.lightImage, ((StaticObject) ob).getX() - 96,
+						((StaticObject) ob).getY() - 54, 192, 192);		
+			}
+		}
+	}
+	
+	
+
 	@SuppressWarnings("static-access")
 	@Override
 	public void resize(int width, int height) {
 		gamePort.update(width, height);
-		
+
 		// controlli per la posizione della camera
 		if (gamePort.getWorldWidth() / 2 + game.world.player.getX() - GameConfig.WIDTH > 0
 				&& !(game.world.player.getX() - gamePort.getWorldWidth() / 2 < 0))
@@ -404,7 +431,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		else if (game.world.player.getX() - gamePort.getWorldWidth() / 2 < 0) {
 			gamecam.position.x = gamePort.getWorldWidth() / 2;
 		}
-		
+
 		if (gamePort.getWorldHeight() / 2 + game.world.player.getY() - GameConfig.HEIGHT > 0)
 			gamecam.position.y = GameConfig.HEIGHT - gamePort.getWorldHeight() / 2;
 		else if (game.world.player.getY() - gamePort.getWorldHeight() / 2 < 0) {

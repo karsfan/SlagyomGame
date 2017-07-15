@@ -81,7 +81,7 @@ public class NetworkBattleScreen extends BattleScreen {
 
 	@Override
 	public void update(float dt) {
-		System.out.println("Update NetBattleScreen");
+		//System.out.println("Update NetBattleScreen");
 		if (!youWin && !youLose) {
 			handleInput(dt);
 			hud.update(dt);
@@ -89,6 +89,7 @@ public class NetworkBattleScreen extends BattleScreen {
 				if (battle.character.getHealth() <= 0) {
 					youLose = true;
 				} else {
+					System.out.println("haiVinto");
 					youWin = true;
 					Client.networkWorld.player.bag.addPack(((NetworkBattle) battle).win_bonus);
 					gameslagyom.loadingMusic.cashSound.play(1.5f);
@@ -136,18 +137,17 @@ public class NetworkBattleScreen extends BattleScreen {
 								"Parch. lev2 x"
 										+ Integer.toString(((NetworkBattle) battle).win_bonus.getNumberOf("PARCHLEV2")),
 								MenuScreen.skin);
-						parchmentLev1.setPosition(800, 282);
+						parchmentLev2.setPosition(800, 282);
 						packTable.add(parchmentLev2);
 					}
 				}
 			}
 			hud.stage.addActor(packTable);
-
 		}
 		if (youWin || youLose)
 			if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 				if (battle.character instanceof NetworkCharacterBattle) {
-					gameslagyom.screenManager.swapScreen(State.MULTIPLAYERGAME);
+					gameslagyom.screenManager.swapScreen(State.PLAYING);
 				} else
 					gameslagyom.screenManager.swapScreen(State.PLAYING);
 			}

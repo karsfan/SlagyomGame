@@ -10,15 +10,24 @@ import character.DynamicObjects.StateDynamicObject;
 
 public class NetworkBattle extends Battle {
 	public Pack win_bonus;
-
+	public NetworkPlayer otherPlayer;
 	public NetworkBattle(NetworkPlayer player, Enemy enemy) {
-		super(player, enemy);
+		super(player);
+		enemyOri = enemy;
+		this.enemy = new NetworkEnemy(enemy);
+		this.character = new NetworkCharacterBattle(player);
 		win_bonus = enemy.win_bonus;
 	}
 
 	public NetworkBattle(NetworkPlayer player, NetworkPlayer otherPlayer) {
-		super(player, otherPlayer);
-		otherPlayer.currentState = StateDynamicObject.RUNNINGLEFT;
+		super(player);
+		this.otherPlayer = otherPlayer;
+		character = new NetworkCharacterBattle(player);
+		enemy = new NetworkCharacterBattle(otherPlayer);
+		enemy.x = 700;
+		System.out.println(character.health);
+		System.out.println(enemy.health);
+		enemy.currentState = StateDynamicObject.RUNNINGLEFT;
 		Random rand = new Random();
 		int r = rand.nextInt(3);
 		switch (r) {
@@ -47,7 +56,9 @@ public class NetworkBattle extends Battle {
 			}
 		} else {
 			if (enemy.health <= 0) {
-				enemy.morto = true;
+				//otherPlayer.morto = true;
+				//enemy.morto = true;
+				//System.out.println(enemy.health);
 				return true;
 			}
 			if (character.getHealth() <= 0) {
@@ -55,6 +66,7 @@ public class NetworkBattle extends Battle {
 				return true;
 			}
 		}
+		//System.out.println(enemy.health);
 		character.update(dt);
 		enemy.update(dt);
 		return false;

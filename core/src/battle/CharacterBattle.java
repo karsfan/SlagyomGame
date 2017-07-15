@@ -13,9 +13,7 @@ import world.GameConfig;
 public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	public Bag bag;
-	public String name;
-	public Weapon primary_weapon;
-	public int health;
+	public Weapon primary_weapon;	
 	public boolean male;
 	
 	public CharacterBattle(Player player) {
@@ -26,7 +24,6 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		male = player.male;
 		primary_weapon = player.primary_weapon;
 		this.health = player.health;
-		System.out.println(health);
 		this.x = 100;
 		this.y = GameConfig.mainY_Battle;
 		if (player.primary_weapon.getType() == Type.Sword)

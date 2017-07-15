@@ -19,7 +19,7 @@ public class ScreenManager {
 	GameSlagyom gameSlagyom;
 
 	public static enum State {
-		MENU, NEWGAME, OPTIONMENU, MULTIPLAYERMENU, MULTIPLAYERGAME, MULTIPLAYERBATTLE, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP,
+		MENU, NEWGAME, OPTIONMENU, MULTIPLAYERMENU, PLAYING, BATTLE, PAUSE, WELCOME, BAG, SHOP,
 	};
 
 	public State currentState;
@@ -35,8 +35,6 @@ public class ScreenManager {
 	public BagScreen bagScreen;
 	public ShopScreen shopScreen;
 	public MultiplayerScreen multiplayerScreen;
-	public NetworkPlayScreen networkPlayScreen;
-	public NetworkBattleScreen networkBattleScreen;
 
 	public ScreenManager(GameSlagyom gameSlagyom) {
 		this.gameSlagyom = gameSlagyom;
@@ -49,11 +47,11 @@ public class ScreenManager {
 	}
 
 	public void swapScreen(State newState) {
-		if (currentState == State.PLAYING || currentState == State.BATTLE || currentState == State.MULTIPLAYERGAME || currentState == State.MULTIPLAYERBATTLE)
+		if (currentState == State.PLAYING || currentState == State.BATTLE )
 			setPreviousState(currentState);
 		setCurrentState(newState);
 
-		if (currentState == State.PLAYING || currentState == State.BATTLE || currentState == State.MULTIPLAYERGAME || currentState == State.MULTIPLAYERBATTLE)
+		if (currentState == State.PLAYING || currentState == State.BATTLE )
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(gameSlagyom.loadingImage.noCursor, 0, 0));
 		else
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(gameSlagyom.loadingImage.cursor, 0, 0));
@@ -113,12 +111,6 @@ public class ScreenManager {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);
 			Gdx.input.setInputProcessor(shopScreen.stage);
-		} else if (currentState == State.MULTIPLAYERGAME) {
-			gameSlagyom.setScreen(networkPlayScreen);
-			Gdx.input.setInputProcessor(null);
-		} else if (currentState == State.MULTIPLAYERBATTLE) {
-			gameSlagyom.setScreen(networkBattleScreen);
-			Gdx.input.setInputProcessor(null);
 		}
 	}
 

@@ -171,9 +171,9 @@ public class NetworkPlayScreen extends PlayScreen {
 			// "inizio la battaglia contro "
 			// + client.networkWorld.player.IDOtherPlayer);
 			client.networkWorld.createBattle(client.networkWorld.player.IDOtherPlayer);
-			gameSlagyom.screenManager.networkBattleScreen = new NetworkBattleScreen(gameSlagyom,
+			gameSlagyom.screenManager.battlescreen = new NetworkBattleScreen(gameSlagyom,
 					client.networkWorld.battle, client);
-			gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYERBATTLE);
+			gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
 			client.networkWorld.player.readyToFight = false;
 			client.networkWorld.player.isFighting = true;
 		}

@@ -218,7 +218,7 @@ public class BagScreen implements Screen {
 					else
 						game.screenManager.swapScreen(State.PLAYING);
 				} else
-					game.screenManager.swapScreen(State.MULTIPLAYERGAME);
+					game.screenManager.swapScreen(State.PLAYING);
 			}
 		});
 
@@ -500,7 +500,7 @@ public class BagScreen implements Screen {
 				else
 					game.screenManager.swapScreen(State.PLAYING);
 			} else
-				game.screenManager.swapScreen(State.MULTIPLAYERGAME);
+				game.screenManager.swapScreen(State.PLAYING);
 		}
 
 		if (currentPocket == Pocket.POTIONS) {

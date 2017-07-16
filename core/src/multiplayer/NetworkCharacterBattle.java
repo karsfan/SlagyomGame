@@ -126,6 +126,8 @@ public class NetworkCharacterBattle extends CharacterBattle {
 
 	@Override
 	public void fightRight(float dt) {
+		right = true;
+		left = false;
 		width += primary_weapon.getWidth();
 		if (collide()) {
 			if (Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle) {
@@ -145,6 +147,8 @@ public class NetworkCharacterBattle extends CharacterBattle {
 
 	@Override
 	public void fightLeft(float dt) {
+		right = false;
+		left = true;
 		x -= primary_weapon.getWidth();
 		if (collide()) {
 			if (Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle) {

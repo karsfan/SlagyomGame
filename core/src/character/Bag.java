@@ -38,11 +38,11 @@ public class Bag {
 	public void deleteParchments(Level itemLevel) {
 		Iterator<Item> itParchment = items.iterator();
 		int parchmentRemoved = 0;
-		if(itemLevel == Level.FIRST)
+		if (itemLevel == Level.FIRST)
 			parchmentRemoved = 10;
-		else if(itemLevel == Level.SECOND)
+		else if (itemLevel == Level.SECOND)
 			parchmentRemoved = 20;
-		while (itParchment.hasNext() && parchmentRemoved >0) {
+		while (itParchment.hasNext() && parchmentRemoved > 0) {
 			Item it = (Item) itParchment.next();
 			if (it.getElement() == Element.PARCHMENT && it.getLevel() == itemLevel) {
 				itParchment.remove();
@@ -147,13 +147,39 @@ public class Bag {
 		if (item.getElement() == Element.POTION) {
 			switch (item.getLevel()) {
 			case FIRST:
-				Game.world.battle.character.health += 15;
+				if (!GameSlagyom.modalityMultiplayer){
+					Game.world.battle.character.health += 15;
+					if(Game.world.battle.character.health > 300)
+						Game.world.battle.character.health = 300;
+				}
+				else{
+					Client.networkWorld.battle.character.health += 45;
+					if(Client.networkWorld.battle.character.health > 300)
+						Client.networkWorld.battle.character.health = 300;
+				}
 				break;
 			case SECOND:
-				Game.world.battle.character.health += 25;
+				if (!GameSlagyom.modalityMultiplayer){
+					Game.world.battle.character.health += 25;
+					if(Game.world.battle.character.health > 300)
+						Game.world.battle.character.health = 300;
+				}
+				else{
+					Client.networkWorld.battle.character.health += 45;
+					if(Client.networkWorld.battle.character.health > 300)
+						Client.networkWorld.battle.character.health = 300;
+				}
 				break;
 			case THIRD:
-				Game.world.battle.character.health += 45;
+				if (!GameSlagyom.modalityMultiplayer){
+					Game.world.battle.character.health += 45;
+					if(Game.world.battle.character.health > 300)
+						Game.world.battle.character.health = 300;}
+				else{
+					Client.networkWorld.battle.character.health += 45;
+					if(Client.networkWorld.battle.character.health > 300)
+						Client.networkWorld.battle.character.health = 300;
+				}
 				break;
 			default:
 				System.out.println("potion non assegnata");

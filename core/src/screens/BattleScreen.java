@@ -116,10 +116,10 @@ public class BattleScreen implements Screen {
 			handleInput(dt);
 			hud.update(dt);
 			if (battle.update(dt)) {
-				if (battle.character.getHealth() <= 0) {
+				if (battle.character.getHealth() == 10) {
 					youLose = true;
 				} else {
-					youWin = true;
+					youWin = true;					
 					battle.character.bag.addPack((Pack) ((Enemy) battle.enemy).getWin_bonus());
 					gameslagyom.loadingMusic.cashSound.play(1.5f);
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {

@@ -227,10 +227,10 @@ public class Enemy extends Fighting {
 			else if (rand > 10 && rand < 25 && Game.world.battle.character.fighting)
 				setState(StateDynamicObject.DEFENDING);
 			else if (x - Game.world.battle.character.getX()
-					- Game.world.battle.character.width < Game.world.battle.character.width / 3
+					- Game.world.battle.character.width/2 < Game.world.battle.character.width / 3
 					&& x - Game.world.battle.character.getX() > 0 && rand < 55)
 				fightLeft();
-			else if (Game.world.battle.character.getX() + Game.world.battle.character.width
+			else if (Game.world.battle.character.getX() + Game.world.battle.character.width/2
 					- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0
 					&& rand < 55)
 				fightRight();
@@ -269,6 +269,8 @@ public class Enemy extends Fighting {
 	}
 
 	public void fightRight() {
+		right = true;
+		left = false;
 		width += weapon.getWidth();
 		if (collide())
 			Game.world.battle.character.decreaseHealth(weapon);
@@ -280,6 +282,8 @@ public class Enemy extends Fighting {
 	}
 
 	public void fightLeft() {
+		right = false;
+		left = true;
 		x -= weapon.getWidth();
 		if (collide())
 			Game.world.battle.character.decreaseHealth(weapon);

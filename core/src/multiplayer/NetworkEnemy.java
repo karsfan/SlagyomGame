@@ -7,7 +7,7 @@ import character.Bomb;
 import world.GameConfig;
 
 public class NetworkEnemy extends Enemy {
-	
+
 	public NetworkEnemy(Enemy enemy) {
 		super(enemy);
 	}
@@ -51,7 +51,8 @@ public class NetworkEnemy extends Enemy {
 			if (collide() && x < Client.networkWorld.battle.character.getX())
 				x = (int) (Client.networkWorld.battle.character.getX() - getWidth() / 2);
 			else if (collide() && x > Client.networkWorld.battle.character.getX())
-				x = (int) (Client.networkWorld.battle.character.getX() + Client.networkWorld.battle.character.getWidth() / 2);
+				x = (int) (Client.networkWorld.battle.character.getX()
+						+ Client.networkWorld.battle.character.getWidth() / 2);
 		} else {
 			jumping = false;
 			doubleJumping = false;
@@ -76,19 +77,19 @@ public class NetworkEnemy extends Enemy {
 	@Override
 	public void updateEnemyHard(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Client.networkWorld.battle.character.getX() < 100
+		if ((x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 3
 				&& x - Client.networkWorld.battle.character.getX() > 0)
-				|| (Client.networkWorld.battle.character.getX() - x < 100
+				|| (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width / 3
 						&& Client.networkWorld.battle.character.getX() - x > 0)) {
 
 			if (rand < 15 && Client.networkWorld.battle.character.fighting)
 				jump(dt);
 			if (rand > 15 && rand < 30 && Client.networkWorld.battle.character.fighting) {
 				setState(StateDynamicObject.DEFENDING);
-			} else if (x - Client.networkWorld.battle.character.getX() < 100
+			} else if (x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width/3
 					&& x - Client.networkWorld.battle.character.getX() > 0 && rand < 90)
 				fightLeft();
-			else if (Client.networkWorld.battle.character.getX() - x < 100
+			else if (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width/3
 					&& Client.networkWorld.battle.character.getX() - x > 0 && rand < 90)
 				fightRight();
 		} else if (Client.networkWorld.battle.character.getX() > x && rand < 90)
@@ -103,19 +104,19 @@ public class NetworkEnemy extends Enemy {
 	@Override
 	public void updateEnemyMedium(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Client.networkWorld.battle.character.getX() < 100
+		if ((x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 2
 				&& x - Client.networkWorld.battle.character.getX() > 0)
-				|| (Client.networkWorld.battle.character.getX() - x < 100
+				|| (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width / 2
 						&& Client.networkWorld.battle.character.getX() - x > 0)) {
 
 			if (rand < 10 && Client.networkWorld.battle.character.fighting)
 				jump(dt);
 			else if (rand > 10 && rand < 25 && Client.networkWorld.battle.character.fighting)
 				setState(StateDynamicObject.DEFENDING);
-			else if (x - Client.networkWorld.battle.character.getX() < 100
+			else if (x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width/2
 					&& x - Client.networkWorld.battle.character.getX() > 0 && rand < 55)
 				fightLeft();
-			else if (Client.networkWorld.battle.character.getX() - x < 100
+			else if (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width/2
 					&& Client.networkWorld.battle.character.getX() - x > 0 && rand < 55)
 				fightRight();
 
@@ -129,18 +130,22 @@ public class NetworkEnemy extends Enemy {
 	@Override
 	public void updateEnemyEasy(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Client.networkWorld.battle.character.getX() < 100
+		if ((x - Client.networkWorld.battle.character.getX()
+				- Client.networkWorld.battle.character.width / 2 < Client.networkWorld.battle.character.width / 3
 				&& x - Client.networkWorld.battle.character.getX() > 0)
-				|| (Client.networkWorld.battle.character.getX() - x < 100
+				|| (Client.networkWorld.battle.character.getX() + Client.networkWorld.battle.character.width / 2
+						- x < Client.networkWorld.battle.character.width / 3
 						&& Client.networkWorld.battle.character.getX() - x > 0)) {
 			if (rand < 5 && Client.networkWorld.battle.character.fighting)
 				jump(dt);
 			else if (rand > 5 && rand < 20 && Client.networkWorld.battle.character.fighting)
 				setState(StateDynamicObject.DEFENDING);
-			else if (x - Client.networkWorld.battle.character.getX() < 100
+			else if (x - Client.networkWorld.battle.character.getX()
+					- Client.networkWorld.battle.character.width / 2 < Client.networkWorld.battle.character.width / 3
 					&& x - Client.networkWorld.battle.character.getX() > 0 && rand < 40)
 				fightLeft();
-			else if (Client.networkWorld.battle.character.getX() - x < 100
+			else if (Client.networkWorld.battle.character.getX() + Client.networkWorld.battle.character.width / 2
+					- x < Client.networkWorld.battle.character.width / 3
 					&& Client.networkWorld.battle.character.getX() - x > 0 && rand < 40)
 				fightRight();
 		} else if (Client.networkWorld.battle.character.getX() > x && rand < 50)
@@ -160,7 +165,10 @@ public class NetworkEnemy extends Enemy {
 			return true;
 		return false;
 	}
+
 	public void fightRight() {
+		right = true;
+		left = false;
 		width += weapon.getWidth();
 		if (collide())
 			Client.networkWorld.battle.character.decreaseHealth(weapon);
@@ -172,6 +180,8 @@ public class NetworkEnemy extends Enemy {
 	}
 
 	public void fightLeft() {
+		right = false;
+		left = true;
 		x -= weapon.getWidth();
 		if (collide())
 			Client.networkWorld.battle.character.decreaseHealth(weapon);

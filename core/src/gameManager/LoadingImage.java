@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 
 import battle.CharacterBattle;
 import battle.Enemy;
+import battle.Fighting;
 import character.DynamicObjects;
 import character.Woman;
 import character.DynamicObjects.StateDynamicObject;
@@ -108,14 +109,6 @@ public class LoadingImage {
 	public Animation<TextureRegion>[] woman3Animation;
 
 	public static Animation<TextureRegion> loadingAnimation;
-
-	public void loadLoadingTexture() {
-		Array<TextureRegion> frames = new Array<TextureRegion>();
-		for (int i = 0; i < 14; i++) {
-			frames.add(new TextureRegion(new Texture("res/loadingAnimation/" + String.valueOf(i + 1) + ".png")));
-			loadingAnimation = new Animation<TextureRegion>(0.2f, frames);
-		}
-	}
 
 	// BAG IMAGE BUTTONS
 	public static ImageButton bluePotion;
@@ -255,6 +248,14 @@ public class LoadingImage {
 
 		loadLoadingTexture();
 
+	}
+
+	public void loadLoadingTexture() {
+		Array<TextureRegion> frames = new Array<TextureRegion>();
+		for (int i = 0; i < 14; i++) {
+			frames.add(new TextureRegion(new Texture("res/loadingAnimation/" + String.valueOf(i + 1) + ".png")));
+			loadingAnimation = new Animation<TextureRegion>(0.2f, frames);
+		}
 	}
 
 	private void createBattleFrame(Texture texture, Animation<TextureRegion>[] arrayAnimation, TextureRegion stand) {
@@ -412,10 +413,14 @@ public class LoadingImage {
 			getFrameStand(ob).setRegion(getAnimation(ob)[3].getKeyFrame(0, true));
 			break;
 		case STANDING:
-			region = getFrameStand(ob);
+			if (((Fighting) ob).left)
+				region = (TextureRegion) getAnimation(ob)[1].getKeyFrame(stateTimer, true);
+			else
+				region = (TextureRegion) getAnimation(ob)[0].getKeyFrame(stateTimer, true);
 			break;
 		default:
-			//getFrameStand(ob).setRegion(getAnimation(ob)[0].getKeyFrame(0, true));
+			// getFrameStand(ob).setRegion(getAnimation(ob)[0].getKeyFrame(0,
+			// true));
 			region = getFrameStand(ob);
 			break;
 		}

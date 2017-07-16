@@ -47,7 +47,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	boolean movesgamePad = false;
 	LoadingImage loadingImage;
 	Game game;
-
+	
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -156,7 +156,7 @@ public class PlayScreen implements Screen, ControllerListener {
 			gameSlagyom.batch.draw(gameSlagyom.loadingImage.blackBg, gamecam.position.x - gamePort.getWorldWidth() / 2,
 					gamecam.position.y - gamePort.getWorldHeight() / 2);
 			gameSlagyom.batch.draw(gameSlagyom.loadingImage.loadingAnimation.getKeyFrame(loadingTimer, true),
-					854 / 2 + 310, 480 / 2 + 103);
+					gamecam.position.x - gamePort.getWorldWidth() / 2, gamecam.position.y - gamePort.getWorldHeight() / 2);
 		}
 
 		if (loadingTimer > 3) {
@@ -242,7 +242,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam.update();
 		game.world.update(dt);
 	}
-
+	
 	@SuppressWarnings("static-access")
 	private void moveCharacter(float dt) {
 		try {

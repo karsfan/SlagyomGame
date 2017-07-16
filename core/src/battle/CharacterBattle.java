@@ -112,6 +112,8 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void fightRight(float dt) {
+		right = true;
+		left = false;
 		width += primary_weapon.getWidth();
 		if (collide())
 			Game.world.battle.enemy.decreaseHealth(primary_weapon);
@@ -123,6 +125,8 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void fightLeft(float dt) {
+		left = true;
+		right = false;
 		x -= primary_weapon.getWidth();
 		if (collide())
 			Game.world.battle.enemy.decreaseHealth(primary_weapon);

@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import battle.Battle;
 import character.Bomb;
 import character.DynamicObjects;
-import character.DynamicObjects.StateDynamicObject;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
@@ -19,6 +18,7 @@ import screens.MenuScreen;
 
 public class NetworkBattleScreen extends BattleScreen {
 	public Client client;
+	public boolean weapon_primary_comunicated = false;
 
 	public NetworkBattleScreen(GameSlagyom gameslagyom, Battle battle, Client client) {
 		super(gameslagyom, battle);
@@ -27,6 +27,8 @@ public class NetworkBattleScreen extends BattleScreen {
 
 	@Override
 	public void render(float delta) {
+		if (!weapon_primary_comunicated && battle.enemy instanceof NetworkCharacterBattle)
+			sendPrimaryWeapon();
 		update(delta);
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -38,6 +40,14 @@ public class NetworkBattleScreen extends BattleScreen {
 		hud.stage.draw();
 		if (client.serverDisconnected)
 			gameslagyom.screenManager.swapScreen(State.MENU);
+	}
+
+	private void sendPrimaryWeapon() {
+		client.writer.println(5 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
+				+ battle.character.primary_weapon.getType() + " " + battle.character.primary_weapon.getLevel() + " " + 0
+				+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+		client.writer.flush();
+		weapon_primary_comunicated = true;
 	}
 
 	private void draw() {
@@ -172,8 +182,8 @@ public class NetworkBattleScreen extends BattleScreen {
 			if (battle.enemy instanceof NetworkCharacterBattle) {
 				if (((NetworkCharacterBattle) battle.character).weaponChanged) {
 					client.writer.println(5 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
-							+ battle.character.primary_weapon.getType() + " " + battle.character.primary_weapon.getLevel() + " "
-							+ 0 + ";"
+							+ battle.character.primary_weapon.getType() + " "
+							+ battle.character.primary_weapon.getLevel() + " " + 0 + ";"
 							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}

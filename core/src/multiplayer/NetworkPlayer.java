@@ -25,7 +25,8 @@ public class NetworkPlayer extends Player {
 	public boolean collideWithOtherPlayer = false;
 	public boolean collisionWithObject = false;
 	public Item itemPicked;
-	
+	public boolean invisible = false;
+
 	public NetworkPlayer(String name) {
 		super(name, true);
 		this.name = name;
@@ -70,73 +71,80 @@ public class NetworkPlayer extends Player {
 
 	}
 
-
-
 	@Override
 	public synchronized boolean collide(Object e) {
 		return false;
 	}
-	public boolean collide(){
-		Iterator<StaticObject> it = Client.networkWorld.getListTile().iterator();
-		while (it.hasNext()) {
-			Object ob = (Object) it.next();
-			if (ob instanceof StaticObject) {
-				if (((StaticObject) ob).getElement() != Element.GROUND
-						&& ((StaticObject) ob).getElement() != Element.ROAD)
-					if (((StaticObject) ob).collide(this)) {
-						if (((StaticObject) ob).getElement() == Element.PREENEMYHOME) {
-							if (((PreEnemyHouse) ob).collideDoor(this)) {
-								collideGym = true;
-								Client.networkWorld.createBattle((PreEnemyHouse) ob);
-								return true;
+
+	public boolean collide() {
+		if (!invisible) {
+			Iterator<StaticObject> it = Client.networkWorld.getListTile().iterator();
+			while (it.hasNext()) {
+				Object ob = (Object) it.next();
+				if (ob instanceof StaticObject) {
+					if (((StaticObject) ob).getElement() != Element.GROUND
+							&& ((StaticObject) ob).getElement() != Element.ROAD)
+						if (((StaticObject) ob).collide(this)) {
+							if (((StaticObject) ob).getElement() == Element.PREENEMYHOME) {
+								if (((PreEnemyHouse) ob).collideDoor(this)) {
+									collideGym = true;
+									Client.networkWorld.createBattle((PreEnemyHouse) ob);
+									return true;
+								}
+							} else if (((StaticObject) ob).getElement() == Element.SHOP) {
+								if (((Shop) ob).collideDoor(this)) {
+									collideShop = true;
+									return true;
+								}
+							} else if (((StaticObject) ob).getElement() == Element.TEMPLE) {
+								if (((EnemyHome) ob).collideDoor(this)) {
+									collideGym = true;
+									Client.networkWorld.createBattle((EnemyHome) ob);
+									return true;
+								}
+							} else if (((StaticObject) ob).getElement() == Element.CASTLE) {
+								if (((BossHome) ob).collideDoor(this)) {
+									collideGym = true;
+									Client.networkWorld.createBattle((BossHome) ob);
+									return true;
+								}
 							}
-						} else if (((StaticObject) ob).getElement() == Element.SHOP) {
-							if (((Shop) ob).collideDoor(this)) {
-								collideShop = true;
-								return true;
-							}
-						} else if (((StaticObject) ob).getElement() == Element.TEMPLE) {
-							if (((EnemyHome) ob).collideDoor(this)) {
-								collideGym = true;
-								Client.networkWorld.createBattle((EnemyHome) ob);
-								return true;
-							}
-						} else if (((StaticObject) ob).getElement() == Element.CASTLE) {
-							if (((BossHome) ob).collideDoor(this)) {
-								collideGym = true;
-								Client.networkWorld.createBattle((BossHome) ob);
-								return true;
-							}
+							return true;
 						}
-						return true;
-					}
-			}
-		}
-		Iterator<NetworkPlayer> otherPlayer = Client.networkWorld.otherPlayers.iterator();
-		while (otherPlayer.hasNext()) {
-			Object ob = (Object) otherPlayer.next();
-			if (ob instanceof NetworkPlayer) {
-				if (!((x > ((NetworkPlayer) ob).getX() + ((NetworkPlayer) ob).getWidth() / 2
-						|| ((NetworkPlayer) ob).getX() > x + width / 2)
-						|| (y > ((NetworkPlayer) ob).getY() + ((NetworkPlayer) ob).getHeight() / 2
-								|| ((NetworkPlayer) ob).getY() > y + height / 2))) {
-					collideWithOtherPlayer = true;
-					IDOtherPlayer = ((NetworkPlayer) ob).ID;
-					// System.out.println(ID + "collisione con " +
-					// IDOtherPlayer);
-					return true;
 				}
 			}
-		}
-		Iterator<Item> it2 = Client.networkWorld.getListItems().iterator();
-		while (it2.hasNext()) {
-			Object ob = (Object) it2.next();
-			if (ob instanceof Item) {
-				if (((Item) ob).collide(this)) {
-					bag.add(ob);
-					collisionWithObject = true;
-					itemPicked = (Item) ob;
-					return false;
+			Iterator<NetworkPlayer> otherPlayer = Client.networkWorld.otherPlayers.iterator();
+			while (otherPlayer.hasNext()) {
+				Object ob = (Object) otherPlayer.next();
+				if (ob instanceof NetworkPlayer) {
+					if (!((x > ((NetworkPlayer) ob).getX() + ((NetworkPlayer) ob).getWidth() / 2
+							|| ((NetworkPlayer) ob).getX() > x + width / 2)
+							|| (y > ((NetworkPlayer) ob).getY() + ((NetworkPlayer) ob).getHeight() / 2
+									|| ((NetworkPlayer) ob).getY() > y + height / 2))) {
+						if (!((NetworkPlayer) ob).isFighting) {
+							collideWithOtherPlayer = true;
+							IDOtherPlayer = ((NetworkPlayer) ob).ID;
+						}
+						// System.out.println(ID + "collisione con " +
+						// IDOtherPlayer);
+						return true;
+					}
+				}
+			}
+			Iterator<Item> it2 = Client.networkWorld.getListItems().iterator();
+			while (it2.hasNext()) {
+				Object ob = (Object) it2.next();
+				if (ob instanceof Item) {
+					if (((Item) ob).collide(this)) {
+						if (((Item) ob).getElement() == Element.COIN)
+							coins++;
+						else
+							bag.add(ob);
+
+						collisionWithObject = true;
+						itemPicked = (Item) ob;
+						return false;
+					}
 				}
 			}
 		}

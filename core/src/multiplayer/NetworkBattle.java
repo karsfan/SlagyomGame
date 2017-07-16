@@ -26,8 +26,8 @@ public class NetworkBattle extends Battle {
 		enemy = new NetworkCharacterBattle(otherPlayer);
 		character.x = 0;
 		enemy.x = 1320;
-		System.out.println(character.health);
-		System.out.println(enemy.health);
+		//System.out.println(character.health);
+		//System.out.println(enemy.health);
 		enemy.currentState = StateDynamicObject.RUNNINGLEFT;
 		Random rand = new Random();
 		int r = rand.nextInt(3);
@@ -57,12 +57,14 @@ public class NetworkBattle extends Battle {
 			}
 		} else {
 			if (enemy.health <= 0) {
+				player.health = character.health;
 				//otherPlayer.morto = true;
 				//enemy.morto = true;
 				//System.out.println(enemy.health);
 				return true;
 			}
 			if (character.getHealth() <= 0) {
+				player.health = character.health;
 				character.morto = true;
 				return true;
 			}

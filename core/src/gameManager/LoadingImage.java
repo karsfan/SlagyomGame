@@ -106,13 +106,14 @@ public class LoadingImage {
 
 	// private static TextureRegion woman3Stand;
 	public Animation<TextureRegion>[] woman3Animation;
-	
+
 	public static Animation<TextureRegion> loadingAnimation;
+
 	public void loadLoadingTexture() {
 		Array<TextureRegion> frames = new Array<TextureRegion>();
 		for (int i = 0; i < 14; i++) {
-			frames.add(new TextureRegion(new Texture("res/loadingAnimation/" + String.valueOf(i+1)+".png")));
-			loadingAnimation = new Animation <TextureRegion> (0.2f, frames);
+			frames.add(new TextureRegion(new Texture("res/loadingAnimation/" + String.valueOf(i + 1) + ".png")));
+			loadingAnimation = new Animation<TextureRegion>(0.2f, frames);
 		}
 	}
 
@@ -136,7 +137,7 @@ public class LoadingImage {
 	// AUDIO & MUSIC
 
 	@SuppressWarnings("unchecked")
-	public LoadingImage() {		
+	public LoadingImage() {
 		// TILES IMAGES
 		title = new Texture("res/title.png");
 		blackBg = new Texture("res/blackBg.png");
@@ -175,7 +176,6 @@ public class LoadingImage {
 		pointer = new Texture("res/pointer.png");
 		miniMap = new Texture("res/miniMap.png");
 		miniMapPointer = new Texture("res/miniMapPointer.png");
-		
 
 		// BAG AND SHOP ITEM IMAGES
 		bluePotion = new ImageButton(
@@ -244,7 +244,7 @@ public class LoadingImage {
 		texture = new Texture("Character/female/spear.png");
 		createBattleFrame(texture, battleFemaleCharacterAnimationSpearLev1, battleFemaleCharacterStand);
 
-		texture = new Texture("Character/sword.png");
+		texture = new Texture("Character/sword2.png");
 		createBattleFrameBig(texture, battleCharacterAnimationSwordLev1, battleCharacterStandSword, 7);
 
 		texture = new Texture("Character/female/sword.png");
@@ -252,7 +252,7 @@ public class LoadingImage {
 
 		texture = new Texture("Enemy/spear.png");
 		createBattleFrame(texture, enemyAnimation, enemyStand);
-		
+
 		loadLoadingTexture();
 
 	}
@@ -415,7 +415,7 @@ public class LoadingImage {
 			region = getFrameStand(ob);
 			break;
 		default:
-			getFrameStand(ob).setRegion(getAnimation(ob)[0].getKeyFrame(0, true));
+			//getFrameStand(ob).setRegion(getAnimation(ob)[0].getKeyFrame(0, true));
 			region = getFrameStand(ob);
 			break;
 		}
@@ -512,6 +512,7 @@ public class LoadingImage {
 			}
 			break;
 		case "NetworkCharacterBattle":
+			// se sono il player
 			if (((NetworkCharacterBattle) ob).player) {
 				if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
 					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
@@ -520,9 +521,32 @@ public class LoadingImage {
 						animation = battleCharacterAnimationSpearLev2;
 					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
 						animation = battleCharacterAnimationSpearLev3;
+				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
+					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+						animation = battleCharacterAnimationSwordLev1;
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+						animation = battleCharacterAnimationSwordLev2;
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+						animation = battleCharacterAnimationSwordLev3;
 				}
-			} else
-				animation = enemyAnimation;
+			} else {// se sono l'oggetto da diseganre è l'avversario
+				if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
+					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+						animation = enemyAnimation;
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+						animation = enemyAnimation;
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+						animation = enemyAnimation;
+				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
+					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+						animation = battleCharacterAnimationSwordLev1;
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+						animation = battleCharacterAnimationSwordLev2;
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+						animation = battleCharacterAnimationSwordLev3;
+				}
+			}
+			// animation = enemyAnimation;
 			break;
 		case "Enemy":
 			animation = enemyAnimation;
@@ -591,9 +615,9 @@ public class LoadingImage {
 			// textureRegion = battleCharacterStand;
 			break;
 		case "NetworkCharacterBattle":
-			if (((NetworkCharacterBattle) ob).player)
+			if (((NetworkCharacterBattle) ob).player) {
 				textureRegion = battleCharacterStand;
-			else
+			} else
 				textureRegion = enemyStand;
 			break;
 		case "Enemy":

@@ -36,17 +36,14 @@ public class ServerHandler extends Thread {
 				String receivedMessage= reader.readLine();
 				if(receivedMessage.contains(" ")){
 					NetworkMessage message = new NetworkMessage(receivedMessage);
-					if(message.action == 2 || message.action == 9 || message.action == 8 || message.action == 3){
-						System.out.println(receivedMessage);
+					if(message.action == 2 || message.action == 3 || message.action == 5){
 						server.send(receivedMessage, message.IDreceiver);	
 					}
 					else{
-						server.send(reader.readLine());						
+						server.send(receivedMessage);						
 					}
 				}
-				
 			} catch (IOException e) {
-				//System.out.println("Not connected");
 				server.send(10+ " "+ ID + " "+0+" "+0 +" "+0+";"+"111111"+";");
 				server.connected.remove(this);
 				break;

@@ -18,10 +18,11 @@ public class Client {
 	boolean initialize = false;
 	public boolean go = false;
 	public boolean canModify = false;
-	//public boolean canDraw = true;
+	public boolean serverDisconnected = false;
+	
 	public Client(String name, GameSlagyom gameSlagyom) {
 		try {
-			socket = new Socket("192.168.1.69", 5555);
+			socket = new Socket("localhost", 5555);
 			writer = new PrintWriter(socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -118,7 +119,13 @@ public class Client {
 					+ networkWorld.player.IDOtherPlayer + ";");
 			writer.flush();
 		}
+	}
 
+	public void update() {
+		// TODO Auto-generated method stub
+		System.out.println("inviato");
+		writer.println(4+ " "+ networkWorld.player.ID+ " "+ networkWorld.player.health+ " "+ 0+" "+ 0 +";"+0+";");
+		writer.flush();
 	}
 
 }

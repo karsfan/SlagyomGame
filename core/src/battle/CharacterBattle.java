@@ -103,7 +103,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 				((Bomb) ob).update(dt);
 				if (ob.morta) {
 					it1.remove();
-					System.out.println("Bomba player eliminata");
+					//System.out.println("Bomba player eliminata");
 					continue;
 				}
 			}

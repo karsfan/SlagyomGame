@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import character.DynamicObjects;
 import gameManager.GameSlagyom;
+import gameManager.ScreenManager.State;
 import hud.Hud;
 import screens.BattleScreen;
 import screens.PlayScreen;
@@ -28,6 +29,7 @@ public class NetworkPlayScreen extends PlayScreen {
 
 	PovDirection directionGamepad = null;
 	boolean movesGamePad = false;
+	boolean youLose = false;
 
 	@SuppressWarnings("static-access")
 	public NetworkPlayScreen(GameSlagyom gameSlagyom, String name) {
@@ -47,15 +49,25 @@ public class NetworkPlayScreen extends PlayScreen {
 		gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
 
 		gameSlagyom.batch.begin();
-		if (client.go)
+		loadingTimer += delta;
+		if (!client.go) {
+			gameSlagyom.batch.draw(gameSlagyom.loadingImage.blackBg, gamecam.position.x - gamePort.getWorldWidth() / 2,
+					gamecam.position.y - gamePort.getWorldHeight() / 2);
+			gameSlagyom.batch.draw(gameSlagyom.loadingImage.loadingAnimation.getKeyFrame(loadingTimer, true),
+					gamecam.position.x - gamePort.getWorldWidth() / 2,
+					gamecam.position.y - gamePort.getWorldHeight() / 2);
+		}
+		if (client.go) {
 			draw();
+		}
 		gameSlagyom.batch.end();
-		hud.update();
+		if (client.go) {
+			hud.update();
 
-		hud.stage.draw();
-		if (client.go)
-			update(delta);
-
+			hud.stage.draw();
+			if (client.go)
+				update(delta);
+		}
 		// TEXT TABLE RENDERING
 		// textTimer += delta;
 		// if (hud.showDialog) {
@@ -80,7 +92,10 @@ public class NetworkPlayScreen extends PlayScreen {
 		// i = 0;
 		// }
 		// END TEXT TABLE RENDERING
-
+		if(youLose)
+			client.networkWorld.player.invisible = true;
+		if(client.serverDisconnected)
+			gameSlagyom.screenManager.swapScreen(State.MENU);
 	}
 
 	// public static void drawDialog(final String text) {
@@ -164,8 +179,8 @@ public class NetworkPlayScreen extends PlayScreen {
 			// "inizio la battaglia contro "
 			// + client.networkWorld.player.IDOtherPlayer);
 			client.networkWorld.createBattle(client.networkWorld.player.IDOtherPlayer);
-			gameSlagyom.screenManager.battlescreen = new NetworkBattleScreen(gameSlagyom,
-					client.networkWorld.battle, client);
+			gameSlagyom.screenManager.battlescreen = new NetworkBattleScreen(gameSlagyom, client.networkWorld.battle,
+					client);
 			gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
 			client.networkWorld.player.readyToFight = false;
 			client.networkWorld.player.isFighting = true;
@@ -173,6 +188,10 @@ public class NetworkPlayScreen extends PlayScreen {
 
 	}
 
+	public void sendUpdate() {
+		
+		client.update();
+	}
 	@SuppressWarnings("static-access")
 	public synchronized void draw() {
 		ListIterator<StaticObject> it = (ListIterator<StaticObject>) client.networkWorld.getListTile().listIterator();
@@ -183,7 +202,7 @@ public class NetworkPlayScreen extends PlayScreen {
 						(float) ((StaticObject) ob).shape.getX(), (float) ((StaticObject) ob).shape.getY(),
 						(float) ((StaticObject) ob).shape.getWidth(), (float) ((StaticObject) ob).shape.getHeight());
 		}
-		
+
 		client.canModify = false;
 		ListIterator<Item> it2 = client.networkWorld.getListItems().listIterator();
 		while (it2.hasNext()) {
@@ -203,11 +222,13 @@ public class NetworkPlayScreen extends PlayScreen {
 						((DynamicObjects) ob).getHeight());
 			}
 		}
-		gameSlagyom.batch.draw(gameSlagyom.loadingImage.getFrame(client.networkWorld.player),
-				client.networkWorld.player.getX(), client.networkWorld.player.getY(),
-				client.networkWorld.player.getWidth(), client.networkWorld.player.getHeight());
-		gameSlagyom.batch.draw(gameSlagyom.loadingImage.pointer, client.networkWorld.player.getX(),
-				client.networkWorld.player.getY() + 30, 14, 13);
+		if (!youLose) {
+			gameSlagyom.batch.draw(gameSlagyom.loadingImage.getFrame(client.networkWorld.player),
+					client.networkWorld.player.getX(), client.networkWorld.player.getY(),
+					client.networkWorld.player.getWidth(), client.networkWorld.player.getHeight());
+			gameSlagyom.batch.draw(gameSlagyom.loadingImage.pointer, client.networkWorld.player.getX(),
+					client.networkWorld.player.getY() + 30, 14, 13);
+		}
 	}
 
 	@SuppressWarnings("static-access")
@@ -329,5 +350,6 @@ public class NetworkPlayScreen extends PlayScreen {
 	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
 		return false;
 	}
+
 
 }

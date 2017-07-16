@@ -43,9 +43,8 @@ public class World {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
-		System.out.println(getClass().getResource("/res/map/map.txt").getPath());
-		maps[0] = new Map(getClass().getResource("/res/map/village1.txt").getPath(), true, "Village one");
-		maps[1] = new Map(getClass().getResource("/res/map/map.txt").getPath(), false, "Village two");
+		maps[0] = new Map(getClass().getResource("/res/map/mapProva.txt").getPath(), true, "Village one");
+		maps[1] = new Map(getClass().getResource("/res/map/village1.txt").getPath(), false, "Village two");
 		player = new Player(name, male);
 		getListDynamicObjects().add(player);
 
@@ -170,12 +169,15 @@ public class World {
 	public LinkedList<StaticObject> getListTile() {
 		return getMap().getListTile();
 	}
-	public LinkedList<StaticObject> getListLightLamps(){
+
+	public LinkedList<StaticObject> getListLightLamps() {
 		return getMap().getListLightLamps();
 	}
-	public LinkedList<StaticObject> getListObjectsMiniMap(){
+
+	public LinkedList<StaticObject> getListObjectsMiniMap() {
 		return getMap().getListObjectsMiniMap();
 	}
+
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
 		boolean creata = false;
 		Iterator<Enemy> it1 = preEnemyHouse.enemy.iterator();
@@ -197,20 +199,20 @@ public class World {
 		return people;
 	}
 
-	public void nextLevel() throws InterruptedException {
+	public void nextLevel() {
 
 		if (level < 1) {
 			level++;
-
-			// semaphore.acquire();
 			people = new ArrayList<DynamicObjects>();
 			getMap().setCurrent(false);
 			maps[level].setCurrent(true);
+			player.x = 500;
+			player.y = 500;
 			people.add(player);
-			while (!addDynamicObject())
-				;
-			addItems();
-			// semaphore.release();
+			while (!addDynamicObject()) {
+			}
+			while (!addItems()) {
+			}
 		}
 
 	}
@@ -266,6 +268,7 @@ public class World {
 					player.collideGym = false;
 					PlayScreen.hud.setDialogText(
 							"Hai già sconfitto il boss di questo villaggio, adesso puoi passare al prossimo villaggio");
+					nextLevel();
 				}
 
 			} else {
@@ -273,5 +276,5 @@ public class World {
 				PlayScreen.hud.setDialogText("Non ci puoi accedere se prima non hai eliminati tutti i nemici");
 			}
 		}
-	}	
+	}
 }

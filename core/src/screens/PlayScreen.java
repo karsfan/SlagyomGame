@@ -248,7 +248,6 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	@SuppressWarnings("static-access")
 	private void moveCharacter(float dt) {
-		try {
 			if (!stop) {
 				/*
 				 * if (movesgamePad) { if (directiongamepad ==
@@ -312,17 +311,13 @@ public class PlayScreen implements Screen, ControllerListener {
 
 				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 					gameSlagyom.loadingMusic.pause();
-					// game.world.semaphore.acquire();
 					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 				}
-
 				else if (Gdx.input.isKeyJustPressed(Keys.B)) {
 					game.world.nextLevel();
-				} // else
-					// game.character.setState(StateDynamicObject.STANDING);
+				} 
 			}
-		} catch (InterruptedException e) {
-		}
+		 
 
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			hud.showDialog = false;

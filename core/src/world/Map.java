@@ -23,7 +23,7 @@ public class Map {
 	public boolean current;
 	public LinkedList<StaticObject> listLightLamps;
 	public LinkedList<StaticObject> listObjectsMiniMap;
-
+	public boolean bossBeaten = false;
 	public Map(String path, boolean villageCurrent, String nameVillage) {
 		this.nameVillage = nameVillage;
 		current = villageCurrent;
@@ -171,7 +171,7 @@ public class Map {
 		// new Point((int) tile.shape.getX(), (int) Math.abs(tile.shape.getY() -
 		// (tile.shape.getHeight() / 32))));
 		listStaticObjects.add(staticObject);
-		if (staticObject.getElement() == Element.LIGHTLAMP)
+		if (staticObject.getElement() == Element.LAMP)
 			listLightLamps.add(staticObject);
 		if (!staticObject.getElement().equals(Element.GROUND)) {
 			

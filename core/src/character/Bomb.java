@@ -45,7 +45,8 @@ public class Bomb extends Weapon implements ICollidable {
 
 	public void lancia(int velocity, Fighting fighting) {
 		lanciata = true;
-		mainX = ((int) ((Fighting) fighting).getX());
+		
+		mainX = (int) (((int) ((Fighting) fighting).getX())+fighting.width/3);
 		mainY = ((int) ((Fighting) fighting).getY());
 
 		if (((Fighting) fighting).left)

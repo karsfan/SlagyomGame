@@ -158,7 +158,8 @@ public class PlayScreen implements Screen, ControllerListener {
 			gameSlagyom.batch.draw(gameSlagyom.loadingImage.loadingAnimation.getKeyFrame(loadingTimer, true),
 					gamecam.position.x - gamePort.getWorldWidth() / 2, gamecam.position.y - gamePort.getWorldHeight() / 2);
 		}
-
+		
+		System.out.println(gamePort.getScreenHeight() + " " + gamePort.getScreenWidth());
 		if (loadingTimer > 3) {
 			draw();
 			drawMiniMap();

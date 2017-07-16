@@ -268,6 +268,5 @@ public class World {
 				PlayScreen.hud.setDialogText("Non ci puoi accedere se prima non hai eliminati tutti i nemici");
 			}
 		}
-	}
-
+	}	
 }

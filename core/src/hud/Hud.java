@@ -124,7 +124,7 @@ public class Hud {
 
 		if (timer <= dayTime) {
 			timer += delta;
-			isNight = isNight;
+			//isNight = isNight;
 			if (!isNight) {
 				splash.addAction(Actions.fadeIn(dayTime));
 			} else {

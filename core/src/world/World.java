@@ -170,7 +170,12 @@ public class World {
 	public LinkedList<StaticObject> getListTile() {
 		return getMap().getListTile();
 	}
-
+	public LinkedList<StaticObject> getListLightLamps(){
+		return getMap().getListLightLamps();
+	}
+	public LinkedList<StaticObject> getListObjectsMiniMap(){
+		return getMap().getListObjectsMiniMap();
+	}
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
 		boolean creata = false;
 		Iterator<Enemy> it1 = preEnemyHouse.enemy.iterator();

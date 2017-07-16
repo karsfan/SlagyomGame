@@ -2,7 +2,6 @@ package character;
 
 import battle.CharacterBattle;
 import battle.Fighting;
-import character.Weapon.Level;
 import gameManager.GameSlagyom;
 import multiplayer.Client;
 import multiplayer.NetworkCharacterBattle;

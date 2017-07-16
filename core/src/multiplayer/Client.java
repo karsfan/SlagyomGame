@@ -19,7 +19,10 @@ public class Client {
 	public boolean go = false;
 	public boolean canModify = false;
 	public boolean serverDisconnected = false;
-	
+	public boolean sound = false;
+	public boolean text = false;
+	public String textDiaglog;
+
 	public Client(String name, GameSlagyom gameSlagyom) {
 		try {
 			socket = new Socket("localhost", 5555);
@@ -53,6 +56,7 @@ public class Client {
 	}
 
 	public void sendCollisionItem() {
+		sound = true;
 		Item item = networkWorld.player.itemPicked;
 		if (item.getElement() == Element.POTION && item.getLevel() == Level.FIRST)
 			writer.println(21 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
@@ -124,7 +128,8 @@ public class Client {
 	public void update() {
 		// TODO Auto-generated method stub
 		System.out.println("inviato");
-		writer.println(4+ " "+ networkWorld.player.ID+ " "+ networkWorld.player.health+ " "+ 0+" "+ 0 +";"+0+";");
+		writer.println(4 + " " + networkWorld.player.ID + " " + networkWorld.player.health + " " + 0 + " " + 0 + ";" + 0
+				+ ";");
 		writer.flush();
 	}
 

@@ -10,7 +10,6 @@ import character.DynamicObjects.StateDynamicObject;
 import character.Weapon;
 import character.Weapon.Level;
 import character.Weapon.Type;
-import gameManager.GameSlagyom;
 import staticObjects.Item;
 import staticObjects.StaticObject;
 import world.GameConfig;
@@ -114,6 +113,8 @@ public class ClientHandler extends Thread {
 										if (((NetworkCharacterBattle) client.networkWorld.battle.enemy).ID == message.ID)
 											client.networkWorld.battle.enemy.health = 0;
 								client.networkWorld.otherPlayers.remove(player);
+								client.text = true;
+								client.textDiaglog = "Il giocatore con ID "+player.ID+" si e' scollegato";
 								break;
 							}
 						} else if (message.action >= 21 && message.action <= 26) {

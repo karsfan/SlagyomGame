@@ -21,12 +21,16 @@ public class Map {
 	private String nameVillage;
 	public String mapPath;
 	public boolean current;
+	public LinkedList<StaticObject> listLightLamps;
+	public LinkedList<StaticObject> listObjectsMiniMap;
 
 	public Map(String path, boolean villageCurrent, String nameVillage) {
 		this.nameVillage = nameVillage;
 		current = villageCurrent;
 		listStaticObjects = new LinkedList<StaticObject>();
 		listItems = new LinkedList<Item>();
+		listLightLamps = new LinkedList<StaticObject>();
+		listObjectsMiniMap = new LinkedList<StaticObject>();
 		readMap(path);
 		setMapPath(path);
 	}
@@ -46,6 +50,14 @@ public class Map {
 
 	public LinkedList<Item> getListItems() {
 		return listItems;
+	}
+
+	public LinkedList<StaticObject> getListLightLamps() {
+		return listLightLamps;
+	}
+
+	public LinkedList<StaticObject> getListObjectsMiniMap() {
+		return listObjectsMiniMap;
 	}
 
 	public void readMap(String path) {
@@ -159,6 +171,12 @@ public class Map {
 		// new Point((int) tile.shape.getX(), (int) Math.abs(tile.shape.getY() -
 		// (tile.shape.getHeight() / 32))));
 		listStaticObjects.add(staticObject);
+		if (staticObject.getElement() == Element.LIGHTLAMP)
+			listLightLamps.add(staticObject);
+		if (!staticObject.getElement().equals(Element.GROUND)) {
+			
+			listObjectsMiniMap.add(staticObject);
+		}
 	}
 
 	public LinkedList<StaticObject> getListTile() {

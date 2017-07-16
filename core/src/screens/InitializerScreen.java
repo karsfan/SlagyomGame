@@ -61,13 +61,13 @@ public class InitializerScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.loadingMusic.pause();
-				game.loadingMusic.backgroundSound.loop(10.0f);
+				//game.loadingMusic.backgroundSound.loop(10.0f);
 				game.screenManager.menuScreen.menuMusic.stop();
 				game.screenManager.playScreen = new PlayScreen(game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected);
 				game.screenManager.setPlayScreen(game.screenManager.playScreen);
 				game.setScreen(game.screenManager.playScreen);
 				game.screenManager.currentState = State.PLAYING;
-				//Gdx.input.setInputProcessor(null);
+				Gdx.input.setInputProcessor(null);
 			}
 		});
 
@@ -147,7 +147,7 @@ public class InitializerScreen implements Screen {
 		
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			game.loadingMusic.pause();
-			game.loadingMusic.backgroundSound.loop(10.0f);
+			//game.loadingMusic.backgroundSound.loop(10.0f);
 			game.screenManager.menuScreen.menuMusic.stop();
 			game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected));
 			game.setScreen(game.screenManager.playScreen);

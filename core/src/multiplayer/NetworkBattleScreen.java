@@ -33,7 +33,6 @@ public class NetworkBattleScreen extends BattleScreen {
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		gameslagyom.batch.begin();
 		draw();
 		gameslagyom.batch.end();
@@ -91,6 +90,7 @@ public class NetworkBattleScreen extends BattleScreen {
 			gameslagyom.batch.draw(LoadingImage.getYouLoseImage(), 0, 0);
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void update(float dt) {
 		// System.out.println("Update NetBattleScreen");

@@ -38,6 +38,14 @@ public class NetworkWorld {
 		return otherPlayers;
 	}
 
+	public LinkedList<StaticObject> getListLightLamps() {
+		return map.getListLightLamps();
+	}
+
+	public LinkedList<StaticObject> getListObjectsMiniMap() {
+		return map.getListObjectsMiniMap();
+	}
+
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
 		boolean creata = false;
 		Iterator<Enemy> it1 = preEnemyHouse.enemy.iterator();
@@ -115,6 +123,5 @@ public class NetworkWorld {
 			}
 		}
 	}
-
 
 }

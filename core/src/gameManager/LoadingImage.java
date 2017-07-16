@@ -62,11 +62,12 @@ public class LoadingImage {
 	public static Texture miniMap;
 	public static Texture pointer;
 	public static Texture miniMapPointer;
-
+	public static Texture areFighting;
 	public static Pixmap cursor;
 	public static Pixmap noCursor;
 	public static Drawable dialog;
-
+	public static Texture miniMapPlayerPointer;
+	
 	public TextureRegion battleCharacterStand;
 	public TextureRegion battleFemaleCharacterStand;
 	public TextureRegion battleCharacterStandSword;
@@ -158,7 +159,7 @@ public class LoadingImage {
 		youWinImage = new Texture("res/youWin.png");
 		youLoseImage = new Texture("res/youLose.png");
 		dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
-
+		
 		// WORLD ITEM IMAGES
 		coinImage = new Texture("res/coin.png");
 		bluPotionImage = new Texture("res/bluePotion.png");
@@ -247,7 +248,8 @@ public class LoadingImage {
 		createBattleFrame(texture, enemyAnimation, enemyStand);
 
 		loadLoadingTexture();
-
+		areFighting = new Texture("res/areFighting.png");
+		miniMapPlayerPointer = new Texture("res/multiplayerPointer.png");
 	}
 
 	public void loadLoadingTexture() {

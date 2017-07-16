@@ -143,52 +143,7 @@ public class Bag {
 		}
 	}
 
-	public void useItem(Item item) {
-		if (item.getElement() == Element.POTION) {
-			switch (item.getLevel()) {
-			case FIRST:
-				if (!GameSlagyom.modalityMultiplayer){
-					Game.world.battle.character.health += 15;
-					if(Game.world.battle.character.health > 300)
-						Game.world.battle.character.health = 300;
-				}
-				else{
-					Client.networkWorld.battle.character.health += 45;
-					if(Client.networkWorld.battle.character.health > 300)
-						Client.networkWorld.battle.character.health = 300;
-				}
-				break;
-			case SECOND:
-				if (!GameSlagyom.modalityMultiplayer){
-					Game.world.battle.character.health += 25;
-					if(Game.world.battle.character.health > 300)
-						Game.world.battle.character.health = 300;
-				}
-				else{
-					Client.networkWorld.battle.character.health += 45;
-					if(Client.networkWorld.battle.character.health > 300)
-						Client.networkWorld.battle.character.health = 300;
-				}
-				break;
-			case THIRD:
-				if (!GameSlagyom.modalityMultiplayer){
-					Game.world.battle.character.health += 45;
-					if(Game.world.battle.character.health > 300)
-						Game.world.battle.character.health = 300;}
-				else{
-					Client.networkWorld.battle.character.health += 45;
-					if(Client.networkWorld.battle.character.health > 300)
-						Client.networkWorld.battle.character.health = 300;
-				}
-				break;
-			default:
-				System.out.println("potion non assegnata");
-				break;
-			}
-			removeItem(item.getElement(), item.getLevel());
-		}
-	}
-
+	
 	public void removeBomb(character.Weapon.Level level) {
 		Iterator<Bomb> bombIterator = bombe.iterator();
 		while (bombIterator.hasNext()) {

@@ -36,11 +36,13 @@ public class ServerHandler extends Thread {
 				String receivedMessage= reader.readLine();
 				if(receivedMessage.contains(" ")){
 					NetworkMessage message = new NetworkMessage(receivedMessage);
-					if(message.action == 2 || message.action == 3 || message.action == 5){
+					if(message.action == 2 || message.action == 3 || message.action == 5 || message.action == 6){
 						server.send(receivedMessage, message.IDreceiver);	
 					}
 					else{
-						server.send(receivedMessage);						
+						server.send(receivedMessage);
+						if(message.action == 10 && message.ID == ID)
+							server.connected.remove(this);
 					}
 				}
 			} catch (IOException e) {

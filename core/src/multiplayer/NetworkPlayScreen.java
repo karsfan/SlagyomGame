@@ -39,7 +39,6 @@ public class NetworkPlayScreen extends PlayScreen {
 		gamecam.position.x = client.networkWorld.player.getX();
 		gamecam.position.y = client.networkWorld.player.getY();
 		hud = new Hud(gameSlagyom);
-
 	}
 
 	@SuppressWarnings("static-access")
@@ -106,23 +105,7 @@ public class NetworkPlayScreen extends PlayScreen {
 		if (client.serverDisconnected)
 			gameSlagyom.screenManager.swapScreen(State.MENU);
 	}
-
-	// public static void drawDialog(final String text) {
-	// Drawable dialog = new TextureRegionDrawable(new TextureRegion(new
-	// Texture("res/dialogBox.png")));
-	// // if (hud.showDialog) {
-	// // Label dialogLabel = new Label(text, MenuScreen.skin);
-	// // hud.textTable.setSize(236 * 3, 47 * 4);
-	// // hud.textTable.setBackground(dialog);
-	// // hud.textTable.add(dialogLabel).top();
-	// // }
-	// }
-
-	public static void hideDialog() {
-		hud.textTable.clear();
-		hud.textTable.setBackground(noDialog);
-	}
-
+																																												
 	@SuppressWarnings("static-access")
 	public void update(float dt) {
 		moveCharacter(dt);

@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
 import gameManager.MenuControllerListener;
+import multiplayer.NetworkPlayScreen;
 
 public class PauseScreen implements Screen {
 
@@ -92,18 +93,13 @@ public class PauseScreen implements Screen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (!game.modalityMultiplayer) {
-					//Game.world.getThread().stop();
 					game.screenManager.playScreen.dispose();
+				} else {
+					int id = ((NetworkPlayScreen) game.screenManager.playScreen).client.networkWorld.player.ID;
+					((NetworkPlayScreen) game.screenManager.playScreen).client.writer
+							.println(10 + " " + id + " " + 0 + " " + 0 + " " + 0 + ";" + "111111" + ";");
+					((NetworkPlayScreen) game.screenManager.playScreen).client.writer.flush();
 				}
-				// else {
-				// int i =
-				// game.screenManager.networkPlayScreen.client.networkWorld.player.ID;
-				// System.out.println(game.screenManager.networkPlayScreen.client.networkWorld.player.ID);
-				// game.screenManager.multiplayerScreen.server
-				// .send(10 + " " + i + " " + 0 + " " + 0 + " " + 0 + ";" +
-				// "111111" + ";");
-				// game.screenManager.multiplayerScreen.server.connected.remove(ServerHandler.class);
-				// }
 				game.screenManager.menuScreen = new MenuScreen(game);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 			}
@@ -178,13 +174,15 @@ public class PauseScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-		
-//			game.screenManager.networkBattleScreen.client.writer.println(
-//					8 + " " + ((NetworkCharacterBattle) game.screenManager.networkBattleScreen.client.networkWorld.battle.character).ID
-//							+ " " + 0 + " " + 0 + " " + 0 + ";"
-//							+ ((NetworkCharacterBattle) game.screenManager.networkBattleScreen.client.networkWorld.battle.character).IDOtherPlayer
-//							+ ";");
-			//game.screenManager.networkBattleScreen.client.writer.flush();
+
+			// game.screenManager.networkBattleScreen.client.writer.println(
+			// 8 + " " + ((NetworkCharacterBattle)
+			// game.screenManager.networkBattleScreen.client.networkWorld.battle.character).ID
+			// + " " + 0 + " " + 0 + " " + 0 + ";"
+			// + ((NetworkCharacterBattle)
+			// game.screenManager.networkBattleScreen.client.networkWorld.battle.character).IDOtherPlayer
+			// + ";");
+			// game.screenManager.networkBattleScreen.client.writer.flush();
 			game.screenManager.swapScreen(game.screenManager.getPreviousState());
 		}
 

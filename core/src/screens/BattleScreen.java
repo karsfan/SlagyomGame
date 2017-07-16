@@ -24,6 +24,9 @@ import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
 import hud.BattleHud;
 import multiplayer.NetworkCharacterBattle;
+import staticObjects.Item;
+import staticObjects.Item.Level;
+import staticObjects.StaticObject.Element;
 
 public class BattleScreen implements Screen {
 
@@ -79,7 +82,6 @@ public class BattleScreen implements Screen {
 
 		gameslagyom.batch.draw(LoadingImage.getBattleBgImage(), 0, 0);
 
-
 		Fighting tmp1 = battle.enemy;
 		gameslagyom.batch.draw(gameslagyom.loadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
 				tmp1.getHeight());
@@ -91,12 +93,12 @@ public class BattleScreen implements Screen {
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.lanciata == true) {
-				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching), searching.getMainX(), searching.getMainY(),
-						searching.getWidth() + 10, searching.getHeight() + 10);
+				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching), searching.getMainX(),
+						searching.getMainY(), searching.getWidth() + 10, searching.getHeight() + 10);
 			}
 		}
 		Iterator<Bomb> bombIterator1 = ((Enemy) tmp1).getBombe().iterator();
-		
+
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
 			if (searching1.lanciata == true) {
@@ -111,7 +113,7 @@ public class BattleScreen implements Screen {
 	}
 
 	public void update(float dt) {
-		
+
 		if (!youWin && !youLose) {
 			handleInput(dt);
 			hud.update(dt);
@@ -119,7 +121,7 @@ public class BattleScreen implements Screen {
 				if (battle.character.getHealth() == 10) {
 					youLose = true;
 				} else {
-					youWin = true;					
+					youWin = true;
 					battle.character.bag.addPack((Pack) ((Enemy) battle.enemy).getWin_bonus());
 					gameslagyom.loadingMusic.cashSound.play(1.5f);
 					if (((Pack) ((Enemy) battle.enemy).getWin_bonus()).getNumberOf("POTIONLEV1") > 0) {
@@ -173,7 +175,6 @@ public class BattleScreen implements Screen {
 				}
 			}
 			hud.stage.addActor(packTable);
-
 		}
 		if (youWin || youLose)
 			if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
@@ -189,6 +190,23 @@ public class BattleScreen implements Screen {
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			gameslagyom.screenManager.swapScreen(State.PAUSE);
+		}
+		if (this.battle.character.health < 300) {
+			if (Gdx.input.isKeyJustPressed(Keys.NUM_1)
+					&& battle.character.bag.getNumberOf(Element.POTION, Level.FIRST) > 0) {
+				battle.character.useItem(new Item(Element.POTION, Level.FIRST));
+				gameslagyom.loadingMusic.upgradeSound.play();
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.NUM_2)
+					&& battle.character.bag.getNumberOf(Element.POTION, Level.SECOND) > 0) {
+				battle.character.useItem(new Item(Element.POTION, Level.SECOND));
+				gameslagyom.loadingMusic.upgradeSound.play();
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.NUM_3)
+					&& battle.character.bag.getNumberOf(Element.POTION, Level.THIRD) > 0) {
+				battle.character.useItem(new Item(Element.POTION, Level.THIRD));
+				gameslagyom.loadingMusic.upgradeSound.play();
+			}
 		}
 		moveCharacter(dt);
 	}
@@ -220,15 +238,13 @@ public class BattleScreen implements Screen {
 				if (Gdx.input.isKeyJustPressed(Keys.A)) {
 					gameslagyom.loadingMusic.swordSound.play();
 					battle.character.fightLeft(dt);
-				}
-				else
+				} else
 					battle.character.movesLeft(dt);
 			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 				if (Gdx.input.isKeyJustPressed(Keys.A)) {
-					gameslagyom.loadingMusic.swordSound.play();					
+					gameslagyom.loadingMusic.swordSound.play();
 					battle.character.fightRight(dt);
-				}
-				else
+				} else
 					battle.character.movesRight(dt);
 			} else {
 				battle.character.stand();

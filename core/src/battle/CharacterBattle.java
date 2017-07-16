@@ -7,6 +7,8 @@ import character.Bomb;
 import character.Player;
 import character.Weapon;
 import character.Weapon.Type;
+import staticObjects.Item;
+import staticObjects.StaticObject.Element;
 import world.Game;
 import world.GameConfig;
 
@@ -235,7 +237,6 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	public void caricaBomba(float dt) {
 		forza += 100 * dt;
-		System.out.println(forza);
 	}
 
 	public void lancia() {
@@ -246,9 +247,79 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 				bomba.lanciata = true;
 				bomba.lancia(forza, this);
 				bomba.id = "Player";
-				System.out.println(bomba.lanciata);
+				//System.out.println(bomba.lanciata);
 				break;
 			}
+		}
+	}
+//	public void useItem(Item item) {
+//		if (item.getElement() == Element.POTION) {
+//			switch (item.getLevel()) {
+//			case FIRST:
+//				if (!GameSlagyom.modalityMultiplayer){
+//					Game.world.battle.character.health += 15;
+//					if(Game.world.battle.character.health > 300)
+//						Game.world.battle.character.health = 300;
+//				}
+//				else{
+//					Client.networkWorld.battle.character.health += 15;
+//					if(Client.networkWorld.battle.character.health > 300)
+//						Client.networkWorld.battle.character.health = 300;
+//				}
+//				break;
+//			case SECOND:
+//				if (!GameSlagyom.modalityMultiplayer){
+//					Game.world.battle.character.health += 25;
+//					if(Game.world.battle.character.health > 300)
+//						Game.world.battle.character.health = 300;
+//				}
+//				else{
+//					Client.networkWorld.battle.character.health += 25;
+//					if(Client.networkWorld.battle.character.health > 300)
+//						Client.networkWorld.battle.character.health = 300;
+//				}
+//				break;
+//			case THIRD:
+//				if (!GameSlagyom.modalityMultiplayer){
+//					Game.world.battle.character.health += 45;
+//					if(Game.world.battle.character.health > 300)
+//						Game.world.battle.character.health = 300;}
+//				else{
+//					Client.networkWorld.battle.character.health += 45;
+//					if(Client.networkWorld.battle.character.health > 300)
+//						Client.networkWorld.battle.character.health = 300;
+//				}
+//				break;
+//			default:
+//				System.out.println("potion non assegnata");
+//				break;
+//			}
+//			removeItem(item.getElement(), item.getLevel());
+//		}
+//	}
+	public void useItem(Item item) {
+		if (item.getElement() == Element.POTION) {
+			switch (item.getLevel()) {
+			case FIRST:
+				health += 15;
+				if (health > 300)
+					health = 300;
+				break;
+			case SECOND:
+				health += 25;
+				if (health > 300)
+					health = 300;
+				break;
+			case THIRD:
+				health += 25;
+				if (health > 300)
+					health = 300;
+				break;
+			default:
+				System.out.println("potion non assegnata");
+				break;
+			}
+			bag.removeItem(item.getElement(), item.getLevel());
 		}
 	}
 

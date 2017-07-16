@@ -4,6 +4,8 @@ import character.DynamicObjects.StateDynamicObject;
 import character.Weapon;
 import character.Weapon.Level;
 import character.Weapon.Type;
+import staticObjects.Item;
+import staticObjects.StaticObject.Element;
 
 public class NetworkMessage {
 	int action;
@@ -14,6 +16,8 @@ public class NetworkMessage {
 	StateDynamicObject currentState;
 	Weapon.Type typeWeapon;
 	Weapon.Level levelWeapon;
+	Item.Level levelItem;
+	Element elementItem;
 
 	public NetworkMessage(String message) {
 		char[] charMessage = new char[message.length()];
@@ -77,7 +81,7 @@ public class NetworkMessage {
 		action = Integer.parseInt(actionString);
 		ID = Integer.parseInt(IDstring);
 		IDreceiver = Integer.parseInt(IDreceiverString);
-		if (action != 5) {
+		if (action != 5 && action != 6) {
 			x = Float.parseFloat(xString);
 			y = Float.parseFloat(yString);
 		}
@@ -104,6 +108,23 @@ public class NetworkMessage {
 				break;
 			case "lev3":
 				levelWeapon = Level.lev3;
+				break;
+			default:
+				break;
+			}
+		}
+		
+		if(action == 6){
+			elementItem = Element.POTION;
+			switch (yString) {
+			case "FIRST":
+				levelItem = Item.Level.FIRST;
+				break;
+			case "SECOND":
+				levelItem = Item.Level.SECOND;
+				break;
+			case "THIRD":
+				levelItem = Item.Level.THIRD;
 				break;
 			default:
 				break;

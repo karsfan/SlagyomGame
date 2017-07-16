@@ -15,6 +15,9 @@ import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
 import screens.BattleScreen;
 import screens.MenuScreen;
+import staticObjects.Item;
+import staticObjects.Item.Level;
+import staticObjects.StaticObject.Element;
 
 public class NetworkBattleScreen extends BattleScreen {
 	public Client client;
@@ -39,6 +42,10 @@ public class NetworkBattleScreen extends BattleScreen {
 		hud.stage.draw();
 		if (client.serverDisconnected)
 			gameslagyom.screenManager.swapScreen(State.MENU);
+		if(client.soundPotionBattle){
+			client.soundPotionBattle = false;
+			gameslagyom.loadingMusic.upgradeSound.play();
+		}
 	}
 
 	private void sendPrimaryWeapon() {
@@ -167,11 +174,52 @@ public class NetworkBattleScreen extends BattleScreen {
 				} else
 					gameslagyom.screenManager.swapScreen(State.PLAYING);
 			}
-
 	}
 
 	private void handleInput(float dt) {
 		moveCharacter(dt);
+		if (this.battle.character.health < 300) {
+			Item item = null;
+			if (Gdx.input.isKeyJustPressed(Keys.NUM_1)
+					&& battle.character.bag.getNumberOf(Element.POTION, Level.FIRST) > 0) {
+				item = new Item(Element.POTION, Level.FIRST);
+				battle.character.useItem(item);
+				battle.character.bag.removeItem(Element.POTION, Level.FIRST);
+				gameslagyom.loadingMusic.upgradeSound.play();
+				if (battle.enemy instanceof NetworkCharacterBattle) {
+					client.writer.println(6 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
+							+ Element.POTION.toString() + " " + Level.FIRST.toString() + " " + 0 + ";"
+							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.flush();
+				}
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.NUM_2)
+					&& battle.character.bag.getNumberOf(Element.POTION, Level.SECOND) > 0) {
+				item = new Item(Element.POTION, Level.SECOND);
+				battle.character.useItem(item);
+				battle.character.bag.removeItem(Element.POTION, Level.SECOND);
+				gameslagyom.loadingMusic.upgradeSound.play();
+				if (battle.enemy instanceof NetworkCharacterBattle) {
+					client.writer.println(6 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
+							+ Element.POTION.toString() + " " + Level.SECOND.toString() + " " + 0 + ";"
+							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.flush();
+				}
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.NUM_3)
+					&& battle.character.bag.getNumberOf(Element.POTION, Level.THIRD) > 0) {
+				item = new Item(Element.POTION, Level.THIRD);
+				battle.character.useItem(item);
+				battle.character.bag.removeItem(Element.POTION, Level.THIRD);
+				gameslagyom.loadingMusic.upgradeSound.play();
+				if (battle.enemy instanceof NetworkCharacterBattle) {
+					client.writer.println(6 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
+							+ Element.POTION.toString() + " " + Level.THIRD.toString() + " " + 0 + ";"
+							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.flush();
+				}
+			}
+		}
 	}
 
 	private void moveCharacter(float dt) {

@@ -22,7 +22,7 @@ public class Client {
 	public boolean sound = false;
 	public boolean text = false;
 	public String textDiaglog;
-
+	public boolean soundPotionBattle = false;
 	public Client(String name, GameSlagyom gameSlagyom) {
 		try {
 			socket = new Socket("localhost", 5555);

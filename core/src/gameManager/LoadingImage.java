@@ -67,7 +67,7 @@ public class LoadingImage {
 	public static Pixmap noCursor;
 	public static Drawable dialog;
 	public static Texture miniMapPlayerPointer;
-	
+
 	public TextureRegion battleCharacterStand;
 	public TextureRegion battleFemaleCharacterStand;
 	public TextureRegion battleCharacterStandSword;
@@ -108,7 +108,10 @@ public class LoadingImage {
 
 	// private static TextureRegion woman3Stand;
 	public Animation<TextureRegion>[] woman3Animation;
-
+	
+	public Animation<TextureRegion>[] otherPlayerAnimation;
+	public TextureRegion otherPlayerStand;
+	
 	public static Animation<TextureRegion> loadingAnimation;
 
 	// BAG IMAGE BUTTONS
@@ -159,7 +162,7 @@ public class LoadingImage {
 		youWinImage = new Texture("res/youWin.png");
 		youLoseImage = new Texture("res/youLose.png");
 		dialog = new TextureRegionDrawable(new TextureRegion(new Texture("res/dialogBox.png")));
-		
+
 		// WORLD ITEM IMAGES
 		coinImage = new Texture("res/coin.png");
 		bluPotionImage = new Texture("res/bluePotion.png");
@@ -198,6 +201,7 @@ public class LoadingImage {
 
 		// WORLD ANIMATIONS
 		playerAnimation = new Animation[4];
+		otherPlayerAnimation = new Animation[4];
 		enemyAnimation = new Animation[4];
 		man1Animation = new Animation[4];
 		man2Animation = new Animation[4];
@@ -219,8 +223,8 @@ public class LoadingImage {
 		man1Stand = new TextureRegion();
 		woman1Stand = new TextureRegion();
 		woman2Stand = new TextureRegion();
-
-		texture = new Texture("bpj.png");
+		otherPlayerStand = new TextureRegion();
+		texture = new Texture("Character/walking.png");
 		createFrame(texture, playerAnimation, playerStand);
 
 		texture = new Texture("notPlaying.png");
@@ -231,6 +235,9 @@ public class LoadingImage {
 
 		texture = new Texture("NotPlaying/woman2.png");
 		createFrame(texture, woman2Animation, woman2Stand);
+
+		texture = new Texture("Enemy/walking.png");
+		createFrame(texture, otherPlayerAnimation, otherPlayerStand);
 
 		texture = new Texture("Character/spear.png");
 		createBattleFrame(texture, battleCharacterAnimationSpearLev1, battleCharacterStand);
@@ -482,7 +489,7 @@ public class LoadingImage {
 			if (((NetworkPlayer) ob).player)
 				animation = playerAnimation;
 			else
-				animation = man1Animation;
+				animation = otherPlayerAnimation;
 			break;
 		case "Man":
 			animation = man1Animation;
@@ -585,7 +592,7 @@ public class LoadingImage {
 			if (((NetworkPlayer) ob).player)
 				textureRegion = playerStand;
 			else
-				textureRegion = man1Stand;
+				textureRegion = otherPlayerStand;
 			break;
 		case "Man":
 			textureRegion = man1Stand;

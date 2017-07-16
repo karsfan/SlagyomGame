@@ -114,7 +114,7 @@ public class ClientHandler extends Thread {
 											client.networkWorld.battle.enemy.health = 0;
 								client.networkWorld.otherPlayers.remove(player);
 								client.text = true;
-								client.textDiaglog = "Il giocatore con ID "+player.ID+" si e' scollegato";
+								client.textDiaglog = "Il player con ID " + player.ID + " ha abbandonato la partita";
 								break;
 							}
 						} else if (message.action >= 21 && message.action <= 26) {
@@ -169,11 +169,7 @@ public class ClientHandler extends Thread {
 						} else if (message.action == 26) {
 							item = new Item(message.x, message.y, StaticObject.Element.COIN, Item.Level.FIRST);
 						}
-						// while(!client.canModify){}
-						// //client.canDraw = false;
-						// if(item!=null)
-						// client.networkWorld.getListItems().remove(item);
-						// client.canDraw = true;
+						
 						for (Item itemeliminare : client.networkWorld.getListItems()) {
 							if (itemeliminare.getX() == item.getX() && itemeliminare.getY() == item.getY()
 									&& itemeliminare.getElement() == item.getElement()
@@ -226,10 +222,14 @@ public class ClientHandler extends Thread {
 						}
 					} else if (message.action == 5) {
 						if (client.networkWorld.player.ID == message.IDreceiver) {
-							System.out.println("Ricevo che la nuova arma dell'avversario e' " + message.typeWeapon + " "
-									+ message.levelWeapon);
 							((NetworkCharacterBattle) client.networkWorld.battle.enemy).primary_weapon = new Weapon(
 									message.levelWeapon, message.typeWeapon);
+						}
+					} else if (message.action == 6) {
+						if (client.networkWorld.player.ID == message.IDreceiver) {
+							Item item = new Item(message.elementItem, message.levelItem);
+							((NetworkCharacterBattle) client.networkWorld.battle.enemy).useItem(item);
+							client.soundPotionBattle = true;
 						}
 					}
 				}

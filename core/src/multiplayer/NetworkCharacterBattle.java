@@ -7,6 +7,8 @@ import character.Bomb;
 import character.Weapon;
 import character.Weapon.Level;
 import character.Weapon.Type;
+import staticObjects.Item;
+import staticObjects.StaticObject.Element;
 import world.GameConfig;
 
 public class NetworkCharacterBattle extends CharacterBattle {
@@ -18,6 +20,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	public Bomb bomb;
 	public boolean bombaLanciata = false;
 	public boolean weaponChanged = false;
+
 	public NetworkCharacterBattle(NetworkPlayer player) {
 		super(player);
 		this.player = player.player;
@@ -82,7 +85,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 						x = (Client.networkWorld.battle.character.getX()
 								+ Client.networkWorld.battle.character.getWidth() / 2);
 				}
-			}else{
+			} else {
 				if (collide() && x < Client.networkWorld.battle.enemy.getX())
 					x = (Client.networkWorld.battle.enemy.getX() - getWidth() / 2);
 				else if (collide() && x > Client.networkWorld.battle.enemy.getX())
@@ -101,7 +104,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 				((Bomb) ob).update(dt);
 				if (ob.morta) {
 					it1.remove();
-					//System.out.println("Bomba player eliminata");
+					// System.out.println("Bomba player eliminata");
 					continue;
 				}
 			}
@@ -206,6 +209,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 		else
 			setStateTimer(0);
 	}
+
 	public void lancia() {
 		Iterator<Bomb> itBomb = bag.bombe.iterator();
 		while (itBomb.hasNext()) {
@@ -215,13 +219,40 @@ public class NetworkCharacterBattle extends CharacterBattle {
 				bomb = bomba;
 				bomba.lancia(forza, this);
 				bombaLanciata = true;
-				if(Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle)
-				bomba.id = String.valueOf(ID);
+				if (Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle)
+					bomba.id = String.valueOf(ID);
 				else
 					bomba.id = "Player";
-			//	System.out.println(bomba.lanciata);
+				// System.out.println(bomba.lanciata);
 				break;
 			}
 		}
 	}
+
+	public void useItem(Item item) {
+		if (item.getElement() == Element.POTION) {
+			switch (item.getLevel()) {
+			case FIRST:
+				health += 15;
+				if (health > 300)
+					health = 300;
+				break;
+			case SECOND:
+				health += 25;
+				if (health > 300)
+					health = 300;
+				break;
+			case THIRD:
+				health += 25;
+				if (health > 300)
+					health = 300;
+				break;
+			default:
+				System.out.println("potion non assegnata");
+				break;
+			}
+			
+		}
+	}
+
 }

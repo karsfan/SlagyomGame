@@ -1,7 +1,6 @@
 package hud;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import battle.Battle;
 import gameManager.GameSlagyom;
 import screens.MenuScreen;
-import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
 
@@ -120,22 +118,6 @@ public class BattleHud {
 		bluePotion.setText("x" + String.valueOf(this.battle.character.bag.getNumberOf(Element.POTION, Level.FIRST)));
 		greenPotion.setText("x" + String.valueOf(this.battle.character.bag.getNumberOf(Element.POTION, Level.SECOND)));
 		redPotion.setText("x" + String.valueOf(this.battle.character.bag.getNumberOf(Element.POTION, Level.THIRD)));
-		if (this.battle.character.health < 300) {
-			if (Gdx.input.isKeyJustPressed(Keys.NUM_1)
-					&& this.battle.character.bag.getNumberOf(Element.POTION, Level.FIRST) > 0) {
-				this.battle.character.bag.useItem(new Item(Element.POTION, Level.FIRST));
-				gameSlagyom.loadingMusic.upgradeSound.play();
-			}
-			if (Gdx.input.isKeyJustPressed(Keys.NUM_2)
-					&& this.battle.character.bag.getNumberOf(Element.POTION, Level.SECOND) > 0) {
-				this.battle.character.bag.useItem(new Item(Element.POTION, Level.SECOND));
-				gameSlagyom.loadingMusic.upgradeSound.play();
-			}
-			if (Gdx.input.isKeyJustPressed(Keys.NUM_3)
-					&& this.battle.character.bag.getNumberOf(Element.POTION, Level.THIRD) > 0) {
-				this.battle.character.bag.useItem(new Item(Element.POTION, Level.THIRD));
-				gameSlagyom.loadingMusic.upgradeSound.play();
-			}
-		}
+	
 	}
 }

@@ -101,7 +101,7 @@ public class BagScreen implements Screen {
 				if (game.screenManager.getPreviousState() == State.BATTLE)
 					if (potionsTable.isVisible()) {
 						if (!game.modalityMultiplayer)
-							Game.world.player.bag.useItem(itemSelected);
+							Game.world.battle.character.useItem(itemSelected);
 						setTextPotions();
 					}
 				if (weaponsTable.isVisible()) {

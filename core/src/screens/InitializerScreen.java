@@ -131,7 +131,6 @@ public class InitializerScreen implements Screen {
 
 	}
 
-	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);

@@ -99,7 +99,7 @@ public class NetworkWorld {
 			// tutti i nemici, se lo sono allora partirà la battaglia con il
 			// boss
 		else if (enemyHome.getElement() == Element.CASTLE) {
-			boolean creata = false;
+			//boolean creata = false;
 			while (it.hasNext()) {
 				StaticObject ob = (StaticObject) it.next();
 				if (ob instanceof EnemyHome && ob.getElement() == Element.TEMPLE) {
@@ -107,7 +107,7 @@ public class NetworkWorld {
 					while (it1.hasNext()) {
 						Enemy ob1 = it1.next();
 						if (!ob1.morto) {
-							creata = true;
+							//creata = true;
 							battle = new NetworkBattle(player, ob1);
 							break;
 						}

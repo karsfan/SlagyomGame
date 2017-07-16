@@ -36,6 +36,8 @@ public class NetworkBattleScreen extends BattleScreen {
 		draw();
 		gameslagyom.batch.end();
 		hud.stage.draw();
+		if (client.serverDisconnected)
+			gameslagyom.screenManager.swapScreen(State.MENU);
 	}
 
 	private void draw() {
@@ -89,7 +91,6 @@ public class NetworkBattleScreen extends BattleScreen {
 				if (battle.character.getHealth() <= 0) {
 					youLose = true;
 				} else {
-					System.out.println("haiVinto");
 					youWin = true;
 					Client.networkWorld.player.bag.addPack(((NetworkBattle) battle).win_bonus);
 					gameslagyom.loadingMusic.cashSound.play(1.5f);
@@ -147,7 +148,12 @@ public class NetworkBattleScreen extends BattleScreen {
 		if (youWin || youLose)
 			if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 				if (battle.character instanceof NetworkCharacterBattle) {
+					if (youLose) {
+						((NetworkPlayScreen) gameslagyom.screenManager.playScreen).youLose = true;
+					}
 					gameslagyom.screenManager.swapScreen(State.PLAYING);
+					client.networkWorld.player.isFighting = false;
+					((NetworkPlayScreen) gameslagyom.screenManager.playScreen).sendUpdate();
 				} else
 					gameslagyom.screenManager.swapScreen(State.PLAYING);
 			}
@@ -155,12 +161,6 @@ public class NetworkBattleScreen extends BattleScreen {
 	}
 
 	private void handleInput(float dt) {
-		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			client.writer.println(9 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + 0 + " " + 0 + " " + 0
-					+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
-			client.writer.flush();
-			gameslagyom.screenManager.swapScreen(State.PAUSE);
-		}
 		moveCharacter(dt);
 	}
 
@@ -169,6 +169,15 @@ public class NetworkBattleScreen extends BattleScreen {
 		if (Gdx.input.isKeyJustPressed(Keys.O)) {
 			System.out.println("SWap");
 			battle.character.swapWeapon();
+			if (battle.enemy instanceof NetworkCharacterBattle) {
+				if (((NetworkCharacterBattle) battle.character).weaponChanged) {
+					client.writer.println(5 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
+							+ battle.character.primary_weapon.getType() + " " + battle.character.primary_weapon.getLevel() + " "
+							+ 0 + ";"
+							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.flush();
+				}
+			}
 		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			battle.character.caricaBomba(dt);
@@ -176,51 +185,65 @@ public class NetworkBattleScreen extends BattleScreen {
 		} else {
 			if (battle.character.lanciaBomba) {
 				battle.character.lancia();
-				if (((NetworkCharacterBattle) battle.character).bombaLanciata) {
-					client.writer.println(3 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + battle.character.getX()+ " "
-							+ battle.character.forza + " " + ((NetworkCharacterBattle) battle.character).bomb.level + ";"
-							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
-					client.writer.flush();
-					System.out.println(client.networkWorld.battle.enemy.x - client.networkWorld.battle.character.x);
+				if (battle.enemy instanceof NetworkCharacterBattle) {
+					if (((NetworkCharacterBattle) battle.character).bombaLanciata) {
+						client.writer.println(3 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
+								+ battle.character.getX() + " " + battle.character.forza + " "
+								+ ((NetworkCharacterBattle) battle.character).bomb.level + ";"
+								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+						client.writer.flush();
+					}
 				}
-				System.out.println("lancia");
 				battle.character.lanciaBomba = false;
 				battle.character.forza = 50;
-				((NetworkCharacterBattle)battle.character).bombaLanciata = false;
-			}
-			else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
+				((NetworkCharacterBattle) battle.character).bombaLanciata = false;
+			} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
 				battle.character.jump(dt);
-				client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
-						+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.JUMPING + ";"
-						+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
-				client.writer.flush();
+				if (battle.enemy instanceof NetworkCharacterBattle) {
+					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.JUMPING + ";"
+							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.flush();
+				}
 			} else if (Gdx.input.isKeyPressed(Keys.LEFT) && !battle.character.fighting) {
 				if (Gdx.input.isKeyJustPressed(Keys.A)) {
 					battle.character.fightLeft(dt);
-					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
-							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.FIGHTINGRIGHT
-							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
-					client.writer.flush();
+					if (battle.enemy instanceof NetworkCharacterBattle) {
+						client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+								+ battle.character.getY() + " "
+								+ character.DynamicObjects.StateDynamicObject.FIGHTINGRIGHT + ";"
+								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+						client.writer.flush();
+					}
 				} else {
 					battle.character.movesLeft(dt);
-					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
-							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGRIGHT
-							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
-					client.writer.flush();
+					if (battle.enemy instanceof NetworkCharacterBattle) {
+						client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+								+ battle.character.getY() + " "
+								+ character.DynamicObjects.StateDynamicObject.RUNNINGRIGHT + ";"
+								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+						client.writer.flush();
+					}
 				}
 			} else if (Gdx.input.isKeyPressed(Keys.RIGHT) && !battle.character.fighting) {
 				if (Gdx.input.isKeyJustPressed(Keys.A)) {
 					battle.character.fightRight(dt);
-					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
-							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.FIGHTINGLEFT
-							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
-					client.writer.flush();
+					if (battle.enemy instanceof NetworkCharacterBattle) {
+						client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+								+ battle.character.getY() + " "
+								+ character.DynamicObjects.StateDynamicObject.FIGHTINGLEFT + ";"
+								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+						client.writer.flush();
+					}
 				} else {
 					battle.character.movesRight(dt);
-					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
-							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGLEFT
-							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
-					client.writer.flush();
+					if (battle.enemy instanceof NetworkCharacterBattle) {
+						client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+								+ battle.character.getY() + " "
+								+ character.DynamicObjects.StateDynamicObject.RUNNINGLEFT + ";"
+								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+						client.writer.flush();
+					}
 				}
 			} else {
 				battle.character.stand();

@@ -142,7 +142,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	}
 
 	boolean loading = true;
-	float loadingTimer = 0;
+	protected float loadingTimer = 0;
 
 	@Override
 	public void render(float delta) {

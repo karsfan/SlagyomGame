@@ -167,17 +167,22 @@ public class Enemy extends Fighting {
 
 	public void updateEnemyHard(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0)
-				|| (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0)) {
+		if ((x - Game.world.battle.character.getX()
+				- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
+				&& x - Game.world.battle.character.getX() > 0)
+				|| (Game.world.battle.character.getX() + Game.world.battle.character.width / 2
+						- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0)) {
 
 			if (rand < 15 && Game.world.battle.character.fighting)
 				jump(dt);
 			if (rand > 15 && rand < 30 && Game.world.battle.character.fighting) {
 				setState(StateDynamicObject.DEFENDING);
-			} else if (x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0
-					&& rand < 90)
+			} else if (x - Game.world.battle.character.getX()
+					- Game.world.battle.character.width < Game.world.battle.character.width / 3
+					&& x - Game.world.battle.character.getX() > 0 && rand < 90)
 				fightLeft();
-			else if (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0
+			else if (Game.world.battle.character.getX() + Game.world.battle.character.width
+					- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0
 					&& rand < 90)
 				fightRight();
 		} else if (Game.world.battle.character.getX() > x && rand < 90)
@@ -211,17 +216,22 @@ public class Enemy extends Fighting {
 
 	public void updateEnemyMedium(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0)
-				|| (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0)) {
+		if ((x - Game.world.battle.character.getX()
+				- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
+				&& x - Game.world.battle.character.getX() > 0)
+				|| (Game.world.battle.character.getX() + Game.world.battle.character.width / 2
+						- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0)) {
 
 			if (rand < 10 && Game.world.battle.character.fighting)
 				jump(dt);
 			else if (rand > 10 && rand < 25 && Game.world.battle.character.fighting)
 				setState(StateDynamicObject.DEFENDING);
-			else if (x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0
-					&& rand < 55)
+			else if (x - Game.world.battle.character.getX()
+					- Game.world.battle.character.width < Game.world.battle.character.width / 3
+					&& x - Game.world.battle.character.getX() > 0 && rand < 55)
 				fightLeft();
-			else if (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0
+			else if (Game.world.battle.character.getX() + Game.world.battle.character.width
+					- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0
 					&& rand < 55)
 				fightRight();
 
@@ -234,22 +244,28 @@ public class Enemy extends Fighting {
 
 	public void updateEnemyEasy(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0)
-				|| (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0)) {
+		if ((x - Game.world.battle.character.getX()
+				- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
+				&& x - Game.world.battle.character.getX() > 0)
+				|| (Game.world.battle.character.getX() + Game.world.battle.character.width / 2
+						- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0)) {
 			if (rand < 5 && Game.world.battle.character.fighting)
 				jump(dt);
 			else if (rand > 5 && rand < 20 && Game.world.battle.character.fighting)
 				setState(StateDynamicObject.DEFENDING);
-			else if (x - Game.world.battle.character.getX() < 100 && x - Game.world.battle.character.getX() > 0
-					&& rand < 40)
+			else if (x - Game.world.battle.character.getX()
+					- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
+					&& x - Game.world.battle.character.getX() > 0 && rand < 40)
 				fightLeft();
-			else if (Game.world.battle.character.getX() - x < 100 && Game.world.battle.character.getX() - x > 0
+			else if (Game.world.battle.character.getX() + Game.world.battle.character.width / 2
+					- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0
 					&& rand < 40)
 				fightRight();
 		} else if (Game.world.battle.character.getX() > x && rand < 50)
 			movesRight(dt);
 		else if (x > Game.world.battle.character.getX() && rand < 50)
 			movesLeft(dt);
+
 	}
 
 	public void fightRight() {

@@ -17,6 +17,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	public boolean fightingRight = false;
 	public Bomb bomb;
 	public boolean bombaLanciata = false;
+	public boolean weaponChanged = false;
 	public NetworkCharacterBattle(NetworkPlayer player) {
 		super(player);
 		this.player = player.player;
@@ -100,7 +101,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 				((Bomb) ob).update(dt);
 				if (ob.morta) {
 					it1.remove();
-					System.out.println("Bomba player eliminata");
+					//System.out.println("Bomba player eliminata");
 					continue;
 				}
 			}
@@ -119,6 +120,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 				width = 200;
 			else
 				width = 120;
+			weaponChanged = true;
 		}
 	}
 
@@ -209,8 +211,11 @@ public class NetworkCharacterBattle extends CharacterBattle {
 				bomb = bomba;
 				bomba.lancia(forza, this);
 				bombaLanciata = true;
+				if(Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle)
 				bomba.id = String.valueOf(ID);
-				System.out.println(bomba.lanciata);
+				else
+					bomba.id = "Player";
+			//	System.out.println(bomba.lanciata);
 				break;
 			}
 		}

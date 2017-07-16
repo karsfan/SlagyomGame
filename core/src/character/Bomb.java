@@ -125,7 +125,7 @@ public class Bomb extends Weapon implements ICollidable {
 							|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
 									|| enemy.getY() > mainY + getHeight()))) {
 						((Fighting) enemy).decreaseHealth(this);
-						System.out.println("collissione con il nemico");
+						//System.out.println("collissione con il nemico");
 						return true;
 					}
 				CharacterBattle player = Client.networkWorld.battle.character;
@@ -134,8 +134,7 @@ public class Bomb extends Weapon implements ICollidable {
 							|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
 									|| player.getY() > mainY + getHeight()))) {
 						player.decreaseHealth(this);
-						System.out.println(id+String.valueOf(((NetworkCharacterBattle) Client.networkWorld.battle.character).ID));
-						System.out.println("collissione della bomba con il player11");
+						//System.out.println("collissione della bomba con il player11");
 						return true;
 					}
 			} else {
@@ -145,7 +144,7 @@ public class Bomb extends Weapon implements ICollidable {
 							|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
 									|| enemy.getY() > mainY + getHeight()))) {
 						((Fighting) enemy).decreaseHealth(this);
-						System.out.println("collissione con il nemico");
+						//System.out.println("collissione con il nemico");
 						return true;
 					}
 				CharacterBattle player = Client.networkWorld.battle.character;
@@ -154,7 +153,7 @@ public class Bomb extends Weapon implements ICollidable {
 							|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
 									|| player.getY() > mainY + getHeight()))) {
 						player.decreaseHealth(this);
-						System.out.println("collissione della bomba con il player");
+						//System.out.println("collissione della bomba con il player");
 						return true;
 					}
 			}

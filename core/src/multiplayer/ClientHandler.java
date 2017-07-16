@@ -7,8 +7,10 @@ import java.net.Socket;
 
 import character.Bomb;
 import character.DynamicObjects.StateDynamicObject;
+import character.Weapon;
 import character.Weapon.Level;
 import character.Weapon.Type;
+import gameManager.GameSlagyom;
 import staticObjects.Item;
 import staticObjects.StaticObject;
 import world.GameConfig;
@@ -34,6 +36,7 @@ public class ClientHandler extends Thread {
 		while (true) {
 			try {
 				String receivedMessage = reader.readLine();
+				// System.out.println(receivedMessage);
 				if (!receivedMessage.contains(" ")) {
 					if (!client.initialize) {
 						// System.out.println(client.networkWorld.player.name);
@@ -43,12 +46,21 @@ public class ClientHandler extends Thread {
 						if (client.networkWorld.player.ID % 2 == 0) {
 							client.networkWorld.player
 									.setX((int) (GameConfig.WIDTH / 2 - client.networkWorld.player.ID * 40));
-							client.networkWorld.player.setY((int) (GameConfig.HEIGHT / 2));
+							client.networkWorld.player
+									.setY((int) (GameConfig.HEIGHT / 2 + client.networkWorld.player.ID * 40));
+							while (client.networkWorld.player.collide()) {
+								client.networkWorld.player.x -= 10;
+								client.networkWorld.player.y -= 10;
+							}
 						} else {
 							client.networkWorld.player
 									.setX((int) (GameConfig.WIDTH / 2 + client.networkWorld.player.ID * 40));
 							client.networkWorld.player
 									.setY((int) (GameConfig.HEIGHT / 2 - client.networkWorld.player.ID * 40));
+							while (client.networkWorld.player.collide()) {
+								client.networkWorld.player.x += 10;
+								client.networkWorld.player.y += 10;
+							}
 						}
 					} else if (receivedMessage.equals("ok")) {
 						client.go = true;
@@ -60,10 +72,18 @@ public class ClientHandler extends Thread {
 							otherPlayer.ID = ID;
 							if (ID % 2 == 0) {
 								otherPlayer.setX((int) (GameConfig.WIDTH / 2 - ID * 40));
-								otherPlayer.setY((int) (GameConfig.HEIGHT / 2));
+								otherPlayer.setY((int) (GameConfig.HEIGHT / 2 + ID * 40));
+								while (otherPlayer.collide()) {
+									otherPlayer.x -= 10;
+									otherPlayer.y -= 10;
+								}
 							} else {
 								otherPlayer.setX((int) (GameConfig.WIDTH / 2 + ID * 40));
 								otherPlayer.setY((int) (GameConfig.HEIGHT / 2 - ID * 40));
+								while (otherPlayer.collide()) {
+									otherPlayer.x += 10;
+									otherPlayer.y += 10;
+								}
 							}
 							client.networkWorld.otherPlayers.add(otherPlayer);
 							System.out.println("Creo un personaggio");
@@ -73,24 +93,42 @@ public class ClientHandler extends Thread {
 
 					NetworkMessage message = new NetworkMessage(receivedMessage);
 					for (NetworkPlayer player : client.networkWorld.otherPlayers) {
-						if (message.action == 0 ) {
+						if (message.action == 0) {
 							if (player.ID == message.ID) {
 								player.x = message.x;
 								player.y = message.y;
 								player.setState(message.currentState);
 								break;
 							}
+						} else if (message.action == 1) {
+							if (player.ID == message.ID)
+								player.isFighting = true;
+							else if (player.ID == message.IDreceiver)
+								player.isFighting = true;
 						} else if (message.action == 10) {
 							if (player.ID == message.ID) {
 								if (message.ID == 0)
 									client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+								if (client.networkWorld.player.isFighting)
+									if (client.networkWorld.battle.enemy instanceof NetworkCharacterBattle)
+										if (((NetworkCharacterBattle) client.networkWorld.battle.enemy).ID == message.ID)
+											client.networkWorld.battle.enemy.health = 0;
 								client.networkWorld.otherPlayers.remove(player);
 								break;
 							}
-						}else if(message.action>=21 && message.action<=26){
+						} else if (message.action >= 21 && message.action <= 26) {
 							if (player.ID == message.ID) {
 								player.setState(message.currentState);
-								
+
+							}
+						} else if (message.action == 4) {
+							System.out.println("ricevuto");
+							if (player.ID == message.ID) {
+								player.health = (int) message.x;
+								player.isFighting = false;
+								if (player.health <= 0)
+									client.networkWorld.otherPlayers.remove(player);
+								break;
 							}
 						}
 					}
@@ -130,17 +168,16 @@ public class ClientHandler extends Thread {
 						} else if (message.action == 26) {
 							item = new Item(message.x, message.y, StaticObject.Element.COIN, Item.Level.FIRST);
 						}
-//						while(!client.canModify){}
-//						//client.canDraw = false;
-//						if(item!=null)
-//							client.networkWorld.getListItems().remove(item);
-						//client.canDraw = true;
+						// while(!client.canModify){}
+						// //client.canDraw = false;
+						// if(item!=null)
+						// client.networkWorld.getListItems().remove(item);
+						// client.canDraw = true;
 						for (Item itemeliminare : client.networkWorld.getListItems()) {
 							if (itemeliminare.getX() == item.getX() && itemeliminare.getY() == item.getY()
 									&& itemeliminare.getElement() == item.getElement()
 									&& itemeliminare.getLevel() == item.getLevel()) {
 								while (!client.canModify) {
-									System.out.println("Fermo");
 								}
 								client.canModify = false;
 								client.networkWorld.getListItems().remove(itemeliminare);
@@ -165,7 +202,6 @@ public class ClientHandler extends Thread {
 							} else if (message.currentState == StateDynamicObject.RUNNINGRIGHT) {
 								client.networkWorld.battle.enemy.movesRight(message.x);
 							} else if (message.currentState == StateDynamicObject.FIGHTINGLEFT) {
-								System.out.println("fightLeft");
 								((NetworkCharacterBattle) client.networkWorld.battle.enemy).fightLeft(message.x);
 							} else if (message.currentState == StateDynamicObject.FIGHTINGRIGHT) {
 								((NetworkCharacterBattle) client.networkWorld.battle.enemy).fightRight(message.x);
@@ -174,26 +210,33 @@ public class ClientHandler extends Thread {
 							}
 						}
 
-					} else if(message.action == 3){
-						if(client.networkWorld.player.ID == message.IDreceiver){
+					} else if (message.action == 3) {
+						if (client.networkWorld.player.ID == message.IDreceiver) {
 							Bomb bomb = null;
-							if(message.x == 1)
+							if (message.x == 1)
 								bomb = new Bomb(Level.lev1, Type.Bomba);
-							else if(message.x == 2)
+							else if (message.x == 2)
 								bomb = new Bomb(Level.lev1, Type.Bomba);
-							else if(message.x == 3)
+							else if (message.x == 3)
 								bomb = new Bomb(Level.lev1, Type.Bomba);
 							((NetworkCharacterBattle) client.networkWorld.battle.enemy).bag.add(bomb);
-							System.out.println(message.y);
-							System.out.println(client.networkWorld.battle.enemy.x - client.networkWorld.battle.character.x);
 							((NetworkCharacterBattle) client.networkWorld.battle.enemy).forza = (int) message.y;
 							((NetworkCharacterBattle) client.networkWorld.battle.enemy).lancia();
+						}
+					} else if (message.action == 5) {
+						if (client.networkWorld.player.ID == message.IDreceiver) {
+							System.out.println("Ricevo che la nuova arma dell'avversario e' " + message.typeWeapon + " "
+									+ message.levelWeapon);
+							((NetworkCharacterBattle) client.networkWorld.battle.enemy).primary_weapon = new Weapon(
+									message.levelWeapon, message.typeWeapon);
 						}
 					}
 				}
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				client.serverDisconnected = true;
+				// e.printStackTrace();
+				break;
 			}
 
 		}

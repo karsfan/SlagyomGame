@@ -1,19 +1,25 @@
 package multiplayer;
 
 import character.DynamicObjects.StateDynamicObject;
+import character.Weapon;
+import character.Weapon.Level;
+import character.Weapon.Type;
 
 public class NetworkMessage {
 	int action;
 	int ID;
 	float x;
-	float  y;
+	float y;
 	int IDreceiver;
 	StateDynamicObject currentState;
+	Weapon.Type typeWeapon;
+	Weapon.Level levelWeapon;
 
 	public NetworkMessage(String message) {
 		char[] charMessage = new char[message.length()];
 		message.getChars(0, message.length(), charMessage, 0);
-		String actionString = "", IDstring = "", xString = "", yString = "", currentStateString = "", IDreceiverString="";
+		String actionString = "", IDstring = "", xString = "", yString = "", currentStateString = "",
+				IDreceiverString = "";
 		int i = 0;
 		for (; charMessage[i] != ' '; i++)
 			actionString += charMessage[i];
@@ -30,7 +36,7 @@ public class NetworkMessage {
 		for (; charMessage[i] != ';'; i++)
 			currentStateString += charMessage[i];
 		i++;
-		for(; charMessage[i] != ';';i++)
+		for (; charMessage[i] != ';'; i++)
 			IDreceiverString += charMessage[i];
 		switch (currentStateString) {
 		case "RUNNINGRIGHT":
@@ -64,16 +70,48 @@ public class NetworkMessage {
 			x = 3;
 			break;
 		default:
-			//System.out.println("Errore codifica currentState nel messaggio. CurrentState: "+currentStateString);
+			// System.out.println("Errore codifica currentState nel messaggio.
+			// CurrentState: "+currentStateString);
 			break;
 		}
 		action = Integer.parseInt(actionString);
 		ID = Integer.parseInt(IDstring);
 		IDreceiver = Integer.parseInt(IDreceiverString);
-		x = Float.parseFloat(xString);
-		y = Float.parseFloat(yString);
-		
-		//System.out.println("Messaggio "+actionString+" "+ID+" "+x+" "+y+currentState);
+		if (action != 5) {
+			x = Float.parseFloat(xString);
+			y = Float.parseFloat(yString);
+		}
+		if (action == 5) {
+			switch (xString) {
+			case "Spear":
+				typeWeapon = Type.Spear;
+				break;
+			case "Sword":
+				typeWeapon = Type.Sword;
+				break;
+			case "Bow":
+				typeWeapon = Type.Bow;
+				break;
+			default:
+				break;
+			}
+			switch (yString) {
+			case "lev1":
+				levelWeapon = Level.lev1;
+				break;
+			case "lev2":
+				levelWeapon = Level.lev2;
+				break;
+			case "lev3":
+				levelWeapon = Level.lev3;
+				break;
+			default:
+				break;
+			}
+		}
+		// System.out.println(message);
+		// System.out.println("Messaggio "+actionString+" "+ID+" "+x+"
+		// "+y+currentState);
 	}
 
 }

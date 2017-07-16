@@ -48,7 +48,6 @@ public class Battle {
 //	}
 
 	public boolean update(float dt) {
-		System.out.println("update ");
 		if (enemy.health <= 0) {
 			player.health = character.health;
 			enemyOri.morto = true;

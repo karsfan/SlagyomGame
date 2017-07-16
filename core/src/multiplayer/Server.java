@@ -1,3 +1,4 @@
+
 package multiplayer;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class Server {
 	int numPlayer;
 
 	public Server(int port, int numPlayer) {
-		this.numPlayer = 2;
+		this.numPlayer = 3;
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) {
@@ -76,7 +77,6 @@ public class Server {
 	}
 
 	public void send(String message) {
-		//System.out.println(message);
 		for (ServerHandler serverHandler : connected) {
 			serverHandler.writer.println(message);
 			serverHandler.writer.flush();

@@ -70,8 +70,8 @@ public class LoadingImage {
 
 	public TextureRegion battleCharacterStand;
 	public TextureRegion battleFemaleCharacterStand;
-	public TextureRegion battleCharacterStandSword;
-	public TextureRegion battleFemaleCharacterStandSword;
+	// public TextureRegion battleCharacterStandSword;
+	// public TextureRegion battleFemaleCharacterStandSword;
 	public Animation<TextureRegion>[] battleCharacterAnimationSpearLev1;
 	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSpearLev1;
 	public Animation<TextureRegion>[] battleCharacterAnimationSpearLev2;
@@ -80,10 +80,12 @@ public class LoadingImage {
 	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSpearLev3;
 	public Animation<TextureRegion>[] battleCharacterAnimationSwordLev1;
 	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev1;
-	public Animation<TextureRegion>[] battleCharacterAnimationSwordLev2;
-	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev2;
-	public Animation<TextureRegion>[] battleCharacterAnimationSwordLev3;
-	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSwordLev3;
+	public Animation<TextureRegion>[] battleCharacterAnimationBowLev1;
+	public Animation<TextureRegion>[] battleFemaleAnimationBowLev1;
+	public Animation<TextureRegion>[] battleCharacterAnimationBowLev2;
+	public Animation<TextureRegion>[] battleFemaleAnimationBowLev2;
+	public Animation<TextureRegion>[] battleCharacterAnimationBowLev3;
+	public Animation<TextureRegion>[] battleFemaleAnimationBowLev3;
 
 	public TextureRegion playerStand;
 	public Animation<TextureRegion>[] playerAnimation;
@@ -108,10 +110,10 @@ public class LoadingImage {
 
 	// private static TextureRegion woman3Stand;
 	public Animation<TextureRegion>[] woman3Animation;
-	
+
 	public Animation<TextureRegion>[] otherPlayerAnimation;
 	public TextureRegion otherPlayerStand;
-	
+
 	public static Animation<TextureRegion> loadingAnimation;
 
 	// BAG IMAGE BUTTONS
@@ -213,12 +215,23 @@ public class LoadingImage {
 		playerStand = new TextureRegion();
 		battleCharacterStand = new TextureRegion();
 		battleFemaleCharacterStand = new TextureRegion();
-		battleCharacterStandSword = new TextureRegion();
-		battleFemaleCharacterStandSword = new TextureRegion();
+		// battleCharacterStandSword = new TextureRegion();
+		// battleFemaleCharacterStandSword = new TextureRegion();
 		battleCharacterAnimationSpearLev1 = new Animation[4];
 		battleFemaleCharacterAnimationSpearLev1 = new Animation[4];
+		battleCharacterAnimationSpearLev2 = new Animation[4];
+		battleFemaleCharacterAnimationSpearLev2 = new Animation[4];
+		battleCharacterAnimationSpearLev3 = new Animation[4];
+		battleFemaleCharacterAnimationSpearLev3 = new Animation[4];
 		battleCharacterAnimationSwordLev1 = new Animation[4];
 		battleFemaleCharacterAnimationSwordLev1 = new Animation[4];
+		battleCharacterAnimationBowLev1 = new Animation[4];
+		battleFemaleAnimationBowLev1 = new Animation[4];
+		battleCharacterAnimationBowLev2 = new Animation[4];
+		battleFemaleAnimationBowLev2 = new Animation[4];
+		battleCharacterAnimationBowLev3 = new Animation[4];
+		battleFemaleAnimationBowLev3 = new Animation[4];
+
 		enemyStand = new TextureRegion();
 		man1Stand = new TextureRegion();
 		woman1Stand = new TextureRegion();
@@ -246,13 +259,43 @@ public class LoadingImage {
 		createBattleFrame(texture, battleFemaleCharacterAnimationSpearLev1, battleFemaleCharacterStand);
 
 		texture = new Texture("Character/sword2.png");
-		createBattleFrameBig(texture, battleCharacterAnimationSwordLev1, battleCharacterStandSword, 7);
+		createBattleFrameBig(texture, battleCharacterAnimationSwordLev1, battleCharacterStand, 5);
 
 		texture = new Texture("Character/female/sword.png");
-		createBattleFrameBig(texture, battleFemaleCharacterAnimationSwordLev1, battleFemaleCharacterStandSword, 7);
+		createBattleFrameBig(texture, battleFemaleCharacterAnimationSwordLev1, battleFemaleCharacterStand, 5);
+
+		texture = new Texture("Character/spear2.png");
+		createBattleFrameBig(texture, battleCharacterAnimationSpearLev2, battleCharacterStand, 5);
+
+		texture = new Texture("Character/female/spear2.png");
+		createBattleFrameBig(texture, battleFemaleCharacterAnimationSpearLev2, battleFemaleCharacterStand, 5);
+
+		texture = new Texture("Character/spear2.png");
+		createBattleFrameBig(texture, battleCharacterAnimationSpearLev3, battleCharacterStand, 5);
+
+		texture = new Texture("Character/female/spear2.png");
+		createBattleFrameBig(texture, battleFemaleCharacterAnimationSpearLev3, battleFemaleCharacterStand, 5);
 
 		texture = new Texture("Enemy/spear.png");
 		createBattleFrame(texture, enemyAnimation, enemyStand);
+
+		texture = new Texture("Character/bow.png");
+		createBattleFrame(texture, battleCharacterAnimationBowLev1, battleCharacterStand);
+
+		texture = new Texture("Character/female/bow.png");
+		createBattleFrame(texture, battleFemaleAnimationBowLev1, battleFemaleCharacterStand);
+
+		texture = new Texture("Character/bow2.png");
+		createBattleFrame(texture, battleCharacterAnimationBowLev2, battleCharacterStand);
+
+		texture = new Texture("Character/female/bow2.png");
+		createBattleFrame(texture, battleFemaleAnimationBowLev2, battleFemaleCharacterStand);
+
+		texture = new Texture("Character/bow3.png");
+		createBattleFrame(texture, battleCharacterAnimationBowLev3, battleCharacterStand);
+
+		texture = new Texture("Character/female/bow3.png");
+		createBattleFrame(texture, battleFemaleAnimationBowLev3, battleFemaleCharacterStand);
 
 		loadLoadingTexture();
 		areFighting = new Texture("res/areFighting.png");
@@ -523,6 +566,22 @@ public class LoadingImage {
 					animation = battleCharacterAnimationSwordLev1;
 				else
 					animation = battleFemaleCharacterAnimationSwordLev1;
+			} else if (((CharacterBattle) ob).primary_weapon.getType() == Type.Bow) {
+				if (((CharacterBattle) ob).male) {
+					if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+						animation = battleCharacterAnimationBowLev1;
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+						animation = battleCharacterAnimationBowLev2;
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+						animation = battleCharacterAnimationBowLev3;
+				} else {
+					if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+						animation = battleFemaleAnimationBowLev1;
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+						animation = battleFemaleAnimationBowLev2;
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+						animation = battleFemaleAnimationBowLev3;
+				}
 			}
 			break;
 		case "NetworkCharacterBattle":
@@ -536,12 +595,14 @@ public class LoadingImage {
 					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
 						animation = battleCharacterAnimationSpearLev3;
 				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
+					animation = battleCharacterAnimationSwordLev1;
+				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Bow) {
 					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
-						animation = battleCharacterAnimationSwordLev1;
+						animation = battleCharacterAnimationBowLev1;
 					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
-						animation = battleCharacterAnimationSwordLev2;
+						animation = battleCharacterAnimationBowLev2;
 					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
-						animation = battleCharacterAnimationSwordLev3;
+						animation = battleCharacterAnimationBowLev3;
 				}
 			} else {// se sono l'oggetto da diseganre è l'avversario
 				if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
@@ -552,12 +613,7 @@ public class LoadingImage {
 					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
 						animation = enemyAnimation;
 				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
-					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
-						animation = battleCharacterAnimationSwordLev1;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
-						animation = battleCharacterAnimationSwordLev2;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
-						animation = battleCharacterAnimationSwordLev3;
+					animation = battleCharacterAnimationSwordLev1;
 				}
 			}
 			// animation = enemyAnimation;
@@ -604,28 +660,11 @@ public class LoadingImage {
 				textureRegion = woman2Stand;
 			break;
 		case "CharacterBattle":
-			if (((CharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
-				if (((CharacterBattle) ob).male) {
-					if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
-						textureRegion = battleCharacterStand;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
-						textureRegion = battleCharacterStand;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
-						textureRegion = battleCharacterStand;
-				} else {
-					if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
-						textureRegion = battleFemaleCharacterStand;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
-						textureRegion = battleFemaleCharacterStand;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
-						textureRegion = battleFemaleCharacterStand;
-				}
+			if (((CharacterBattle) ob).male) {
+				textureRegion = battleCharacterStand;
+			} else {
+				textureRegion = battleFemaleCharacterStand;
 			}
-
-			else if (((CharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
-				textureRegion = battleCharacterStandSword;
-			}
-
 			// textureRegion = battleCharacterStand;
 			break;
 		case "NetworkCharacterBattle":

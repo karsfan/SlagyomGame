@@ -49,7 +49,8 @@ public class PlayScreen implements Screen, ControllerListener {
 	boolean movesgamePad = false;
 	LoadingImage loadingImage;
 	Game game;
-
+	public float miniMapScale = 7;
+	public float miniMapRadius = (float) 63.5;
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -62,6 +63,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	 * 
 	 */
 	@SuppressWarnings("static-access")
+
 	public PlayScreen(GameSlagyom gameslagyom, String name, boolean male) {
 
 		this.loadingImage = gameslagyom.loadingImage;
@@ -248,76 +250,71 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	@SuppressWarnings("static-access")
 	private void moveCharacter(float dt) {
-			if (!stop) {
-				/*
-				 * if (movesgamePad) { if (directiongamepad ==
-				 * PovDirection.east) game.world.player.movesRight(dt); else if
-				 * (directiongamepad == PovDirection.north) {
-				 * game.world.player.movesUp(dt); if
-				 * (game.world.player.collideShop) {
-				 * game.screenManager.swapScreen(it.slagyom.ScreenManager.State.
-				 * SHOP); game.world.semaphore.acquire();
-				 * game.world.player.collideShop = false; } } else if
-				 * (directiongamepad == PovDirection.west)
-				 * game.world.player.movesLeft(dt); else if (directiongamepad ==
-				 * PovDirection.south) game.world.player.movesDown(dt); else if
-				 * (directiongamepad == PovDirection.northEast)
-				 * game.world.player.movesNorthEast(dt); else if
-				 * (directiongamepad == PovDirection.northWest)
-				 * game.world.player.movesNorthWest(dt); else if
-				 * (directiongamepad == PovDirection.southEast)
-				 * game.world.player.movesSouthEast(dt); else if
-				 * (directiongamepad == PovDirection.southWest)
-				 * game.world.player.movesSouthWest(dt);
-				 * 
-				 * }
-				 */
+		if (!stop) {
+			/*
+			 * if (movesgamePad) { if (directiongamepad == PovDirection.east)
+			 * game.world.player.movesRight(dt); else if (directiongamepad ==
+			 * PovDirection.north) { game.world.player.movesUp(dt); if
+			 * (game.world.player.collideShop) {
+			 * game.screenManager.swapScreen(it.slagyom.ScreenManager.State.
+			 * SHOP); game.world.semaphore.acquire();
+			 * game.world.player.collideShop = false; } } else if
+			 * (directiongamepad == PovDirection.west)
+			 * game.world.player.movesLeft(dt); else if (directiongamepad ==
+			 * PovDirection.south) game.world.player.movesDown(dt); else if
+			 * (directiongamepad == PovDirection.northEast)
+			 * game.world.player.movesNorthEast(dt); else if (directiongamepad
+			 * == PovDirection.northWest) game.world.player.movesNorthWest(dt);
+			 * else if (directiongamepad == PovDirection.southEast)
+			 * game.world.player.movesSouthEast(dt); else if (directiongamepad
+			 * == PovDirection.southWest) game.world.player.movesSouthWest(dt);
+			 * 
+			 * }
+			 */
 
-				if (Gdx.input.isKeyPressed(Keys.Z)) {
-					game.world.player.setVelocity(150f);
-					loadingImage.setFrameDurationCharacter(0.1f);
-				} else {
-					game.world.player.setVelocity(100);
-					loadingImage.setFrameDurationCharacter(0.2f);
-				}
-				if (Gdx.input.isKeyPressed(Keys.LEFT))
-					game.world.player.movesLeft(dt);
-				else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-					game.world.player.movesRight(dt);
-				else if (Gdx.input.isKeyPressed(Keys.UP) || (directiongamepad == PovDirection.north && movesgamePad)) {
-					game.world.player.movesUp(dt);
-					if (game.world.player.collideShop) {
-						gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
-						game.world.player.collideShop = false;
-					}
-					if (game.world.player.collideGym) {
-						gameSlagyom.screenManager.battlescreen = new BattleScreen(gameSlagyom, game.world.battle);
-						gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
-						game.world.player.collideGym = false;
-					}
-
-				} else if (Gdx.input.isKeyPressed(Keys.DOWN))
-					game.world.player.movesDown(dt);
-
-				else if (Gdx.input.isKeyJustPressed(Keys.C)) {
-					gamecam.zoom -= 0.2;
-					gamecam.position.x = game.world.player.getX();
-					gamecam.position.y = game.world.player.getY();
-
-				} else if (Gdx.input.isKeyJustPressed(Keys.V)) {
-					gamecam.zoom += 0.2;
-					gamecam.position.x = game.world.player.getX();
-					gamecam.position.y = game.world.player.getY();
-
-				} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-					gameSlagyom.loadingMusic.pause();
-					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
-				}
-				else if (Gdx.input.isKeyJustPressed(Keys.B)) {
-					game.world.nextLevel();
-				} 
+			if (Gdx.input.isKeyPressed(Keys.Z)) {
+				game.world.player.setVelocity(150f);
+				loadingImage.setFrameDurationCharacter(0.1f);
+			} else {
+				game.world.player.setVelocity(100);
+				loadingImage.setFrameDurationCharacter(0.2f);
 			}
-		 
+			if (Gdx.input.isKeyPressed(Keys.LEFT))
+				game.world.player.movesLeft(dt);
+			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+				game.world.player.movesRight(dt);
+			else if (Gdx.input.isKeyPressed(Keys.UP) || (directiongamepad == PovDirection.north && movesgamePad)) {
+				game.world.player.movesUp(dt);
+				if (game.world.player.collideShop) {
+					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
+					game.world.player.collideShop = false;
+				}
+				if (game.world.player.collideGym) {
+					gameSlagyom.screenManager.battlescreen = new BattleScreen(gameSlagyom, game.world.battle);
+					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
+					game.world.player.collideGym = false;
+				}
+
+			} else if (Gdx.input.isKeyPressed(Keys.DOWN))
+				game.world.player.movesDown(dt);
+
+			else if (Gdx.input.isKeyJustPressed(Keys.C)) {
+				gamecam.zoom -= 0.2;
+				gamecam.position.x = game.world.player.getX();
+				gamecam.position.y = game.world.player.getY();
+
+			} else if (Gdx.input.isKeyJustPressed(Keys.V)) {
+				gamecam.zoom += 0.2;
+				gamecam.position.x = game.world.player.getX();
+				gamecam.position.y = game.world.player.getY();
+
+			} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+				gameSlagyom.loadingMusic.pause();
+				gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
+			} else if (Gdx.input.isKeyJustPressed(Keys.B)) {
+				game.world.nextLevel();
+			}
+		}
 
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			hud.showDialog = false;
@@ -327,9 +324,6 @@ public class PlayScreen implements Screen, ControllerListener {
 			}
 		}
 	}
-
-	public float miniMapScale = 7;
-	public float miniMapRadius = (float) 63.5;
 
 	@SuppressWarnings("static-access")
 	public synchronized void draw() {

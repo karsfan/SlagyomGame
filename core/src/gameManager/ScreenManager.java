@@ -59,6 +59,8 @@ public class ScreenManager {
 			// LoadingMusic.mainMusic.play();
 			gameSlagyom.setScreen(menuScreen);
 			Gdx.input.setInputProcessor(menuScreen.stage);
+			gameSlagyom.loadingMusic.backgroundSound.stop();
+			gameSlagyom.loadingMusic.battleMusic.stop();
 
 		} else if (currentState == State.PLAYING) {
 //			gameSlagyom.loadingMusic.pause();

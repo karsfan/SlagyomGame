@@ -108,7 +108,6 @@ public class ClientHandler extends Thread {
 							if (player.ID == message.ID) {
 								// if (message.ID == 0)
 								// client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
-
 								if (client.networkWorld.player.isFighting)
 									if (client.networkWorld.battle.enemy instanceof NetworkCharacterBattle)
 										if (((NetworkCharacterBattle) client.networkWorld.battle.enemy).ID == message.ID)

@@ -46,6 +46,7 @@ public class Bag {
 			Item it = (Item) itParchment.next();
 			if (it.getElement() == Element.PARCHMENT && it.getLevel() == itemLevel) {
 				itParchment.remove();
+				parchmentRemoved--;
 				continue;
 			}
 		} // it controls that the numbers is sufficient to upgrade

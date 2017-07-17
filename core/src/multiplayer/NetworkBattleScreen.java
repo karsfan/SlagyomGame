@@ -295,7 +295,7 @@ public class NetworkBattleScreen extends BattleScreen {
 							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}
-			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+			} else if (Gdx.input.isKeyPressed(Keys.LEFT) && !battle.character.fighting) {
 				battle.character.movesLeft(dt);
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
@@ -303,7 +303,7 @@ public class NetworkBattleScreen extends BattleScreen {
 							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}
-			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			} else if (Gdx.input.isKeyPressed(Keys.RIGHT) && !battle.character.fighting) {
 				battle.character.movesRight(dt);
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
@@ -311,7 +311,10 @@ public class NetworkBattleScreen extends BattleScreen {
 							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}
-			} else if (Gdx.input.isKeyJustPressed(Keys.A)) {
+			} else {
+				battle.character.stand();
+			}
+			if (Gdx.input.isKeyJustPressed(Keys.A)) {
 				if (battle.character.left) {
 					battle.character.fightLeft(dt);
 					if (battle.enemy instanceof NetworkCharacterBattle) {
@@ -331,8 +334,6 @@ public class NetworkBattleScreen extends BattleScreen {
 						client.writer.flush();
 					}
 				}
-			} else {
-				battle.character.stand();
 			}
 		}
 	}

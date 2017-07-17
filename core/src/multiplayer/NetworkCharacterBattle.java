@@ -72,7 +72,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 			arrowShooted = false;
 			fightingLeft = false;
 			fightingRight = false;
-			setState(StateDynamicObject.STANDING, dt);
+			//setState(StateDynamicObject.STANDING, dt);
 		}
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {

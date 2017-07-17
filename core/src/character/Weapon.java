@@ -250,7 +250,7 @@ public class Weapon {
 					return true;
 				}
 			} else if (level == Level.lev2) {
-				if (bag.getNumberOf(Element.PARCHMENT, Item.Level.FIRST) >= 20) {
+				if (bag.getNumberOf(Element.PARCHMENT, Item.Level.SECOND) >= 20) {
 					setWeapon(type, Level.lev3);
 					bag.deleteParchments(Item.Level.SECOND);
 					return true;

@@ -105,9 +105,32 @@ public class BagScreen implements Screen {
 						setTextPotions();
 					}
 				if (weaponsTable.isVisible()) {
-					if (Game.world.player.primary_weapon.upgrade(Game.world.player.bag))
-						weapons[0].setText(Game.world.player.primary_weapon.getType().toString() + " "
-								+ Game.world.player.primary_weapon.getLevel());
+					if (!game.modalityMultiplayer) {
+						if (weaponSelected.getType() == Game.world.player.primary_weapon.getType()
+								&& weaponSelected.getLevel() == Game.world.player.primary_weapon.getLevel()) {
+							if (Game.world.player.primary_weapon.upgrade(Game.world.player.bag))
+								weapons[0].setText(Game.world.player.primary_weapon.getType().toString() + " "
+										+ Game.world.player.primary_weapon.getLevel());
+						} else if (weaponSelected.getType() == Game.world.player.bag.secondary_weapon.getType()
+								&& weaponSelected.getLevel() == Game.world.player.bag.secondary_weapon.getLevel()) {
+							if (Game.world.player.bag.secondary_weapon.upgrade(Game.world.player.bag))
+								weapons[1].setText(Game.world.player.bag.secondary_weapon.getType().toString() + " "
+										+ Game.world.player.bag.secondary_weapon.getLevel());
+						}
+					} else {
+						if (weaponSelected.getType() == Client.networkWorld.player.primary_weapon.getType()
+								&& weaponSelected.getLevel() == Client.networkWorld.player.primary_weapon.getLevel()) {
+							if (Client.networkWorld.player.primary_weapon.upgrade(Client.networkWorld.player.bag))
+								weapons[0].setText(Client.networkWorld.player.primary_weapon.getType().toString() + " "
+										+ Client.networkWorld.player.primary_weapon.getLevel());
+						} else if (weaponSelected.getType() == Client.networkWorld.player.bag.secondary_weapon.getType()
+								&& weaponSelected.getLevel() == Client.networkWorld.player.bag.secondary_weapon
+										.getLevel()) {
+							if (Client.networkWorld.player.bag.secondary_weapon.upgrade(Client.networkWorld.player.bag))
+								weapons[1].setText(Client.networkWorld.player.bag.secondary_weapon.getType().toString()
+										+ " " + Client.networkWorld.player.bag.secondary_weapon.getLevel());
+						}
+					}
 				}
 			}
 
@@ -421,7 +444,7 @@ public class BagScreen implements Screen {
 		stage.addActor(weaponsTable);
 		stage.addActor(parchmentsTable);
 		stage.addActor(optionsTable);
-				
+
 		Controllers.addListener(new MenuControllerListener(potionsTable));
 		Controllers.addListener(new MenuControllerListener(weaponsTable));
 		Controllers.addListener(new MenuControllerListener(parchmentsTable));

@@ -272,7 +272,7 @@ public class LoadingImage {
 		texture = new Texture("Character/female/spear.png");
 		createBattleFrame(texture, battleFemaleCharacterAnimationSpearLev1, battleFemaleCharacterStand);
 
-		texture = new Texture("Character/swordOK.png");
+		texture = new Texture("Character/swordOk.png");
 		createBattleFrameBig(texture, battleCharacterAnimationSwordLev1, battleCharacterStand, 5);
 
 		texture = new Texture("Character/female/sword.png");

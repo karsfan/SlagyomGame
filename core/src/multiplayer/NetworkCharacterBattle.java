@@ -60,12 +60,19 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	public void update(float dt) {
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += dt;
+			if (fightingTimeCurrent >= fightingTime / 2 && primary_weapon.getType() == Type.Bow)
+				if (!arrowShooted){
+					shootArrow();
+					arrowShooted = true;
+				}
 			setState(getCurrentState(), dt);
 		} else if (fighting && fightingTimeCurrent > fightingTime) {
 			fighting = false;
 			fightingTimeCurrent = 0;
+			arrowShooted = false;
 			fightingLeft = false;
 			fightingRight = false;
+			setState(StateDynamicObject.STANDING, dt);
 		}
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {
@@ -118,11 +125,12 @@ public class NetworkCharacterBattle extends CharacterBattle {
 			Client.networkWorld.player.primary_weapon = bag.secondary_weapon;
 			bag.secondary_weapon = temporary;
 			primary_weapon = Client.networkWorld.player.primary_weapon;
-
-			if (primary_weapon.getType() == Type.Sword)
-				width = 200;
+			if (primary_weapon.getType() == Type.Sword
+					|| (primary_weapon.getType() == Type.Spear && primary_weapon.getLevel() == Weapon.Level.lev2)
+					|| (primary_weapon.getType() == Type.Spear && primary_weapon.getLevel() == Weapon.Level.lev3))
+				this.width = 200;
 			else
-				width = 120;
+				this.width = 120;
 			weaponChanged = true;
 		}
 	}
@@ -207,6 +215,8 @@ public class NetworkCharacterBattle extends CharacterBattle {
 		if (previousState == currentState && currentState != StateDynamicObject.STANDING)
 			setStateTimer(getStateTimer() + dt);
 		else
+			setStateTimer(0);
+		if(state == StateDynamicObject.JUMPING)
 			setStateTimer(0);
 	}
 

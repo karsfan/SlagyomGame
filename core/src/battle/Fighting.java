@@ -40,7 +40,7 @@ public class Fighting extends DynamicObjects{
 		
 	}
 	public void decreaseHealth(Weapon weapon) {
-	
+		health -= weapon.getDamage();
 	}
 	public void update(float dt) {
 		

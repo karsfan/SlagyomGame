@@ -20,6 +20,7 @@ import character.Player;
 import character.Weapon.Type;
 import character.Woman.WomanType;
 import multiplayer.NetworkCharacterBattle;
+import multiplayer.NetworkEnemy;
 import multiplayer.NetworkPlayer;
 import staticObjects.Item;
 import staticObjects.StaticObject;
@@ -67,11 +68,11 @@ public class LoadingImage {
 	public static Pixmap noCursor;
 	public static Drawable dialog;
 	public static Texture miniMapPlayerPointer;
+	public static Texture arrowLeft;
+	public static Texture arrowRight;
 
 	public TextureRegion battleCharacterStand;
 	public TextureRegion battleFemaleCharacterStand;
-	// public TextureRegion battleCharacterStandSword;
-	// public TextureRegion battleFemaleCharacterStandSword;
 	public Animation<TextureRegion>[] battleCharacterAnimationSpearLev1;
 	public Animation<TextureRegion>[] battleFemaleCharacterAnimationSpearLev1;
 	public Animation<TextureRegion>[] battleCharacterAnimationSpearLev2;
@@ -91,7 +92,13 @@ public class LoadingImage {
 	public Animation<TextureRegion>[] playerAnimation;
 
 	public TextureRegion enemyStand;
-	public Animation<TextureRegion>[] enemyAnimation;
+	public Animation<TextureRegion>[] enemyAnimationSpearLev1;
+	public Animation<TextureRegion>[] enemyAnimationSpearLev2;
+	public Animation<TextureRegion>[] enemyAnimationSpearLev3;
+	public Animation<TextureRegion>[] enemyAnimationBowLev1;
+	public Animation<TextureRegion>[] enemyAnimationBowLev2;
+	public Animation<TextureRegion>[] enemyAnimationBowLev3;
+	public Animation<TextureRegion>[] enemyAnimationSword;
 
 	public TextureRegion man1Stand;
 	public Animation<TextureRegion>[] man1Animation;
@@ -138,6 +145,7 @@ public class LoadingImage {
 	@SuppressWarnings("unchecked")
 	public LoadingImage() {
 		// TILES IMAGES
+		
 		title = new Texture("res/title.png");
 		blackBg = new Texture("res/blackBg.png");
 		homeImage = new Texture("res/home.png");
@@ -204,7 +212,6 @@ public class LoadingImage {
 		// WORLD ANIMATIONS
 		playerAnimation = new Animation[4];
 		otherPlayerAnimation = new Animation[4];
-		enemyAnimation = new Animation[4];
 		man1Animation = new Animation[4];
 		man2Animation = new Animation[4];
 		man3Animation = new Animation[4];
@@ -215,8 +222,7 @@ public class LoadingImage {
 		playerStand = new TextureRegion();
 		battleCharacterStand = new TextureRegion();
 		battleFemaleCharacterStand = new TextureRegion();
-		// battleCharacterStandSword = new TextureRegion();
-		// battleFemaleCharacterStandSword = new TextureRegion();
+		
 		battleCharacterAnimationSpearLev1 = new Animation[4];
 		battleFemaleCharacterAnimationSpearLev1 = new Animation[4];
 		battleCharacterAnimationSpearLev2 = new Animation[4];
@@ -232,6 +238,14 @@ public class LoadingImage {
 		battleCharacterAnimationBowLev3 = new Animation[4];
 		battleFemaleAnimationBowLev3 = new Animation[4];
 
+		enemyAnimationSpearLev1 = new Animation[4];
+		enemyAnimationSpearLev2 = new Animation[4];
+		enemyAnimationSpearLev3 = new Animation[4];
+		enemyAnimationBowLev1 = new Animation[4];
+		enemyAnimationBowLev2 = new Animation[4];
+		enemyAnimationBowLev3 = new Animation[4];
+		enemyAnimationSword = new Animation[4];
+		
 		enemyStand = new TextureRegion();
 		man1Stand = new TextureRegion();
 		woman1Stand = new TextureRegion();
@@ -258,7 +272,7 @@ public class LoadingImage {
 		texture = new Texture("Character/female/spear.png");
 		createBattleFrame(texture, battleFemaleCharacterAnimationSpearLev1, battleFemaleCharacterStand);
 
-		texture = new Texture("Character/sword2.png");
+		texture = new Texture("Character/swordOK.png");
 		createBattleFrameBig(texture, battleCharacterAnimationSwordLev1, battleCharacterStand, 5);
 
 		texture = new Texture("Character/female/sword.png");
@@ -270,14 +284,14 @@ public class LoadingImage {
 		texture = new Texture("Character/female/spear2.png");
 		createBattleFrameBig(texture, battleFemaleCharacterAnimationSpearLev2, battleFemaleCharacterStand, 5);
 
-		texture = new Texture("Character/spear2.png");
+		texture = new Texture("Character/spear3.png");
 		createBattleFrameBig(texture, battleCharacterAnimationSpearLev3, battleCharacterStand, 5);
 
-		texture = new Texture("Character/female/spear2.png");
+		texture = new Texture("Character/female/spear3.png");
 		createBattleFrameBig(texture, battleFemaleCharacterAnimationSpearLev3, battleFemaleCharacterStand, 5);
 
 		texture = new Texture("Enemy/spear.png");
-		createBattleFrame(texture, enemyAnimation, enemyStand);
+		createBattleFrame(texture, enemyAnimationSpearLev1, enemyStand);
 
 		texture = new Texture("Character/bow.png");
 		createBattleFrame(texture, battleCharacterAnimationBowLev1, battleCharacterStand);
@@ -297,9 +311,31 @@ public class LoadingImage {
 		texture = new Texture("Character/female/bow3.png");
 		createBattleFrame(texture, battleFemaleAnimationBowLev3, battleFemaleCharacterStand);
 
+		texture = new Texture("Enemy/bow.png");
+		createBattleFrame(texture, enemyAnimationBowLev1, enemyStand);
+		
+		texture = new Texture("Enemy/bow2.png");
+		createBattleFrame(texture, enemyAnimationBowLev2, enemyStand);
+		
+		texture = new Texture("Enemy/bow3.png");
+		createBattleFrame(texture, enemyAnimationBowLev3, enemyStand);
+		
+		texture = new Texture("Enemy/spear2.png");
+		createBattleFrameBig(texture, enemyAnimationSpearLev2, enemyStand, 5);
+		
+		texture = new Texture("Enemy/spear3.png");
+		createBattleFrameBig(texture, enemyAnimationSpearLev3, enemyStand, 5);
+		
+		texture = new Texture("Enemy/sword.png");
+		createBattleFrameBig(texture, enemyAnimationSword, enemyStand, 5);
+		
 		loadLoadingTexture();
+		arrowLeft = new Texture("res/sxArrow.png");
+		arrowRight = new Texture("res/dxArrow.png");
+
 		areFighting = new Texture("res/areFighting.png");
 		miniMapPlayerPointer = new Texture("res/multiplayerPointer.png");
+		
 	}
 
 	public void loadLoadingTexture() {
@@ -360,24 +396,24 @@ public class LoadingImage {
 		Animation<TextureRegion> fightingLeft;
 
 		for (int i = 0; i <= frame; i++) {
-			frames.add(new TextureRegion(texture, i * 190, 65, 120, 65));
+			frames.add(new TextureRegion(texture, i * 190 + 10, 65, 120, 65));
 		}
 		right = new Animation<TextureRegion>(0.2f, frames);
 		frames.clear();
 
-		for (int i = frame; i != 0; i--) {
+		for (int i = 0; i <= frame; i++) {
 			frames.add(new TextureRegion(texture, i * 190, 0, 120, 65));
 		}
 		left = new Animation<TextureRegion>(0.2f, frames);
 		frames.clear();
 
 		for (int i = 0; i <= frame; i++) {
-			frames.add(new TextureRegion(texture, i * 190, 195, 120, 65));
+			frames.add(new TextureRegion(texture, i * 190 + 10, 195, 120, 65));
 		}
 		fightingRight = new Animation<TextureRegion>(0.2f, frames);
 		frames.clear();
 
-		for (int i = frame; i != 0; i--) {
+		for (int i = 0; i <= frame; i++) {
 			frames.add(new TextureRegion(texture, i * 190, 130, 120, 65));
 		}
 		fightingLeft = new Animation<TextureRegion>(0.2f, frames);
@@ -473,8 +509,13 @@ public class LoadingImage {
 		default:
 			// getFrameStand(ob).setRegion(getAnimation(ob)[0].getKeyFrame(0,
 			// true));
-			region = getFrameStand(ob);
+			if (((Fighting) ob).left)
+				region = (TextureRegion) getAnimation(ob)[1].getKeyFrame(stateTimer, true);
+			else
+				region = (TextureRegion) getAnimation(ob)[0].getKeyFrame(stateTimer, true);
 			break;
+		// region = getFrameStand(ob);
+		// break;
 		}
 		return region;
 	}
@@ -607,26 +648,83 @@ public class LoadingImage {
 			} else {// se sono l'oggetto da diseganre è l'avversario
 				if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
 					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
-						animation = enemyAnimation;
+						animation = enemyAnimationSpearLev1;
 					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
-						animation = enemyAnimation;
+						animation = enemyAnimationSpearLev2;
 					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
-						animation = enemyAnimation;
+						animation = enemyAnimationSpearLev3;
 				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
-					animation = battleCharacterAnimationSwordLev1;
+					animation = enemyAnimationSword;
+				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Bow) {
+					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+						animation = enemyAnimationBowLev1;
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+						animation = enemyAnimationBowLev2;
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+						animation = enemyAnimationBowLev3;
 				}
+
 			}
 			// animation = enemyAnimation;
 			break;
 		case "Enemy":
-			animation = enemyAnimation;
+			if (((Enemy) ob).weapon.getType() == Type.Spear) {
+				if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+					animation = enemyAnimationSpearLev1;
+				else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+					animation = enemyAnimationSpearLev2;
+				else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+					animation = enemyAnimationSpearLev3;
+			} else if (((Enemy) ob).weapon.getType() == Type.Sword) {
+				animation = enemyAnimationSword;
+			} else if (((Enemy) ob).weapon.getType() == Type.Bow) {
+				if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+					animation = enemyAnimationBowLev1;
+				else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+					animation = enemyAnimationBowLev2;
+				else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+					animation = enemyAnimationBowLev3;
+			}
 			break;
 		case "NetworkEnemy":
-			animation = enemyAnimation;
+			if (((NetworkEnemy) ob).weapon.getType() == Type.Spear) {
+				if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+					animation = enemyAnimationSpearLev1;
+				else if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+					animation = enemyAnimationSpearLev2;
+				else if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+					animation = enemyAnimationSpearLev3;
+			} else if (((NetworkEnemy) ob).weapon.getType() == Type.Sword) {
+				animation = enemyAnimationSword;
+			} else if (((NetworkEnemy) ob).weapon.getType() == Type.Bow) {
+				if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+					animation = enemyAnimationBowLev1;
+				else if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+					animation = enemyAnimationBowLev2;
+				else if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+					animation = enemyAnimationBowLev3;
+			}
 			break;
 		default:
-			if (ob instanceof Enemy)
-				animation = enemyAnimation;
+			if (ob instanceof Enemy){
+				if (((Enemy) ob).weapon.getType() == Type.Spear) {
+					if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+						animation = enemyAnimationSpearLev1;
+					else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+						animation = enemyAnimationSpearLev2;
+					else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+						animation = enemyAnimationSpearLev3;
+				} else if (((Enemy) ob).weapon.getType() == Type.Sword) {
+					animation = enemyAnimationSword;
+				} else if (((Enemy) ob).weapon.getType() == Type.Bow) {
+					if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+						animation = enemyAnimationBowLev1;
+					else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+						animation = enemyAnimationBowLev2;
+					else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+						animation = enemyAnimationBowLev3;
+				}
+			}
 			else
 				System.out.println("Errore in getAnimation");
 			break;
@@ -776,6 +874,13 @@ public class LoadingImage {
 		} else
 			texture = coinImage;
 		return texture;
+	}
+
+	public static Texture getArrowImage(boolean left) {
+		if (left)
+			return arrowLeft;
+		else
+			return arrowRight;
 	}
 
 	public static Texture getYouWinImage() {

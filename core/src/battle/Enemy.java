@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 
+import character.Arrow;
 import character.Bomb;
 import character.Weapon;
 import character.Weapon.Type;
@@ -20,6 +21,8 @@ public class Enemy extends Fighting {
 	public Weapon weapon;
 	public ArrayList<Bomb> bombe = new ArrayList<>();
 	public Pack win_bonus;
+	public boolean arrowShooted = false;
+	public ArrayList<Weapon> arrowsShooted = new ArrayList<Weapon>();
 
 	public Pack getWin_bonus() {
 		return win_bonus;
@@ -64,6 +67,11 @@ public class Enemy extends Fighting {
 		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		if (weapon.getType() == Type.Sword || (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev2)
+				|| (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev3))
+			this.width = 200;
+		else
+			this.width = 120;
 	}
 
 	public Enemy(Level level) {
@@ -120,6 +128,11 @@ public class Enemy extends Fighting {
 		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		if (weapon.getType() == Type.Sword || (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev2)
+				|| (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev3))
+			this.width = 200;
+		else
+			this.width = 120;
 	}
 
 	public int getHealth() {
@@ -159,11 +172,18 @@ public class Enemy extends Fighting {
 		}
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += dt;
+			if (fightingTimeCurrent >= fightingTime / 2 && weapon.getType() == Type.Bow)
+				if (!arrowShooted) {
+					shootArrow();
+					arrowShooted = true;
+				}
 			setState(getCurrentState());
 
 		} else if (fighting && fightingTimeCurrent > fightingTime) {
 			fighting = false;
+			arrowShooted = false;
 			fightingTimeCurrent = 0;
+			setState(StateDynamicObject.STANDING);
 		}
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {
@@ -187,7 +207,7 @@ public class Enemy extends Fighting {
 				((Bomb) ob).update(dt);
 				if (ob.morta) {
 					it1.remove();
-					System.out.println("Bomba enemy eliminata");
+					// System.out.println("Bomba enemy eliminata");
 					continue;
 				}
 			}
@@ -195,25 +215,42 @@ public class Enemy extends Fighting {
 
 	}
 
+	public void shootArrow() {
+		Weapon arrow = null;
+		if (weapon.getLevel() == Weapon.Level.lev1)
+			arrow = new Arrow(Weapon.Level.lev1, Type.Freccia, x, y + width / 2);
+		else if (weapon.getLevel() == Weapon.Level.lev2)
+			arrow = new Arrow(Weapon.Level.lev2, Type.Freccia, x, y + width / 2);
+		else if (weapon.getLevel() == Weapon.Level.lev3)
+			arrow = new Arrow(Weapon.Level.lev3, Type.Freccia, x, y + width / 2);
+		if (left)
+			((Arrow) arrow).left = true;
+		arrowsShooted.add(arrow);
+	}
+
 	public void updateEnemyHard(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Game.world.battle.character.getX()
+		if (rand > 80 && rand < 95 && weapon.getType() == Type.Bow) {
+			if (x < Game.world.battle.character.x)
+				fightRight();
+			else
+				fightLeft();
+		} else if ((x - Game.world.battle.character.getX()
 				- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
 				&& x - Game.world.battle.character.getX() > 0)
-				|| (Game.world.battle.character.getX() - width / 2
-						- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0)) {
+				|| (Game.world.battle.character.getX() - width / 2 - x < Game.world.battle.character.width / 3
+						&& Game.world.battle.character.getX() - x > 0)) {
 
 			if (rand < 15 && Game.world.battle.character.fighting)
 				jump(dt);
 			if (rand > 15 && rand < 30 && Game.world.battle.character.fighting) {
 				setState(StateDynamicObject.DEFENDING);
 			} else if (x - Game.world.battle.character.getX()
-					- Game.world.battle.character.width/2 < Game.world.battle.character.width / 3
+					- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
 					&& x - Game.world.battle.character.getX() > 0 && rand < 90)
 				fightLeft();
-			else if (Game.world.battle.character.getX() - width/2
-					- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0
-					&& rand < 90)
+			else if (Game.world.battle.character.getX() - width / 2 - x < Game.world.battle.character.width / 3
+					&& Game.world.battle.character.getX() - x > 0 && rand < 90)
 				fightRight();
 		} else if (Game.world.battle.character.getX() > x && rand < 90) {
 			if (rand > 75 && rand < 80)
@@ -239,17 +276,19 @@ public class Enemy extends Fighting {
 				if (!ob.lanciata) {
 					ob.lancia(velocityy, this);
 					ob.id = "Enemy";
-					System.out.println((2 * velocityy * velocityy * Math.cos(30 * (Math.PI / 180))
-							* Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
-					System.out.println(x - Game.world.battle.character.getX());
-					System.out.println("bomba lanciata dal nemico");
+					// System.out.println((2 * velocityy * velocityy *
+					// Math.cos(30 * (Math.PI / 180))
+					// * Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
+					// System.out.println(x -
+					// Game.world.battle.character.getX());
+					// System.out.println("bomba lanciata dal nemico");
 					break;
 				}
 			}
 		} else if (right && !bombe.isEmpty()) {
 			int velocityy = 200;
 			// calcolo della gittata
-			velocityy = (int) Math.sqrt(((Game.world.battle.character.getX()+width/3 - x) * GameConfig.gravity)
+			velocityy = (int) Math.sqrt(((Game.world.battle.character.getX() + width / 3 - x) * GameConfig.gravity)
 					/ ((2 * Math.cos(30 * (Math.PI / 180)) * Math.sin(90 * (Math.PI / 180)))));
 			Iterator<Bomb> it1 = bombe.iterator();
 			while (it1.hasNext()) {
@@ -257,10 +296,12 @@ public class Enemy extends Fighting {
 				if (!ob.lanciata) {
 					ob.lancia(velocityy, this);
 					ob.id = "Enemy";
-					System.out.println("bomba lanciata dal nemico");
-					System.out.println((2 * velocityy * velocityy * Math.cos(30 * (Math.PI / 180))
-							* Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
-					System.out.println(Game.world.battle.character.getX()+ width/3 - x);
+					// System.out.println("bomba lanciata dal nemico");
+					// System.out.println((2 * velocityy * velocityy *
+					// Math.cos(30 * (Math.PI / 180))
+					// * Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
+					// System.out.println(Game.world.battle.character.getX()+
+					// width/3 - x);
 					break;
 				}
 			}
@@ -269,11 +310,16 @@ public class Enemy extends Fighting {
 
 	public void updateEnemyMedium(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Game.world.battle.character.getX()
+		if (rand > 85 && rand < 95 && weapon.getType() == Type.Bow) {
+			if (x < Game.world.battle.character.x)
+				fightRight();
+			else
+				fightLeft();
+		} else if ((x - Game.world.battle.character.getX()
 				- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
 				&& x - Game.world.battle.character.getX() > 0)
-				|| (Game.world.battle.character.getX() - width / 2
-						- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0)) {
+				|| (Game.world.battle.character.getX() - width / 2 - x < Game.world.battle.character.width / 3
+						&& Game.world.battle.character.getX() - x > 0)) {
 
 			if (rand < 10 && Game.world.battle.character.fighting)
 				jump(dt);
@@ -283,9 +329,8 @@ public class Enemy extends Fighting {
 					- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
 					&& x - Game.world.battle.character.getX() > 0 && rand < 55)
 				fightLeft();
-			else if (Game.world.battle.character.getX() - width / 2
-					- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0
-					&& rand < 55)
+			else if (Game.world.battle.character.getX() - width / 2 - x < Game.world.battle.character.width / 3
+					&& Game.world.battle.character.getX() - x > 0 && rand < 55)
 				fightRight();
 
 		} else if (Game.world.battle.character.getX() > x && rand <= 70) {
@@ -303,11 +348,16 @@ public class Enemy extends Fighting {
 
 	public void updateEnemyEasy(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Game.world.battle.character.getX()
+		if (rand > 93 && rand < 95 && weapon.getType() == Type.Bow) {
+			if (x < Game.world.battle.character.x)
+				fightRight();
+			else
+				fightLeft();
+		} else if ((x - Game.world.battle.character.getX()
 				- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
 				&& x - Game.world.battle.character.getX() > 0)
-				|| (Game.world.battle.character.getX() - width / 2
-						- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0)) {
+				|| (Game.world.battle.character.getX() - width / 2 - x < Game.world.battle.character.width / 3
+						&& Game.world.battle.character.getX() - x > 0)) {
 			if (rand < 5 && Game.world.battle.character.fighting)
 				jump(dt);
 			else if (rand > 5 && rand < 20 && Game.world.battle.character.fighting)
@@ -316,9 +366,8 @@ public class Enemy extends Fighting {
 					- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
 					&& x - Game.world.battle.character.getX() > 0 && rand < 40)
 				fightLeft();
-			else if (Game.world.battle.character.getX() - width/2
-					- x < Game.world.battle.character.width / 3 && Game.world.battle.character.getX() - x > 0
-					&& rand < 40)
+			else if (Game.world.battle.character.getX() - width / 2 - x < Game.world.battle.character.width / 3
+					&& Game.world.battle.character.getX() - x > 0 && rand < 40)
 				fightRight();
 		} else if (Game.world.battle.character.getX() > x && rand <= 50) {
 			if (rand == 50)

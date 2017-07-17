@@ -1,7 +1,9 @@
 package battle;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import character.Arrow;
 import character.Bag;
 import character.Bomb;
 import character.Player;
@@ -18,6 +20,8 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public Bag bag;
 	public Weapon primary_weapon;
 	public boolean male;
+	public boolean arrowShooted = false;
+	public ArrayList<Weapon> arrowsShooted = new ArrayList<Weapon>();
 
 	public CharacterBattle(Player player) {
 		super();
@@ -30,7 +34,8 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		this.x = 100;
 		this.y = GameConfig.mainY_Battle;
 		if (player.primary_weapon.getType() == Type.Sword
-				|| (player.primary_weapon.getType() == Type.Spear && player.primary_weapon.getLevel() == Level.lev2))
+				|| (player.primary_weapon.getType() == Type.Spear && player.primary_weapon.getLevel() == Level.lev2)
+				|| (player.primary_weapon.getType() == Type.Spear && player.primary_weapon.getLevel() == Level.lev3))
 			this.width = 200;
 		else
 			this.width = 120;
@@ -48,7 +53,8 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			primary_weapon = Game.world.player.primary_weapon;
 
 			if (primary_weapon.getType() == Type.Sword
-					|| (primary_weapon.getType() == Type.Spear && primary_weapon.getLevel() == Level.lev2))
+					|| (primary_weapon.getType() == Type.Spear && primary_weapon.getLevel() == Level.lev2)
+					|| (primary_weapon.getType() == Type.Spear && primary_weapon.getLevel() == Level.lev3))
 
 				width = 200;
 			else
@@ -79,9 +85,15 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public void update(float dt) {
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += dt;
+			if (fightingTimeCurrent >= fightingTime / 2 && primary_weapon.getType() == Type.Bow)
+				if (!arrowShooted) {
+					shootArrow();
+					arrowShooted = true;
+				}
 			setState(getCurrentState(), dt);
 		} else if (fighting && fightingTimeCurrent > fightingTime) {
 			fighting = false;
+			arrowShooted = false;
 			fightingTimeCurrent = 0;
 		}
 		dt = 0.35f;
@@ -115,6 +127,19 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			}
 		}
 
+	}
+
+	public void shootArrow() {
+		Weapon arrow = null;
+		if (primary_weapon.getLevel() == Level.lev1)
+			arrow = new Arrow(Level.lev1, Type.Freccia, x, y + width / 2);
+		else if (primary_weapon.getLevel() == Level.lev2)
+			arrow = new Arrow(Level.lev2, Type.Freccia, x, y + width / 2);
+		else if (primary_weapon.getLevel() == Level.lev3)
+			arrow = new Arrow(Level.lev3, Type.Freccia, x, y + width / 2);
+		if (left)
+			((Arrow) arrow).left = true;
+		arrowsShooted.add(arrow);
 	}
 
 	public void fightRight(float dt) {

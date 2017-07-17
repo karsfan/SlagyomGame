@@ -106,8 +106,9 @@ public class ClientHandler extends Thread {
 								player.isFighting = true;
 						} else if (message.action == 10) {
 							if (player.ID == message.ID) {
-								//if (message.ID == 0)
-									//client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+								// if (message.ID == 0)
+								// client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+
 								if (client.networkWorld.player.isFighting)
 									if (client.networkWorld.battle.enemy instanceof NetworkCharacterBattle)
 										if (((NetworkCharacterBattle) client.networkWorld.battle.enemy).ID == message.ID)
@@ -120,7 +121,6 @@ public class ClientHandler extends Thread {
 						} else if (message.action >= 21 && message.action <= 26) {
 							if (player.ID == message.ID) {
 								player.setState(message.currentState);
-
 							}
 						} else if (message.action == 4) {
 							System.out.println("ricevuto");
@@ -169,7 +169,7 @@ public class ClientHandler extends Thread {
 						} else if (message.action == 26) {
 							item = new Item(message.x, message.y, StaticObject.Element.COIN, Item.Level.FIRST);
 						}
-						
+
 						for (Item itemeliminare : client.networkWorld.getListItems()) {
 							if (itemeliminare.getX() == item.getX() && itemeliminare.getY() == item.getY()
 									&& itemeliminare.getElement() == item.getElement()
@@ -222,8 +222,15 @@ public class ClientHandler extends Thread {
 						}
 					} else if (message.action == 5) {
 						if (client.networkWorld.player.ID == message.IDreceiver) {
-							((NetworkCharacterBattle) client.networkWorld.battle.enemy).primary_weapon = new Weapon(
-									message.levelWeapon, message.typeWeapon);
+							Weapon weapon = new Weapon(message.levelWeapon, message.typeWeapon);
+							((NetworkCharacterBattle) client.networkWorld.battle.enemy).primary_weapon = weapon;
+							if (weapon.getType() == Type.Sword
+									|| (weapon.getType() == Type.Spear && weapon.getLevel() == Level.lev2)
+									|| (weapon.getType() == Type.Spear && weapon.getLevel() == Level.lev3))
+								((NetworkCharacterBattle) client.networkWorld.battle.enemy).width = 200;
+							else
+								((NetworkCharacterBattle) client.networkWorld.battle.enemy).width = 120;
+
 						}
 					} else if (message.action == 6) {
 						if (client.networkWorld.player.ID == message.IDreceiver) {

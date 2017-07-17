@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import battle.Battle;
+import battle.Enemy;
+import character.Arrow;
 import character.Bomb;
 import character.DynamicObjects;
+import character.Weapon;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
@@ -42,7 +45,7 @@ public class NetworkBattleScreen extends BattleScreen {
 		hud.stage.draw();
 		if (client.serverDisconnected)
 			gameslagyom.screenManager.swapScreen(State.MENU);
-		if(client.soundPotionBattle){
+		if (client.soundPotionBattle) {
 			client.soundPotionBattle = false;
 			gameslagyom.loadingMusic.upgradeSound.play();
 		}
@@ -56,21 +59,22 @@ public class NetworkBattleScreen extends BattleScreen {
 		weapon_primary_comunicated = true;
 	}
 
+	@SuppressWarnings("static-access")
 	private void draw() {
 		gameslagyom.batch.draw(LoadingImage.getBattleBgImage(), 0, 0);
 
-		NetworkCharacterBattle tmp = (NetworkCharacterBattle) battle.character;
-		gameslagyom.batch.draw(gameslagyom.loadingImage.getBattleFrame(tmp), tmp.getX(), tmp.getY(), tmp.getWidth(),
-				tmp.getHeight());
-		DynamicObjects tmp1;
+		NetworkCharacterBattle player = (NetworkCharacterBattle) battle.character;
+		gameslagyom.batch.draw(gameslagyom.loadingImage.getBattleFrame(player), player.getX(), player.getY(),
+				player.getWidth(), player.getHeight());
+		DynamicObjects enemy;
 		if (battle.enemy instanceof NetworkCharacterBattle)
-			tmp1 = (NetworkCharacterBattle) battle.enemy;
+			enemy = (NetworkCharacterBattle) battle.enemy;
 		else
-			tmp1 = (NetworkEnemy) battle.enemy;
-		gameslagyom.batch.draw(gameslagyom.loadingImage.getBattleFrame(tmp1), tmp1.getX(), tmp1.getY(), tmp1.getWidth(),
-				tmp1.getHeight());
+			enemy = (NetworkEnemy) battle.enemy;
+		gameslagyom.batch.draw(gameslagyom.loadingImage.getBattleFrame(enemy), enemy.getX(), enemy.getY(),
+				enemy.getWidth(), enemy.getHeight());
 
-		Iterator<Bomb> bombIterator = tmp.bag.bombe.iterator();
+		Iterator<Bomb> bombIterator = player.bag.bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.lanciata == true) {
@@ -80,15 +84,43 @@ public class NetworkBattleScreen extends BattleScreen {
 		}
 		Iterator<Bomb> bombIterator1 = null;
 		if (battle.enemy instanceof NetworkCharacterBattle)
-			bombIterator1 = ((NetworkCharacterBattle) tmp1).bag.bombe.iterator();
+			bombIterator1 = ((NetworkCharacterBattle) enemy).bag.bombe.iterator();
 		else
-			bombIterator1 = ((NetworkEnemy) tmp1).getBombe().iterator();
+			bombIterator1 = ((NetworkEnemy) enemy).getBombe().iterator();
 
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
 			if (searching1.lanciata == true) {
 				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching1), searching1.getMainX(),
 						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
+			}
+		}
+
+		if (!player.arrowsShooted.isEmpty()) {
+			Iterator<Weapon> it = player.arrowsShooted.iterator();
+			while (it.hasNext()) {
+				Arrow ob = (Arrow) it.next();
+				gameslagyom.batch.draw(gameslagyom.loadingImage.getArrowImage(ob.left), ob.x, ob.y, ob.getWidth() + 100,
+						ob.getHeight() + 30);
+			}
+		}
+		if (battle.enemy instanceof NetworkCharacterBattle) {
+			if (!((NetworkCharacterBattle) enemy).arrowsShooted.isEmpty()) {
+				Iterator<Weapon> it2 = ((NetworkCharacterBattle) enemy).arrowsShooted.iterator();
+				while (it2.hasNext()) {
+					Arrow ob = (Arrow) it2.next();
+					gameslagyom.batch.draw(gameslagyom.loadingImage.getArrowImage(ob.left), ob.x, ob.y,
+							ob.getWidth() + 100, ob.getHeight() + 30);
+				}
+			}
+		} else {
+			if (!((Enemy) enemy).arrowsShooted.isEmpty()) {
+				Iterator<Weapon> it2 = ((Enemy) enemy).arrowsShooted.iterator();
+				while (it2.hasNext()) {
+					Arrow ob = (Arrow) it2.next();
+					gameslagyom.batch.draw(gameslagyom.loadingImage.getArrowImage(ob.left), ob.x, ob.y,
+							ob.getWidth() + 100, ob.getHeight() + 30);
+				}
 			}
 		}
 		if (youWin)
@@ -263,8 +295,24 @@ public class NetworkBattleScreen extends BattleScreen {
 							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}
-			} else if (Gdx.input.isKeyPressed(Keys.LEFT) && !battle.character.fighting) {
-				if (Gdx.input.isKeyJustPressed(Keys.A)) {
+			} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+				battle.character.movesLeft(dt);
+				if (battle.enemy instanceof NetworkCharacterBattle) {
+					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGRIGHT
+							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.flush();
+				}
+			} else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+				battle.character.movesRight(dt);
+				if (battle.enemy instanceof NetworkCharacterBattle) {
+					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
+							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.RUNNINGLEFT
+							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
+					client.writer.flush();
+				}
+			} else if (Gdx.input.isKeyJustPressed(Keys.A)) {
+				if (battle.character.left) {
 					battle.character.fightLeft(dt);
 					if (battle.enemy instanceof NetworkCharacterBattle) {
 						client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
@@ -273,32 +321,12 @@ public class NetworkBattleScreen extends BattleScreen {
 								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 						client.writer.flush();
 					}
-				} else {
-					battle.character.movesLeft(dt);
-					if (battle.enemy instanceof NetworkCharacterBattle) {
-						client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
-								+ battle.character.getY() + " "
-								+ character.DynamicObjects.StateDynamicObject.RUNNINGRIGHT + ";"
-								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
-						client.writer.flush();
-					}
-				}
-			} else if (Gdx.input.isKeyPressed(Keys.RIGHT) && !battle.character.fighting) {
-				if (Gdx.input.isKeyJustPressed(Keys.A)) {
+				} else if (!battle.character.left) {
 					battle.character.fightRight(dt);
 					if (battle.enemy instanceof NetworkCharacterBattle) {
 						client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
 								+ battle.character.getY() + " "
 								+ character.DynamicObjects.StateDynamicObject.FIGHTINGLEFT + ";"
-								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
-						client.writer.flush();
-					}
-				} else {
-					battle.character.movesRight(dt);
-					if (battle.enemy instanceof NetworkCharacterBattle) {
-						client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
-								+ battle.character.getY() + " "
-								+ character.DynamicObjects.StateDynamicObject.RUNNINGLEFT + ";"
 								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 						client.writer.flush();
 					}

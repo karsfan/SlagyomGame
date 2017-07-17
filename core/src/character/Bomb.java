@@ -91,7 +91,7 @@ public class Bomb extends Weapon implements ICollidable {
 
 	@Override
 	public boolean collide(Object e) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 

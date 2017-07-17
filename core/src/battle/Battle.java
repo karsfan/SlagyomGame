@@ -1,9 +1,13 @@
 package battle;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 
+import character.Arrow;
 import character.Player;
+import character.Weapon;
 import world.Game;
+import world.GameConfig;
 
 public class Battle {
 
@@ -34,6 +38,33 @@ public class Battle {
 	}
 
 	public boolean update(float dt) {
+		Iterator<Weapon> it = character.arrowsShooted.iterator();
+		while (it.hasNext()) {
+			Arrow ob = (Arrow) it.next();
+			((Arrow) ob).update(dt);
+			if (ob.collide(enemy)) {
+				character.arrowsShooted.remove(ob);
+				break;
+			}
+			if (ob.x < 0 || ob.x > GameConfig.WIDTH_BATTLE) {
+				character.arrowsShooted.remove(ob);
+				break;
+			}
+		}
+
+		Iterator<Weapon> it2 = ((Enemy) enemy).arrowsShooted.iterator();
+		while (it2.hasNext()) {
+			Arrow ob = (Arrow) it2.next();
+			((Arrow) ob).update(dt);
+			if (ob.collide(character)) {
+				((Enemy) enemy).arrowsShooted.remove(ob);
+				break;
+			}
+			if (ob.x < 0 || ob.x > GameConfig.WIDTH_BATTLE) {
+				((Enemy) enemy).arrowsShooted.remove(ob);
+				break;
+			}
+		}
 		if (enemy.health <= 0) {
 			player.health = character.health;
 			enemyOri.morto = true;
@@ -46,6 +77,7 @@ public class Battle {
 		}
 		character.update(dt);
 		enemy.update(dt);
+
 		return false;
 	}
 

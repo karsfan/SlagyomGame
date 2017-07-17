@@ -37,9 +37,8 @@ public class Weapon {
 			setWeapon(type, level);
 			break;
 		case Freccia:
-			damage = 8;
-			setWidth(0);
-			System.out.println("freccia");
+			width = 15;
+			height = 5;
 			break;
 		case Bomba:
 			setWeapon(type, level);
@@ -292,4 +291,5 @@ public class Weapon {
 	public void setWidth(float width) {
 		this.width = width;
 	}
+
 }

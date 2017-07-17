@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import battle.Enemy;
 import character.Bomb;
+import character.Weapon.Type;
 import world.GameConfig;
 
 public class NetworkEnemy extends Enemy {
@@ -37,11 +38,16 @@ public class NetworkEnemy extends Enemy {
 		}
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += dt;
+			if (!arrowShooted) {
+				shootArrow();
+				arrowShooted = true;
+			}
 			setState(getCurrentState());
 
 		} else if (fighting && fightingTimeCurrent > fightingTime) {
 			fighting = false;
 			fightingTimeCurrent = 0;
+			arrowShooted = false;
 		}
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {
@@ -77,19 +83,23 @@ public class NetworkEnemy extends Enemy {
 	@Override
 	public void updateEnemyHard(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 3
+		if (rand > 80 && rand < 95 && weapon.getType() == Type.Bow) {
+			if (x < Client.networkWorld.battle.character.x)
+				fightRight();
+			else
+				fightLeft();
+		} else if ((x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 3
 				&& x - Client.networkWorld.battle.character.getX() > 0)
 				|| (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width / 3
 						&& Client.networkWorld.battle.character.getX() - x > 0)) {
-
 			if (rand < 15 && Client.networkWorld.battle.character.fighting)
 				jump(dt);
 			if (rand > 15 && rand < 30 && Client.networkWorld.battle.character.fighting) {
 				setState(StateDynamicObject.DEFENDING);
-			} else if (x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width/3
+			} else if (x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 3
 					&& x - Client.networkWorld.battle.character.getX() > 0 && rand < 90)
 				fightLeft();
-			else if (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width/3
+			else if (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width / 3
 					&& Client.networkWorld.battle.character.getX() - x > 0 && rand < 90)
 				fightRight();
 		} else if (Client.networkWorld.battle.character.getX() > x && rand < 90)
@@ -102,9 +112,60 @@ public class NetworkEnemy extends Enemy {
 	}
 
 	@Override
+	public void lanciaBomb(float dt) {
+		if (left && !bombe.isEmpty()) {
+			int velocityy = 200;
+			// calcolo della gittata
+			velocityy = (int) Math.sqrt(((x - Client.networkWorld.battle.character.getX()) * GameConfig.gravity)
+					/ ((2 * Math.cos(30 * (Math.PI / 180)) * Math.sin(90 * (Math.PI / 180)))));
+			Iterator<Bomb> it1 = bombe.iterator();
+			while (it1.hasNext()) {
+				Bomb ob = (Bomb) it1.next();
+				if (!ob.lanciata) {
+					ob.lancia(velocityy, this);
+					ob.id = "Enemy";
+					// System.out.println((2 * velocityy * velocityy *
+					// Math.cos(30 * (Math.PI / 180))
+					// * Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
+					// System.out.println(x -
+					// Game.world.battle.character.getX());
+					// System.out.println("bomba lanciata dal nemico");
+					break;
+				}
+			}
+		} else if (right && !bombe.isEmpty()) {
+			int velocityy = 200;
+			// calcolo della gittata
+			velocityy = (int) Math
+					.sqrt(((Client.networkWorld.battle.character.getX() + width / 3 - x) * GameConfig.gravity)
+							/ ((2 * Math.cos(30 * (Math.PI / 180)) * Math.sin(90 * (Math.PI / 180)))));
+			Iterator<Bomb> it1 = bombe.iterator();
+			while (it1.hasNext()) {
+				Bomb ob = (Bomb) it1.next();
+				if (!ob.lanciata) {
+					ob.lancia(velocityy, this);
+					ob.id = "Enemy";
+					// System.out.println("bomba lanciata dal nemico");
+					// System.out.println((2 * velocityy * velocityy *
+					// Math.cos(30 * (Math.PI / 180))
+					// * Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
+					// System.out.println(Game.world.battle.character.getX()+
+					// width/3 - x);
+					break;
+				}
+			}
+		}
+	}
+
+	@Override
 	public void updateEnemyMedium(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 2
+		if (rand > 85 && rand < 95 && weapon.getType() == Type.Bow) {
+			if (x < Client.networkWorld.battle.character.x)
+				fightRight();
+			else
+				fightLeft();
+		} else if ((x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 2
 				&& x - Client.networkWorld.battle.character.getX() > 0)
 				|| (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width / 2
 						&& Client.networkWorld.battle.character.getX() - x > 0)) {
@@ -113,10 +174,10 @@ public class NetworkEnemy extends Enemy {
 				jump(dt);
 			else if (rand > 10 && rand < 25 && Client.networkWorld.battle.character.fighting)
 				setState(StateDynamicObject.DEFENDING);
-			else if (x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width/2
+			else if (x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 2
 					&& x - Client.networkWorld.battle.character.getX() > 0 && rand < 55)
 				fightLeft();
-			else if (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width/2
+			else if (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width / 2
 					&& Client.networkWorld.battle.character.getX() - x > 0 && rand < 55)
 				fightRight();
 
@@ -130,7 +191,12 @@ public class NetworkEnemy extends Enemy {
 	@Override
 	public void updateEnemyEasy(float dt) {
 		int rand = (int) (Math.random() * 100);
-		if ((x - Client.networkWorld.battle.character.getX()
+		if (rand > 93 && rand < 95 && weapon.getType() == Type.Bow) {
+			if (x < Client.networkWorld.battle.character.x)
+				fightRight();
+			else
+				fightLeft();
+		} else if ((x - Client.networkWorld.battle.character.getX()
 				- Client.networkWorld.battle.character.width / 2 < Client.networkWorld.battle.character.width / 3
 				&& x - Client.networkWorld.battle.character.getX() > 0)
 				|| (Client.networkWorld.battle.character.getX() + Client.networkWorld.battle.character.width / 2

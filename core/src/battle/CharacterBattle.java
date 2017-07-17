@@ -6,6 +6,7 @@ import character.Bag;
 import character.Bomb;
 import character.Player;
 import character.Weapon;
+import character.Weapon.Level;
 import character.Weapon.Type;
 import staticObjects.Item;
 import staticObjects.StaticObject.Element;
@@ -15,9 +16,9 @@ import world.GameConfig;
 public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	public Bag bag;
-	public Weapon primary_weapon;	
+	public Weapon primary_weapon;
 	public boolean male;
-	
+
 	public CharacterBattle(Player player) {
 		super();
 		stateTimer = 0;
@@ -28,7 +29,8 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		this.health = player.health;
 		this.x = 100;
 		this.y = GameConfig.mainY_Battle;
-		if (player.primary_weapon.getType() == Type.Sword)
+		if (player.primary_weapon.getType() == Type.Sword
+				|| (player.primary_weapon.getType() == Type.Spear && player.primary_weapon.getLevel() == Level.lev2))
 			this.width = 200;
 		else
 			this.width = 120;
@@ -45,7 +47,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			bag.secondary_weapon = temporary;
 			primary_weapon = Game.world.player.primary_weapon;
 
-			if (primary_weapon.getType() == Type.Sword)
+			if (primary_weapon.getType() == Type.Sword
+					|| (primary_weapon.getType() == Type.Spear && primary_weapon.getLevel() == Level.lev2))
+
 				width = 200;
 			else
 				width = 120;
@@ -88,9 +92,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			setState(StateDynamicObject.JUMPING, dt);
 
 			if (collide() && x < Game.world.battle.enemy.getX())
-				x =  (Game.world.battle.enemy.getX() - getWidth() / 2);
+				x = (Game.world.battle.enemy.getX() - getWidth() / 2);
 			else if (collide() && x > Game.world.battle.enemy.getX())
-				x =  (Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2);
+				x = (Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2);
 
 		} else {
 			jumping = false;
@@ -105,7 +109,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 				((Bomb) ob).update(dt);
 				if (ob.morta) {
 					it1.remove();
-					//System.out.println("Bomba player eliminata");
+					// System.out.println("Bomba player eliminata");
 					continue;
 				}
 			}
@@ -180,7 +184,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			setState(StateDynamicObject.JUMPING, dt);
 		} else if (jumping && !doubleJumping) {
 			jumping = false;
-			doubleJumping = true;			
+			doubleJumping = true;
 			velocityY = 100;
 			velocityX = 10;
 		}
@@ -206,7 +210,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 
 	@Override
 	public boolean collide() {
-		
+
 		if (!((x > Game.world.battle.enemy.getX() + Game.world.battle.enemy.getWidth() / 2
 				|| Game.world.battle.enemy.getX() > x + width / 2)
 				|| (y > Game.world.battle.enemy.getY() + Game.world.battle.enemy.getHeight() / 2
@@ -247,56 +251,57 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 				bomba.lanciata = true;
 				bomba.lancia(forza, this);
 				bomba.id = "Player";
-				//System.out.println(bomba.lanciata);
+				// System.out.println(bomba.lanciata);
 				break;
 			}
 		}
 	}
-//	public void useItem(Item item) {
-//		if (item.getElement() == Element.POTION) {
-//			switch (item.getLevel()) {
-//			case FIRST:
-//				if (!GameSlagyom.modalityMultiplayer){
-//					Game.world.battle.character.health += 15;
-//					if(Game.world.battle.character.health > 300)
-//						Game.world.battle.character.health = 300;
-//				}
-//				else{
-//					Client.networkWorld.battle.character.health += 15;
-//					if(Client.networkWorld.battle.character.health > 300)
-//						Client.networkWorld.battle.character.health = 300;
-//				}
-//				break;
-//			case SECOND:
-//				if (!GameSlagyom.modalityMultiplayer){
-//					Game.world.battle.character.health += 25;
-//					if(Game.world.battle.character.health > 300)
-//						Game.world.battle.character.health = 300;
-//				}
-//				else{
-//					Client.networkWorld.battle.character.health += 25;
-//					if(Client.networkWorld.battle.character.health > 300)
-//						Client.networkWorld.battle.character.health = 300;
-//				}
-//				break;
-//			case THIRD:
-//				if (!GameSlagyom.modalityMultiplayer){
-//					Game.world.battle.character.health += 45;
-//					if(Game.world.battle.character.health > 300)
-//						Game.world.battle.character.health = 300;}
-//				else{
-//					Client.networkWorld.battle.character.health += 45;
-//					if(Client.networkWorld.battle.character.health > 300)
-//						Client.networkWorld.battle.character.health = 300;
-//				}
-//				break;
-//			default:
-//				System.out.println("potion non assegnata");
-//				break;
-//			}
-//			removeItem(item.getElement(), item.getLevel());
-//		}
-//	}
+
+	// public void useItem(Item item) {
+	// if (item.getElement() == Element.POTION) {
+	// switch (item.getLevel()) {
+	// case FIRST:
+	// if (!GameSlagyom.modalityMultiplayer){
+	// Game.world.battle.character.health += 15;
+	// if(Game.world.battle.character.health > 300)
+	// Game.world.battle.character.health = 300;
+	// }
+	// else{
+	// Client.networkWorld.battle.character.health += 15;
+	// if(Client.networkWorld.battle.character.health > 300)
+	// Client.networkWorld.battle.character.health = 300;
+	// }
+	// break;
+	// case SECOND:
+	// if (!GameSlagyom.modalityMultiplayer){
+	// Game.world.battle.character.health += 25;
+	// if(Game.world.battle.character.health > 300)
+	// Game.world.battle.character.health = 300;
+	// }
+	// else{
+	// Client.networkWorld.battle.character.health += 25;
+	// if(Client.networkWorld.battle.character.health > 300)
+	// Client.networkWorld.battle.character.health = 300;
+	// }
+	// break;
+	// case THIRD:
+	// if (!GameSlagyom.modalityMultiplayer){
+	// Game.world.battle.character.health += 45;
+	// if(Game.world.battle.character.health > 300)
+	// Game.world.battle.character.health = 300;}
+	// else{
+	// Client.networkWorld.battle.character.health += 45;
+	// if(Client.networkWorld.battle.character.health > 300)
+	// Client.networkWorld.battle.character.health = 300;
+	// }
+	// break;
+	// default:
+	// System.out.println("potion non assegnata");
+	// break;
+	// }
+	// removeItem(item.getElement(), item.getLevel());
+	// }
+	// }
 	public void useItem(Item item) {
 		if (item.getElement() == Element.POTION) {
 			switch (item.getLevel()) {

@@ -147,5 +147,6 @@ public class ScreenManager {
 
 	public void setPlayScreen(PlayScreen playScreen) {
 		this.playScreen = playScreen;
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(gameSlagyom.loadingImage.noCursor, 0, 0));
 	}
 }

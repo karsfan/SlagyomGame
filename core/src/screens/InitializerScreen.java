@@ -138,6 +138,7 @@ public class InitializerScreen implements Screen, ControllerListener {
 	protected void clickDefaultLevelButton() {
 		game.loadingMusic.pause();
 		game.screenManager.menuScreen.menuMusic.stop();
+		
 		game.screenManager.playScreen = new PlayScreen(game, game.screenManager.newCharacterScreen.charName,
 				game.screenManager.newCharacterScreen.maleSelected);
 		game.screenManager.setPlayScreen(game.screenManager.playScreen);

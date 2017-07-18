@@ -142,7 +142,22 @@ public class ShopScreen implements Screen, ControllerListener {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickReturnButton();
+=======
+				showInfo(LoadingImage.emptyShopIcon, LoadingImage.emptyDescription);
+				hideInfo();
+				LoadingImage.emptyShopIcon.setVisible(true);
+				optionsTable.removeActor(LoadingImage.bombDescription);
+				optionsTable.removeActor(LoadingImage.potionDescription);
+				optionsTable.removeActor(LoadingImage.weaponDescription);
+				optionsTable.removeActor(LoadingImage.parchmentDescription);
+				buyingTable.setVisible(false);
+				buying = false;
+				optionsTable.add(LoadingImage.rightArrow);
+				optionsTable.add(LoadingImage.leftArrow);
+				optionsTable.add(LoadingImage.close);
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 
 			}
 		});
@@ -215,21 +230,42 @@ public class ShopScreen implements Screen, ControllerListener {
 		potions[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickPotionFirst();
+=======
+				showInfo(LoadingImage.bluePotion, LoadingImage.potionDescription);
+				itemSelected = new Item(Element.POTION, Level.FIRST);
+				setBuyingTable();
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
 		potions[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickPotionSecond();
+=======
+				showInfo(LoadingImage.redPotion, LoadingImage.potionDescription);
+				setBuyingTable();
+				itemSelected = new Item(Element.POTION, Level.SECOND);
+
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
 		potions[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickPotionThird();
+=======
+				showInfo(LoadingImage.greenPotion, LoadingImage.potionDescription);
+
+				setBuyingTable();
+				itemSelected = new Item(Element.POTION, Level.THIRD);
+
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
@@ -254,21 +290,39 @@ public class ShopScreen implements Screen, ControllerListener {
 		bombs[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickBombFirst();
+=======
+				showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
+				weaponSelected = new Bomb(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
+				setBuyingTable();
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
 		bombs[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickBombSecond();
+=======
+				showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
+				setBuyingTable();
+				weaponSelected = new Bomb(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
 		bombs[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickBombThird();
+=======
+				showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
+				setBuyingTable();
+				weaponSelected = new Bomb(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
@@ -299,21 +353,100 @@ public class ShopScreen implements Screen, ControllerListener {
 		weapons[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickWeaponSword();
+=======
+				showInfo(LoadingImage.spear, LoadingImage.weaponDescription);
+				buying = true;
+				buyingTable.clear();
+				buyingTable.setVisible(true);
+
+				lev1.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Sword);
+					}
+				});
+				lev2.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Sword);
+					}
+				});
+				lev3.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Sword);
+					}
+				});
+				setBuyingTableWeapon();
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
 		weapons[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickWeaponSpear();
+=======
+				showInfo(LoadingImage.sword, LoadingImage.weaponDescription);
+				buying = true;
+				buyingTable.clear();
+				buyingTable.setVisible(true);
+				lev1.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Spear);
+					}
+				});
+				lev2.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Spear);
+					}
+				});
+				lev3.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Spear);
+					}
+				});
+				setBuyingTableWeapon();
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
 		weapons[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickWeaponBow();
+=======
+				showInfo(LoadingImage.bow, LoadingImage.weaponDescription);
+				buying = true;
+				buyingTable.clear();
+				buyingTable.setVisible(true);
+				lev1.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Bow);
+					}
+				});
+				lev2.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Bow);
+					}
+				});
+				lev3.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Bow);
+					}
+				});
+				setBuyingTableWeapon();
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
@@ -339,14 +472,26 @@ public class ShopScreen implements Screen, ControllerListener {
 		parchments[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickParchmentFirst();
+=======
+				showInfo(LoadingImage.parchment, LoadingImage.parchmentDescription);
+				itemSelected = new Item(Element.PARCHMENT, Level.FIRST);
+				setBuyingTable();
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
 		parchments[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+<<<<<<< HEAD
 				clickParchmentSecond();
+=======
+				showInfo(LoadingImage.parchment2, LoadingImage.parchmentDescription);
+				itemSelected = new Item(Element.PARCHMENT, Level.SECOND);
+				setBuyingTable();
+>>>>>>> 5e1df373e7a3d1b1b4615ee5187d92b328a2f1b3
 			}
 		});
 
@@ -630,10 +775,13 @@ public class ShopScreen implements Screen, ControllerListener {
 		scaling = true;
 	}
 
-	private void showInfo(ImageButton icon) {
+	private void showInfo(ImageButton icon, ImageButton description) {
 		icon.setPosition(149, 43);
+		description.setPosition(230, 16);
 		optionsTable.removeActor(icon);
+		optionsTable.removeActor(description);
 		optionsTable.add(icon);
+		optionsTable.add(description);
 		LoadingImage.emptyShopIcon.setVisible(false);
 
 		buyButton.setVisible(true);

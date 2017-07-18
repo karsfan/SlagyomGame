@@ -124,6 +124,11 @@ public class LoadingImage {
 	public static Animation<TextureRegion> loadingAnimation;
 
 	// BAG IMAGE BUTTONS
+	public static ImageButton potionDescription;
+	public static ImageButton bombDescription;
+	public static ImageButton weaponDescription;
+	public static ImageButton parchmentDescription;
+	public static ImageButton emptyDescription;
 	public static ImageButton bluePotion;
 	public static ImageButton redPotion;
 	public static ImageButton greenPotion;
@@ -185,6 +190,18 @@ public class LoadingImage {
 		miniMapPointer = new Texture("res/miniMapPointer.png");
 
 		// BAG AND SHOP ITEM IMAGES
+		potionDescription = new ImageButton(
+				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/potionDescription.png"))));
+		weaponDescription = new ImageButton(
+				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/weaponDescription.png"))));
+		parchmentDescription = new ImageButton(
+				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/parchmentDescription.png"))));
+		bombDescription = new ImageButton(
+				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/bombDescription.png"))));
+		emptyDescription = new ImageButton(
+				new TextureRegionDrawable(new TextureRegion(new Texture("res/noCursor.png"))));
+	
+		
 		bluePotion = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/bluePotion.png"))));
 		redPotion = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/redPotion.png"))));

@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -134,10 +135,24 @@ public class MenuScreen implements Screen, ControllerListener {
 		mainTable.row();
 		mainTable.add(exitButton).pad(5);
 
+		Image title = new Image(titleBackground);
+		title.setPosition(0, 150); //310
+
 		// Add table to stage
 		stage.addActor(mainTable);
-		stage.addAction(Actions.alpha(0f));
-		stage.addAction(Actions.fadeIn(2f));
+		
+		stage.addActor(title);
+		title.addAction(Actions.alpha(0f));
+//		title.addAction(Actions.fadeIn(2f));
+		title.addAction(Actions.sequence(Actions.fadeIn(1.5f), (Actions.moveTo(0, 310, 1f))));
+//		title.addAction(Actions.moveTo(0, 310, 2f));
+		mainTable.addAction(Actions.delay(2f, Actions.fadeIn(1.5f)));
+		mainTable.addAction(Actions.alpha(0f));
+//		stage.addAction(Actions.alpha(0f, 0f));
+//		stage.addAction(Actions.fadeIn(2f));
+//		mainTable.addAction(Actions.fadeIn(2f));
+
+		
 		buttonSelected = playButton;
 	}
 
@@ -201,7 +216,7 @@ public class MenuScreen implements Screen, ControllerListener {
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 
-		game.batch.draw(titleBackground, 0, 310);
+//		game.batch.draw(titleBackground, 0, 310);
 		game.batch.end();
 
 		stage.act(delta);

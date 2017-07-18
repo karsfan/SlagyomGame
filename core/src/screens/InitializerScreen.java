@@ -34,8 +34,8 @@ public class InitializerScreen implements Screen, ControllerListener {
 	private Texture background;
 	private Sprite backgroundSprite;
 	final Label name;
-	TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
-	TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);
+	TextButton defaultAiButton = new TextButton("Default enemies' A.I.", MenuScreen.skin);
+	TextButton chooseAiButton = new TextButton("Choose enemies' A.I...", MenuScreen.skin);
 	TextButton returnButton = new TextButton("Return", MenuScreen.skin);
 	TextButton continueButton;
 	TextButton buttonSelected;
@@ -63,14 +63,14 @@ public class InitializerScreen implements Screen, ControllerListener {
 
 		// Create buttons
 		// Add listeners to buttons
-		defaultLevelButton.addListener(new ClickListener() {
+		defaultAiButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				clickDefaultLevelButton();
 			}
 		});
 
-		chooseLevelButton.addListener(new ClickListener() {
+		chooseAiButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				clickChooseLevelButton();
@@ -94,15 +94,15 @@ public class InitializerScreen implements Screen, ControllerListener {
 
 		mainTable.add(name).pad(30);
 		mainTable.row();
-		mainTable.add(defaultLevelButton).pad(5).padTop(camera.viewportHeight / 5);
+		mainTable.add(defaultAiButton).pad(5).padTop(camera.viewportHeight / 5);
 		mainTable.row();
-		mainTable.add(chooseLevelButton).pad(5);
+		mainTable.add(chooseAiButton).pad(5);
 		mainTable.row();
 		mainTable.add(returnButton).pad(5);
 		mainTable.row();
 
 		stage.addActor(mainTable);
-		buttonSelected = defaultLevelButton;
+		buttonSelected = defaultAiButton;
 
 	}
 
@@ -114,7 +114,7 @@ public class InitializerScreen implements Screen, ControllerListener {
 		mainTable.clear();
 		mainTable.add(name).pad(30);
 		mainTable.row();
-		mainTable.add(defaultLevelButton).pad(5).padTop(camera.viewportHeight / 2 - camera.viewportHeight / 3);
+		mainTable.add(defaultAiButton).pad(5).padTop(camera.viewportHeight / 2 - camera.viewportHeight / 3);
 		mainTable.row();
 		mainTable.add(nameAI);
 		mainTable.row();
@@ -179,10 +179,10 @@ public class InitializerScreen implements Screen, ControllerListener {
 			buttonSelected = continueButton;
 		else if (returnButton.isOver())
 			buttonSelected = returnButton;
-		else if (defaultLevelButton.isOver())
-			buttonSelected = defaultLevelButton;
-		else if (chooseLevelButton.isOver())
-			buttonSelected = chooseLevelButton;
+		else if (defaultAiButton.isOver())
+			buttonSelected = defaultAiButton;
+		else if (chooseAiButton.isOver())
+			buttonSelected = chooseAiButton;
 	}
 
 	@Override
@@ -226,9 +226,9 @@ public class InitializerScreen implements Screen, ControllerListener {
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
 		if (buttonCode == 0) {
-			if (buttonSelected == defaultLevelButton)
+			if (buttonSelected == defaultAiButton)
 				clickDefaultLevelButton();
-			else if (buttonSelected == chooseLevelButton)
+			else if (buttonSelected == chooseAiButton)
 				clickChooseLevelButton();
 			else if (buttonSelected == returnButton)
 				game.screenManager.swapScreen(State.NEWGAME);
@@ -248,29 +248,29 @@ public class InitializerScreen implements Screen, ControllerListener {
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		if (value == PovDirection.north) {
 			buttonSelected.getLabel().setFontScale(1.0f);
-			if (buttonSelected == defaultLevelButton)
+			if (buttonSelected == defaultAiButton)
 				buttonSelected = returnButton;
-			else if (buttonSelected == chooseLevelButton)
-				buttonSelected = defaultLevelButton;
+			else if (buttonSelected == chooseAiButton)
+				buttonSelected = defaultAiButton;
 			else if (buttonSelected == returnButton) {
 				if (!continueButton.isVisible())
-					buttonSelected = chooseLevelButton;
+					buttonSelected = chooseAiButton;
 				else
 					buttonSelected = continueButton;
 			} else if (buttonSelected == continueButton)
-				buttonSelected = defaultLevelButton;
+				buttonSelected = defaultAiButton;
 
 		} else if (value == PovDirection.south) {
 			buttonSelected.getLabel().setFontScale(1.0f);
-			if (buttonSelected == defaultLevelButton) {
+			if (buttonSelected == defaultAiButton) {
 				if (!continueButton.isVisible())
-					buttonSelected = chooseLevelButton;
+					buttonSelected = chooseAiButton;
 				else
 					buttonSelected = continueButton;
-			} else if (buttonSelected == chooseLevelButton)
+			} else if (buttonSelected == chooseAiButton)
 				buttonSelected = returnButton;
 			else if (buttonSelected == returnButton)
-				buttonSelected = defaultLevelButton;
+				buttonSelected = defaultAiButton;
 			else if(buttonSelected == continueButton)
 				buttonSelected = returnButton;
 		}

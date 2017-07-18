@@ -93,7 +93,7 @@ public class Hud {
 		splash.addAction(Actions.alpha(0f));
 
 		stage.addActor(splash);
-		stage.addActor(coin);
+//		stage.addActor(coin);
 
 		table.setBackground(hudBG);
 		textTable.setX(854 - 236);

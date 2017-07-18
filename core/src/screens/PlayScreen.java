@@ -25,7 +25,6 @@ import character.Player;
 import character.Woman;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
-import gameManager.MenuControllerListener;
 import hud.Hud;
 import staticObjects.Item;
 import staticObjects.StaticObject;
@@ -255,26 +254,6 @@ public class PlayScreen implements Screen, ControllerListener {
 	@SuppressWarnings("static-access")
 	private void moveCharacter(float dt) {
 		if (!stop) {
-			/*
-			 * if (movesGamePad) { if (directionGamePad == PovDirection.east)
-			 * game.world.player.movesRight(dt); else if (directionGamePad ==
-			 * PovDirection.north) { game.world.player.movesUp(dt); if
-			 * (game.world.player.collideShop) {
-			 * game.screenManager.swapScreen(it.slagyom.ScreenManager.State.
-			 * SHOP); game.world.semaphore.acquire();
-			 * game.world.player.collideShop = false; } } else if
-			 * (directionGamePad == PovDirection.west)
-			 * game.world.player.movesLeft(dt); else if (directionGamePad ==
-			 * PovDirection.south) game.world.player.movesDown(dt); else if
-			 * (directionGamePad == PovDirection.northEast)
-			 * game.world.player.movesNorthEast(dt); else if (directionGamePad
-			 * == PovDirection.northWest) game.world.player.movesNorthWest(dt);
-			 * else if (directionGamePad == PovDirection.southEast)
-			 * game.world.player.movesSouthEast(dt); else if (directionGamePad
-			 * == PovDirection.southWest) game.world.player.movesSouthWest(dt);
-			 * 
-			 * }
-			 */
 			if (Gdx.input.isKeyPressed(Keys.Z) || (buttonPressed && buttonCodePressed == 5)) {
 				game.world.player.setVelocity(150f);
 				loadingImage.setFrameDurationCharacter(0.1f);
@@ -292,11 +271,16 @@ public class PlayScreen implements Screen, ControllerListener {
 				if (game.world.player.collideShop) {
 					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
 					game.world.player.collideShop = false;
+					movesGamePad = false;
 				}
 				if (game.world.player.collideGym) {
 					gameSlagyom.screenManager.battlescreen = new BattleScreen(gameSlagyom, game.world.battle);
 					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
 					game.world.player.collideGym = false;
+					movesGamePad = false;
+				}if(!game.world.player.textDialog.equals("")){
+					hud.setDialogText(game.world.player.textDialog);
+					game.world.player.textDialog = "";
 				}
 
 			} else if (Gdx.input.isKeyPressed(Keys.DOWN) || (directionGamePad == PovDirection.south && movesGamePad))
@@ -312,6 +296,7 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER) || (buttonPressed && buttonCodePressed == 0)) {
 			hud.showDialog = false;
+			buttonPressed = false;
 			if (stop) {
 				stop = false;
 			}

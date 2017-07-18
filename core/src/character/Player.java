@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 
 import character.Weapon.Level;
 import character.Weapon.Type;
-import screens.PlayScreen;
 import staticObjects.EnemyHome;
 import staticObjects.BossHome;
 import staticObjects.Item;
@@ -30,7 +29,7 @@ public class Player extends DynamicObjects implements ICollidable {
 	public boolean male;
 	public boolean collideCoin = false;
 	public boolean collideItem = false;
-	
+	public String textDialog = "";
 	public Player(String name, boolean male) {
 		super();
 		this.name = name;
@@ -291,7 +290,7 @@ public class Player extends DynamicObjects implements ICollidable {
 						&& ((StaticObject) ob).getElement() != Element.ROAD)
 					if (((StaticObject) ob).collide(this)) {
 						if (((StaticObject) ob).getElement() == Element.TABLE)
-							PlayScreen.hud.setDialogText(((StaticObject) ob).getInfo());
+							textDialog = ((StaticObject) ob).getInfo();
 						else if (((StaticObject) ob).getElement() == Element.SHOP) {
 							if (((Shop) ob).collideDoor(this)) {
 								collideShop = true;

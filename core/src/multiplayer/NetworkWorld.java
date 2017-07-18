@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import battle.Battle;
 import battle.Enemy;
+import staticObjects.BossHome;
 import staticObjects.EnemyHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
@@ -59,6 +60,7 @@ public class NetworkWorld {
 		}
 		if (!creata) {
 			battle = null;
+			player.textDialog = "There aren't enemies in this home";
 			player.collideGym = false;
 		}
 
@@ -94,12 +96,13 @@ public class NetworkWorld {
 			}
 			if (!creata) {
 				player.collideGym = false;
+				player.textDialog = "There aren't enemies in this home";
 			}
 		} // se si tratta di un castle controllo prima che siano stati sconfitti
 			// tutti i nemici, se lo sono allora partirà la battaglia con il
 			// boss
 		else if (enemyHome.getElement() == Element.CASTLE) {
-			//boolean creata = false;
+			boolean creata = true;
 			while (it.hasNext()) {
 				StaticObject ob = (StaticObject) it.next();
 				if (ob instanceof EnemyHome && ob.getElement() == Element.TEMPLE) {
@@ -107,17 +110,21 @@ public class NetworkWorld {
 					while (it1.hasNext()) {
 						Enemy ob1 = it1.next();
 						if (!ob1.morto) {
-							//creata = true;
+							creata = false;
 							battle = new NetworkBattle(player, ob1);
 							break;
 						}
 
 					}
-				} else {
-					player.collideGym = false;
-					// PlayScreen.hud.setDialogText(
-					// "Hai già sconfitto il boss di questo villaggio, adesso
-					// puoi passare al prossimo villaggio");
+				}
+				if (creata) {
+					if (!((BossHome)enemyHome).getEnemy().morto) {
+						battle = new Battle(player, ((BossHome)enemyHome).getEnemy());
+					}
+					else {
+						player.collideGym = false;
+						player.textDialog = "You have defeated the village boss";
+					}
 				}
 
 			}

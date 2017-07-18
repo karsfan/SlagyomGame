@@ -16,6 +16,7 @@ import character.Man;
 import character.Player;
 import character.Woman;
 import screens.PlayScreen;
+import staticObjects.BossHome;
 import staticObjects.EnemyHome;
 import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
@@ -38,7 +39,6 @@ public class World {
 
 	private FileReader fileReader;
 	private Scanner input;
-
 	public World(String name, boolean male) {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
@@ -191,7 +191,7 @@ public class World {
 		}
 		if (!creata) {
 			player.collideGym = false;
-			PlayScreen.hud.setDialogText("Non ci sono nemici in questa casa");
+			player.textDialog = "There aren't enemies in this home";
 		}
 	}
 
@@ -217,10 +217,6 @@ public class World {
 
 	}
 
-	// public void setThread(ThreadWorld thread) {
-	// this.thread = thread;
-	// }
-
 	public void createBattle(EnemyHome enemyHome) {
 		Iterator<StaticObject> it = getListTile().iterator();
 		// se si tratta di un tempio controllo tra la lista dei nemici quali
@@ -239,7 +235,7 @@ public class World {
 			}
 			if (!creata) {
 				player.collideGym = false;
-				PlayScreen.hud.setDialogText("Non ci sono nemici in questa casa");
+				player.textDialog = "There aren't enemies in this home";
 			}
 		} // se si tratta di un castle controllo prima che siano stati sconfitti
 			// tutti i nemici, se lo sono allora partirà la battaglia con il
@@ -262,12 +258,12 @@ public class World {
 				}
 			}
 			if (creata) {
-				if (!enemyHome.getEnemy().morto)
-					battle = new Battle(player, enemyHome.getEnemy());
+				if (! ((BossHome)enemyHome).getEnemy().morto){
+					battle = new Battle(player, ((BossHome)enemyHome).getEnemy());
+				}
 				else {
 					player.collideGym = false;
-					PlayScreen.hud.setDialogText(
-							"Hai già sconfitto il boss di questo villaggio, adesso puoi passare al prossimo villaggio");
+					player.textDialog = "You have defeated the village boss, now you expect other challenges";
 					nextLevel();
 				}
 

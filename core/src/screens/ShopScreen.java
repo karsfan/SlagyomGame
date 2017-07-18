@@ -194,9 +194,13 @@ public class ShopScreen implements Screen {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.emptyShopIcon);
+				showInfo(LoadingImage.emptyShopIcon, LoadingImage.emptyDescription);
 				hideInfo();
 				LoadingImage.emptyShopIcon.setVisible(true);
+				optionsTable.removeActor(LoadingImage.bombDescription);
+				optionsTable.removeActor(LoadingImage.potionDescription);
+				optionsTable.removeActor(LoadingImage.weaponDescription);
+				optionsTable.removeActor(LoadingImage.parchmentDescription);
 				buyingTable.setVisible(false);
 				buying = false;
 				optionsTable.add(LoadingImage.rightArrow);
@@ -293,7 +297,7 @@ public class ShopScreen implements Screen {
 		potions[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bluePotion);
+				showInfo(LoadingImage.bluePotion, LoadingImage.potionDescription);
 				itemSelected = new Item(Element.POTION, Level.FIRST);
 				setBuyingTable();
 			}
@@ -302,7 +306,7 @@ public class ShopScreen implements Screen {
 		potions[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.redPotion);
+				showInfo(LoadingImage.redPotion, LoadingImage.potionDescription);
 				setBuyingTable();
 				itemSelected = new Item(Element.POTION, Level.SECOND);
 
@@ -312,7 +316,7 @@ public class ShopScreen implements Screen {
 		potions[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.greenPotion);
+				showInfo(LoadingImage.greenPotion, LoadingImage.potionDescription);
 
 				setBuyingTable();
 				itemSelected = new Item(Element.POTION, Level.THIRD);
@@ -341,7 +345,7 @@ public class ShopScreen implements Screen {
 		bombs[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bomb);
+				showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 				weaponSelected = new Bomb(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
 				setBuyingTable();
 			}
@@ -350,7 +354,7 @@ public class ShopScreen implements Screen {
 		bombs[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bomb);
+				showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 				setBuyingTable();
 				weaponSelected = new Bomb(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
 			}
@@ -359,7 +363,7 @@ public class ShopScreen implements Screen {
 		bombs[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bomb);
+				showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 				setBuyingTable();
 				weaponSelected = new Bomb(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
 			}
@@ -393,7 +397,7 @@ public class ShopScreen implements Screen {
 		weapons[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.spear);
+				showInfo(LoadingImage.spear, LoadingImage.weaponDescription);
 				buying = true;
 				buyingTable.clear();
 				buyingTable.setVisible(true);
@@ -423,7 +427,7 @@ public class ShopScreen implements Screen {
 		weapons[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.sword);
+				showInfo(LoadingImage.sword, LoadingImage.weaponDescription);
 				buying = true;
 				buyingTable.clear();
 				buyingTable.setVisible(true);
@@ -452,7 +456,7 @@ public class ShopScreen implements Screen {
 		weapons[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bow);
+				showInfo(LoadingImage.bow, LoadingImage.weaponDescription);
 				buying = true;
 				buyingTable.clear();
 				buyingTable.setVisible(true);
@@ -500,7 +504,7 @@ public class ShopScreen implements Screen {
 		parchments[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.parchment);
+				showInfo(LoadingImage.parchment, LoadingImage.parchmentDescription);
 				itemSelected = new Item(Element.PARCHMENT, Level.FIRST);
 				setBuyingTable();
 			}
@@ -509,7 +513,7 @@ public class ShopScreen implements Screen {
 		parchments[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.parchment2);
+				showInfo(LoadingImage.parchment2, LoadingImage.parchmentDescription);
 				itemSelected = new Item(Element.PARCHMENT, Level.SECOND);
 				setBuyingTable();
 			}
@@ -531,10 +535,13 @@ public class ShopScreen implements Screen {
 		stage.addActor(buyingTable);
 	}
 
-	private void showInfo(ImageButton icon) {
+	private void showInfo(ImageButton icon, ImageButton description) {
 		icon.setPosition(149, 43);
+		description.setPosition(230, 16);
 		optionsTable.removeActor(icon);
+		optionsTable.removeActor(description);
 		optionsTable.add(icon);
+		optionsTable.add(description);
 		LoadingImage.emptyShopIcon.setVisible(false);
 
 		buyButton.setVisible(true);

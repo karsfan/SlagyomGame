@@ -881,11 +881,13 @@ public class BagScreen implements Screen, ControllerListener {
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
 		if (buttonCode == 1) {
+			game.loadingMusic.selectionSound.play();
 			if (optionsTable.isVisible())
 				clickExitButton();
 			else
 				game.screenManager.swapScreen(State.PAUSE);
 		} else if (buttonCode == 0) {
+			game.loadingMusic.selectionSound.play();
 			if (!optionsTable.isVisible()) {
 				if (potionsTable.isVisible()) {
 					if (buttonSelected == potions[0])

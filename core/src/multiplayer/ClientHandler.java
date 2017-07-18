@@ -85,7 +85,7 @@ public class ClientHandler extends Thread {
 								}
 							}
 							client.networkWorld.otherPlayers.add(otherPlayer);
-							System.out.println("Creo un personaggio");
+							// System.out.println("Creo un personaggio");
 						}
 					}
 				} else {
@@ -106,8 +106,6 @@ public class ClientHandler extends Thread {
 								player.isFighting = true;
 						} else if (message.action == 10) {
 							if (player.ID == message.ID) {
-								// if (message.ID == 0)
-								// client.gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 								if (client.networkWorld.player.isFighting)
 									if (client.networkWorld.battle.enemy instanceof NetworkCharacterBattle)
 										if (((NetworkCharacterBattle) client.networkWorld.battle.enemy).ID == message.ID)
@@ -122,7 +120,6 @@ public class ClientHandler extends Thread {
 								player.setState(message.currentState);
 							}
 						} else if (message.action == 4) {
-							System.out.println("ricevuto");
 							if (player.ID == message.ID) {
 								player.health = (int) message.x;
 								player.isFighting = false;
@@ -130,6 +127,9 @@ public class ClientHandler extends Thread {
 									client.networkWorld.otherPlayers.remove(player);
 								break;
 							}
+						}else if(message.action == 9){
+							if(player.ID == message.ID)
+								player.isFighting = true;
 						}
 					}
 					if (message.action >= 15 && message.action <= 20) {

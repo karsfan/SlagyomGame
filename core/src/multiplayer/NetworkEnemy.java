@@ -38,6 +38,7 @@ public class NetworkEnemy extends Enemy {
 		}
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += dt;
+			if (fightingTimeCurrent >= fightingTime / 2 && weapon.getType() == Type.Bow)
 			if (!arrowShooted) {
 				shootArrow();
 				arrowShooted = true;
@@ -92,11 +93,9 @@ public class NetworkEnemy extends Enemy {
 				&& x - Client.networkWorld.battle.character.getX() > 0)
 				|| (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width / 3
 						&& Client.networkWorld.battle.character.getX() - x > 0)) {
-			if (rand < 15 && Client.networkWorld.battle.character.fighting)
+			if (rand < 20 && Client.networkWorld.battle.character.fighting)
 				jump(dt);
-			if (rand > 15 && rand < 30 && Client.networkWorld.battle.character.fighting) {
-				setState(StateDynamicObject.DEFENDING);
-			} else if (x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 3
+			else if (x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 3
 					&& x - Client.networkWorld.battle.character.getX() > 0 && rand < 90)
 				fightLeft();
 			else if (Client.networkWorld.battle.character.getX() - x < Client.networkWorld.battle.character.width / 3
@@ -172,8 +171,6 @@ public class NetworkEnemy extends Enemy {
 
 			if (rand < 10 && Client.networkWorld.battle.character.fighting)
 				jump(dt);
-			else if (rand > 10 && rand < 25 && Client.networkWorld.battle.character.fighting)
-				setState(StateDynamicObject.DEFENDING);
 			else if (x - Client.networkWorld.battle.character.getX() < Client.networkWorld.battle.character.width / 2
 					&& x - Client.networkWorld.battle.character.getX() > 0 && rand < 55)
 				fightLeft();
@@ -202,10 +199,8 @@ public class NetworkEnemy extends Enemy {
 				|| (Client.networkWorld.battle.character.getX() + Client.networkWorld.battle.character.width / 2
 						- x < Client.networkWorld.battle.character.width / 3
 						&& Client.networkWorld.battle.character.getX() - x > 0)) {
-			if (rand < 5 && Client.networkWorld.battle.character.fighting)
+			if (rand < 7 && Client.networkWorld.battle.character.fighting)
 				jump(dt);
-			else if (rand > 5 && rand < 20 && Client.networkWorld.battle.character.fighting)
-				setState(StateDynamicObject.DEFENDING);
 			else if (x - Client.networkWorld.battle.character.getX()
 					- Client.networkWorld.battle.character.width / 2 < Client.networkWorld.battle.character.width / 3
 					&& x - Client.networkWorld.battle.character.getX() > 0 && rand < 40)

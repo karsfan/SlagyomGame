@@ -241,11 +241,9 @@ public class Enemy extends Fighting {
 				|| (Game.world.battle.character.getX() - width / 2 - x < Game.world.battle.character.width / 3
 						&& Game.world.battle.character.getX() - x > 0)) {
 
-			if (rand < 15 && Game.world.battle.character.fighting)
+			if (rand < 20 && Game.world.battle.character.fighting)
 				jump(dt);
-			if (rand > 15 && rand < 30 && Game.world.battle.character.fighting) {
-				setState(StateDynamicObject.DEFENDING);
-			} else if (x - Game.world.battle.character.getX()
+			else if (x - Game.world.battle.character.getX()
 					- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
 					&& x - Game.world.battle.character.getX() > 0 && rand < 90)
 				fightLeft();
@@ -323,8 +321,6 @@ public class Enemy extends Fighting {
 
 			if (rand < 10 && Game.world.battle.character.fighting)
 				jump(dt);
-			else if (rand > 10 && rand < 25 && Game.world.battle.character.fighting)
-				setState(StateDynamicObject.DEFENDING);
 			else if (x - Game.world.battle.character.getX()
 					- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
 					&& x - Game.world.battle.character.getX() > 0 && rand < 55)
@@ -358,10 +354,8 @@ public class Enemy extends Fighting {
 				&& x - Game.world.battle.character.getX() > 0)
 				|| (Game.world.battle.character.getX() - width / 2 - x < Game.world.battle.character.width / 3
 						&& Game.world.battle.character.getX() - x > 0)) {
-			if (rand < 5 && Game.world.battle.character.fighting)
+			if (rand < 7 && Game.world.battle.character.fighting)
 				jump(dt);
-			else if (rand > 5 && rand < 20 && Game.world.battle.character.fighting)
-				setState(StateDynamicObject.DEFENDING);
 			else if (x - Game.world.battle.character.getX()
 					- Game.world.battle.character.width / 2 < Game.world.battle.character.width / 3
 					&& x - Game.world.battle.character.getX() > 0 && rand < 40)
@@ -465,10 +459,7 @@ public class Enemy extends Fighting {
 	}
 
 	public void decreaseHealth(Weapon weaponCharacter) {
-		if (currentState == StateDynamicObject.DEFENDING) {
-			health -= weaponCharacter.getDamage() / 2;
-		} else
-			health -= weaponCharacter.getDamage();
+		health -= weaponCharacter.getDamage();
 	}
 
 	public String getName() {

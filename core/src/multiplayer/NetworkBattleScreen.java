@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
@@ -132,7 +133,6 @@ public class NetworkBattleScreen extends BattleScreen {
 	@SuppressWarnings("static-access")
 	@Override
 	public void update(float dt) {
-		// System.out.println("Update NetBattleScreen");
 		if (!youWin && !youLose) {
 			handleInput(dt);
 			hud.update(dt);
@@ -195,16 +195,22 @@ public class NetworkBattleScreen extends BattleScreen {
 			hud.stage.addActor(packTable);
 		}
 		if (youWin || youLose)
-			if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-				if (battle.character instanceof NetworkCharacterBattle) {
+			if (Gdx.input.isKeyJustPressed(Keys.ENTER)
+					|| (buttonPressed && (buttonCodePressed == 7 || buttonCodePressed == 0))) {
+				if (battle.enemy instanceof NetworkCharacterBattle) {
 					if (youLose) {
 						((NetworkPlayScreen) gameslagyom.screenManager.playScreen).youLose = true;
 					}
+					((NetworkPlayScreen) gameslagyom.screenManager.playScreen).sendUpdate();
+					client.networkWorld.player.isFighting = false;
 					gameslagyom.screenManager.swapScreen(State.PLAYING);
+
+				} else {
 					client.networkWorld.player.isFighting = false;
 					((NetworkPlayScreen) gameslagyom.screenManager.playScreen).sendUpdate();
-				} else
 					gameslagyom.screenManager.swapScreen(State.PLAYING);
+				}
+				buttonPressed = false;
 			}
 	}
 
@@ -212,8 +218,9 @@ public class NetworkBattleScreen extends BattleScreen {
 		moveCharacter(dt);
 		if (this.battle.character.health < 300) {
 			Item item = null;
-			if (Gdx.input.isKeyJustPressed(Keys.NUM_1)
+			if ((Gdx.input.isKeyJustPressed(Keys.NUM_1) || (buttonPressed && buttonCodePressed == 1))
 					&& battle.character.bag.getNumberOf(Element.POTION, Level.FIRST) > 0) {
+				buttonPressed = false;
 				item = new Item(Element.POTION, Level.FIRST);
 				battle.character.useItem(item);
 				battle.character.bag.removeItem(Element.POTION, Level.FIRST);
@@ -225,8 +232,9 @@ public class NetworkBattleScreen extends BattleScreen {
 					client.writer.flush();
 				}
 			}
-			if (Gdx.input.isKeyJustPressed(Keys.NUM_2)
+			if ((Gdx.input.isKeyJustPressed(Keys.NUM_2) || (buttonPressed && buttonCodePressed == 2))
 					&& battle.character.bag.getNumberOf(Element.POTION, Level.SECOND) > 0) {
+				buttonPressed = false;
 				item = new Item(Element.POTION, Level.SECOND);
 				battle.character.useItem(item);
 				battle.character.bag.removeItem(Element.POTION, Level.SECOND);
@@ -238,8 +246,9 @@ public class NetworkBattleScreen extends BattleScreen {
 					client.writer.flush();
 				}
 			}
-			if (Gdx.input.isKeyJustPressed(Keys.NUM_3)
+			if ((Gdx.input.isKeyJustPressed(Keys.NUM_3) || (buttonPressed && buttonCodePressed == 3))
 					&& battle.character.bag.getNumberOf(Element.POTION, Level.THIRD) > 0) {
+				buttonPressed = false;
 				item = new Item(Element.POTION, Level.THIRD);
 				battle.character.useItem(item);
 				battle.character.bag.removeItem(Element.POTION, Level.THIRD);
@@ -256,9 +265,9 @@ public class NetworkBattleScreen extends BattleScreen {
 
 	private void moveCharacter(float dt) {
 
-		if (Gdx.input.isKeyJustPressed(Keys.O)) {
-			System.out.println("SWap");
+		if (Gdx.input.isKeyJustPressed(Keys.O) || (buttonPressed && buttonCodePressed == 4)) {
 			battle.character.swapWeapon();
+			buttonPressed = false;
 			if (battle.enemy instanceof NetworkCharacterBattle) {
 				if (((NetworkCharacterBattle) battle.character).weaponChanged) {
 					client.writer.println(5 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
@@ -269,12 +278,13 @@ public class NetworkBattleScreen extends BattleScreen {
 				}
 			}
 		}
-		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+		if (Gdx.input.isKeyPressed(Keys.SPACE) || (buttonPressed && buttonCodePressed == 5)) {
 			battle.character.caricaBomba(dt);
 			battle.character.lanciaBomba = true;
 		} else {
 			if (battle.character.lanciaBomba) {
 				battle.character.lancia();
+				buttonPressed = false;
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					if (((NetworkCharacterBattle) battle.character).bombaLanciata) {
 						client.writer.println(3 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
@@ -287,15 +297,18 @@ public class NetworkBattleScreen extends BattleScreen {
 				battle.character.lanciaBomba = false;
 				battle.character.forza = 50;
 				((NetworkCharacterBattle) battle.character).bombaLanciata = false;
-			} else if (Gdx.input.isKeyJustPressed(Keys.UP)) {
+			} else if (Gdx.input.isKeyJustPressed(Keys.UP)
+					|| (movesGamePad && directionGamePad == PovDirection.north)) {
 				battle.character.jump(dt);
+				movesGamePad = false;
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
 							+ battle.character.getY() + " " + character.DynamicObjects.StateDynamicObject.JUMPING + ";"
 							+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}
-			} else if (Gdx.input.isKeyPressed(Keys.LEFT) && !battle.character.fighting) {
+			} else if ((Gdx.input.isKeyPressed(Keys.LEFT) || (movesGamePad && directionGamePad == PovDirection.west))
+					&& !battle.character.fighting) {
 				battle.character.movesLeft(dt);
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
@@ -303,7 +316,8 @@ public class NetworkBattleScreen extends BattleScreen {
 							+ ";" + ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 					client.writer.flush();
 				}
-			} else if (Gdx.input.isKeyPressed(Keys.RIGHT) && !battle.character.fighting) {
+			} else if ((Gdx.input.isKeyPressed(Keys.RIGHT) || (movesGamePad && directionGamePad == PovDirection.east))
+					&& !battle.character.fighting) {
 				battle.character.movesRight(dt);
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					client.writer.println(2 + " " + ((NetworkCharacterBattle) battle.character).ID + " " + dt + " "
@@ -314,7 +328,8 @@ public class NetworkBattleScreen extends BattleScreen {
 			} else {
 				battle.character.stand();
 			}
-			if (Gdx.input.isKeyJustPressed(Keys.A)) {
+			if (Gdx.input.isKeyJustPressed(Keys.A) || (buttonPressed && buttonCodePressed == 0)) {
+				buttonPressed = false;
 				if (battle.character.left) {
 					battle.character.fightLeft(dt);
 					if (battle.enemy instanceof NetworkCharacterBattle) {

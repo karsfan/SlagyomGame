@@ -85,7 +85,9 @@ public class NetworkPlayer extends Player {
 					if (((StaticObject) ob).getElement() != Element.GROUND
 							&& ((StaticObject) ob).getElement() != Element.ROAD)
 						if (((StaticObject) ob).collide(this)) {
-							if (((StaticObject) ob).getElement() == Element.PREENEMYHOME) {
+							if (((StaticObject) ob).getElement() == Element.TABLE)
+								textDialog = ((StaticObject) ob).getInfo();
+							else if (((StaticObject) ob).getElement() == Element.PREENEMYHOME) {
 								if (((PreEnemyHouse) ob).collideDoor(this)) {
 									collideGym = true;
 									Client.networkWorld.createBattle((PreEnemyHouse) ob);
@@ -125,8 +127,6 @@ public class NetworkPlayer extends Player {
 							collideWithOtherPlayer = true;
 							IDOtherPlayer = ((NetworkPlayer) ob).ID;
 						}
-						// System.out.println(ID + "collisione con " +
-						// IDOtherPlayer);
 						return true;
 					}
 				}

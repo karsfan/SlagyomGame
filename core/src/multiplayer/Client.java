@@ -96,9 +96,18 @@ public class Client {
 
 	public void movesUp(float dt) {
 		networkWorld.player.movesUp(dt);
+		if(!networkWorld.player.textDialog.equals("")){
+			text = true;
+			textDiaglog = networkWorld.player.textDialog;
+			networkWorld.player.textDialog = "";
+		}
 		if (networkWorld.player.collisionWithObject) {
 			sendCollisionItem();
-		} else if (!networkWorld.player.collideWithOtherPlayer) {
+		}else if(networkWorld.player.collideGym){
+			writer.println(9 + " "+networkWorld.player.ID + " "+0+" "+0+" "+0+";"+0+";");
+			writer.flush();
+		}
+		else if (!networkWorld.player.collideWithOtherPlayer) {
 			writer.println(0 + " " + networkWorld.player.ID + " " + networkWorld.player.getX() + " "
 					+ networkWorld.player.getY() + " " + networkWorld.player.currentState + ";" + "11111" + ";");
 			writer.flush();
@@ -126,8 +135,6 @@ public class Client {
 	}
 
 	public void update() {
-		// TODO Auto-generated method stub
-		System.out.println("inviato");
 		writer.println(4 + " " + networkWorld.player.ID + " " + networkWorld.player.health + " " + 0 + " " + 0 + ";" + 0
 				+ ";");
 		writer.flush();

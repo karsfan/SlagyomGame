@@ -100,6 +100,8 @@ public class ScreenManager {
 			gameSlagyom.loadingMusic.backgroundSound.pause();
 			gameSlagyom.loadingMusic.battleMusic.setVolume((float) 0.07);
 			gameSlagyom.loadingMusic.battleMusic.play();
+			Controllers.clearListeners();
+			Controllers.addListener(battlescreen);
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
 			gameSlagyom.loadingMusic.pause();

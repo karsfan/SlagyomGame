@@ -105,15 +105,14 @@ public class ScreenManager {
 			gameSlagyom.loadingMusic.pause();
 			gameSlagyom.setScreen(pauseScreen);
 			Gdx.input.setInputProcessor(pauseScreen.stage);
+			Controllers.clearListeners();
+			Controllers.addListener(pauseScreen);
 		} else if (currentState == State.BAG) {
 			bagScreen = new BagScreen(gameSlagyom);
 			gameSlagyom.setScreen(bagScreen);
 			Gdx.input.setInputProcessor(bagScreen.stage);
-			Controllers.addListener(new MenuControllerListener(bagScreen.potionsTable));
-			Controllers.addListener(new MenuControllerListener(bagScreen.weaponsTable));
-			Controllers.addListener(new MenuControllerListener(bagScreen.parchmentsTable));
-			Controllers.addListener(new MenuControllerListener(bagScreen.bombsTable));
-			Controllers.addListener(new MenuControllerListener(bagScreen.optionsTable));
+			Controllers.clearListeners();
+			Controllers.addListener(bagScreen);
 		} else if (currentState == State.SHOP) {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);

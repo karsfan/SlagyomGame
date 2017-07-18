@@ -2,13 +2,17 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -23,9 +27,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
 import gameManager.MenuControllerListener;
+import gameManager.ScreenManager.State;
 import multiplayer.NetworkPlayScreen;
 
-public class PauseScreen implements Screen {
+public class PauseScreen implements Screen, ControllerListener {
 
 	private GameSlagyom game;
 	public Stage stage;
@@ -34,9 +39,15 @@ public class PauseScreen implements Screen {
 
 	private Texture background;
 	private Sprite backgroundSprite;
-	// private boolean movesGamePad= false;
-	// private PovDirection directionGamepad;
+
 	Table mainTable = new Table();
+	TextButton buttonSelected;
+	TextButton bagButton;
+	TextButton returnButton;
+	TextButton saveGame;
+	TextButton optionsButton;
+	TextButton exitButton;
+	TextButton menuButton;
 
 	public PauseScreen(final GameSlagyom game) {
 
@@ -57,28 +68,25 @@ public class PauseScreen implements Screen {
 		mainTable.top();
 		Label pauseLabel = new Label("PAUSE", MenuScreen.skin);
 		// Create buttons
-		TextButton bagButton = new TextButton("Bag", MenuScreen.skin);
-		TextButton returnButton = new TextButton("Return", MenuScreen.skin);
-		TextButton saveGame = new TextButton("Save game", MenuScreen.skin);
-		TextButton optionsButton = new TextButton("Options", MenuScreen.skin);
-		TextButton exitButton = new TextButton("Exit", MenuScreen.skin);
-		TextButton menuButton = new TextButton("Menu", MenuScreen.skin);
+		bagButton = new TextButton("Bag", MenuScreen.skin);
+		returnButton = new TextButton("Return", MenuScreen.skin);
+		saveGame = new TextButton("Save game", MenuScreen.skin);
+		optionsButton = new TextButton("Options", MenuScreen.skin);
+		exitButton = new TextButton("Exit", MenuScreen.skin);
+		menuButton = new TextButton("Menu", MenuScreen.skin);
 
 		// Add listeners to buttons
 		saveGame.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.saveGame();
-				game.screenManager.swapScreen(gameManager.ScreenManager.State.PLAYING);
-				PlayScreen.hud.setDialogText("Game saved!");
+				clickSaveButton();
 			}
 		});
-		// saveGame.addListener(new InputListener());
+		
 		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.OPTIONMENU);
-
 			}
 		});
 
@@ -89,19 +97,9 @@ public class PauseScreen implements Screen {
 			}
 		});
 		menuButton.addListener(new ClickListener() {
-			@SuppressWarnings({ "static-access" })
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (!game.modalityMultiplayer) {
-					game.screenManager.playScreen.dispose();
-				} else {
-					int id = ((NetworkPlayScreen) game.screenManager.playScreen).client.networkWorld.player.ID;
-					((NetworkPlayScreen) game.screenManager.playScreen).client.writer
-							.println(10 + " " + id + " " + 0 + " " + 0 + " " + 0 + ";" + "111111" + ";");
-					((NetworkPlayScreen) game.screenManager.playScreen).client.writer.flush();
-				}
-				game.screenManager.menuScreen = new MenuScreen(game);
-				game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+				clickMenuButton();
 			}
 		});
 
@@ -150,11 +148,31 @@ public class PauseScreen implements Screen {
 		Drawable actionDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/help/action.png")));
 		final ImageButton action = new ImageButton(actionDraw);
 
-		helpTable.add(arrow);// .padLeft(Gdx.graphics.getWidth()/2);
+		helpTable.add(arrow);
 		helpTable.add(run);
 		helpTable.add(action);
 		stage.addActor(helpTable);
-		//Controllers.addListener(new MenuControllerListener(mainTable));
+		buttonSelected = bagButton;
+	}
+
+	@SuppressWarnings("static-access")
+	protected void clickMenuButton() {
+		if (!game.modalityMultiplayer) {
+			game.screenManager.playScreen.dispose();
+		} else {
+			int id = ((NetworkPlayScreen) game.screenManager.playScreen).client.networkWorld.player.ID;
+			((NetworkPlayScreen) game.screenManager.playScreen).client.writer
+					.println(10 + " " + id + " " + 0 + " " + 0 + " " + 0 + ";" + "111111" + ";");
+			((NetworkPlayScreen) game.screenManager.playScreen).client.writer.flush();
+		}
+		game.screenManager.menuScreen = new MenuScreen(game);
+		game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+	}
+
+	protected void clickSaveButton() {
+		game.saveGame();
+		game.screenManager.swapScreen(gameManager.ScreenManager.State.PLAYING);
+		PlayScreen.hud.setDialogText("Game saved!");
 	}
 
 	@Override
@@ -166,6 +184,11 @@ public class PauseScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		buttonSelected.getLabel().setFontScale(1.0f);
+		mouseMoved();
+		buttonSelected.getLabel().setFontScale(1.2f);
+		
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();
@@ -174,20 +197,23 @@ public class PauseScreen implements Screen {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-
-			// game.screenManager.networkBattleScreen.client.writer.println(
-			// 8 + " " + ((NetworkCharacterBattle)
-			// game.screenManager.networkBattleScreen.client.networkWorld.battle.character).ID
-			// + " " + 0 + " " + 0 + " " + 0 + ";"
-			// + ((NetworkCharacterBattle)
-			// game.screenManager.networkBattleScreen.client.networkWorld.battle.character).IDOtherPlayer
-			// + ";");
-			// game.screenManager.networkBattleScreen.client.writer.flush();
 			game.screenManager.swapScreen(game.screenManager.getPreviousState());
 		}
-
 	}
-
+	private void mouseMoved() {
+		if (bagButton.isOver())
+			buttonSelected = bagButton;
+		else if (returnButton.isOver())
+			buttonSelected = returnButton;
+		else if (saveGame.isOver())
+			buttonSelected = saveGame;
+		else if (menuButton.isOver())
+			buttonSelected = menuButton;
+		else if(exitButton.isOver())
+			buttonSelected = exitButton;
+		else if(optionsButton.isOver())
+			buttonSelected = optionsButton;
+	}
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().setScreenSize(width, height);
@@ -213,6 +239,104 @@ public class PauseScreen implements Screen {
 	@Override
 	public void dispose() {
 		game.screenManager.playScreen.dispose();
+	}
+
+	@Override
+	public void connected(Controller controller) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void disconnected(Controller controller) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean buttonDown(Controller controller, int buttonCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean buttonUp(Controller controller, int buttonCode) {
+		if(buttonCode == 1)
+			game.screenManager.swapScreen(game.screenManager.getPreviousState());
+		else if(buttonCode == 0){
+			if(buttonSelected == saveGame)
+				clickSaveButton();
+			else if(buttonSelected == bagButton)
+				game.screenManager.swapScreen(gameManager.ScreenManager.State.BAG);
+			else if(buttonSelected == returnButton)
+				game.screenManager.swapScreen(game.screenManager.getPreviousState());
+			else if(buttonSelected == menuButton)
+				game.screenManager.swapScreen(State.MENU);
+			else if(buttonSelected == exitButton)
+				Gdx.app.exit();
+			else if(buttonSelected == optionsButton)
+				game.screenManager.swapScreen(gameManager.ScreenManager.State.OPTIONMENU);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean axisMoved(Controller controller, int axisCode, float value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+		if(value == PovDirection.north){
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if(buttonSelected == bagButton)
+				buttonSelected = exitButton;
+			else if(buttonSelected == saveGame)
+				buttonSelected = bagButton;
+			else if(buttonSelected == optionsButton)
+				buttonSelected = saveGame;
+			else if(buttonSelected == returnButton)
+				buttonSelected = optionsButton;
+			else if(buttonSelected == menuButton)
+				buttonSelected = returnButton;
+			else if(buttonSelected == exitButton)
+				buttonSelected = menuButton;
+		}
+		if(value == PovDirection.south){
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if(buttonSelected == bagButton)
+				buttonSelected = saveGame;
+			else if(buttonSelected == saveGame)
+				buttonSelected = optionsButton;
+			else if(buttonSelected == optionsButton)
+				buttonSelected = returnButton;
+			else if(buttonSelected == returnButton)
+				buttonSelected = menuButton;
+			else if(buttonSelected == menuButton)
+				buttonSelected = exitButton;
+			else if(buttonSelected == exitButton)
+				buttonSelected = bagButton;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/*

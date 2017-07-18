@@ -54,6 +54,7 @@ public class PlayScreen implements Screen, ControllerListener {
 	public float miniMapRadius = (float) 63.5;
 	public int buttonCodePressed;
 	public boolean buttonPressed = false;
+
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -274,7 +275,7 @@ public class PlayScreen implements Screen, ControllerListener {
 			 * 
 			 * }
 			 */
-			if (Gdx.input.isKeyPressed(Keys.Z)) {
+			if (Gdx.input.isKeyPressed(Keys.Z) || (buttonPressed && buttonCodePressed == 5)) {
 				game.world.player.setVelocity(150f);
 				loadingImage.setFrameDurationCharacter(0.1f);
 			} else {
@@ -283,7 +284,8 @@ public class PlayScreen implements Screen, ControllerListener {
 			}
 			if (Gdx.input.isKeyPressed(Keys.LEFT) || (directionGamePad == PovDirection.west && movesGamePad))
 				game.world.player.movesLeft(dt);
-			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || (directionGamePad == PovDirection.east && movesGamePad))
+			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)
+					|| (directionGamePad == PovDirection.east && movesGamePad))
 				game.world.player.movesRight(dt);
 			else if (Gdx.input.isKeyPressed(Keys.UP) || (directionGamePad == PovDirection.north && movesGamePad)) {
 				game.world.player.movesUp(dt);
@@ -299,12 +301,10 @@ public class PlayScreen implements Screen, ControllerListener {
 
 			} else if (Gdx.input.isKeyPressed(Keys.DOWN) || (directionGamePad == PovDirection.south && movesGamePad))
 				game.world.player.movesDown(dt);
-			 else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) || (buttonPressed && buttonCodePressed == 7)) {
+			else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) || (buttonPressed && buttonCodePressed == 7)) {
 				gameSlagyom.loadingMusic.pause();
 				gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
-				Controllers.clearListeners();
-//				Controllers.addListener(gameSlagyom.screenManager.pauseScreen);
-				Controllers.addListener(new MenuControllerListener(gameSlagyom.screenManager.pauseScreen.mainTable));
+				buttonPressed = false;
 			} else if (Gdx.input.isKeyJustPressed(Keys.B)) {
 				game.world.nextLevel();
 			}
@@ -477,47 +477,47 @@ public class PlayScreen implements Screen, ControllerListener {
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
 		System.out.println("button" + buttonCode);
+		if (buttonCode == 5) {
+			buttonPressed = true;
+			buttonCodePressed = buttonCode;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
 		System.out.println("buttonUp" + buttonCode);
-		if(buttonCode == 0 || buttonCode == 1 || buttonCode == 3 || buttonCode == 4 || buttonCode == 5 || buttonCode == 7){
+		if (buttonCode == 0 || buttonCode == 1 || buttonCode == 3 || buttonCode == 4 || buttonCode == 7) {
 			buttonCodePressed = buttonCode;
 			buttonPressed = true;
+			return true;
 		}
+		buttonCodePressed = 1111;
+		buttonPressed = false;
 		return false;
 	}
 
 	@Override
 	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		// TODO Auto-generated method stub
 		System.out.println(axisCode);
 		return false;
 	}
 
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-		// TODO Auto-generated method stub
 		if (value == PovDirection.east) {
 			movesGamePad = true;
 			directionGamePad = value;
 			return true;
-		} else if (value == PovDirection.north) {
+		} else if (value == PovDirection.north || value == PovDirection.northEast || value == PovDirection.northWest) {
 			movesGamePad = true;
-			directionGamePad = value;
+			directionGamePad = PovDirection.north;
 			return true;
-		} else if (value == PovDirection.south) {
+		} else if (value == PovDirection.south || value == PovDirection.southEast || value == PovDirection.southWest) {
 			movesGamePad = true;
-			directionGamePad = value;
+			directionGamePad = PovDirection.south;
 			return true;
 		} else if (value == PovDirection.west) {
-			movesGamePad = true;
-			directionGamePad = value;
-			return true;
-		} else if (value == PovDirection.northEast || value == PovDirection.northWest || value == PovDirection.southWest
-				|| value == PovDirection.southEast) {
 			movesGamePad = true;
 			directionGamePad = value;
 			return true;

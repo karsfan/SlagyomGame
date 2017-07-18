@@ -119,6 +119,8 @@ public class ScreenManager {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);
 			Gdx.input.setInputProcessor(shopScreen.stage);
+			Controllers.clearListeners();
+			Controllers.addListener(shopScreen);
 		}
 	}
 

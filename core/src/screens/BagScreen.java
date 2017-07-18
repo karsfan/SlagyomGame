@@ -632,32 +632,40 @@ public class BagScreen implements Screen, ControllerListener {
 	}
 
 	private void mouseMoved() {
-		if (potionsTable.isVisible()) {
-			if (potions[0].isOver() && potions[0].isVisible())
-				buttonSelected = potions[0];
-			else if (potions[1].isOver() && potions[1].isVisible())
-				buttonSelected = potions[1];
-			else if (potions[2].isOver() && potions[2].isVisible())
-				buttonSelected = potions[2];
-		} else if (weaponsTable.isVisible()) {
-			if (weapons[0].isOver() && weapons[0].isVisible())
-				buttonSelected = weapons[0];
-			else if (weapons[1].isOver() && weapons[1].isVisible())
-				buttonSelected = weapons[1];
-		} else if (bombsTable.isVisible()) {
-			if (bombs[0].isOver() && bombs[0].isVisible())
-				buttonSelected = bombs[0];
-			else if (bombs[1].isOver() && bombs[1].isVisible())
-				buttonSelected = bombs[1];
-			else if (bombs[2].isOver() && bombs[2].isVisible())
-				buttonSelected = bombs[2];
-		} else if (parchmentsTable.isVisible()) {
-			if (parchments[0].isOver() && parchments[0].isVisible())
-				buttonSelected = parchments[0];
-			else if (parchments[1].isOver() && parchments[1].isVisible())
-				buttonSelected = parchments[1];
+		if (!optionsTable.isVisible()) {
+			if (potionsTable.isVisible()) {
+				if (potions[0].isOver() && potions[0].isVisible())
+					buttonSelected = potions[0];
+				else if (potions[1].isOver() && potions[1].isVisible())
+					buttonSelected = potions[1];
+				else if (potions[2].isOver() && potions[2].isVisible())
+					buttonSelected = potions[2];
+			} else if (weaponsTable.isVisible()) {
+				if (weapons[0].isOver() && weapons[0].isVisible())
+					buttonSelected = weapons[0];
+				else if (weapons[1].isOver() && weapons[1].isVisible())
+					buttonSelected = weapons[1];
+			} else if (bombsTable.isVisible()) {
+				if (bombs[0].isOver() && bombs[0].isVisible())
+					buttonSelected = bombs[0];
+				else if (bombs[1].isOver() && bombs[1].isVisible())
+					buttonSelected = bombs[1];
+				else if (bombs[2].isOver() && bombs[2].isVisible())
+					buttonSelected = bombs[2];
+			} else if (parchmentsTable.isVisible()) {
+				if (parchments[0].isOver() && parchments[0].isVisible())
+					buttonSelected = parchments[0];
+				else if (parchments[1].isOver() && parchments[1].isVisible())
+					buttonSelected = parchments[1];
+			}
+		} else {
+			if (use.isOver())
+				optionButtonSelected = use;
+			else if (delete.isOver())
+				optionButtonSelected = delete;
+			else if (exit.isOver())
+				optionButtonSelected = exit;
 		}
-
 	}
 
 	@SuppressWarnings("static-access")
@@ -913,7 +921,7 @@ public class BagScreen implements Screen, ControllerListener {
 						clickSecondaryWeapon();
 				}
 			} else if (optionsTable.isVisible()) {
-				
+
 				if (optionButtonSelected == use)
 					useButtonClicked();
 				else if (optionButtonSelected == delete)

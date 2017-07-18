@@ -1,13 +1,17 @@
 package screens;
 
 import com.badlogic.gdx.Screen;
-
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -32,7 +36,7 @@ import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
 import world.Game;
 
-public class ShopScreen implements Screen {
+public class ShopScreen implements Screen, ControllerListener {
 	private enum Category {
 		POTIONS, WEAPONS, PARCHMENTS, BOMBS
 	}
@@ -60,6 +64,7 @@ public class ShopScreen implements Screen {
 	private Label coins;
 	Label textTable;
 	boolean buying;
+	boolean selectionWeapon = false;
 	Weapon weaponSelected;
 	TextButton[] parchments;
 	TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
@@ -74,6 +79,17 @@ public class ShopScreen implements Screen {
 	float coinsTimer = 0;
 	boolean scaling = false;
 	public Item itemSelected;
+	Label potionsLabel;
+	TextButton[] potions;
+	Label bombsLabel;
+	TextButton[] bombs;
+	Label weaponsLabel;
+	TextButton[] weapons;
+
+	TextButton buttonSelected;
+	TextButton optionButtonSelected;
+	TextButton buttonLevelSelected;
+	Label parchmentsLabel;
 
 	@SuppressWarnings("static-access")
 	public ShopScreen(final GameSlagyom game) {
@@ -119,89 +135,14 @@ public class ShopScreen implements Screen {
 		buyButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				boolean buy = false;
-				if ((potionsTable.isVisible() || parchmentsTable.isVisible()) && level2n.getText() != null) {
-					if (!game.modalityMultiplayer) {
-						int tmp = (int) (Game.world.player.coins
-								- (Integer.parseInt(level2n.getText())) * itemSelected.price);
-						if (tmp >= 0) {
-							buy = true;
-							refreshedCoins = tmp;
-							for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
-								Game.world.player.bag.add(itemSelected);
-						}
-					} else {
-						int tmp = (int) (Client.networkWorld.player.coins
-								- (Integer.parseInt(level2n.getText())) * itemSelected.price);
-						if (tmp >= 0) {
-							buy = true;
-							refreshedCoins = tmp;
-							for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
-								Client.networkWorld.player.bag.add(itemSelected);
-						}
-					}
-				} else if (weaponsTable.isVisible()) {
-					if (!game.modalityMultiplayer) {
-						int tmp = (int) (Game.world.player.coins - weaponSelected.price);
-						if (tmp >= 0) {
-							buy = true;
-							refreshedCoins = tmp;
-							Game.world.player.bag.add(weaponSelected);
-						}
-					} else {
-						int tmp = (int) (Client.networkWorld.player.coins - weaponSelected.price);
-						if (tmp >= 0) {
-							buy = true;
-							refreshedCoins = tmp;
-							Client.networkWorld.player.bag.add(weaponSelected);
-						}
-					}
-				} else if (bombsTable.isVisible() && level2n.getText() != null) {
-					if (!game.modalityMultiplayer) {
-						int tmp = (int) (Game.world.player.coins
-								- (Integer.parseInt(level2n.getText())) * weaponSelected.price);
-						if (tmp >= 0) {
-							buy = true;
-							refreshedCoins = tmp;
-
-							for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
-								Game.world.player.bag.add(weaponSelected);
-						}
-					} else {
-						int tmp = (int) (Client.networkWorld.player.coins
-								- (Integer.parseInt(level2n.getText())) * weaponSelected.price);
-						if (tmp >= 0) {
-							buy = true;
-							refreshedCoins = tmp;
-
-							for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
-								Client.networkWorld.player.bag.add(weaponSelected);
-						}
-					}
-				}
-				if (buy)
-					game.loadingMusic.cashSound.play(1.5f);
-				else {
-					if (!game.modalityMultiplayer)
-						refreshedCoins = Game.world.player.coins;
-					else
-						refreshedCoins = Client.networkWorld.player.coins;
-				}
-				scaling = true;
+				clickBuyButton();
 			}
 		});
 
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.emptyShopIcon);
-				hideInfo();
-				LoadingImage.emptyShopIcon.setVisible(true);
-				buyingTable.setVisible(false);
-				buying = false;
-				optionsTable.add(LoadingImage.rightArrow);
-				optionsTable.add(LoadingImage.leftArrow);
-				optionsTable.add(LoadingImage.close);
+				clickReturnButton();
 
 			}
 		});
@@ -209,40 +150,21 @@ public class ShopScreen implements Screen {
 		LoadingImage.rightArrow.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (currentCategory == Category.POTIONS) {
-					currentCategory = Category.WEAPONS;
-				} else if (currentCategory == Category.WEAPONS)
-					currentCategory = Category.PARCHMENTS;
-				else if (currentCategory == Category.PARCHMENTS)
-					currentCategory = Category.BOMBS;
-				else if (currentCategory == Category.BOMBS)
-					currentCategory = Category.POTIONS;
-				buying = false;
+				clickRightArrow();
 			}
 		});
 
 		LoadingImage.leftArrow.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (currentCategory == Category.POTIONS)
-					currentCategory = Category.BOMBS;
-				else if (currentCategory == Category.BOMBS)
-					currentCategory = Category.PARCHMENTS;
-				else if (currentCategory == Category.PARCHMENTS)
-					currentCategory = Category.WEAPONS;
-				else if (currentCategory == Category.WEAPONS)
-					currentCategory = Category.POTIONS;
-				buying = false;
+				clickLeftArrow();
 			}
 		});
-		
+
 		LoadingImage.close.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (!game.modalityMultiplayer)
-					game.screenManager.swapScreen(State.PLAYING);
-				else
-					game.screenManager.swapScreen(State.PLAYING);
+				game.screenManager.swapScreen(State.PLAYING);
 			}
 		});
 
@@ -254,8 +176,8 @@ public class ShopScreen implements Screen {
 		level2n.setPosition(482, 198);
 		level3n.setPosition(482, 154);
 		LoadingImage.howMuch.setPosition(0, 0);
-		optionsTable.add(buyButton);
-		optionsTable.add(returnButton);
+		// optionsTable.add(buyButton);
+		// optionsTable.add(returnButton);
 		buyingTable.add(level1n);
 		buyingTable.add(level2n);
 		buyingTable.add(level3n);
@@ -270,19 +192,19 @@ public class ShopScreen implements Screen {
 		LoadingImage.emptyShopIcon.setVisible(true);
 		returnButton.setVisible(false);
 		buyButton.setVisible(false);
-		optionsTable.add(coins);
-		optionsTable.add(returnButton);
-		optionsTable.add(LoadingImage.rightArrow);
-		optionsTable.add(LoadingImage.leftArrow);
-		optionsTable.add(LoadingImage.close);
+		coins.setVisible(true);
+		// optionsTable.add(coins);
+		// optionsTable.add(returnButton);
+		// optionsTable.add(LoadingImage.rightArrow);
+		// optionsTable.add(LoadingImage.leftArrow);
+		optionsTable.setVisible(true);
+		// optionsTable.add(LoadingImage.close);
 		optionsTable.add(LoadingImage.emptyShopIcon);
 		// END OPTIONS TABLE
 
 		// POTIONS TABLE
 		potionsTable = new Table();
 		potionsTable.setLayoutEnabled(false);
-		Label potionsLabel;
-		TextButton[] potions;
 
 		potionsLabel = new Label("Potions", MenuScreen.skin);
 		potions = new TextButton[3];
@@ -293,30 +215,21 @@ public class ShopScreen implements Screen {
 		potions[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bluePotion);
-				itemSelected = new Item(Element.POTION, Level.FIRST);
-				setBuyingTable();
+				clickPotionFirst();
 			}
 		});
 
 		potions[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.redPotion);
-				setBuyingTable();
-				itemSelected = new Item(Element.POTION, Level.SECOND);
-
+				clickPotionSecond();
 			}
 		});
 
 		potions[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.greenPotion);
-
-				setBuyingTable();
-				itemSelected = new Item(Element.POTION, Level.THIRD);
-
+				clickPotionThird();
 			}
 		});
 
@@ -331,8 +244,8 @@ public class ShopScreen implements Screen {
 		// END POTIONS TABLE
 		bombsTable = new Table();
 		bombsTable.setLayoutEnabled(false);
-		Label bombsLabel = new Label("Bombs", MenuScreen.skin);
-		TextButton[] bombs = new TextButton[3];
+		bombsLabel = new Label("Bombs", MenuScreen.skin);
+		bombs = new TextButton[3];
 
 		bombs[0] = new TextButton("Bomb   lev1   $3", MenuScreen.skin);
 		bombs[1] = new TextButton("Bomb   lev2   $5", MenuScreen.skin);
@@ -341,27 +254,21 @@ public class ShopScreen implements Screen {
 		bombs[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bomb);
-				weaponSelected = new Bomb(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
-				setBuyingTable();
+				clickBombFirst();
 			}
 		});
 
 		bombs[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bomb);
-				setBuyingTable();
-				weaponSelected = new Bomb(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
+				clickBombSecond();
 			}
 		});
 
 		bombs[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bomb);
-				setBuyingTable();
-				weaponSelected = new Bomb(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
+				clickBombThird();
 			}
 		});
 
@@ -379,8 +286,7 @@ public class ShopScreen implements Screen {
 		weaponsTable = new Table();
 		weaponsTable.setLayoutEnabled(false);
 		weaponsTable.setVisible(false);
-		Label weaponsLabel;
-		TextButton[] weapons = new TextButton[3];
+		weapons = new TextButton[3];
 
 		lev1.setPosition(302, 250);
 		lev2.setPosition(302, 206);
@@ -393,88 +299,21 @@ public class ShopScreen implements Screen {
 		weapons[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.spear);
-				buying = true;
-				buyingTable.clear();
-				buyingTable.setVisible(true);
-
-				lev1.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Sword);
-					}
-				});
-				lev2.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Sword);
-					}
-				});
-				lev3.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Sword);
-					}
-				});
-				setBuyingTableWeapon();
+				clickWeaponSword();
 			}
 		});
 
 		weapons[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.sword);
-				buying = true;
-				buyingTable.clear();
-				buyingTable.setVisible(true);
-				lev1.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Spear);
-					}
-				});
-				lev2.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Spear);
-					}
-				});
-				lev3.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Spear);
-					}
-				});
-				setBuyingTableWeapon();
+				clickWeaponSpear();
 			}
 		});
 
 		weapons[2].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.bow);
-				buying = true;
-				buyingTable.clear();
-				buyingTable.setVisible(true);
-				lev1.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Bow);
-					}
-				});
-				lev2.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Bow);
-					}
-				});
-				lev3.addListener(new ClickListener() {
-					@Override
-					public void clicked(InputEvent event, float x, float y) {
-						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Bow);
-					}
-				});
-				setBuyingTableWeapon();
+				clickWeaponBow();
 			}
 		});
 
@@ -492,7 +331,7 @@ public class ShopScreen implements Screen {
 		parchmentsTable = new Table();
 		parchmentsTable.setLayoutEnabled(false);
 
-		Label parchmentsLabel = new Label("Parchments", MenuScreen.skin);
+		parchmentsLabel = new Label("Parchments", MenuScreen.skin);
 		parchments = new TextButton[2];
 		parchments[0] = new TextButton("Parchment lev1 $4", MenuScreen.skin);
 		parchments[1] = new TextButton("Parchment lev2 $9", MenuScreen.skin);
@@ -500,21 +339,17 @@ public class ShopScreen implements Screen {
 		parchments[0].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.parchment);
-				itemSelected = new Item(Element.PARCHMENT, Level.FIRST);
-				setBuyingTable();
+				clickParchmentFirst();
 			}
 		});
 
 		parchments[1].addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showInfo(LoadingImage.parchment2);
-				itemSelected = new Item(Element.PARCHMENT, Level.SECOND);
-				setBuyingTable();
+				clickParchmentSecond();
 			}
 		});
-		
+
 		parchmentsLabel.setPosition(120, 425);
 		parchments[0].setPosition(350, 420);
 		parchments[1].setPosition(350, 370);
@@ -529,6 +364,270 @@ public class ShopScreen implements Screen {
 		stage.addActor(parchmentsTable);
 		stage.addActor(optionsTable);
 		stage.addActor(buyingTable);
+		stage.addActor(LoadingImage.leftArrow);
+		stage.addActor(LoadingImage.rightArrow);
+		stage.addActor(LoadingImage.close);
+		stage.addActor(coins);
+		buttonLevelSelected = lev1;
+		optionButtonSelected = buyButton;
+		buttonSelected = potions[0];
+	}
+
+	protected void clickParchmentSecond() {
+		showInfo(LoadingImage.parchment2);
+		itemSelected = new Item(Element.PARCHMENT, Level.SECOND);
+		setBuyingTable();
+	}
+
+	protected void clickParchmentFirst() {
+		showInfo(LoadingImage.parchment);
+		itemSelected = new Item(Element.PARCHMENT, Level.FIRST);
+		setBuyingTable();
+	}
+
+	protected void clickWeaponBow() {
+		showInfo(LoadingImage.bow);
+		buying = true;
+		buyingTable.clear();
+		buyingTable.setVisible(true);
+		lev1.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Bow);
+				clickBuyButton();
+			}
+		});
+		lev2.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Bow);
+				clickBuyButton();
+			}
+		});
+		lev3.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Bow);
+				clickBuyButton();
+			}
+		});
+		setBuyingTableWeapon();
+	}
+
+	protected void clickWeaponSpear() {
+		showInfo(LoadingImage.sword);
+		buying = true;
+		buyingTable.clear();
+		buyingTable.setVisible(true);
+		lev1.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Spear);
+				clickBuyButton();
+			}
+		});
+		lev2.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Spear);
+				clickBuyButton();
+			}
+		});
+		lev3.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Spear);
+				clickBuyButton();
+			}
+		});
+		setBuyingTableWeapon();
+
+	}
+
+	protected void clickWeaponSword() {
+		showInfo(LoadingImage.spear);
+		buying = true;
+		buyingTable.clear();
+		buyingTable.setVisible(true);
+
+		lev1.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Sword);
+				clickBuyButton();
+			}
+		});
+		lev2.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Sword);
+				clickBuyButton();
+			}
+		});
+		lev3.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Sword);
+				clickBuyButton();
+			}
+		});
+		setBuyingTableWeapon();
+	}
+
+	protected void clickBombThird() {
+		showInfo(LoadingImage.bomb);
+		setBuyingTable();
+		weaponSelected = new Bomb(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
+	}
+
+	protected void clickBombSecond() {
+		showInfo(LoadingImage.bomb);
+		setBuyingTable();
+		weaponSelected = new Bomb(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
+	}
+
+	protected void clickBombFirst() {
+		showInfo(LoadingImage.bomb);
+		weaponSelected = new Bomb(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
+		setBuyingTable();
+	}
+
+	protected void clickPotionThird() {
+		showInfo(LoadingImage.greenPotion);
+		setBuyingTable();
+		itemSelected = new Item(Element.POTION, Level.THIRD);
+	}
+
+	protected void clickPotionSecond() {
+		showInfo(LoadingImage.redPotion);
+		setBuyingTable();
+		itemSelected = new Item(Element.POTION, Level.SECOND);
+	}
+
+	protected void clickPotionFirst() {
+		showInfo(LoadingImage.bluePotion);
+		itemSelected = new Item(Element.POTION, Level.FIRST);
+		setBuyingTable();
+	}
+
+	protected void clickLeftArrow() {
+		if (currentCategory == Category.POTIONS) {
+			currentCategory = Category.BOMBS;
+			buttonSelected = bombs[0];
+		} else if (currentCategory == Category.BOMBS) {
+			currentCategory = Category.PARCHMENTS;
+			buttonSelected = parchments[0];
+		} else if (currentCategory == Category.PARCHMENTS) {
+			currentCategory = Category.WEAPONS;
+			buttonSelected = weapons[0];
+		} else if (currentCategory == Category.WEAPONS) {
+			currentCategory = Category.POTIONS;
+			buttonSelected = potions[0];
+		}
+		buying = false;
+	}
+
+	protected void clickRightArrow() {
+		if (currentCategory == Category.POTIONS) {
+			currentCategory = Category.WEAPONS;
+			buttonSelected = weapons[0];
+		} else if (currentCategory == Category.WEAPONS) {
+			currentCategory = Category.PARCHMENTS;
+			buttonSelected = parchments[0];
+		} else if (currentCategory == Category.PARCHMENTS) {
+			currentCategory = Category.BOMBS;
+			buttonSelected = bombs[0];
+		} else if (currentCategory == Category.BOMBS) {
+			currentCategory = Category.POTIONS;
+			buttonSelected = potions[0];
+		}
+		buying = false;
+	}
+
+	protected void clickReturnButton() {
+		showInfo(LoadingImage.emptyShopIcon);
+		hideInfo();
+		LoadingImage.emptyShopIcon.setVisible(true);
+		buyingTable.setVisible(false);
+		buying = false;
+		for (Actor actor : stage.getActors()) {
+			if (actor == LoadingImage.rightArrow)
+				actor.setVisible(true);
+			else if (actor == LoadingImage.leftArrow)
+				actor.setVisible(true);
+		}
+	}
+
+	@SuppressWarnings("static-access")
+	protected void clickBuyButton() {
+		boolean buy = false;
+		if ((potionsTable.isVisible() || parchmentsTable.isVisible()) && !level2n.getText().equals("")) {
+			if (!game.modalityMultiplayer) {
+				int tmp = (int) (Game.world.player.coins - (Integer.parseInt(level2n.getText())) * itemSelected.price);
+				if (tmp >= 0) {
+					buy = true;
+					refreshedCoins = tmp;
+					for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
+						Game.world.player.bag.add(itemSelected);
+				}
+			} else {
+				int tmp = (int) (Client.networkWorld.player.coins
+						- (Integer.parseInt(level2n.getText())) * itemSelected.price);
+				if (tmp >= 0) {
+					buy = true;
+					refreshedCoins = tmp;
+					for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
+						Client.networkWorld.player.bag.add(itemSelected);
+				}
+			}
+		} else if (weaponsTable.isVisible()) {
+			if (!game.modalityMultiplayer) {
+				int tmp = (int) (Game.world.player.coins - weaponSelected.price);
+				if (tmp >= 0) {
+					buy = true;
+					refreshedCoins = tmp;
+					Game.world.player.bag.add(weaponSelected);
+				}
+			} else {
+				int tmp = (int) (Client.networkWorld.player.coins - weaponSelected.price);
+				if (tmp >= 0) {
+					buy = true;
+					refreshedCoins = tmp;
+					Client.networkWorld.player.bag.add(weaponSelected);
+				}
+			}
+		} else if (bombsTable.isVisible() && level2n.getText() != null) {
+			if (!game.modalityMultiplayer) {
+				int tmp = (int) (Game.world.player.coins
+						- (Integer.parseInt(level2n.getText())) * weaponSelected.price);
+				if (tmp >= 0) {
+					buy = true;
+					refreshedCoins = tmp;
+
+					for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
+						Game.world.player.bag.add(weaponSelected);
+				}
+			} else {
+				int tmp = (int) (Client.networkWorld.player.coins
+						- (Integer.parseInt(level2n.getText())) * weaponSelected.price);
+				if (tmp >= 0) {
+					buy = true;
+					refreshedCoins = tmp;
+
+					for (int i = 0; i < Integer.parseInt(level2n.getText()); i++)
+						Client.networkWorld.player.bag.add(weaponSelected);
+				}
+			}
+		}
+		if (buy)
+			game.loadingMusic.cashSound.play(1.5f);
+		else {
+			if (!game.modalityMultiplayer)
+				refreshedCoins = Game.world.player.coins;
+			else
+				refreshedCoins = Client.networkWorld.player.coins;
+		}
+		scaling = true;
 	}
 
 	private void showInfo(ImageButton icon) {
@@ -548,8 +647,12 @@ public class ShopScreen implements Screen {
 	}
 
 	void buyingMode() {
-		optionsTable.removeActor(LoadingImage.rightArrow);
-		optionsTable.removeActor(LoadingImage.leftArrow);
+		for (Actor actor : stage.getActors()) {
+			if (actor == LoadingImage.rightArrow)
+				actor.setVisible(false);
+			else if (actor == LoadingImage.leftArrow)
+				actor.setVisible(false);
+		}
 	}
 
 	@Override
@@ -562,8 +665,18 @@ public class ShopScreen implements Screen {
 	public void render(float delta) {
 		if (Gdx.input.justTouched())
 			game.loadingMusic.selectionSound.play();
+		buttonSelected.getLabel().setFontScale(1.0f);
+		if (buttonLevelSelected != null)
+			buttonLevelSelected.getLabel().setFontScale(1.0f);
+		optionButtonSelected.getLabel().setFontScale(1.0f);
 
-		
+		mouseMoved();
+
+		buttonSelected.getLabel().setFontScale(1.1f);
+		if (buttonLevelSelected != null)
+			buttonLevelSelected.getLabel().setFontScale(1.1f);
+		optionButtonSelected.getLabel().setFontScale(1.1f);
+
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -573,7 +686,7 @@ public class ShopScreen implements Screen {
 			selectionBackgroundSprite.draw(game.batch);
 			buyBackgroundSprite.draw(game.batch);
 		}
-		
+
 		else
 			backgroundSprite.draw(game.batch);
 
@@ -635,6 +748,48 @@ public class ShopScreen implements Screen {
 		}
 	}
 
+	private void mouseMoved() {
+		if (!buyingTable.isVisible()) {
+			if (potionsTable.isVisible()) {
+				if (potions[0].isOver())
+					buttonSelected = potions[0];
+				else if (potions[1].isOver())
+					buttonSelected = potions[1];
+				else if (potions[2].isOver())
+					buttonSelected = potions[2];
+			} else if (weaponsTable.isVisible()) {
+				if (weapons[0].isOver())
+					buttonSelected = weapons[0];
+				else if (weapons[1].isOver())
+					buttonSelected = weapons[1];
+			} else if (bombsTable.isVisible()) {
+				if (bombs[0].isOver())
+					buttonSelected = bombs[0];
+				else if (bombs[1].isOver())
+					buttonSelected = bombs[1];
+				else if (bombs[2].isOver())
+					buttonSelected = bombs[2];
+			} else if (parchmentsTable.isVisible()) {
+				if (parchments[0].isOver())
+					buttonSelected = parchments[0];
+				else if (parchments[1].isOver())
+					buttonSelected = parchments[1];
+			}
+		}
+		if (buyingTable.isVisible()) {
+			if (lev1.isOver())
+				buttonLevelSelected = lev1;
+			else if (lev2.isOver())
+				buttonLevelSelected = lev2;
+			else if (lev3.isOver())
+				buttonLevelSelected = lev3;
+			if (buyButton.isOver())
+				optionButtonSelected = buyButton;
+			else if (returnButton.isOver())
+				optionButtonSelected = returnButton;
+		}
+	}
+
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().setScreenSize(width, height);
@@ -646,8 +801,8 @@ public class ShopScreen implements Screen {
 		buyingTable.add(lev1);
 		buyingTable.add(lev2);
 		buyingTable.add(lev3);
-		buyingTable.add(buyButton);
-		buyingTable.add(returnButton);
+		// buyingTable.add(buyButton);
+		// buyingTable.add(returnButton);
 	}
 
 	public void setBuyingTable() {
@@ -681,6 +836,229 @@ public class ShopScreen implements Screen {
 	public void dispose() {
 		MenuScreen.skin.dispose();
 		MenuScreen.atlas.dispose();
+	}
+
+	@Override
+	public void connected(Controller controller) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void disconnected(Controller controller) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean buttonDown(Controller controller, int buttonCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean buttonUp(Controller controller, int buttonCode) {
+		if (buttonCode == 1) {
+			game.loadingMusic.selectionSound.play();
+			if (buyingTable.isVisible())
+				clickReturnButton();
+			else
+				game.screenManager.swapScreen(State.PLAYING);
+		} else if (buttonCode == 0) {
+			game.loadingMusic.selectionSound.play();
+			if (!buyingTable.isVisible()) {
+				if (potionsTable.isVisible()) {
+					if (buttonSelected == potions[0])
+						clickPotionFirst();
+					else if (buttonSelected == potions[1])
+						clickPotionSecond();
+					else if (buttonSelected == potions[2])
+						clickPotionThird();
+				} else if (parchmentsTable.isVisible()) {
+					if (buttonSelected == parchments[0])
+						clickParchmentFirst();
+					else if (buttonSelected == parchments[1])
+						clickParchmentSecond();
+				} else if (bombsTable.isVisible()) {
+					if (buttonSelected == bombs[0])
+						clickBombFirst();
+					else if (buttonSelected == bombs[1])
+						clickBombSecond();
+					else if (buttonSelected == bombs[2])
+						clickBombThird();
+				} else if (weaponsTable.isVisible()) {
+					if (buttonSelected == weapons[0])
+						clickWeaponSword();
+					else if (buttonSelected == weapons[1])
+						clickWeaponSpear();
+					else if (buttonLevelSelected == weapons[2])
+						clickWeaponBow();
+				}
+			} else if (buyingTable.isVisible()) {
+				if (optionButtonSelected == buyButton)
+					clickBuyButton();
+				else if (optionButtonSelected == returnButton)
+					clickReturnButton();
+				if (buttonSelected == weapons[0]) {
+					if (buttonLevelSelected == lev1)
+						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Sword);
+					else if (buttonLevelSelected == lev2)
+						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Sword);
+					else if (buttonLevelSelected == lev3)
+						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Sword);
+					clickBuyButton();
+				} else if (buttonSelected == weapons[1]) {
+					if (buttonLevelSelected == lev1)
+						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Spear);
+					else if (buttonLevelSelected == lev2)
+						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Spear);
+					else if (buttonLevelSelected == lev3)
+						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Spear);
+					clickBuyButton();
+				} else if (buttonSelected == weapons[2]) {
+					if (buttonLevelSelected == lev1)
+						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Bow);
+					else if (buttonLevelSelected == lev2)
+						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Bow);
+					else if (buttonLevelSelected == lev3)
+						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Bow);
+					clickBuyButton();
+				}
+			}
+		} else if (buttonCode == 4) {
+			clickLeftArrow();
+		} else if (buttonCode == 5)
+			clickRightArrow();
+		return false;
+	}
+
+	@Override
+	public boolean axisMoved(Controller controller, int axisCode, float value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+		if (value == PovDirection.north) {
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if (!buyingTable.isVisible()) {
+				if (potionsTable.isVisible()) {
+					if (buttonSelected == potions[0])
+						buttonSelected = potions[2];
+					else if (buttonSelected == potions[1])
+						buttonSelected = potions[0];
+					else if (buttonSelected == potions[2])
+						buttonSelected = potions[1];
+					buttonLevelSelected = null;
+				} else if (weaponsTable.isVisible()) {
+					if (buttonSelected == weapons[0])
+						buttonSelected = weapons[1];
+					else if (buttonSelected == weapons[1])
+						buttonSelected = weapons[0];
+					buttonLevelSelected = lev1;
+				} else if (bombsTable.isVisible()) {
+					if (buttonSelected == bombs[0])
+						buttonSelected = bombs[2];
+					else if (buttonSelected == bombs[1])
+						buttonSelected = bombs[0];
+					else if (buttonSelected == bombs[2])
+						buttonSelected = bombs[1];
+					buttonLevelSelected = null;
+				} else if (parchmentsTable.isVisible()) {
+					if (buttonSelected == parchments[0])
+						buttonSelected = parchments[1];
+					else if (buttonSelected == parchments[1])
+						buttonSelected = parchments[0];
+					buttonLevelSelected = null;
+				}
+			} else {
+				optionButtonSelected.getLabel().setFontScale(1.0f);
+				if (buttonLevelSelected != null)
+					buttonLevelSelected.getLabel().setFontScale(1.0f);
+				if (buttonLevelSelected == null) {
+					System.out.println("alkhkjh");
+					if (optionButtonSelected == buyButton)
+						optionButtonSelected = returnButton;
+					else if (optionButtonSelected == returnButton)
+						optionButtonSelected = buyButton;
+				}
+				if (buttonLevelSelected == lev1)
+					buttonLevelSelected = lev3;
+				else if (buttonLevelSelected == lev2)
+					buttonLevelSelected = lev1;
+				else if (buttonLevelSelected == lev3)
+					buttonLevelSelected = lev2;
+			}
+		} else if (value == PovDirection.south) {
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if (!buyingTable.isVisible()) {
+				if (potionsTable.isVisible()) {
+					if (buttonSelected == potions[0])
+						buttonSelected = potions[1];
+					else if (buttonSelected == potions[1])
+						buttonSelected = potions[2];
+					else if (buttonSelected == potions[2])
+						buttonSelected = potions[0];
+					buttonLevelSelected = null;
+				} else if (weaponsTable.isVisible()) {
+					if (buttonSelected == weapons[0])
+						buttonSelected = weapons[1];
+					else if (buttonSelected == weapons[1])
+						buttonSelected = weapons[0];
+					buttonLevelSelected = lev1;
+				} else if (bombsTable.isVisible()) {
+					if (buttonSelected == bombs[0])
+						buttonSelected = bombs[1];
+					else if (buttonSelected == bombs[1])
+						buttonSelected = bombs[2];
+					else if (buttonSelected == bombs[2])
+						buttonSelected = bombs[0];
+					buttonLevelSelected = null;
+				} else if (parchmentsTable.isVisible()) {
+					if (buttonSelected == parchments[0])
+						buttonSelected = parchments[1];
+					else if (buttonSelected == parchments[1])
+						buttonSelected = parchments[0];
+					buttonLevelSelected = null;
+				}
+			} else {
+				optionButtonSelected.getLabel().setFontScale(1.0f);
+				if (buttonLevelSelected != null)
+					buttonLevelSelected.getLabel().setFontScale(1.0f);
+				if (buttonLevelSelected == null) {
+					if (optionButtonSelected == buyButton)
+						optionButtonSelected = returnButton;
+					else if (optionButtonSelected == returnButton)
+						optionButtonSelected = buyButton;
+				}
+				if (buttonLevelSelected == lev1)
+					buttonLevelSelected = lev2;
+				else if (buttonLevelSelected == lev2)
+					buttonLevelSelected = lev3;
+				else if (buttonLevelSelected == lev3)
+					buttonLevelSelected = lev1;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

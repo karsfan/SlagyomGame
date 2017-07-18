@@ -26,9 +26,6 @@ import world.GameConfig;
 public class NetworkPlayScreen extends PlayScreen {
 
 	public Client client;
-	private boolean stop = false;
-	PovDirection directionGamepad = null;
-	boolean movesGamePad = false;
 	boolean youLose = false;
 
 	@SuppressWarnings("static-access")
@@ -105,7 +102,7 @@ public class NetworkPlayScreen extends PlayScreen {
 		if (client.serverDisconnected)
 			gameSlagyom.screenManager.swapScreen(State.MENU);
 	}
-																																												
+
 	@SuppressWarnings("static-access")
 	public void update(float dt) {
 		moveCharacter(dt);
@@ -136,11 +133,12 @@ public class NetworkPlayScreen extends PlayScreen {
 				client.networkWorld.player.setVelocity(100);
 				gameSlagyom.loadingImage.setFrameDurationCharacter(0.2f);
 			}
-			if (Gdx.input.isKeyPressed(Keys.LEFT))
+			if (Gdx.input.isKeyPressed(Keys.LEFT) || (directionGamePad == PovDirection.east && movesGamePad))
 				client.movesLeft(dt);
-			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)
+					|| (directionGamePad == PovDirection.west && movesGamePad))
 				client.movesRight(dt);
-			else if (Gdx.input.isKeyPressed(Keys.UP) || (directionGamepad == PovDirection.north && movesGamePad)) {
+			else if (Gdx.input.isKeyPressed(Keys.UP) || (directionGamePad == PovDirection.north && movesGamePad)) {
 				client.movesUp(dt);
 				if (client.networkWorld.player.collideShop) {
 					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
@@ -151,23 +149,12 @@ public class NetworkPlayScreen extends PlayScreen {
 					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
 					client.networkWorld.player.collideGym = false;
 				}
-			} else if (Gdx.input.isKeyPressed(Keys.DOWN))
+			} else if (Gdx.input.isKeyPressed(Keys.DOWN) || (directionGamePad == PovDirection.south && movesGamePad))
 				client.movesDown(dt);
-			else if (Gdx.input.isKeyJustPressed(Keys.C)) {
-				gamecam.zoom -= 0.2;
-				gamecam.position.x = client.networkWorld.player.getX();
-				gamecam.position.y = client.networkWorld.player.getY();
-
-			} else if (Gdx.input.isKeyJustPressed(Keys.V)) {
-				gamecam.zoom += 0.2;
-				gamecam.position.x = client.networkWorld.player.getX();
-				gamecam.position.y = client.networkWorld.player.getY();
-
-			} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 				gameSlagyom.loadingMusic.pause();
 				gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 			}
-
 		}
 		if (client.networkWorld.player.readyToFight && !client.networkWorld.player.isFighting) {
 			client.networkWorld.createBattle(client.networkWorld.player.IDOtherPlayer);
@@ -377,27 +364,26 @@ public class NetworkPlayScreen extends PlayScreen {
 
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-		// TODO Auto-generated method stub
 		if (value == PovDirection.east) {
 			movesGamePad = true;
-			directionGamepad = value;
+			directionGamePad = value;
 			return true;
 		} else if (value == PovDirection.north) {
 			movesGamePad = true;
-			directionGamepad = value;
+			directionGamePad = value;
 			return true;
 		} else if (value == PovDirection.south) {
 			movesGamePad = true;
-			directionGamepad = value;
+			directionGamePad = value;
 			return true;
 		} else if (value == PovDirection.west) {
 			movesGamePad = true;
-			directionGamepad = value;
+			directionGamePad = value;
 			return true;
 		} else if (value == PovDirection.northEast || value == PovDirection.northWest || value == PovDirection.southWest
 				|| value == PovDirection.southEast) {
 			movesGamePad = true;
-			directionGamepad = value;
+			directionGamePad = value;
 			return true;
 		}
 		movesGamePad = false;

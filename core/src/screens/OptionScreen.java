@@ -28,6 +28,7 @@ public class OptionScreen implements Screen {
 	private Sprite backgroundSprite;
 
 	public boolean activeMusic;
+	public Table mainTable = new Table();
 
 	public OptionScreen(final GameSlagyom game) {
 		this.game = game;
@@ -45,7 +46,6 @@ public class OptionScreen implements Screen {
 
 		stage = new Stage(viewport, game.batch);
 		// Create Table
-		Table mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
 

@@ -4,10 +4,14 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -21,7 +25,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import gameManager.GameSlagyom;
 import gameManager.ScreenManager.State;
 
-public class InitializerScreen implements Screen {
+public class InitializerScreen implements Screen, ControllerListener {
 
 	public GameSlagyom game;
 	public Stage stage;
@@ -34,6 +38,7 @@ public class InitializerScreen implements Screen {
 	final TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
 	final TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);
 	final TextButton returnButton = new TextButton("Return", MenuScreen.skin);
+	public final Table mainTable = new Table();
 
 	public InitializerScreen(final GameSlagyom game) {
 		this.game = game;
@@ -51,7 +56,6 @@ public class InitializerScreen implements Screen {
 		stage = new Stage(viewport, game.batch);
 
 		// Create Table
-		final Table mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
 
@@ -123,7 +127,7 @@ public class InitializerScreen implements Screen {
 //
 //		mShapeRenderer = new ShapeRenderer();
 //		startTime = TimeUtils.nanoTime();
-
+		
 	}
 
 	@Override
@@ -202,6 +206,60 @@ public class InitializerScreen implements Screen {
 
 		MenuScreen.skin.dispose();
 		MenuScreen.atlas.dispose();
+	}
+
+	@Override
+	public void connected(Controller controller) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void disconnected(Controller controller) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean buttonDown(Controller controller, int buttonCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean buttonUp(Controller controller, int buttonCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean axisMoved(Controller controller, int axisCode, float value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

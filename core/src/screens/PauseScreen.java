@@ -154,7 +154,7 @@ public class PauseScreen implements Screen {
 		helpTable.add(run);
 		helpTable.add(action);
 		stage.addActor(helpTable);
-		Controllers.addListener(new MenuControllerListener(mainTable));
+		//Controllers.addListener(new MenuControllerListener(mainTable));
 	}
 
 	@Override

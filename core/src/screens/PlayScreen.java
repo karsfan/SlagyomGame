@@ -25,6 +25,7 @@ import character.Player;
 import character.Woman;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
+import gameManager.MenuControllerListener;
 import hud.Hud;
 import staticObjects.Item;
 import staticObjects.StaticObject;
@@ -41,16 +42,18 @@ public class PlayScreen implements Screen, ControllerListener {
 	public static Drawable noDialog = null;
 	public float textTimer;
 	public int textIndex = 0;
-	private boolean stop = false;
+	public boolean stop = false;
 	public boolean loading = true;
-	protected float loadingTimer = 0;
+	public float loadingTimer = 0;
 
-	PovDirection directiongamepad = null;
-	boolean movesgamePad = false;
+	public PovDirection directionGamePad = null;
+	public boolean movesGamePad = false;
 	LoadingImage loadingImage;
 	Game game;
 	public float miniMapScale = 7;
 	public float miniMapRadius = (float) 63.5;
+	public int buttonCodePressed;
+	public boolean buttonPressed = false;
 	/**
 	 * Constructor of the screen where you play the game
 	 * 
@@ -78,7 +81,7 @@ public class PlayScreen implements Screen, ControllerListener {
 		gamecam.position.x = game.world.player.getX();
 		gamecam.position.y = game.world.player.getY();
 		hud = new Hud(gameslagyom);
-
+		Controllers.clearListeners();
 		Controllers.addListener(this);
 		gameslagyom.modalityMultiplayer = false;
 		// gameslagyom.loadingMusic.backgroundSound.loop(100);
@@ -252,26 +255,25 @@ public class PlayScreen implements Screen, ControllerListener {
 	private void moveCharacter(float dt) {
 		if (!stop) {
 			/*
-			 * if (movesgamePad) { if (directiongamepad == PovDirection.east)
-			 * game.world.player.movesRight(dt); else if (directiongamepad ==
+			 * if (movesGamePad) { if (directionGamePad == PovDirection.east)
+			 * game.world.player.movesRight(dt); else if (directionGamePad ==
 			 * PovDirection.north) { game.world.player.movesUp(dt); if
 			 * (game.world.player.collideShop) {
 			 * game.screenManager.swapScreen(it.slagyom.ScreenManager.State.
 			 * SHOP); game.world.semaphore.acquire();
 			 * game.world.player.collideShop = false; } } else if
-			 * (directiongamepad == PovDirection.west)
-			 * game.world.player.movesLeft(dt); else if (directiongamepad ==
+			 * (directionGamePad == PovDirection.west)
+			 * game.world.player.movesLeft(dt); else if (directionGamePad ==
 			 * PovDirection.south) game.world.player.movesDown(dt); else if
-			 * (directiongamepad == PovDirection.northEast)
-			 * game.world.player.movesNorthEast(dt); else if (directiongamepad
+			 * (directionGamePad == PovDirection.northEast)
+			 * game.world.player.movesNorthEast(dt); else if (directionGamePad
 			 * == PovDirection.northWest) game.world.player.movesNorthWest(dt);
-			 * else if (directiongamepad == PovDirection.southEast)
-			 * game.world.player.movesSouthEast(dt); else if (directiongamepad
+			 * else if (directionGamePad == PovDirection.southEast)
+			 * game.world.player.movesSouthEast(dt); else if (directionGamePad
 			 * == PovDirection.southWest) game.world.player.movesSouthWest(dt);
 			 * 
 			 * }
 			 */
-
 			if (Gdx.input.isKeyPressed(Keys.Z)) {
 				game.world.player.setVelocity(150f);
 				loadingImage.setFrameDurationCharacter(0.1f);
@@ -279,11 +281,11 @@ public class PlayScreen implements Screen, ControllerListener {
 				game.world.player.setVelocity(100);
 				loadingImage.setFrameDurationCharacter(0.2f);
 			}
-			if (Gdx.input.isKeyPressed(Keys.LEFT))
+			if (Gdx.input.isKeyPressed(Keys.LEFT) || (directionGamePad == PovDirection.west && movesGamePad))
 				game.world.player.movesLeft(dt);
-			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || (directionGamePad == PovDirection.east && movesGamePad))
 				game.world.player.movesRight(dt);
-			else if (Gdx.input.isKeyPressed(Keys.UP) || (directiongamepad == PovDirection.north && movesgamePad)) {
+			else if (Gdx.input.isKeyPressed(Keys.UP) || (directionGamePad == PovDirection.north && movesGamePad)) {
 				game.world.player.movesUp(dt);
 				if (game.world.player.collideShop) {
 					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.SHOP);
@@ -295,30 +297,21 @@ public class PlayScreen implements Screen, ControllerListener {
 					game.world.player.collideGym = false;
 				}
 
-			} else if (Gdx.input.isKeyPressed(Keys.DOWN))
+			} else if (Gdx.input.isKeyPressed(Keys.DOWN) || (directionGamePad == PovDirection.south && movesGamePad))
 				game.world.player.movesDown(dt);
-
-			else if (Gdx.input.isKeyJustPressed(Keys.C)) {
-				gamecam.zoom -= 0.2;
-				gamecam.position.x = game.world.player.getX();
-				gamecam.position.y = game.world.player.getY();
-
-			} else if (Gdx.input.isKeyJustPressed(Keys.V)) {
-				gamecam.zoom += 0.2;
-				gamecam.position.x = game.world.player.getX();
-				gamecam.position.y = game.world.player.getY();
-
-			} else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			 else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) || (buttonPressed && buttonCodePressed == 7)) {
 				gameSlagyom.loadingMusic.pause();
 				gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
+				Controllers.clearListeners();
+//				Controllers.addListener(gameSlagyom.screenManager.pauseScreen);
+				Controllers.addListener(new MenuControllerListener(gameSlagyom.screenManager.pauseScreen.mainTable));
 			} else if (Gdx.input.isKeyJustPressed(Keys.B)) {
 				game.world.nextLevel();
 			}
 		}
 
-		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+		if (Gdx.input.isKeyJustPressed(Keys.ENTER) || (buttonPressed && buttonCodePressed == 0)) {
 			hud.showDialog = false;
-			hideDialog();
 			if (stop) {
 				stop = false;
 			}
@@ -483,15 +476,17 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
-
 		System.out.println("button" + buttonCode);
 		return false;
 	}
 
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
-		// TODO Auto-generated method stub
-
+		System.out.println("buttonUp" + buttonCode);
+		if(buttonCode == 0 || buttonCode == 1 || buttonCode == 3 || buttonCode == 4 || buttonCode == 5 || buttonCode == 7){
+			buttonCodePressed = buttonCode;
+			buttonPressed = true;
+		}
 		return false;
 	}
 
@@ -506,28 +501,28 @@ public class PlayScreen implements Screen, ControllerListener {
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		// TODO Auto-generated method stub
 		if (value == PovDirection.east) {
-			movesgamePad = true;
-			directiongamepad = value;
+			movesGamePad = true;
+			directionGamePad = value;
 			return true;
 		} else if (value == PovDirection.north) {
-			movesgamePad = true;
-			directiongamepad = value;
+			movesGamePad = true;
+			directionGamePad = value;
 			return true;
 		} else if (value == PovDirection.south) {
-			movesgamePad = true;
-			directiongamepad = value;
+			movesGamePad = true;
+			directionGamePad = value;
 			return true;
 		} else if (value == PovDirection.west) {
-			movesgamePad = true;
-			directiongamepad = value;
+			movesGamePad = true;
+			directionGamePad = value;
 			return true;
 		} else if (value == PovDirection.northEast || value == PovDirection.northWest || value == PovDirection.southWest
 				|| value == PovDirection.southEast) {
-			movesgamePad = true;
-			directiongamepad = value;
+			movesGamePad = true;
+			directionGamePad = value;
 			return true;
 		}
-		movesgamePad = false;
+		movesGamePad = false;
 		return false;
 	}
 

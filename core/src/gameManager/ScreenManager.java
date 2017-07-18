@@ -1,6 +1,7 @@
 package gameManager;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.controllers.Controllers;
 
 import screens.BagScreen;
 import screens.BattleScreen;
@@ -61,40 +62,42 @@ public class ScreenManager {
 			Gdx.input.setInputProcessor(menuScreen.stage);
 			gameSlagyom.loadingMusic.backgroundSound.stop();
 			gameSlagyom.loadingMusic.battleMusic.stop();
-
+			Controllers.clearListeners();
+			//Controllers.addListener(new MenuControllerListener(menuScreen.mainTable));
+			Controllers.addListener(menuScreen);
 		} else if (currentState == State.PLAYING) {
-//			gameSlagyom.loadingMusic.pause();
-//			gameSlagyom.loadingMusic.backgroundSound.loop(100f);
 			gameSlagyom.setScreen(getPlayScreen());
-
+			Controllers.clearListeners();
+			Controllers.addListener(playScreen);
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC
 			gameSlagyom.loadingMusic.battleMusic.pause();
 			menuScreen.menuMusic.stop();
-			//Game.world.semaphore.release();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.MULTIPLAYERMENU) {
 			gameSlagyom.setScreen(multiplayerScreen);
 			Gdx.input.setInputProcessor(multiplayerScreen.stage);
-
+			Controllers.clearListeners();
+			Controllers.addListener(new MenuControllerListener(multiplayerScreen.mainTable));
 		} else if (currentState == State.OPTIONMENU) {
 			gameSlagyom.setScreen(optionScreen);
 			Gdx.input.setInputProcessor(optionScreen.stage);
-
+			Controllers.clearListeners();
+			Controllers.addListener(new MenuControllerListener(optionScreen.mainTable));
 		} else if (currentState == State.NEWGAME) {
 			newCharacterScreen = new NewCharacterScreen(gameSlagyom);
 			gameSlagyom.setScreen(newCharacterScreen);
 			Gdx.input.setInputProcessor(newCharacterScreen.stage);
-
+			Controllers.clearListeners();
+			Controllers.addListener(new MenuControllerListener(newCharacterScreen.mainTable));
 		} else if (currentState == State.WELCOME) {
-			//System.out.println(gameSlagyom.screenManager.newCharacterScreen.charName);
 			gameSlagyom.prefs = Gdx.app.getPreferences(newCharacterScreen.charName);
 			initializerScreen = new InitializerScreen(gameSlagyom);
 			gameSlagyom.setScreen(initializerScreen);
 			Gdx.input.setInputProcessor(initializerScreen.stage);
-
+			Controllers.clearListeners();
+			//Controllers.addListener(initializerScreen);
+			Controllers.addListener(new MenuControllerListener(initializerScreen.mainTable));
 		} else if (currentState == State.BATTLE) {
-			// battlescreen = new BattleScreen(gameSlagyom,
-			// it.slagyom.src.World.Game.world.battle);
 			gameSlagyom.setScreen(battlescreen);
 			gameSlagyom.loadingMusic.backgroundSound.pause();
 			gameSlagyom.loadingMusic.battleMusic.setVolume((float) 0.07);
@@ -108,6 +111,11 @@ public class ScreenManager {
 			bagScreen = new BagScreen(gameSlagyom);
 			gameSlagyom.setScreen(bagScreen);
 			Gdx.input.setInputProcessor(bagScreen.stage);
+			Controllers.addListener(new MenuControllerListener(bagScreen.potionsTable));
+			Controllers.addListener(new MenuControllerListener(bagScreen.weaponsTable));
+			Controllers.addListener(new MenuControllerListener(bagScreen.parchmentsTable));
+			Controllers.addListener(new MenuControllerListener(bagScreen.bombsTable));
+			Controllers.addListener(new MenuControllerListener(bagScreen.optionsTable));
 		} else if (currentState == State.SHOP) {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);

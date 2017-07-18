@@ -1,18 +1,26 @@
 package screens;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -23,8 +31,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
 
-
-public class MenuScreen implements Screen {
+public class MenuScreen implements Screen, ControllerListener {
 	GameSlagyom game;
 
 	public Stage stage;
@@ -32,17 +39,23 @@ public class MenuScreen implements Screen {
 	private OrthographicCamera camera;
 
 	private Texture background;
-	private Texture titleBackground = new Texture ("res/title.png");
+	private Texture titleBackground = new Texture("res/title.png");
 	private Sprite backgroundSprite;
 
 	static TextureAtlas atlas;
 	public static Skin skin;
 	public Table mainTable;
 
-	public TextButton musicButton;
+	public TextButton playButton;
+	public TextButton continueButton;
+	public TextButton multiplayerButton;
+	public TextButton optionsButton;
+	public TextButton exitButton;
 	public TextButton returnButton;
+	public TextButton checkContinueGame;
 	public TextField nameLoad;
 	public Music menuMusic;
+	TextButton buttonSelected;
 
 	public MenuScreen(final GameSlagyom game) {
 		this.game = game;
@@ -50,7 +63,6 @@ public class MenuScreen implements Screen {
 		skin = new Skin(Gdx.files.internal("menu/vhs/vhs-ui.json"), atlas);
 		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
 
-		musicButton = new TextButton("Music", skin);
 		returnButton = new TextButton("Return", skin);
 
 		camera = new OrthographicCamera();
@@ -69,67 +81,39 @@ public class MenuScreen implements Screen {
 		mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
-		
-		// Create buttons
-		final TextButton playButton = new TextButton("New Game", skin);
-		final TextButton continueButton = new TextButton("Continue game", skin);
-		final TextButton multiplayerButton = new TextButton("Multiplayer", skin);
-		final TextButton optionsButton = new TextButton("Options", skin);
-		final TextButton exitButton = new TextButton("Exit", skin);
 
+		// Create buttons
+		continueButton = new TextButton("Continue game", skin);
+		multiplayerButton = new TextButton("Multiplayer", skin);
+		optionsButton = new TextButton("Options", skin);
+		exitButton = new TextButton("Exit", skin);
+		playButton = new TextButton("New Game", skin);
+		checkContinueGame = new TextButton("Continue", MenuScreen.skin);
 		// Add listeners to buttons
 		playButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.screenManager.swapScreen(gameManager.ScreenManager.State.NEWGAME);
+				clickPlayButton();
 			}
+
 		});
 		continueButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-			
-				nameLoad = new TextField("", MenuScreen.skin);
-				nameLoad.setMessageText("Saved game");
-				nameLoad.setFocusTraversal(true);
-				mainTable.clear();
-				mainTable.add(playButton).pad(5).padTop(viewport.getWorldHeight() / 3);
-				mainTable.row();
-				mainTable.add(nameLoad).pad(5);
-				mainTable.row();
-				TextButton cont = new TextButton("Continue", MenuScreen.skin);
-				cont.addListener(new ClickListener(){
-					public void clicked(InputEvent event, float x, float y) {
-						game.loadGame(nameLoad.getText());
-					}
-				});
-
-				mainTable.add(cont).pad(5);
-				mainTable.row();
-				mainTable.add(multiplayerButton).pad(5);
-				mainTable.row();
-				mainTable.add(optionsButton).pad(5);
-				mainTable.row();
-				mainTable.add(exitButton).pad(5);
-				//game.loadGame(path);
-				menuMusic.stop();
-				//game.screenManager.swapScreen(State.PLAYING);
-				//PlayScreen.hud.textTable.clear();
-				//PlayScreen.hud.textDialog = "Game loaded!";
-
+				clickContinueButton();
 			}
 		});
 		multiplayerButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYERMENU);
+				clickMultiplayerButton();
 			}
 		});
-		
+
 		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.screenManager.swapScreen(gameManager.ScreenManager.State.OPTIONMENU);
-
+				clickOptionButton();
 			}
 		});
 		exitButton.addListener(new ClickListener() {
@@ -154,23 +138,70 @@ public class MenuScreen implements Screen {
 		stage.addActor(mainTable);
 		stage.addAction(Actions.alpha(0f));
 		stage.addAction(Actions.fadeIn(2f));
-		//Controllers.addListener(new MenuControllerListener(mainTable));
-		
+		// Controllers.addListener(new MenuControllerListener(mainTable));
+		buttonSelected = playButton;
+	}
+
+	protected void clickOptionButton() {
+		game.screenManager.swapScreen(gameManager.ScreenManager.State.OPTIONMENU);
+	}
+
+	protected void clickMultiplayerButton() {
+		game.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYERMENU);
+
+	}
+
+	protected void clickContinueButton() {
+		nameLoad = new TextField("", MenuScreen.skin);
+		nameLoad.setMessageText("Saved game");
+		nameLoad.setFocusTraversal(true);
+		mainTable.clear();
+		mainTable.add(playButton).pad(5).padTop(viewport.getWorldHeight() / 3);
+		mainTable.row();
+		mainTable.add(nameLoad).pad(5);
+		mainTable.row();
+
+		checkContinueGame.addListener(new ClickListener() {
+			public void clicked(InputEvent event, float x, float y) {
+				clickCheckContinueGame();
+			}
+		});
+		continueButton.setVisible(false);
+		mainTable.add(checkContinueGame).pad(5);
+		mainTable.row();
+		mainTable.add(multiplayerButton).pad(5);
+		mainTable.row();
+		mainTable.add(optionsButton).pad(5);
+		mainTable.row();
+		mainTable.add(exitButton).pad(5);
+		menuMusic.stop();
+
+	}
+
+	protected void clickCheckContinueGame() {
+		if (!nameLoad.getText().equals(""))
+			game.loadGame(nameLoad.getText());
 	}
 
 	@Override
 	public void show() {
+	}
 
+	public void clickPlayButton() {
+		game.screenManager.swapScreen(gameManager.ScreenManager.State.NEWGAME);
 	}
 
 	@Override
 	public void render(float delta) {
-		
+
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		buttonSelected.getLabel().setFontScale(1.0f);
+		mouseMoved();
+		buttonSelected.getLabel().setFontScale(1.2f);
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
-	
+
 		game.batch.draw(titleBackground, 0, 310);
 		game.batch.end();
 
@@ -179,12 +210,26 @@ public class MenuScreen implements Screen {
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			game.loadGame(nameLoad.getText());
 		}
-		
+
+	}
+
+	private void mouseMoved() {
+		if (playButton.isOver())
+			buttonSelected = playButton;
+		else if (continueButton.isOver())
+			buttonSelected = continueButton;
+		else if (multiplayerButton.isOver())
+			buttonSelected = multiplayerButton;
+		else if (optionsButton.isOver())
+			buttonSelected = optionsButton;
+		else if (exitButton.isOver())
+			buttonSelected = exitButton;
+		else if (checkContinueGame.isOver())
+			buttonSelected = checkContinueGame;
 	}
 
 	@Override
 	public void resize(int width, int height) {
-
 		stage.getViewport().setScreenSize(width, height);
 		camera.update();
 	}
@@ -208,7 +253,111 @@ public class MenuScreen implements Screen {
 	public void dispose() {
 		skin.dispose();
 		atlas.dispose();
-		
+
+	}
+
+	@Override
+	public void connected(Controller controller) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void disconnected(Controller controller) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean buttonDown(Controller controller, int buttonCode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean buttonUp(Controller controller, int buttonCode) {
+		if (buttonCode == 0) {
+			if (buttonSelected == playButton)
+				clickPlayButton();
+			else if (buttonSelected == continueButton)
+				clickContinueButton();
+			else if (buttonSelected == checkContinueGame)
+				clickCheckContinueGame();
+			else if (buttonSelected == multiplayerButton)
+				clickMultiplayerButton();
+			else if (buttonSelected == optionsButton)
+				clickOptionButton();
+			else if (buttonSelected == exitButton)
+				Gdx.app.exit();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean axisMoved(Controller controller, int axisCode, float value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+		// TODO Auto-generated method stub
+		if (value == PovDirection.north) {
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if (buttonSelected == playButton)
+				buttonSelected = exitButton;
+			else if (buttonSelected == continueButton)
+				buttonSelected = playButton;
+			else if (buttonSelected == checkContinueGame)
+				buttonSelected = playButton;
+			else if (buttonSelected == multiplayerButton) {
+				if (continueButton.isVisible())
+					buttonSelected = continueButton;
+				else
+					buttonSelected = checkContinueGame;
+			} else if (buttonSelected == optionsButton)
+				buttonSelected = multiplayerButton;
+			else if (buttonSelected == exitButton)
+				buttonSelected = optionsButton;
+			return true;
+		} else if (value == PovDirection.south) {
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if (buttonSelected == playButton) {
+				if (continueButton.isVisible())
+					buttonSelected = continueButton;
+				else
+					buttonSelected = checkContinueGame;
+			} else if (buttonSelected == continueButton)
+				buttonSelected = multiplayerButton;
+			else if (buttonSelected == checkContinueGame)
+				buttonSelected = multiplayerButton;
+			else if (buttonSelected == multiplayerButton)
+				buttonSelected = optionsButton;
+			else if (buttonSelected == optionsButton)
+				buttonSelected = exitButton;
+			else if (buttonSelected == exitButton)
+				buttonSelected = playButton;
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

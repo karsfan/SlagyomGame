@@ -53,6 +53,7 @@ public class NewCharacterScreen implements Screen {
 			new ImageButtonStyle(null, null, femaleokDraw, femaleDraw, null, femaleokDraw));
 
 	Table gender = new Table();
+	public Table mainTable = new Table();
 
 	public NewCharacterScreen(final GameSlagyom game) {
 		this.game = game;
@@ -70,7 +71,6 @@ public class NewCharacterScreen implements Screen {
 		stage = new Stage(viewport, game.batch);
 
 		// Create Table
-		Table mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
 
@@ -134,7 +134,7 @@ public class NewCharacterScreen implements Screen {
 		mainTable.add(returnButton).pad(20).center();
 
 		stage.addActor(mainTable);
-		Controllers.addListener(new MenuControllerListener(mainTable));
+		//Controllers.addListener(new MenuControllerListener(mainTable));
 	}
 
 	@Override

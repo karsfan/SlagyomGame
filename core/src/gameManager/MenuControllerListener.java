@@ -70,7 +70,6 @@ public class MenuControllerListener  implements ControllerListener {
 	    InputEvent event = Pools.obtain(InputEvent.class);
 	    event.setType(Type.touchDown);
 	    event.setButton(Input.Buttons.LEFT);
-
 	    button.fire(event);
 	    boolean handled = event.isHandled();
 	    Pools.free(event);
@@ -106,10 +105,15 @@ public class MenuControllerListener  implements ControllerListener {
 
 	        switch(value) {
 	        case north:
+	        	currentButtonIndex--;
+	            break;
 	        case west:
 	            currentButtonIndex--;
 	            break;
 	        case south:
+	        	currentButtonIndex++;
+	            break;
+
 	        case east:
 	            currentButtonIndex++;
 	            break;
@@ -134,7 +138,7 @@ public class MenuControllerListener  implements ControllerListener {
 	private boolean selectButton(Actor button) {
 	    InputEvent event = Pools.obtain(InputEvent.class);
 	    event.setType(Type.enter);
-
+	    System.out.println(button + "s");
 	    button.fire(event);
 	    boolean handled = event.isHandled();
 	    Pools.free(event);

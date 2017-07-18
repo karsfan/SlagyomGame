@@ -49,12 +49,12 @@ public class BagScreen implements Screen {
 	private Sprite selectionBackgroundSprite;
 	boolean selection;
 
-	private Table weaponsTable;
-	private Table bombsTable;
-	private Table potionsTable;
-	private Table parchmentsTable;
+	public Table weaponsTable;
+	public Table bombsTable;
+	public Table potionsTable;
+	public  Table parchmentsTable;
 
-	private Table optionsTable;
+	public Table optionsTable;
 	private TextButton use;
 	private TextButton delete;
 	private TextButton exit;
@@ -445,10 +445,10 @@ public class BagScreen implements Screen {
 		stage.addActor(parchmentsTable);
 		stage.addActor(optionsTable);
 
-		Controllers.addListener(new MenuControllerListener(potionsTable));
-		Controllers.addListener(new MenuControllerListener(weaponsTable));
-		Controllers.addListener(new MenuControllerListener(parchmentsTable));
-		Controllers.addListener(new MenuControllerListener(optionsTable));
+//		Controllers.addListener(new MenuControllerListener(potionsTable));
+//		Controllers.addListener(new MenuControllerListener(weaponsTable));
+//		Controllers.addListener(new MenuControllerListener(parchmentsTable));
+//		Controllers.addListener(new MenuControllerListener(optionsTable));
 	}
 
 	@SuppressWarnings("static-access")

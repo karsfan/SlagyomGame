@@ -36,6 +36,7 @@ public class MultiplayerScreen implements Screen {
 	public static String multiplayerAddress;
 	public static int multiplayerPort;
 	Server server;
+	public Table mainTable = new Table();
 
 	public MultiplayerScreen(final GameSlagyom game) {
 		this.game = game;
@@ -53,7 +54,6 @@ public class MultiplayerScreen implements Screen {
 		stage = new Stage(viewport, game.batch);
 
 		// Create Table
-		Table mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
 

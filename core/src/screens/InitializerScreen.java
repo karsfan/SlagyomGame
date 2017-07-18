@@ -1,6 +1,5 @@
 package screens;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -35,10 +34,13 @@ public class InitializerScreen implements Screen, ControllerListener {
 	private Texture background;
 	private Sprite backgroundSprite;
 	final Label name;
-	final TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
-	final TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);
-	final TextButton returnButton = new TextButton("Return", MenuScreen.skin);
-	public final Table mainTable = new Table();
+	TextButton defaultLevelButton = new TextButton("Default level", MenuScreen.skin);
+	TextButton chooseLevelButton = new TextButton("Choose level...", MenuScreen.skin);
+	TextButton returnButton = new TextButton("Return", MenuScreen.skin);
+	TextButton continueButton;
+	TextButton buttonSelected;
+	TextField nameAI;
+	public Table mainTable = new Table();
 
 	public InitializerScreen(final GameSlagyom game) {
 		this.game = game;
@@ -64,44 +66,14 @@ public class InitializerScreen implements Screen, ControllerListener {
 		defaultLevelButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.loadingMusic.pause();
-				//game.loadingMusic.backgroundSound.loop(10.0f);
-				game.screenManager.menuScreen.menuMusic.stop();
-				game.screenManager.playScreen = new PlayScreen(game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected);
-				game.screenManager.setPlayScreen(game.screenManager.playScreen);
-				game.setScreen(game.screenManager.playScreen);
-				game.screenManager.currentState = State.PLAYING;
-				Gdx.input.setInputProcessor(null);
+				clickDefaultLevelButton();
 			}
 		});
 
 		chooseLevelButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				final TextField nameAI = new TextField("", MenuScreen.skin);
-				nameAI.setMessageText("Name");
-				nameAI.setFocusTraversal(true);
-				
-				mainTable.clear();
-				mainTable.add(name).pad(30);
-				mainTable.row();
-				mainTable.add(defaultLevelButton).pad(5).padTop(camera.viewportHeight / 2 - camera.viewportHeight / 3);
-				mainTable.row();
-				mainTable.add(nameAI);
-				mainTable.row();
-				TextButton a = new TextButton("Continue", MenuScreen.skin);
-				a.addListener(new ClickListener(){
-					public void clicked(InputEvent event, float x, float y) {
-						game.screenManager.setPlayScreen(new PlayScreen(nameAI.getText(),game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected));
-						game.screenManager.swapScreen(gameManager.ScreenManager.State.PLAYING);
-					}
-				});
-				mainTable.add(a).pad(5);
-				mainTable.row();
-				mainTable.add(returnButton).pad(5);
-				mainTable.row();
-				//game.screenManager.setPlayScreen(new PlayScreen(game, path, NewCharacterScreen.charName));
-				//game.screenManager.swapScreen(it.slagyom.ScreenManager.State.PLAYING);
+				clickChooseLevelButton();
 			}
 		});
 
@@ -111,6 +83,13 @@ public class InitializerScreen implements Screen, ControllerListener {
 				game.screenManager.swapScreen(State.NEWGAME);
 			}
 		});
+		continueButton = new TextButton("Continue", MenuScreen.skin);
+		continueButton.addListener(new ClickListener() {
+			public void clicked(InputEvent event, float x, float y) {
+				clickContinueButton();
+			}
+		});
+		continueButton.setVisible(false);
 		// Add buttons to table
 
 		mainTable.add(name).pad(30);
@@ -123,16 +102,52 @@ public class InitializerScreen implements Screen, ControllerListener {
 		mainTable.row();
 
 		stage.addActor(mainTable);
-//		bf_loadProgress = new BitmapFont();
-//
-//		mShapeRenderer = new ShapeRenderer();
-//		startTime = TimeUtils.nanoTime();
+		buttonSelected = defaultLevelButton;
+
+	}
+
+	protected void clickChooseLevelButton() {
+		nameAI = new TextField("", MenuScreen.skin);
+		nameAI.setMessageText("Name");
+		nameAI.setFocusTraversal(true);
+
+		mainTable.clear();
+		mainTable.add(name).pad(30);
+		mainTable.row();
+		mainTable.add(defaultLevelButton).pad(5).padTop(camera.viewportHeight / 2 - camera.viewportHeight / 3);
+		mainTable.row();
+		mainTable.add(nameAI);
+		mainTable.row();
+		continueButton.setVisible(true);
 		
+		mainTable.add(continueButton).pad(5);
+		mainTable.row();
+		mainTable.add(returnButton).pad(5);
+		mainTable.row();
+	}
+
+	protected void clickContinueButton() {
+		if (!nameAI.getText().isEmpty()) {
+			game.screenManager.setPlayScreen(
+					new PlayScreen(nameAI.getText(), game, game.screenManager.newCharacterScreen.charName,
+							game.screenManager.newCharacterScreen.maleSelected));
+			game.screenManager.swapScreen(gameManager.ScreenManager.State.PLAYING);
+		}
+	}
+
+	protected void clickDefaultLevelButton() {
+		game.loadingMusic.pause();
+		game.screenManager.menuScreen.menuMusic.stop();
+		game.screenManager.playScreen = new PlayScreen(game, game.screenManager.newCharacterScreen.charName,
+				game.screenManager.newCharacterScreen.maleSelected);
+		game.screenManager.setPlayScreen(game.screenManager.playScreen);
+		game.setScreen(game.screenManager.playScreen);
+		game.screenManager.currentState = State.PLAYING;
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
 	public void show() {
-
 	}
 
 	@Override
@@ -141,46 +156,37 @@ public class InitializerScreen implements Screen, ControllerListener {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.batch.begin();
-		//showLoadProgress();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();
-
+		buttonSelected.getLabel().setFontScale(1.0f);
+		mouseMoved();
+		buttonSelected.getLabel().setFontScale(1.2f);
 		stage.act();
 		stage.draw();
-		
+
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			game.loadingMusic.pause();
-			//game.loadingMusic.backgroundSound.loop(10.0f);
 			game.screenManager.menuScreen.menuMusic.stop();
-			game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName, game.screenManager.newCharacterScreen.maleSelected));
+			game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName,
+					game.screenManager.newCharacterScreen.maleSelected));
 			game.setScreen(game.screenManager.playScreen);
 			game.screenManager.currentState = State.PLAYING;
 		}
 	}
-//	private void showLoadProgress() {
-//		long currentTimeStamp = TimeUtils.nanoTime();
-//		if (currentTimeStamp - startTime > TimeUtils.millisToNanos(500)) {
-//			startTime = currentTimeStamp;
-//			progress = progress + 10;
-//		}
-//		// Width of progress bar on screen relevant to Screen width
-//		float progressBarWidth = ((viewport.getWorldWidth()/2) / 100) * progress;
-//
-//		//game.batch.begin();
-//		bf_loadProgress.draw(game.batch, "Loading " + progress + " / " + 100, 10, 40);
-//		//game.batch.end();
-//
-//		mShapeRenderer.setProjectionMatrix(camera.combined);
-//		mShapeRenderer.begin(ShapeType.Filled);
-//		mShapeRenderer.setColor(Color.YELLOW);
-//		mShapeRenderer.rect(0, 10, progressBarWidth, 10);
-//		mShapeRenderer.end();
-//
-//	}
+
+	private void mouseMoved() {
+		if (continueButton.isOver())
+			buttonSelected = continueButton;
+		else if (returnButton.isOver())
+			buttonSelected = returnButton;
+		else if (defaultLevelButton.isOver())
+			buttonSelected = defaultLevelButton;
+		else if (chooseLevelButton.isOver())
+			buttonSelected = chooseLevelButton;
+	}
 
 	@Override
 	public void resize(int width, int height) {
-		// viewport.update(width, height);
 		stage.getViewport().setScreenSize(width, height);
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 		camera.update();
@@ -188,77 +194,101 @@ public class InitializerScreen implements Screen, ControllerListener {
 
 	@Override
 	public void pause() {
-
 	}
 
 	@Override
 	public void resume() {
-
 	}
 
 	@Override
 	public void hide() {
-
 	}
 
 	@Override
 	public void dispose() {
-
 		MenuScreen.skin.dispose();
 		MenuScreen.atlas.dispose();
 	}
 
 	@Override
 	public void connected(Controller controller) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void disconnected(Controller controller) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
-		// TODO Auto-generated method stub
+		if (buttonCode == 0) {
+			if (buttonSelected == defaultLevelButton)
+				clickDefaultLevelButton();
+			else if (buttonSelected == chooseLevelButton)
+				clickChooseLevelButton();
+			else if (buttonSelected == returnButton)
+				game.screenManager.swapScreen(State.NEWGAME);
+			else if (buttonSelected == continueButton)
+				clickContinueButton();
+		} else if (buttonCode == 1)
+			game.screenManager.swapScreen(State.NEWGAME);
 		return false;
 	}
 
 	@Override
 	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-		// TODO Auto-generated method stub
+		if (value == PovDirection.north) {
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if (buttonSelected == defaultLevelButton)
+				buttonSelected = returnButton;
+			else if (buttonSelected == chooseLevelButton)
+				buttonSelected = defaultLevelButton;
+			else if (buttonSelected == returnButton) {
+				if (!continueButton.isVisible())
+					buttonSelected = chooseLevelButton;
+				else
+					buttonSelected = continueButton;
+			} else if (buttonSelected == continueButton)
+				buttonSelected = defaultLevelButton;
+
+		} else if (value == PovDirection.south) {
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if (buttonSelected == defaultLevelButton) {
+				if (!continueButton.isVisible())
+					buttonSelected = chooseLevelButton;
+				else
+					buttonSelected = continueButton;
+			} else if (buttonSelected == chooseLevelButton)
+				buttonSelected = returnButton;
+			else if (buttonSelected == returnButton)
+				buttonSelected = defaultLevelButton;
+			else if(buttonSelected == continueButton)
+				buttonSelected = returnButton;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

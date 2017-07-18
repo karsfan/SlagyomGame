@@ -3,12 +3,15 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -23,10 +26,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
-import gameManager.MenuControllerListener;
 import gameManager.ScreenManager.State;
 
-public class NewCharacterScreen implements Screen {
+public class NewCharacterScreen implements Screen, ControllerListener {
 
 	private GameSlagyom game;
 	public Stage stage;
@@ -45,15 +47,16 @@ public class NewCharacterScreen implements Screen {
 
 	Drawable femaleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/female.png")));
 	Drawable femaleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/femaleok.png")));
-	// Drawable up, Drawable down, Drawable checked, Drawable imageUp, Drawable
-	// imageDown,
-	// Drawable imageChecked
+
 	ImageButton male = new ImageButton(new ImageButtonStyle(null, null, maleokDraw, maleDraw, null, maleokDraw));
 	ImageButton female = new ImageButton(
 			new ImageButtonStyle(null, null, femaleokDraw, femaleDraw, null, femaleokDraw));
 
 	Table gender = new Table();
 	public Table mainTable = new Table();
+	TextButton continueButton;
+	TextButton returnButton;
+	TextButton buttonSelected;
 
 	public NewCharacterScreen(final GameSlagyom game) {
 		this.game = game;
@@ -85,7 +88,6 @@ public class NewCharacterScreen implements Screen {
 		male.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("MALE");
 				male.setChecked(true);
 				female.setChecked(false);
 				maleSelected = true;
@@ -95,24 +97,21 @@ public class NewCharacterScreen implements Screen {
 		female.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				System.out.println("FEMALE");
 				female.setChecked(true);
 				male.setChecked(false);
 				maleSelected = false;
 			}
 		});
 
-		TextButton continueButton = new TextButton("Continue", MenuScreen.skin);
+		continueButton = new TextButton("Continue", MenuScreen.skin);
 		continueButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				charName = name.getText().toUpperCase();
-				if (!charName.isEmpty())
-					game.screenManager.swapScreen(gameManager.ScreenManager.State.WELCOME);
+				clickContinueButton();
 			}
 		});
 
-		TextButton returnButton = new TextButton("Return", MenuScreen.skin);
+		returnButton = new TextButton("Return", MenuScreen.skin);
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -134,7 +133,14 @@ public class NewCharacterScreen implements Screen {
 		mainTable.add(returnButton).pad(20).center();
 
 		stage.addActor(mainTable);
-		//Controllers.addListener(new MenuControllerListener(mainTable));
+		buttonSelected = continueButton;
+		// Controllers.addListener(new MenuControllerListener(mainTable));
+	}
+
+	protected void clickContinueButton() {
+		charName = name.getText().toUpperCase();
+		if (!charName.isEmpty())
+			game.screenManager.swapScreen(gameManager.ScreenManager.State.WELCOME);
 	}
 
 	@Override
@@ -146,11 +152,12 @@ public class NewCharacterScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();
-
+		buttonSelected.getLabel().setFontScale(1.0f);
+		mouseMoved();
+		buttonSelected.getLabel().setFontScale(1.2f);
 		stage.act();
 		stage.draw();
 
@@ -160,6 +167,13 @@ public class NewCharacterScreen implements Screen {
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.WELCOME);
 		}
 
+	}
+
+	private void mouseMoved() {
+		if (continueButton.isOver())
+			buttonSelected = continueButton;
+		else if (returnButton.isOver())
+			buttonSelected = returnButton;
 	}
 
 	@Override
@@ -188,6 +202,127 @@ public class NewCharacterScreen implements Screen {
 	public void dispose() {
 		MenuScreen.skin.dispose();
 		MenuScreen.atlas.dispose();
+	}
+
+	@Override
+	public void connected(Controller controller) {
+	}
+
+	@Override
+	public void disconnected(Controller controller) {
+	}
+
+	@Override
+	public boolean buttonDown(Controller controller, int buttonCode) {
+		return false;
+	}
+
+	@Override
+	public boolean buttonUp(Controller controller, int buttonCode) {
+		if (buttonCode == 1)
+			game.screenManager.swapScreen(State.MENU);
+		else if (buttonCode == 0) {
+			if (buttonSelected == continueButton)
+				clickContinueButton();
+			else if (buttonSelected == returnButton)
+				game.screenManager.swapScreen(State.MENU);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean axisMoved(Controller controller, int axisCode, float value) {
+		return false;
+	}
+
+	@Override
+	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
+		// TODO Auto-generated method stub
+		// if (value == PovDirection.south) {
+		// if (buttonSelected == male)
+		// buttonSelected = continueButton;
+		// else if (buttonSelected == continueButton)
+		// buttonSelected = returnButton;
+		// else if (buttonSelected == returnButton) {
+		// buttonSelected = male;
+		// if (!maleSelected) {
+		// male.setChecked(true);
+		// female.setChecked(false);
+		// }
+		// } else if (buttonSelected == female)
+		// buttonSelected = continueButton;
+		// } else if (value == PovDirection.north) {
+		// if (buttonSelected == male)
+		// buttonSelected = returnButton;
+		// else if (buttonSelected == continueButton) {
+		// buttonSelected = male;
+		// if (!maleSelected) {
+		// male.setChecked(true);
+		// female.setChecked(false);
+		// }
+		// } else if (buttonSelected == returnButton) {
+		// buttonSelected = continueButton;
+		// } else if (buttonSelected == female)
+		// buttonSelected = returnButton;
+		// } else if (value == PovDirection.east) {
+		// if (buttonSelected == male) {
+		// buttonSelected = female;
+		// if (!maleSelected) {
+		// female.setChecked(true);
+		// male.setChecked(false);
+		// }
+		// } else if (buttonSelected == female) {
+		// buttonSelected = male;
+		// if (!maleSelected) {
+		// male.setChecked(true);
+		// female.setChecked(false);
+		// }
+		// }
+		// } else if (value == PovDirection.west) {
+		// if (buttonSelected == male) {
+		// buttonSelected = female;
+		// if (!maleSelected) {
+		// female.setChecked(true);
+		// male.setChecked(false);
+		// }
+		// } else if (buttonSelected == female) {
+		// buttonSelected = male;
+		// if (!maleSelected) {
+		// male.setChecked(true);
+		// female.setChecked(false);
+		// }
+		// }
+		//
+		// }
+		if (value == PovDirection.north) {
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if (buttonSelected == continueButton)
+				buttonSelected = returnButton;
+			else if (buttonSelected == returnButton)
+				buttonSelected = continueButton;
+		} else if (value == PovDirection.south) {
+			buttonSelected.getLabel().setFontScale(1.0f);
+			if (buttonSelected == continueButton)
+				buttonSelected = returnButton;
+			else if (buttonSelected == returnButton)
+				buttonSelected = continueButton;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
+		return false;
+	}
+
+	@Override
+	public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
+		return false;
+	}
+
+	@Override
+	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
+		return false;
 	}
 
 }

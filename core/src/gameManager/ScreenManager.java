@@ -63,7 +63,6 @@ public class ScreenManager {
 			gameSlagyom.loadingMusic.backgroundSound.stop();
 			gameSlagyom.loadingMusic.battleMusic.stop();
 			Controllers.clearListeners();
-			//Controllers.addListener(new MenuControllerListener(menuScreen.mainTable));
 			Controllers.addListener(menuScreen);
 		} else if (currentState == State.PLAYING) {
 			gameSlagyom.setScreen(getPlayScreen());
@@ -77,26 +76,25 @@ public class ScreenManager {
 			gameSlagyom.setScreen(multiplayerScreen);
 			Gdx.input.setInputProcessor(multiplayerScreen.stage);
 			Controllers.clearListeners();
-			Controllers.addListener(new MenuControllerListener(multiplayerScreen.mainTable));
+			Controllers.addListener(multiplayerScreen);
 		} else if (currentState == State.OPTIONMENU) {
 			gameSlagyom.setScreen(optionScreen);
 			Gdx.input.setInputProcessor(optionScreen.stage);
 			Controllers.clearListeners();
-			Controllers.addListener(new MenuControllerListener(optionScreen.mainTable));
+			Controllers.addListener(optionScreen);
 		} else if (currentState == State.NEWGAME) {
 			newCharacterScreen = new NewCharacterScreen(gameSlagyom);
 			gameSlagyom.setScreen(newCharacterScreen);
 			Gdx.input.setInputProcessor(newCharacterScreen.stage);
 			Controllers.clearListeners();
-			Controllers.addListener(new MenuControllerListener(newCharacterScreen.mainTable));
+			Controllers.addListener(newCharacterScreen);
 		} else if (currentState == State.WELCOME) {
 			gameSlagyom.prefs = Gdx.app.getPreferences(newCharacterScreen.charName);
 			initializerScreen = new InitializerScreen(gameSlagyom);
 			gameSlagyom.setScreen(initializerScreen);
 			Gdx.input.setInputProcessor(initializerScreen.stage);
 			Controllers.clearListeners();
-			//Controllers.addListener(initializerScreen);
-			Controllers.addListener(new MenuControllerListener(initializerScreen.mainTable));
+			Controllers.addListener(initializerScreen);
 		} else if (currentState == State.BATTLE) {
 			gameSlagyom.setScreen(battlescreen);
 			gameSlagyom.loadingMusic.backgroundSound.pause();

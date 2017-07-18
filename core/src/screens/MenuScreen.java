@@ -138,7 +138,6 @@ public class MenuScreen implements Screen, ControllerListener {
 		stage.addActor(mainTable);
 		stage.addAction(Actions.alpha(0f));
 		stage.addAction(Actions.fadeIn(2f));
-		// Controllers.addListener(new MenuControllerListener(mainTable));
 		buttonSelected = playButton;
 	}
 

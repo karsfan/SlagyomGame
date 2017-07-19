@@ -26,10 +26,10 @@ public class NetworkPlayScreen extends PlayScreen {
 	boolean youLose = false;
 
 	@SuppressWarnings("static-access")
-	public NetworkPlayScreen(GameSlagyom gameSlagyom, String name) {
+	public NetworkPlayScreen(GameSlagyom gameSlagyom, String name, String address, int port) {
 		super(gameSlagyom);
 		gameSlagyom.modalityMultiplayer = true;
-		client = new Client(name, gameSlagyom);
+		client = new Client(name, gameSlagyom, address, port);
 		gamecam.position.x = client.networkWorld.player.getX();
 		gamecam.position.y = client.networkWorld.player.getY();
 		hud = new Hud(gameSlagyom);

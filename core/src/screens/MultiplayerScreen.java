@@ -49,6 +49,8 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 	TextField name;
 	TextField address;
 	TextField port;
+	TextField numberOfPlayer;
+	TextButton continueButton;
 
 	public MultiplayerScreen(final GameSlagyom game) {
 		this.game = game;
@@ -68,7 +70,7 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 		// Create Table
 		mainTable.setFillParent(true);
 		mainTable.top();
-
+		numberOfPlayer = new TextField("", MenuScreen.skin);
 		// Create buttons
 		name = new TextField("", MenuScreen.skin);
 		name.setMessageText("Name");
@@ -83,6 +85,7 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 		port.setFocusTraversal(true);
 
 		startServerButton = new TextButton("Start server", MenuScreen.skin);
+		continueButton = new TextButton("Start", MenuScreen.skin);
 		playButton = new TextButton("Play", MenuScreen.skin);
 		returnButton = new TextButton("Return", MenuScreen.skin);
 		// Add listeners to buttons
@@ -97,6 +100,13 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				clickPlayButton();
+			}
+		});
+
+		continueButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				clickContinueButton();
 			}
 		});
 
@@ -123,7 +133,21 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 		mainTable.row();
 
 		stage.addActor(mainTable);
+		continueButton.setVisible(false);
 		buttonSelected = startServerButton;
+	}
+
+	protected void clickContinueButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
+		if (!port.getText().isEmpty() && !name.getText().isEmpty() && !numberOfPlayer.getText().isEmpty()) {
+			multiplayerAddress = address.getText();
+			multiplayerPort = Integer.parseInt(port.getText());
+			server = new Server(multiplayerPort, Integer.parseInt(numberOfPlayer.getText()));
+			new ServerThread(server);
+			game.screenManager.playScreen = new NetworkPlayScreen(game, name.getText(), multiplayerAddress,
+					multiplayerPort);
+			game.screenManager.swapScreen(State.PLAYING);
+		}
 	}
 
 	protected void clickPlayButton() {
@@ -132,7 +156,8 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 			multiplayerCharName = name.getText();
 			multiplayerAddress = address.getText();
 			multiplayerPort = Integer.parseInt(port.getText());
-			game.screenManager.playScreen = new NetworkPlayScreen(game, name.getText());
+			game.screenManager.playScreen = new NetworkPlayScreen(game, name.getText(), multiplayerAddress,
+					multiplayerPort);
 			game.screenManager.swapScreen(State.PLAYING);
 		}
 	}
@@ -140,12 +165,24 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 	protected void clickServerButton() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (!port.getText().isEmpty() && !name.getText().isEmpty()) {
-			multiplayerAddress = address.getText();
-			multiplayerPort = Integer.parseInt(port.getText());
-			server = new Server(multiplayerPort, 3);
-			new ServerThread(server);
-			game.screenManager.playScreen = new NetworkPlayScreen(game, name.getText());
-			game.screenManager.swapScreen(State.PLAYING);
+			numberOfPlayer.setMessageText("Players");
+			numberOfPlayer.setFocusTraversal(true);
+			continueButton.setVisible(true);
+			mainTable.clear();
+			mainTable.add(name).pad(5).padTop(viewport.getWorldHeight() / 2 - viewport.getWorldHeight() / 4);
+			mainTable.row();
+			mainTable.add(address).pad(5);
+			mainTable.row();
+			mainTable.add(port).pad(5);
+			mainTable.row();
+			mainTable.add(numberOfPlayer).pad(5);
+			mainTable.row();
+			mainTable.add(continueButton).pad(5);
+			mainTable.row();
+			mainTable.add(playButton).pad(5);
+			mainTable.row();
+			mainTable.add(returnButton).pad(15);
+			mainTable.row();
 		}
 	}
 
@@ -168,21 +205,24 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 		stage.act();
 		stage.draw();
 	}
+
 	private void mouseMoved() {
-		if (startServerButton.isOver()){
-			if(buttonSelected != startServerButton)
+		if (startServerButton.isOver()) {
+			if (buttonSelected != startServerButton)
 				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = startServerButton;
-		}
-		else if (playButton.isOver()){
-			if(buttonSelected != playButton)
+		} else if (playButton.isOver()) {
+			if (buttonSelected != playButton)
 				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = playButton;
-		}
-		else if (returnButton.isOver()){
-			if(buttonSelected != returnButton)
+		} else if (returnButton.isOver()) {
+			if (buttonSelected != returnButton)
 				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = returnButton;
+		} else if (continueButton.isOver()) {
+			if (buttonSelected != continueButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
+			buttonSelected = continueButton;
 		}
 	}
 
@@ -234,16 +274,17 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
-		if(buttonCode == 1){
+		if (buttonCode == 1) {
 			game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 			game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
-		}
-		else if(buttonCode == 0){
-			if(buttonSelected == startServerButton)
+		} else if (buttonCode == 0) {
+			if (buttonSelected == startServerButton)
 				clickServerButton();
-			else if(buttonSelected == playButton)
+			else if (buttonSelected == playButton)
 				clickPlayButton();
-			else if(buttonSelected == returnButton){
+			else if (buttonSelected == continueButton)
+				clickContinueButton();
+			else if (buttonSelected == returnButton) {
 				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 			}
@@ -259,28 +300,36 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-		if(value == PovDirection.north){
+		if (value == PovDirection.north) {
 			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
-			if(buttonSelected == startServerButton)
+			if (buttonSelected == startServerButton)
 				buttonSelected = returnButton;
-			else if(buttonSelected == playButton)
+			else if (buttonSelected == playButton) {
+				if (continueButton.isVisible())
+					buttonSelected = continueButton;
+			} else if (buttonSelected == continueButton)
+				buttonSelected = returnButton;
+			else if (buttonSelected == playButton)
 				buttonSelected = startServerButton;
-			else if(buttonSelected == returnButton)
+			else if (buttonSelected == returnButton)
 				buttonSelected = playButton;
-		}
-		else if(value == PovDirection.south){
+		} else if (value == PovDirection.south) {
 			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
-			if(buttonSelected == startServerButton)
+			if (buttonSelected == startServerButton && continueButton.isVisible())
+				buttonSelected = continueButton;
+			else if(buttonSelected == startServerButton)
 				buttonSelected = playButton;
-			else if(buttonSelected == playButton)
+			else if (buttonSelected == playButton)
 				buttonSelected = returnButton;
-			else if(buttonSelected == returnButton)
+			else if(buttonSelected == returnButton && continueButton.isVisible())
+				buttonSelected = continueButton;
+			else if (buttonSelected == returnButton)
 				buttonSelected = startServerButton;
 		}
 		return false;
-	}	
+	}
 
 	@Override
 	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {

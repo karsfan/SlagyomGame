@@ -23,9 +23,13 @@ public class Client {
 	public boolean text = false;
 	public String textDiaglog;
 	public boolean soundPotionBattle = false;
-	public Client(String name, GameSlagyom gameSlagyom) {
+
+	public Client(String name, GameSlagyom gameSlagyom, String address, int port) {
 		try {
-			socket = new Socket("localhost", 5555);
+			if (address.equals(""))
+				socket = new Socket("localhost", port);
+			else
+				socket = new Socket(address, port);
 			writer = new PrintWriter(socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -96,18 +100,17 @@ public class Client {
 
 	public void movesUp(float dt) {
 		networkWorld.player.movesUp(dt);
-		if(!networkWorld.player.textDialog.equals("")){
+		if (!networkWorld.player.textDialog.equals("")) {
 			text = true;
 			textDiaglog = networkWorld.player.textDialog;
 			networkWorld.player.textDialog = "";
 		}
 		if (networkWorld.player.collisionWithObject) {
 			sendCollisionItem();
-		}else if(networkWorld.player.collideGym){
-			writer.println(9 + " "+networkWorld.player.ID + " "+0+" "+0+" "+0+";"+0+";");
+		} else if (networkWorld.player.collideGym) {
+			writer.println(9 + " " + networkWorld.player.ID + " " + 0 + " " + 0 + " " + 0 + ";" + 0 + ";");
 			writer.flush();
-		}
-		else if (!networkWorld.player.collideWithOtherPlayer) {
+		} else if (!networkWorld.player.collideWithOtherPlayer) {
 			writer.println(0 + " " + networkWorld.player.ID + " " + networkWorld.player.getX() + " "
 					+ networkWorld.player.getY() + " " + networkWorld.player.currentState + ";" + "11111" + ";");
 			writer.flush();

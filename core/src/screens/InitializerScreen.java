@@ -141,13 +141,13 @@ public class InitializerScreen implements Screen, ControllerListener {
 
 	protected void clickDefaultLevelButton() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
-		game.screenManager.menuScreen.menuMusic.stop();
 		
 		game.screenManager.playScreen = new PlayScreen(game, game.screenManager.newCharacterScreen.charName,
 				game.screenManager.newCharacterScreen.maleSelected);
-		game.screenManager.setPlayScreen(game.screenManager.playScreen);
-		game.setScreen(game.screenManager.playScreen);
-		game.screenManager.currentState = State.PLAYING;
+		//game.screenManager.setPlayScreen(game.screenManager.playScreen);
+		game.screenManager.swapScreen(State.PLAYING);
+		//game.setScreen(game.screenManager.playScreen);
+		//game.screenManager.currentState = State.PLAYING;
 		Gdx.input.setInputProcessor(null);
 	}
 
@@ -170,11 +170,11 @@ public class InitializerScreen implements Screen, ControllerListener {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			game.screenManager.menuScreen.menuMusic.stop();
 			game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName,
 					game.screenManager.newCharacterScreen.maleSelected));
-			game.setScreen(game.screenManager.playScreen);
-			game.screenManager.currentState = State.PLAYING;
+			game.screenManager.swapScreen(State.PLAYING);
+			//game.setScreen(game.screenManager.playScreen);
+			//game.screenManager.currentState = State.PLAYING;
 		}
 	}
 

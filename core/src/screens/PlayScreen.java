@@ -167,8 +167,9 @@ public class PlayScreen implements Screen, ControllerListener {
 
 		if (loadingTimer > 3) {
 			draw();
-			if (loading)
+			if (loading){
 				gameSlagyom.loadingMusic.backgroundSound.loop(10.0f);
+			}
 			loading = false;
 		}
 

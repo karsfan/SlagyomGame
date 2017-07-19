@@ -48,7 +48,7 @@ public class ScreenManager {
 
 	@SuppressWarnings("static-access")
 	public void swapScreen(State newState) {
-		if (currentState == State.PLAYING || currentState == State.BATTLE )
+		if (currentState == State.PLAYING || currentState == State.BATTLE || currentState == State.MENU)
 			setPreviousState(currentState);
 		setCurrentState(newState);
 
@@ -58,7 +58,8 @@ public class ScreenManager {
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(gameSlagyom.loadingImage.cursor, 0, 0));
 
 		if (currentState == State.MENU) {
-			// LoadingMusic.mainMusic.play();
+			gameSlagyom.loadingMusic.mainMusic.setVolume(GameConfig.musicVolume);
+			gameSlagyom.loadingMusic.mainMusic.play();
 			gameSlagyom.setScreen(menuScreen);
 			Gdx.input.setInputProcessor(menuScreen.stage);
 			gameSlagyom.loadingMusic.backgroundSound.stop();
@@ -66,12 +67,14 @@ public class ScreenManager {
 			Controllers.clearListeners();
 			Controllers.addListener(menuScreen);
 		} else if (currentState == State.PLAYING) {
+			gameSlagyom.loadingMusic.battleMusic.stop();
+			gameSlagyom.loadingMusic.mainMusic.stop();
+			if(GameConfig.soundVolume > 0)
+			gameSlagyom.loadingMusic.backgroundSound.resume();
 			gameSlagyom.setScreen(getPlayScreen());
 			Controllers.clearListeners();
 			Controllers.addListener(playScreen);
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC
-			gameSlagyom.loadingMusic.battleMusic.stop();
-			menuScreen.menuMusic.stop();
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.MULTIPLAYERMENU) {
 			gameSlagyom.setScreen(multiplayerScreen);
@@ -106,6 +109,7 @@ public class ScreenManager {
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
 			gameSlagyom.setScreen(pauseScreen);
+			gameSlagyom.loadingMusic.backgroundSound.pause();
 			Gdx.input.setInputProcessor(pauseScreen.stage);
 			Controllers.clearListeners();
 			Controllers.addListener(pauseScreen);

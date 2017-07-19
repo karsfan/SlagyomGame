@@ -1,7 +1,6 @@
 package world;
 
 public class GameConfig {
-	//public static float gravity = 34f;
 	public static float gravity = 17f;
 	public static float WIDTH = 1440;
 	public static float HEIGHT = 960;
@@ -15,7 +14,7 @@ public class GameConfig {
 	public static int mainY_Battle = 180;
 	public int gamePlayerNet = 0;
 	public static boolean music = true;
-	public static float musicVolume = 1.0f;
+	public static float musicVolume = 0.5f;
 	public static float soundVolume = 0.7f;
 	public static float battleMusic = 0.07f;
 }

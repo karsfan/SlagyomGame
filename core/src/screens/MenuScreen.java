@@ -3,7 +3,6 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.PovDirection;
@@ -51,14 +50,12 @@ public class MenuScreen implements Screen, ControllerListener {
 	public TextButton returnButton;
 	public TextButton checkContinueGame;
 	public TextField nameLoad;
-	public Music menuMusic;
 	TextButton buttonSelected;
 
 	public MenuScreen(final GameSlagyom game) {
 		this.game = game;
 		atlas = new TextureAtlas("menu/vhs/vhs-ui.atlas");
 		skin = new Skin(Gdx.files.internal("menu/vhs/vhs-ui.json"), atlas);
-		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("res/audio/mainMusic.mp3"));
 
 		returnButton = new TextButton("Return", skin);
 
@@ -186,7 +183,6 @@ public class MenuScreen implements Screen, ControllerListener {
 		mainTable.add(optionsButton).pad(5);
 		mainTable.row();
 		mainTable.add(exitButton).pad(5);
-		menuMusic.stop();
 
 	}
 

@@ -1,5 +1,6 @@
 package screens;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controller;
@@ -111,6 +112,8 @@ public class OptionScreen implements Screen, ControllerListener {
 			GameConfig.battleMusic = 0.07f;
 			musicButton.setText("Music ON");
 		}
+		game.loadingMusic.battleMusic.setVolume(GameConfig.battleMusic);
+		game.loadingMusic.mainMusic.setVolume(GameConfig.musicVolume);
 	}
 
 	protected void clickFullScreenButton() {
@@ -145,10 +148,7 @@ public class OptionScreen implements Screen, ControllerListener {
 
 	protected void clickReturnButton() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
-		if (game.screenManager.playScreen != null)
-			game.screenManager.swapScreen(gameManager.ScreenManager.State.PLAYING);
-		else
-			game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+		game.screenManager.swapScreen(game.screenManager.previousState);
 	}
 
 	@Override

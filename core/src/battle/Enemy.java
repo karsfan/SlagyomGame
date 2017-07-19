@@ -56,17 +56,6 @@ public class Enemy extends Fighting {
 		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 		bombe.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 		if (weapon.getType() == Type.Sword || (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev2)
 				|| (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev3))
 			this.width = 200;
@@ -84,15 +73,6 @@ public class Enemy extends Fighting {
 			health = 100;
 			win_bonus = new Pack(Level.EASY);
 			velocity = 40;
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));

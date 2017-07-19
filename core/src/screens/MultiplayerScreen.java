@@ -25,6 +25,7 @@ import gameManager.ScreenManager.State;
 import multiplayer.NetworkPlayScreen;
 import multiplayer.Server;
 import multiplayer.ServerThread;
+import world.GameConfig;
 
 public class MultiplayerScreen implements Screen, ControllerListener {
 
@@ -102,6 +103,7 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
 			}
 		});
@@ -125,6 +127,7 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickPlayButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (!name.getText().isEmpty() && !port.getText().isEmpty()) {
 			multiplayerCharName = name.getText();
 			multiplayerAddress = address.getText();
@@ -135,6 +138,7 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickServerButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (!port.getText().isEmpty() && !name.getText().isEmpty()) {
 			multiplayerAddress = address.getText();
 			multiplayerPort = Integer.parseInt(port.getText());
@@ -165,12 +169,21 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 		stage.draw();
 	}
 	private void mouseMoved() {
-		if (startServerButton.isOver())
+		if (startServerButton.isOver()){
+			if(buttonSelected != startServerButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = startServerButton;
-		else if (playButton.isOver())
+		}
+		else if (playButton.isOver()){
+			if(buttonSelected != playButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = playButton;
-		else if (returnButton.isOver())
+		}
+		else if (returnButton.isOver()){
+			if(buttonSelected != returnButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = returnButton;
+		}
 	}
 
 	@Override
@@ -221,15 +234,19 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
-		if(buttonCode == 1)
+		if(buttonCode == 1){
+			game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 			game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+		}
 		else if(buttonCode == 0){
 			if(buttonSelected == startServerButton)
 				clickServerButton();
 			else if(buttonSelected == playButton)
 				clickPlayButton();
-			else if(buttonSelected == returnButton)
+			else if(buttonSelected == returnButton){
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.MENU);
+			}
 		}
 		return false;
 	}
@@ -243,6 +260,7 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		if(value == PovDirection.north){
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if(buttonSelected == startServerButton)
 				buttonSelected = returnButton;
@@ -252,6 +270,7 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 				buttonSelected = playButton;
 		}
 		else if(value == PovDirection.south){
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if(buttonSelected == startServerButton)
 				buttonSelected = playButton;

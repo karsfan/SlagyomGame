@@ -24,6 +24,7 @@ import battle.Pack;
 import character.Arrow;
 import character.Bomb;
 import character.Weapon;
+import character.Weapon.Type;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
@@ -97,13 +98,16 @@ public class BattleScreen implements Screen, ControllerListener {
 		CharacterBattle player = battle.character;
 		gameslagyom.batch.draw(gameslagyom.loadingImage.getBattleFrame(player), player.getX(), player.getY(),
 				player.getWidth(), player.getHeight());
-
+		if (battle.character.soundBomb) {
+			gameslagyom.loadingMusic.bombSound.play();
+			battle.character.soundBomb = false;
+		}
 		Iterator<Bomb> bombIterator = player.bag.bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.lanciata == true) {
-				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching), searching.getMainX(),
-						searching.getMainY(), searching.getWidth() + 10, searching.getHeight() + 10);
+				gameslagyom.batch.draw(gameslagyom.loadingImage.bombImage, searching.getMainX(), searching.getMainY(),
+						searching.getWidth() + 20, searching.getHeight() + 20);
 			}
 		}
 		Iterator<Bomb> bombIterator1 = ((Enemy) enemy).getBombe().iterator();
@@ -111,8 +115,8 @@ public class BattleScreen implements Screen, ControllerListener {
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
 			if (searching1.lanciata == true) {
-				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching1), searching1.getMainX(),
-						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
+				gameslagyom.batch.draw(gameslagyom.loadingImage.bombImage, searching1.getMainX(), searching1.getMainY(),
+						searching1.getWidth() + 20, searching1.getHeight() + 20);
 			}
 		}
 		if (!player.arrowsShooted.isEmpty()) {
@@ -265,7 +269,11 @@ public class BattleScreen implements Screen, ControllerListener {
 			}
 			if (Gdx.input.isKeyJustPressed(Keys.A) || (buttonPressed && buttonCodePressed == 0)) {
 				buttonPressed = false;
-				gameslagyom.loadingMusic.swordSound.play();
+				if (battle.character.primary_weapon.getType() == Type.Sword)
+					gameslagyom.loadingMusic.swordSound.play();
+				else if (battle.character.primary_weapon.getType() == Type.Bow) {
+					gameslagyom.loadingMusic.arrowSound.play();
+				}
 				if (battle.character.left)
 					battle.character.fightLeft(dt);
 				else

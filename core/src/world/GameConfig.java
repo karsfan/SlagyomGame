@@ -14,4 +14,7 @@ public class GameConfig {
 	public static float HEIGHT_BATTLE = 960;
 	public static int mainY_Battle = 180;
 	public int gamePlayerNet = 0;
+	public static boolean music = true;
+	public static float musicVolume = 1.0f;
+	public static float soundVolume = 1.5f;
 }

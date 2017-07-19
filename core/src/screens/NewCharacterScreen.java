@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
 import gameManager.ScreenManager.State;
+import world.GameConfig;
 
 public class NewCharacterScreen implements Screen, ControllerListener {
 
@@ -88,6 +89,7 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 		male.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				male.setChecked(true);
 				female.setChecked(false);
 				maleSelected = true;
@@ -97,6 +99,7 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 		female.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				female.setChecked(true);
 				male.setChecked(false);
 				maleSelected = false;
@@ -115,6 +118,7 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(State.MENU);
 			}
 		});
@@ -138,6 +142,7 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickContinueButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		charName = name.getText().toUpperCase();
 		if (!charName.isEmpty())
 			game.screenManager.swapScreen(gameManager.ScreenManager.State.WELCOME);
@@ -170,10 +175,17 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 	}
 
 	private void mouseMoved() {
-		if (continueButton.isOver())
+		if (continueButton.isOver()){
+			if(buttonSelected != continueButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = continueButton;
+		}
 		else if (returnButton.isOver())
+		{
+			if(buttonSelected != returnButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = returnButton;
+		}
 	}
 
 	@Override
@@ -224,8 +236,10 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 		else if (buttonCode == 0) {
 			if (buttonSelected == continueButton)
 				clickContinueButton();
-			else if (buttonSelected == returnButton)
+			else if (buttonSelected == returnButton){
 				game.screenManager.swapScreen(State.MENU);
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
+			}
 		}
 		return false;
 	}
@@ -237,70 +251,15 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-		// TODO Auto-generated method stub
-		// if (value == PovDirection.south) {
-		// if (buttonSelected == male)
-		// buttonSelected = continueButton;
-		// else if (buttonSelected == continueButton)
-		// buttonSelected = returnButton;
-		// else if (buttonSelected == returnButton) {
-		// buttonSelected = male;
-		// if (!maleSelected) {
-		// male.setChecked(true);
-		// female.setChecked(false);
-		// }
-		// } else if (buttonSelected == female)
-		// buttonSelected = continueButton;
-		// } else if (value == PovDirection.north) {
-		// if (buttonSelected == male)
-		// buttonSelected = returnButton;
-		// else if (buttonSelected == continueButton) {
-		// buttonSelected = male;
-		// if (!maleSelected) {
-		// male.setChecked(true);
-		// female.setChecked(false);
-		// }
-		// } else if (buttonSelected == returnButton) {
-		// buttonSelected = continueButton;
-		// } else if (buttonSelected == female)
-		// buttonSelected = returnButton;
-		// } else if (value == PovDirection.east) {
-		// if (buttonSelected == male) {
-		// buttonSelected = female;
-		// if (!maleSelected) {
-		// female.setChecked(true);
-		// male.setChecked(false);
-		// }
-		// } else if (buttonSelected == female) {
-		// buttonSelected = male;
-		// if (!maleSelected) {
-		// male.setChecked(true);
-		// female.setChecked(false);
-		// }
-		// }
-		// } else if (value == PovDirection.west) {
-		// if (buttonSelected == male) {
-		// buttonSelected = female;
-		// if (!maleSelected) {
-		// female.setChecked(true);
-		// male.setChecked(false);
-		// }
-		// } else if (buttonSelected == female) {
-		// buttonSelected = male;
-		// if (!maleSelected) {
-		// male.setChecked(true);
-		// female.setChecked(false);
-		// }
-		// }
-		//
-		// }
 		if (value == PovDirection.north) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (buttonSelected == continueButton)
 				buttonSelected = returnButton;
 			else if (buttonSelected == returnButton)
 				buttonSelected = continueButton;
 		} else if (value == PovDirection.south) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (buttonSelected == continueButton)
 				buttonSelected = returnButton;

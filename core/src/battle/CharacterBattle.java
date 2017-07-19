@@ -21,6 +21,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public Weapon primary_weapon;
 	public boolean male;
 	public boolean arrowShooted = false;
+	public boolean soundBomb = false;
 	public ArrayList<Weapon> arrowsShooted = new ArrayList<Weapon>();
 
 	public CharacterBattle(Player player) {
@@ -99,7 +100,6 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {
 			y += velocityY * dt;
-			// System.out.println(velocityY + " "+ velocityY*dt);
 			updateVelocityY(dt);
 			setState(StateDynamicObject.JUMPING, dt);
 
@@ -120,8 +120,8 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			if (ob.lanciata == true) {
 				((Bomb) ob).update(dt);
 				if (ob.morta) {
+					soundBomb = true;
 					it1.remove();
-					// System.out.println("Bomba player eliminata");
 					continue;
 				}
 			}

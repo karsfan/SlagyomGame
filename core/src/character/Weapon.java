@@ -215,19 +215,19 @@ public class Weapon {
 			switch (level) {
 			case lev1:
 				damage = 8;
-				width = 10;
+				width = 30;
 				height = 10;
 				price = 3;
 				break;
 			case lev2:
 				damage = 20;
-				width = 13;
+				width = 33;
 				height = 13;
 				price = 5;
 				break;
 			case lev3:
 				damage = 35;
-				width = 15;
+				width = 38;
 				height = 15;
 				price = 15;
 				break;

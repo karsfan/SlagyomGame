@@ -286,7 +286,6 @@ public class PlayScreen implements Screen, ControllerListener {
 			} else if (Gdx.input.isKeyPressed(Keys.DOWN) || (directionGamePad == PovDirection.south && movesGamePad))
 				game.world.player.movesDown(dt);
 			else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) || (buttonPressed && buttonCodePressed == 7)) {
-				gameSlagyom.loadingMusic.pause();
 				gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 				buttonPressed = false;
 			} else if (Gdx.input.isKeyJustPressed(Keys.B)) {

@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import gameManager.GameSlagyom;
 import gameManager.ScreenManager.State;
 import multiplayer.NetworkPlayScreen;
+import world.GameConfig;
 
 public class PauseScreen implements Screen, ControllerListener {
 
@@ -80,10 +81,11 @@ public class PauseScreen implements Screen, ControllerListener {
 				clickSaveButton();
 			}
 		});
-		
+
 		optionsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.OPTIONMENU);
 			}
 		});
@@ -91,6 +93,7 @@ public class PauseScreen implements Screen, ControllerListener {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(game.screenManager.getPreviousState());
 			}
 		});
@@ -104,6 +107,7 @@ public class PauseScreen implements Screen, ControllerListener {
 		bagButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.BAG);
 			}
 		});
@@ -111,6 +115,7 @@ public class PauseScreen implements Screen, ControllerListener {
 		exitButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				Gdx.app.exit();
 			}
 		});
@@ -155,6 +160,7 @@ public class PauseScreen implements Screen, ControllerListener {
 
 	@SuppressWarnings("static-access")
 	protected void clickMenuButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (!game.modalityMultiplayer) {
 			game.screenManager.playScreen.dispose();
 		} else {
@@ -168,6 +174,7 @@ public class PauseScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickSaveButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		game.saveGame();
 		game.screenManager.swapScreen(gameManager.ScreenManager.State.PLAYING);
 		PlayScreen.hud.setDialogText("Game saved!");
@@ -182,11 +189,11 @@ public class PauseScreen implements Screen, ControllerListener {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(.1f, .12f, .16f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
 		buttonSelected.getLabel().setFontScale(1.0f);
 		mouseMoved();
 		buttonSelected.getLabel().setFontScale(1.2f);
-		
+
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 		game.batch.end();
@@ -198,20 +205,35 @@ public class PauseScreen implements Screen, ControllerListener {
 			game.screenManager.swapScreen(game.screenManager.getPreviousState());
 		}
 	}
+
 	private void mouseMoved() {
-		if (bagButton.isOver())
+		if (bagButton.isOver()) {
+			if (buttonSelected != bagButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = bagButton;
-		else if (returnButton.isOver())
+		} else if (returnButton.isOver()) {
+			if (buttonSelected != returnButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = returnButton;
-		else if (saveGame.isOver())
+		} else if (saveGame.isOver()) {
+			if (buttonSelected != saveGame)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = saveGame;
-		else if (menuButton.isOver())
+		} else if (menuButton.isOver()) {
+			if (buttonSelected != menuButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = menuButton;
-		else if(exitButton.isOver())
+		} else if (exitButton.isOver()) {
+			if (buttonSelected != exitButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = exitButton;
-		else if(optionsButton.isOver())
+		} else if (optionsButton.isOver()) {
+			if (buttonSelected != optionsButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = optionsButton;
+		}
 	}
+
 	@Override
 	public void resize(int width, int height) {
 		stage.getViewport().setScreenSize(width, height);
@@ -259,21 +281,31 @@ public class PauseScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
-		if(buttonCode == 1)
+		if (buttonCode == 1){
+			game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 			game.screenManager.swapScreen(game.screenManager.getPreviousState());
-		else if(buttonCode == 0){
-			if(buttonSelected == saveGame)
+		}
+		else if (buttonCode == 0) {
+			if (buttonSelected == saveGame)
 				clickSaveButton();
-			else if(buttonSelected == bagButton)
+			else if (buttonSelected == bagButton){
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.BAG);
-			else if(buttonSelected == returnButton)
+			}
+			else if (buttonSelected == returnButton){
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(game.screenManager.getPreviousState());
-			else if(buttonSelected == menuButton)
+			}
+			else if (buttonSelected == menuButton)
 				game.screenManager.swapScreen(State.MENU);
-			else if(buttonSelected == exitButton)
+			else if (buttonSelected == exitButton){
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				Gdx.app.exit();
-			else if(buttonSelected == optionsButton)
+			}
+			else if (buttonSelected == optionsButton){				
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.OPTIONMENU);
+			}
 		}
 		return false;
 	}
@@ -286,34 +318,36 @@ public class PauseScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-		if(value == PovDirection.north){
+		if (value == PovDirection.north) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
-			if(buttonSelected == bagButton)
+			if (buttonSelected == bagButton)
 				buttonSelected = exitButton;
-			else if(buttonSelected == saveGame)
+			else if (buttonSelected == saveGame)
 				buttonSelected = bagButton;
-			else if(buttonSelected == optionsButton)
+			else if (buttonSelected == optionsButton)
 				buttonSelected = saveGame;
-			else if(buttonSelected == returnButton)
+			else if (buttonSelected == returnButton)
 				buttonSelected = optionsButton;
-			else if(buttonSelected == menuButton)
+			else if (buttonSelected == menuButton)
 				buttonSelected = returnButton;
-			else if(buttonSelected == exitButton)
+			else if (buttonSelected == exitButton)
 				buttonSelected = menuButton;
 		}
-		if(value == PovDirection.south){
+		if (value == PovDirection.south) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
-			if(buttonSelected == bagButton)
+			if (buttonSelected == bagButton)
 				buttonSelected = saveGame;
-			else if(buttonSelected == saveGame)
+			else if (buttonSelected == saveGame)
 				buttonSelected = optionsButton;
-			else if(buttonSelected == optionsButton)
+			else if (buttonSelected == optionsButton)
 				buttonSelected = returnButton;
-			else if(buttonSelected == returnButton)
+			else if (buttonSelected == returnButton)
 				buttonSelected = menuButton;
-			else if(buttonSelected == menuButton)
+			else if (buttonSelected == menuButton)
 				buttonSelected = exitButton;
-			else if(buttonSelected == exitButton)
+			else if (buttonSelected == exitButton)
 				buttonSelected = bagButton;
 		}
 		return false;

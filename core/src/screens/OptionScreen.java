@@ -100,10 +100,12 @@ public class OptionScreen implements Screen, ControllerListener {
 	protected void clickMusicButton() {
 		activeMusic = !activeMusic;
 		if (!activeMusic) {
-			game.screenManager.menuScreen.menuMusic.pause();
+			GameConfig.musicVolume = 0;
+			GameConfig.soundVolume = 0;
 			musicButton.setText("Music OFF");
 		} else {
-			game.screenManager.menuScreen.menuMusic.play();
+			GameConfig.musicVolume = 1.0f;
+			GameConfig.soundVolume = 1.2f;
 			musicButton.setText("Music ON");
 		}
 	}

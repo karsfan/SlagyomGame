@@ -104,7 +104,6 @@ public class ScreenManager {
 			Controllers.addListener(battlescreen);
 			Gdx.input.setInputProcessor(null);
 		} else if (currentState == State.PAUSE) {
-			gameSlagyom.loadingMusic.pause();
 			gameSlagyom.setScreen(pauseScreen);
 			Gdx.input.setInputProcessor(pauseScreen.stage);
 			Controllers.clearListeners();
@@ -145,6 +144,7 @@ public class ScreenManager {
 		return playScreen;
 	}
 
+	@SuppressWarnings("static-access")
 	public void setPlayScreen(PlayScreen playScreen) {
 		this.playScreen = playScreen;
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(gameSlagyom.loadingImage.noCursor, 0, 0));

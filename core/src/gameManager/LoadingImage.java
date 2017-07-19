@@ -70,7 +70,8 @@ public class LoadingImage {
 	public static Texture miniMapPlayerPointer;
 	public static Texture arrowLeft;
 	public static Texture arrowRight;
-
+	public static Texture bombImage;
+	
 	public TextureRegion battleCharacterStand;
 	public TextureRegion battleFemaleCharacterStand;
 	public Animation<TextureRegion>[] battleCharacterAnimationSpearLev1;
@@ -349,7 +350,7 @@ public class LoadingImage {
 		loadLoadingTexture();
 		arrowLeft = new Texture("res/sxArrow.png");
 		arrowRight = new Texture("res/dxArrow.png");
-
+		bombImage = new Texture("res/bomb30.png");
 		areFighting = new Texture("res/areFighting.png");
 		miniMapPlayerPointer = new Texture("res/multiplayerPointer.png");
 		
@@ -780,7 +781,6 @@ public class LoadingImage {
 			} else {
 				textureRegion = battleFemaleCharacterStand;
 			}
-			// textureRegion = battleCharacterStand;
 			break;
 		case "NetworkCharacterBattle":
 			if (((NetworkCharacterBattle) ob).player) {

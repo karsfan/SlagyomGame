@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
 import gameManager.ScreenManager.State;
+import world.GameConfig;
 
 public class InitializerScreen implements Screen, ControllerListener {
 
@@ -80,6 +81,7 @@ public class InitializerScreen implements Screen, ControllerListener {
 		returnButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(State.NEWGAME);
 			}
 		});
@@ -107,6 +109,7 @@ public class InitializerScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickChooseLevelButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		nameAI = new TextField("", MenuScreen.skin);
 		nameAI.setMessageText("Name");
 		nameAI.setFocusTraversal(true);
@@ -127,6 +130,7 @@ public class InitializerScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickContinueButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (!nameAI.getText().isEmpty()) {
 			game.screenManager.setPlayScreen(
 					new PlayScreen(nameAI.getText(), game, game.screenManager.newCharacterScreen.charName,
@@ -136,7 +140,7 @@ public class InitializerScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickDefaultLevelButton() {
-		game.loadingMusic.pause();
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		game.screenManager.menuScreen.menuMusic.stop();
 		
 		game.screenManager.playScreen = new PlayScreen(game, game.screenManager.newCharacterScreen.charName,
@@ -166,7 +170,6 @@ public class InitializerScreen implements Screen, ControllerListener {
 		stage.draw();
 
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			game.loadingMusic.pause();
 			game.screenManager.menuScreen.menuMusic.stop();
 			game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName,
 					game.screenManager.newCharacterScreen.maleSelected));
@@ -176,14 +179,26 @@ public class InitializerScreen implements Screen, ControllerListener {
 	}
 
 	private void mouseMoved() {
-		if (continueButton.isOver())
+		if (continueButton.isOver()){
+			if(buttonSelected != continueButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = continueButton;
-		else if (returnButton.isOver())
+		}
+		else if (returnButton.isOver()){
+			if(buttonSelected != returnButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = returnButton;
-		else if (defaultAiButton.isOver())
+		}
+		else if (defaultAiButton.isOver()){
+			if(buttonSelected != defaultAiButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = defaultAiButton;
-		else if (chooseAiButton.isOver())
+		}
+		else if (chooseAiButton.isOver()){
+			if(buttonSelected != chooseAiButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = chooseAiButton;
+		}
 	}
 
 	@Override
@@ -235,8 +250,10 @@ public class InitializerScreen implements Screen, ControllerListener {
 				game.screenManager.swapScreen(State.NEWGAME);
 			else if (buttonSelected == continueButton)
 				clickContinueButton();
-		} else if (buttonCode == 1)
+		} else if (buttonCode == 1){
+			game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 			game.screenManager.swapScreen(State.NEWGAME);
+		}
 		return false;
 	}
 
@@ -248,6 +265,7 @@ public class InitializerScreen implements Screen, ControllerListener {
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		if (value == PovDirection.north) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (buttonSelected == defaultAiButton)
 				buttonSelected = returnButton;
@@ -262,6 +280,7 @@ public class InitializerScreen implements Screen, ControllerListener {
 				buttonSelected = defaultAiButton;
 
 		} else if (value == PovDirection.south) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (buttonSelected == defaultAiButton) {
 				if (!continueButton.isVisible())

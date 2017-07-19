@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
+import world.GameConfig;
 
 public class MenuScreen implements Screen, ControllerListener {
 	GameSlagyom game;
@@ -115,6 +116,7 @@ public class MenuScreen implements Screen, ControllerListener {
 		exitButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				Gdx.app.exit();
 			}
 		});
@@ -131,31 +133,32 @@ public class MenuScreen implements Screen, ControllerListener {
 		mainTable.add(exitButton).pad(5);
 
 		Image title = new Image(titleBackground);
-		title.setPosition(0, 150); //310
+		title.setPosition(0, 150); // 310
 
 		// Add table to stage
 		stage.addActor(mainTable);
-		
+
 		stage.addActor(title);
 		title.addAction(Actions.alpha(0f));
-//		title.addAction(Actions.fadeIn(2f));
+		// title.addAction(Actions.fadeIn(2f));
 		title.addAction(Actions.sequence(Actions.fadeIn(1.5f), (Actions.moveTo(0, 310, 1f))));
-//		title.addAction(Actions.moveTo(0, 310, 2f));
+		// title.addAction(Actions.moveTo(0, 310, 2f));
 		mainTable.addAction(Actions.delay(2f, Actions.fadeIn(1.5f)));
 		mainTable.addAction(Actions.alpha(0f));
-//		stage.addAction(Actions.alpha(0f, 0f));
-//		stage.addAction(Actions.fadeIn(2f));
-//		mainTable.addAction(Actions.fadeIn(2f));
+		// stage.addAction(Actions.alpha(0f, 0f));
+		// stage.addAction(Actions.fadeIn(2f));
+		// mainTable.addAction(Actions.fadeIn(2f));
 
-		
 		buttonSelected = playButton;
 	}
 
 	protected void clickOptionButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		game.screenManager.swapScreen(gameManager.ScreenManager.State.OPTIONMENU);
 	}
 
 	protected void clickMultiplayerButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		game.screenManager.swapScreen(gameManager.ScreenManager.State.MULTIPLAYERMENU);
 
 	}
@@ -188,6 +191,7 @@ public class MenuScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickCheckContinueGame() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (!nameLoad.getText().equals(""))
 			game.loadGame(nameLoad.getText());
 	}
@@ -197,6 +201,7 @@ public class MenuScreen implements Screen, ControllerListener {
 	}
 
 	public void clickPlayButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		game.screenManager.swapScreen(gameManager.ScreenManager.State.NEWGAME);
 	}
 
@@ -211,7 +216,6 @@ public class MenuScreen implements Screen, ControllerListener {
 		game.batch.begin();
 		backgroundSprite.draw(game.batch);
 
-//		game.batch.draw(titleBackground, 0, 310);
 		game.batch.end();
 
 		stage.act(delta);
@@ -223,18 +227,31 @@ public class MenuScreen implements Screen, ControllerListener {
 	}
 
 	private void mouseMoved() {
-		if (playButton.isOver())
+		if (playButton.isOver()) {
+			if (buttonSelected != playButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = playButton;
-		else if (continueButton.isOver())
+		} else if (continueButton.isOver()) {
+			if (buttonSelected != continueButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = continueButton;
-		else if (multiplayerButton.isOver())
+		} else if (multiplayerButton.isOver()) {
+			if (buttonSelected != multiplayerButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = multiplayerButton;
-		else if (optionsButton.isOver())
+		} else if (optionsButton.isOver()) {
+			if (buttonSelected != optionsButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = optionsButton;
-		else if (exitButton.isOver())
+		} else if (exitButton.isOver()) {
+			if (buttonSelected != exitButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = exitButton;
-		else if (checkContinueGame.isOver())
+		} else if (checkContinueGame.isOver()) {
+			if (buttonSelected != checkContinueGame)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = checkContinueGame;
+		}
 	}
 
 	@Override
@@ -296,8 +313,10 @@ public class MenuScreen implements Screen, ControllerListener {
 				clickMultiplayerButton();
 			else if (buttonSelected == optionsButton)
 				clickOptionButton();
-			else if (buttonSelected == exitButton)
+			else if (buttonSelected == exitButton){
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				Gdx.app.exit();
+			}
 		}
 		return false;
 	}
@@ -312,6 +331,7 @@ public class MenuScreen implements Screen, ControllerListener {
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		// TODO Auto-generated method stub
 		if (value == PovDirection.north) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (buttonSelected == playButton)
 				buttonSelected = exitButton;
@@ -330,6 +350,7 @@ public class MenuScreen implements Screen, ControllerListener {
 				buttonSelected = optionsButton;
 			return true;
 		} else if (value == PovDirection.south) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (buttonSelected == playButton) {
 				if (continueButton.isVisible())

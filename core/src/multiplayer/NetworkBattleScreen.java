@@ -14,6 +14,7 @@ import character.Arrow;
 import character.Bomb;
 import character.DynamicObjects;
 import character.Weapon;
+import character.Weapon.Type;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
@@ -79,8 +80,8 @@ public class NetworkBattleScreen extends BattleScreen {
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
 			if (searching.lanciata == true) {
-				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching), searching.getMainX(),
-						searching.getMainY(), searching.getWidth() + 10, searching.getHeight() + 10);
+				gameslagyom.batch.draw(gameslagyom.loadingImage.bombImage, searching.getMainX(), searching.getMainY(),
+						searching.getWidth() + 20, searching.getHeight() + 20);
 			}
 		}
 		Iterator<Bomb> bombIterator1 = null;
@@ -92,8 +93,8 @@ public class NetworkBattleScreen extends BattleScreen {
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
 			if (searching1.lanciata == true) {
-				gameslagyom.batch.draw(gameslagyom.loadingImage.getTileImage(searching1), searching1.getMainX(),
-						searching1.getMainY(), searching1.getWidth() + 10, searching1.getHeight() + 10);
+				gameslagyom.batch.draw(gameslagyom.loadingImage.bombImage, searching1.getMainX(), searching1.getMainY(),
+						searching1.getWidth() + 20, searching1.getHeight() + 20);
 			}
 		}
 
@@ -330,6 +331,11 @@ public class NetworkBattleScreen extends BattleScreen {
 			}
 			if (Gdx.input.isKeyJustPressed(Keys.A) || (buttonPressed && buttonCodePressed == 0)) {
 				buttonPressed = false;
+				if (battle.character.primary_weapon.getType() == Type.Sword)
+					gameslagyom.loadingMusic.swordSound.play();
+				else if (battle.character.primary_weapon.getType() == Type.Bow) {
+					gameslagyom.loadingMusic.arrowSound.play();
+				}
 				if (battle.character.left) {
 					battle.character.fightLeft(dt);
 					if (battle.enemy instanceof NetworkCharacterBattle) {

@@ -31,6 +31,7 @@ import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
 import world.Game;
+import world.GameConfig;
 
 public class BagScreen implements Screen, ControllerListener {
 	private enum Pocket {
@@ -351,6 +352,7 @@ public class BagScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickSecondaryWeapon() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.spear);
 		if (!GameSlagyom.modalityMultiplayer)
 			weaponSelected = new Weapon(Game.world.player.bag.secondary_weapon.getLevel(),
@@ -361,6 +363,7 @@ public class BagScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickPrimaryWeapon() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.spear);
 		if (!GameSlagyom.modalityMultiplayer)
 			weaponSelected = new Weapon(Game.world.player.primary_weapon.getLevel(),
@@ -371,16 +374,19 @@ public class BagScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickParchmentFirst() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.parchment);
 		itemSelected = new Item(Element.PARCHMENT, Level.FIRST);
 	}
 
 	protected void clickParchmentSecond() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.parchment);
 		itemSelected = new Item(Element.PARCHMENT, Level.SECOND);
 	}
 
 	protected void clickLeftArrow() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		hideInfo();
 		if (currentPocket == Pocket.POTIONS) {
 			currentPocket = Pocket.BOMBS;
@@ -398,6 +404,7 @@ public class BagScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickRightArrow() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		hideInfo();
 		if (currentPocket == Pocket.POTIONS) {
 			currentPocket = Pocket.WEAPONS;
@@ -415,42 +422,50 @@ public class BagScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickBombFirst() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb);
 		weaponSelected = new Weapon(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
 	}
 
 	protected void clickBombSecond() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb);
 		weaponSelected = new Weapon(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
 	}
 
 	protected void clickBombThird() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb);
 		weaponSelected = new Weapon(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
 	}
 
 	protected void clickPotionFirst() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bluePotion);
 		itemSelected = new Item(Element.POTION, Level.FIRST);
 	}
 
 	protected void clickPotionSecond() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bluePotion);
 		itemSelected = new Item(Element.POTION, Level.SECOND);
 	}
 
 	protected void clickPotionThird() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bluePotion);
 		itemSelected = new Item(Element.POTION, Level.THIRD);
 	}
 
 	protected void clickExitButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.emptyBagIcon);
 		hideInfo();
 	}
 
 	@SuppressWarnings("static-access")
 	protected void clickDeleteButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (potionsTable.isVisible()) {
 			if (!game.modalityMultiplayer)
 				Game.world.player.bag.removeItem(itemSelected.getElement(), itemSelected.getLevel());
@@ -480,7 +495,7 @@ public class BagScreen implements Screen, ControllerListener {
 
 	@SuppressWarnings("static-access")
 	protected void useButtonClicked() {
-		game.loadingMusic.selectionSound.play();
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (game.screenManager.getPreviousState() == State.BATTLE)
 			if (potionsTable.isVisible()) {
 				if (!game.modalityMultiplayer)
@@ -566,8 +581,8 @@ public class BagScreen implements Screen, ControllerListener {
 	@Override
 	public void render(float delta) {
 
-		if (Gdx.input.justTouched())
-			game.loadingMusic.selectionSound.play();
+//		if (Gdx.input.justTouched())
+//			game.loadingMusic.selectionSound.play();
 		buttonSelected.getLabel().setFontScale(1.0f);
 		optionButtonSelected.getLabel().setFontScale(1.0f);
 		mouseMoved();
@@ -887,13 +902,11 @@ public class BagScreen implements Screen, ControllerListener {
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
 		if (buttonCode == 1) {
-			game.loadingMusic.selectionSound.play();
 			if (optionsTable.isVisible())
 				clickExitButton();
 			else
 				game.screenManager.swapScreen(State.PAUSE);
 		} else if (buttonCode == 0) {
-			game.loadingMusic.selectionSound.play();
 			if (!optionsTable.isVisible()) {
 				if (potionsTable.isVisible()) {
 					if (buttonSelected == potions[0])
@@ -946,6 +959,7 @@ public class BagScreen implements Screen, ControllerListener {
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		if (value == PovDirection.north) {
 			buttonSelected.getLabel().setFontScale(1.0f);
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			if (!optionsTable.isVisible()) {
 				if (potionsTable.isVisible()) {
 					if (buttonSelected == potions[0] && potions[2].isVisible())
@@ -994,6 +1008,7 @@ public class BagScreen implements Screen, ControllerListener {
 					optionButtonSelected = delete;
 			}
 		} else if (value == PovDirection.south) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (!optionsTable.isVisible()) {
 				if (potionsTable.isVisible()) {

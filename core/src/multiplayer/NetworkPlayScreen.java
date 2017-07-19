@@ -155,7 +155,6 @@ public class NetworkPlayScreen extends PlayScreen {
 			} else if (Gdx.input.isKeyPressed(Keys.DOWN) || (directionGamePad == PovDirection.south && movesGamePad))
 				client.movesDown(dt);
 			else if (Gdx.input.isKeyJustPressed(Keys.ESCAPE) || (buttonPressed && buttonCodePressed == 7)) {
-				gameSlagyom.loadingMusic.pause();
 				buttonPressed = false;
 				gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.PAUSE);
 			}

@@ -103,10 +103,12 @@ public class OptionScreen implements Screen, ControllerListener {
 		if (!activeMusic) {
 			GameConfig.musicVolume = 0;
 			GameConfig.soundVolume = 0;
+			GameConfig.battleMusic = 0;
 			musicButton.setText("Music OFF");
 		} else {
 			GameConfig.musicVolume = 1.0f;
-			GameConfig.soundVolume = 1.2f;
+			GameConfig.soundVolume = 0.7f;
+			GameConfig.battleMusic = 0.07f;
 			musicButton.setText("Music ON");
 		}
 	}

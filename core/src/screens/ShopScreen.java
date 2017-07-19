@@ -35,6 +35,7 @@ import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
 import world.Game;
+import world.GameConfig;
 
 public class ShopScreen implements Screen, ControllerListener {
 	private enum Category {
@@ -469,42 +470,49 @@ public class ShopScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickBombThird() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 		setBuyingTable();
 		weaponSelected = new Bomb(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
 	}
 
 	protected void clickBombSecond() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 		setBuyingTable();
 		weaponSelected = new Bomb(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
 	}
 
 	protected void clickBombFirst() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 		weaponSelected = new Bomb(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
 		setBuyingTable();
 	}
 
 	protected void clickPotionThird() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.greenPotion, LoadingImage.potionDescription);
 		setBuyingTable();
 		itemSelected = new Item(Element.POTION, Level.THIRD);
 	}
 
 	protected void clickPotionSecond() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.redPotion, LoadingImage.potionDescription);
 		setBuyingTable();
 		itemSelected = new Item(Element.POTION, Level.SECOND);
 	}
 
 	protected void clickPotionFirst() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bluePotion, LoadingImage.potionDescription);
 		itemSelected = new Item(Element.POTION, Level.FIRST);
 		setBuyingTable();
 	}
 
 	protected void clickLeftArrow() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (currentCategory == Category.POTIONS) {
 			currentCategory = Category.BOMBS;
 			buttonSelected = bombs[0];
@@ -522,6 +530,7 @@ public class ShopScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickRightArrow() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (currentCategory == Category.POTIONS) {
 			currentCategory = Category.WEAPONS;
 			buttonSelected = weapons[0];
@@ -539,6 +548,7 @@ public class ShopScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickReturnButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		hideInfo();
 		LoadingImage.emptyShopIcon.setVisible(true);
 		buyingTable.setVisible(false);
@@ -559,6 +569,7 @@ public class ShopScreen implements Screen, ControllerListener {
 	@SuppressWarnings("static-access")
 	protected void clickBuyButton() {
 		boolean buy = false;
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if ((potionsTable.isVisible() || parchmentsTable.isVisible()) && !level2n.getText().equals("")) {
 			if (!game.modalityMultiplayer) {
 				int tmp = (int) (Game.world.player.coins - (Integer.parseInt(level2n.getText())) * itemSelected.price);
@@ -664,8 +675,6 @@ public class ShopScreen implements Screen, ControllerListener {
 	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
-		if (Gdx.input.justTouched())
-			game.loadingMusic.selectionSound.play();
 		buttonSelected.getLabel().setFontScale(1.0f);
 		if (buttonLevelSelected != null)
 			buttonLevelSelected.getLabel().setFontScale(1.0f);
@@ -752,42 +761,81 @@ public class ShopScreen implements Screen, ControllerListener {
 	private void mouseMoved() {
 		if (!buyingTable.isVisible()) {
 			if (potionsTable.isVisible()) {
-				if (potions[0].isOver())
+				if (potions[0].isOver()) {
+					if (buttonSelected != potions[0])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = potions[0];
-				else if (potions[1].isOver())
+				} else if (potions[1].isOver()) {
+					if (buttonSelected != potions[1])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = potions[1];
-				else if (potions[2].isOver())
+				} else if (potions[2].isOver()) {
+					if (buttonSelected != potions[2])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = potions[2];
+				}
 			} else if (weaponsTable.isVisible()) {
-				if (weapons[0].isOver())
+				if (weapons[0].isOver()) {
+					if (buttonSelected != weapons[0])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = weapons[0];
-				else if (weapons[1].isOver())
+				} else if (weapons[1].isOver()) {
+					if (buttonSelected != weapons[1])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = weapons[1];
+				}
 			} else if (bombsTable.isVisible()) {
-				if (bombs[0].isOver())
+				if (bombs[0].isOver()) {
+					if (buttonSelected != bombs[0])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = bombs[0];
-				else if (bombs[1].isOver())
+				} else if (bombs[1].isOver()) {
+					if (buttonSelected != bombs[1])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = bombs[1];
-				else if (bombs[2].isOver())
+				} else if (bombs[2].isOver()) {
+					if (buttonSelected != bombs[2])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = bombs[2];
+				}
 			} else if (parchmentsTable.isVisible()) {
-				if (parchments[0].isOver())
+				if (parchments[0].isOver()) {
+					if (buttonSelected != parchments[0])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = parchments[0];
-				else if (parchments[1].isOver())
+				} else if (parchments[1].isOver()) {
+					if (buttonSelected != parchments[1])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = parchments[1];
+				}
 			}
 		}
 		if (buyingTable.isVisible()) {
-			if (lev1.isOver())
+			if (lev1.isOver()){
+				if(buttonLevelSelected != lev1)
+					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				buttonLevelSelected = lev1;
-			else if (lev2.isOver())
+			}
+			else if (lev2.isOver()){
+				if(buttonLevelSelected != lev2)
+					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				buttonLevelSelected = lev2;
-			else if (lev3.isOver())
+			}
+			else if (lev3.isOver()){
+				if(buttonLevelSelected != lev3)
+					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				buttonLevelSelected = lev3;
-			if (buyButton.isOver())
+			}
+			if (buyButton.isOver()){
+				if(optionButtonSelected != buyButton)
+					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				optionButtonSelected = buyButton;
-			else if (returnButton.isOver())
+			}
+			else if (returnButton.isOver()){
+				if(optionButtonSelected != returnButton)
+					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				optionButtonSelected = returnButton;
+			}
 		}
 	}
 
@@ -798,12 +846,9 @@ public class ShopScreen implements Screen, ControllerListener {
 	}
 
 	public void setBuyingTableWeapon() {
-
 		buyingTable.add(lev1);
 		buyingTable.add(lev2);
 		buyingTable.add(lev3);
-		// buyingTable.add(buyButton);
-		// buyingTable.add(returnButton);
 	}
 
 	public void setBuyingTable() {
@@ -860,13 +905,14 @@ public class ShopScreen implements Screen, ControllerListener {
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
 		if (buttonCode == 1) {
-			game.loadingMusic.selectionSound.play();
+			
 			if (buyingTable.isVisible())
 				clickReturnButton();
-			else
+			else{
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(State.PLAYING);
+			}
 		} else if (buttonCode == 0) {
-			game.loadingMusic.selectionSound.play();
 			if (!buyingTable.isVisible()) {
 				if (potionsTable.isVisible()) {
 					if (buttonSelected == potions[0])
@@ -942,6 +988,7 @@ public class ShopScreen implements Screen, ControllerListener {
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		if (value == PovDirection.north) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (!buyingTable.isVisible()) {
 				if (potionsTable.isVisible()) {
@@ -992,6 +1039,7 @@ public class ShopScreen implements Screen, ControllerListener {
 					buttonLevelSelected = lev2;
 			}
 		} else if (value == PovDirection.south) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (!buyingTable.isVisible()) {
 				if (potionsTable.isVisible()) {

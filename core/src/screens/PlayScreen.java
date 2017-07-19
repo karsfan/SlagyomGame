@@ -236,9 +236,9 @@ public class PlayScreen implements Screen, ControllerListener {
 	public void update(float dt) {
 		moveCharacter(dt);
 		if (game.world.player.collideCoin)
-			gameSlagyom.loadingMusic.coinSound.play();
+			gameSlagyom.loadingMusic.coinSound.play(GameConfig.soundVolume);
 		if (game.world.player.collideItem)
-			gameSlagyom.loadingMusic.itemSound.play();
+			gameSlagyom.loadingMusic.itemSound.play(GameConfig.soundVolume);
 		if ((game.world.player.getX() - gamePort.getWorldWidth() / 2 > 0
 				&& game.world.player.getX() + gamePort.getWorldWidth() / 2 < GameConfig.WIDTH))
 			gamecam.position.x = game.world.player.getX();

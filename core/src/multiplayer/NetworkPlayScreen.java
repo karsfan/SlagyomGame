@@ -169,9 +169,9 @@ public class NetworkPlayScreen extends PlayScreen {
 		}
 		if (client.sound) {
 			if (client.networkWorld.player.itemPicked.getElement() == Element.COIN)
-				gameSlagyom.loadingMusic.coinSound.play();
+				gameSlagyom.loadingMusic.coinSound.play(GameConfig.soundVolume);
 			else
-				gameSlagyom.loadingMusic.itemSound.play();
+				gameSlagyom.loadingMusic.itemSound.play(GameConfig.soundVolume);
 			client.sound = false;
 		}
 	}

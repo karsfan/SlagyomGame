@@ -32,6 +32,7 @@ import hud.BattleHud;
 import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import world.GameConfig;
 
 public class BattleScreen implements Screen, ControllerListener {
 
@@ -99,7 +100,7 @@ public class BattleScreen implements Screen, ControllerListener {
 		gameslagyom.batch.draw(gameslagyom.loadingImage.getBattleFrame(player), player.getX(), player.getY(),
 				player.getWidth(), player.getHeight());
 		if (battle.character.soundBomb) {
-			gameslagyom.loadingMusic.bombSound.play();
+			gameslagyom.loadingMusic.bombSound.play(GameConfig.soundVolume);
 			battle.character.soundBomb = false;
 		}
 		Iterator<Bomb> bombIterator = player.bag.bombe.iterator();
@@ -224,17 +225,17 @@ public class BattleScreen implements Screen, ControllerListener {
 			if ((Gdx.input.isKeyJustPressed(Keys.NUM_1) || (buttonPressed && buttonCodePressed == 1))
 					&& battle.character.bag.getNumberOf(Element.POTION, Level.FIRST) > 0) {
 				battle.character.useItem(new Item(Element.POTION, Level.FIRST));
-				gameslagyom.loadingMusic.upgradeSound.play();
+				gameslagyom.loadingMusic.upgradeSound.play(GameConfig.soundVolume);
 				buttonPressed = false;
 			} else if ((Gdx.input.isKeyJustPressed(Keys.NUM_2) || (buttonPressed && buttonCodePressed == 2))
 					&& battle.character.bag.getNumberOf(Element.POTION, Level.SECOND) > 0) {
 				battle.character.useItem(new Item(Element.POTION, Level.SECOND));
 				buttonPressed = false;
-				gameslagyom.loadingMusic.upgradeSound.play();
+				gameslagyom.loadingMusic.upgradeSound.play(GameConfig.soundVolume);
 			} else if ((Gdx.input.isKeyJustPressed(Keys.NUM_3) || (buttonPressed && buttonCodePressed == 3))
 					&& battle.character.bag.getNumberOf(Element.POTION, Level.THIRD) > 0) {
 				battle.character.useItem(new Item(Element.POTION, Level.THIRD));
-				gameslagyom.loadingMusic.upgradeSound.play();
+				gameslagyom.loadingMusic.upgradeSound.play(GameConfig.soundVolume);
 				buttonPressed = false;
 			}
 		}
@@ -270,9 +271,9 @@ public class BattleScreen implements Screen, ControllerListener {
 			if (Gdx.input.isKeyJustPressed(Keys.A) || (buttonPressed && buttonCodePressed == 0)) {
 				buttonPressed = false;
 				if (battle.character.primary_weapon.getType() == Type.Sword)
-					gameslagyom.loadingMusic.swordSound.play();
+					gameslagyom.loadingMusic.swordSound.play(GameConfig.soundVolume);
 				else if (battle.character.primary_weapon.getType() == Type.Bow) {
-					gameslagyom.loadingMusic.arrowSound.play();
+					gameslagyom.loadingMusic.arrowSound.play(GameConfig.soundVolume);
 				}
 				if (battle.character.left)
 					battle.character.fightLeft(dt);

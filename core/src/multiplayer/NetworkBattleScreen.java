@@ -23,6 +23,7 @@ import screens.MenuScreen;
 import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import world.GameConfig;
 
 public class NetworkBattleScreen extends BattleScreen {
 	public Client client;
@@ -49,7 +50,7 @@ public class NetworkBattleScreen extends BattleScreen {
 			gameslagyom.screenManager.swapScreen(State.MENU);
 		if (client.soundPotionBattle) {
 			client.soundPotionBattle = false;
-			gameslagyom.loadingMusic.upgradeSound.play();
+			gameslagyom.loadingMusic.upgradeSound.play(GameConfig.soundVolume);
 		}
 	}
 
@@ -225,7 +226,7 @@ public class NetworkBattleScreen extends BattleScreen {
 				item = new Item(Element.POTION, Level.FIRST);
 				battle.character.useItem(item);
 				battle.character.bag.removeItem(Element.POTION, Level.FIRST);
-				gameslagyom.loadingMusic.upgradeSound.play();
+				gameslagyom.loadingMusic.upgradeSound.play(GameConfig.soundVolume);
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					client.writer.println(6 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
 							+ Element.POTION.toString() + " " + Level.FIRST.toString() + " " + 0 + ";"
@@ -239,7 +240,7 @@ public class NetworkBattleScreen extends BattleScreen {
 				item = new Item(Element.POTION, Level.SECOND);
 				battle.character.useItem(item);
 				battle.character.bag.removeItem(Element.POTION, Level.SECOND);
-				gameslagyom.loadingMusic.upgradeSound.play();
+				gameslagyom.loadingMusic.upgradeSound.play(GameConfig.soundVolume);
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					client.writer.println(6 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
 							+ Element.POTION.toString() + " " + Level.SECOND.toString() + " " + 0 + ";"
@@ -253,7 +254,7 @@ public class NetworkBattleScreen extends BattleScreen {
 				item = new Item(Element.POTION, Level.THIRD);
 				battle.character.useItem(item);
 				battle.character.bag.removeItem(Element.POTION, Level.THIRD);
-				gameslagyom.loadingMusic.upgradeSound.play();
+				gameslagyom.loadingMusic.upgradeSound.play(GameConfig.soundVolume);
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					client.writer.println(6 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
 							+ Element.POTION.toString() + " " + Level.THIRD.toString() + " " + 0 + ";"
@@ -332,9 +333,9 @@ public class NetworkBattleScreen extends BattleScreen {
 			if (Gdx.input.isKeyJustPressed(Keys.A) || (buttonPressed && buttonCodePressed == 0)) {
 				buttonPressed = false;
 				if (battle.character.primary_weapon.getType() == Type.Sword)
-					gameslagyom.loadingMusic.swordSound.play();
+					gameslagyom.loadingMusic.swordSound.play(GameConfig.soundVolume);
 				else if (battle.character.primary_weapon.getType() == Type.Bow) {
-					gameslagyom.loadingMusic.arrowSound.play();
+					gameslagyom.loadingMusic.arrowSound.play(GameConfig.soundVolume);
 				}
 				if (battle.character.left) {
 					battle.character.fightLeft(dt);

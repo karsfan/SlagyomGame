@@ -649,37 +649,76 @@ public class BagScreen implements Screen, ControllerListener {
 	private void mouseMoved() {
 		if (!optionsTable.isVisible()) {
 			if (potionsTable.isVisible()) {
-				if (potions[0].isOver() && potions[0].isVisible())
+				if (potions[0].isOver() && potions[0].isVisible()){
+					if(buttonSelected != potions[0])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = potions[0];
-				else if (potions[1].isOver() && potions[1].isVisible())
+				}
+				else if (potions[1].isOver() && potions[1].isVisible()){
+					if(buttonSelected != potions[1])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = potions[1];
-				else if (potions[2].isOver() && potions[2].isVisible())
+				}
+				else if (potions[2].isOver() && potions[2].isVisible()){
+					if(buttonSelected != potions[2])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = potions[2];
+				}
 			} else if (weaponsTable.isVisible()) {
-				if (weapons[0].isOver() && weapons[0].isVisible())
+				if (weapons[0].isOver() && weapons[0].isVisible()){
+					if(buttonSelected != weapons[0])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = weapons[0];
-				else if (weapons[1].isOver() && weapons[1].isVisible())
+				}
+				else if (weapons[1].isOver() && weapons[1].isVisible()){
+					if(buttonSelected != weapons[1])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = weapons[1];
+				}
 			} else if (bombsTable.isVisible()) {
-				if (bombs[0].isOver() && bombs[0].isVisible())
+				if (bombs[0].isOver() && bombs[0].isVisible()){
+					if(buttonSelected != bombs[0])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = bombs[0];
-				else if (bombs[1].isOver() && bombs[1].isVisible())
+				}
+				else if (bombs[1].isOver() && bombs[1].isVisible()){
+					if(buttonSelected != bombs[1])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);					
 					buttonSelected = bombs[1];
-				else if (bombs[2].isOver() && bombs[2].isVisible())
+				}
+				else if (bombs[2].isOver() && bombs[2].isVisible()){
+					if(buttonSelected != bombs[2])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = bombs[2];
+				}
 			} else if (parchmentsTable.isVisible()) {
-				if (parchments[0].isOver() && parchments[0].isVisible())
+				if (parchments[0].isOver() && parchments[0].isVisible()){
+					if(buttonSelected != parchments[0])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = parchments[0];
-				else if (parchments[1].isOver() && parchments[1].isVisible())
+				}
+				else if (parchments[1].isOver() && parchments[1].isVisible()){
+					if(buttonSelected != parchments[1])
+						game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 					buttonSelected = parchments[1];
+				}
 			}
 		} else {
-			if (use.isOver())
+			if (use.isOver()){
+				if(optionButtonSelected != use)
+					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				optionButtonSelected = use;
-			else if (delete.isOver())
+			}
+			else if (delete.isOver()){
+				if(optionButtonSelected != delete)
+					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				optionButtonSelected = delete;
-			else if (exit.isOver())
+			}
+			else if (exit.isOver()){
+				if(optionButtonSelected != exit)
+					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				optionButtonSelected = exit;
+			}
 		}
 	}
 
@@ -904,8 +943,10 @@ public class BagScreen implements Screen, ControllerListener {
 		if (buttonCode == 1) {
 			if (optionsTable.isVisible())
 				clickExitButton();
-			else
+			else{
+				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(State.PAUSE);
+			}
 		} else if (buttonCode == 0) {
 			if (!optionsTable.isVisible()) {
 				if (potionsTable.isVisible()) {

@@ -98,6 +98,7 @@ public class OptionScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickMusicButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		activeMusic = !activeMusic;
 		if (!activeMusic) {
 			GameConfig.musicVolume = 0;
@@ -111,6 +112,7 @@ public class OptionScreen implements Screen, ControllerListener {
 	}
 
 	protected void clickFullScreenButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		GameConfig.fullscreen = !GameConfig.fullscreen;
 		if (!GameConfig.fullscreen) {
 			Gdx.graphics.setWindowedMode(854, 480);
@@ -122,15 +124,25 @@ public class OptionScreen implements Screen, ControllerListener {
 	}
 
 	private void mouseMoved() {
-		if (musicButton.isOver())
+		if (musicButton.isOver()){
+			if(buttonSelected != musicButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = musicButton;
-		else if (fullscreenButton.isOver())
+		}
+		else if (fullscreenButton.isOver()){
+			if(buttonSelected != fullscreenButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = fullscreenButton;
-		else if (returnButton.isOver())
+		}
+		else if (returnButton.isOver()){
+			if(buttonSelected != returnButton)
+				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = returnButton;
+		}
 	}
 
 	protected void clickReturnButton() {
+		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		if (game.screenManager.playScreen != null)
 			game.screenManager.swapScreen(gameManager.ScreenManager.State.PLAYING);
 		else
@@ -227,6 +239,7 @@ public class OptionScreen implements Screen, ControllerListener {
 	@Override
 	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
 		if (value == PovDirection.south) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (buttonSelected == musicButton)
 				buttonSelected = fullscreenButton;
@@ -235,6 +248,7 @@ public class OptionScreen implements Screen, ControllerListener {
 			else if (buttonSelected == returnButton)
 				buttonSelected = musicButton;
 		} else if (value == PovDirection.north) {
+			game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected.getLabel().setFontScale(1.0f);
 			if (buttonSelected == musicButton)
 				buttonSelected = returnButton;

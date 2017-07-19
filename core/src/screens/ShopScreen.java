@@ -886,19 +886,14 @@ public class ShopScreen implements Screen, ControllerListener {
 
 	@Override
 	public void connected(Controller controller) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void disconnected(Controller controller) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -981,7 +976,6 @@ public class ShopScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -1001,9 +995,11 @@ public class ShopScreen implements Screen, ControllerListener {
 					buttonLevelSelected = null;
 				} else if (weaponsTable.isVisible()) {
 					if (buttonSelected == weapons[0])
-						buttonSelected = weapons[1];
+						buttonSelected = weapons[2];
 					else if (buttonSelected == weapons[1])
 						buttonSelected = weapons[0];
+					else if(buttonSelected == weapons[2])
+						buttonSelected = weapons[1];
 					buttonLevelSelected = lev1;
 				} else if (bombsTable.isVisible()) {
 					if (buttonSelected == bombs[0])
@@ -1025,7 +1021,6 @@ public class ShopScreen implements Screen, ControllerListener {
 				if (buttonLevelSelected != null)
 					buttonLevelSelected.getLabel().setFontScale(1.0f);
 				if (buttonLevelSelected == null) {
-					System.out.println("alkhkjh");
 					if (optionButtonSelected == buyButton)
 						optionButtonSelected = returnButton;
 					else if (optionButtonSelected == returnButton)
@@ -1054,6 +1049,8 @@ public class ShopScreen implements Screen, ControllerListener {
 					if (buttonSelected == weapons[0])
 						buttonSelected = weapons[1];
 					else if (buttonSelected == weapons[1])
+						buttonSelected = weapons[2];
+					else if(buttonSelected == weapons[2])
 						buttonSelected = weapons[0];
 					buttonLevelSelected = lev1;
 				} else if (bombsTable.isVisible()) {

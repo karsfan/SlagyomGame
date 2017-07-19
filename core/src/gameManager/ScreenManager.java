@@ -52,7 +52,7 @@ public class ScreenManager {
 			setPreviousState(currentState);
 		setCurrentState(newState);
 
-		if (currentState == State.PLAYING || currentState == State.BATTLE )
+		if (currentState == State.PLAYING || currentState == State.BATTLE)
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(gameSlagyom.loadingImage.noCursor, 0, 0));
 		else
 			Gdx.graphics.setCursor(Gdx.graphics.newCursor(gameSlagyom.loadingImage.cursor, 0, 0));
@@ -69,8 +69,8 @@ public class ScreenManager {
 		} else if (currentState == State.PLAYING) {
 			gameSlagyom.loadingMusic.battleMusic.stop();
 			gameSlagyom.loadingMusic.mainMusic.stop();
-			if(GameConfig.soundVolume > 0)
-			gameSlagyom.loadingMusic.backgroundSound.resume();
+			if (GameConfig.soundVolume > 0)
+				gameSlagyom.loadingMusic.backgroundSound.resume();
 			gameSlagyom.setScreen(getPlayScreen());
 			Controllers.clearListeners();
 			Controllers.addListener(playScreen);

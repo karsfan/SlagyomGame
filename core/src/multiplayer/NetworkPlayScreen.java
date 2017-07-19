@@ -79,7 +79,7 @@ public class NetworkPlayScreen extends PlayScreen {
 						hud.textTable.row();
 					if (textIndex % 75 == 0) {
 						hud.textTable.clear();
-						gameSlagyom.loadingMusic.tickSound.play(1.0f);
+						gameSlagyom.loadingMusic.tickSound.play(GameConfig.soundVolume);
 					}
 					drawDialog(String.valueOf(hud.textDialog.charAt(textIndex)));
 					textIndex++;

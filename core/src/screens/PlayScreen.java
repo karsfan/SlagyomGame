@@ -156,7 +156,7 @@ public class PlayScreen implements Screen, ControllerListener {
 					gamecam.position.y - gamePort.getWorldHeight() / 2);
 		}
 
-		if (loadingTimer > 3) {
+		if (loadingTimer > 2.8) {
 			draw();
 			if (loading){
 				gameSlagyom.loadingMusic.backgroundSound.loop(10.0f);

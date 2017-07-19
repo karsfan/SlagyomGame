@@ -145,9 +145,13 @@ public class LoadingImage {
 	public static ImageButton rightArrow;
 	public static ImageButton close;
 	public static ImageButton howMuch;
-
-	// AUDIO & MUSIC
-
+	
+	//BATTLE IMAGE
+	public static ImageButton battleBow;
+	public static ImageButton battleSpear1;
+	public static ImageButton battleSpear2;
+	public static ImageButton battleSpear3;
+	public static ImageButton battleSword;
 	@SuppressWarnings("unchecked")
 	public LoadingImage() {
 		// TILES IMAGES
@@ -226,6 +230,13 @@ public class LoadingImage {
 		howMuch = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/shop/howMuch.png"))));
 		cursor = new Pixmap(Gdx.files.internal("res/cursor.png"));
 		noCursor = new Pixmap(Gdx.files.internal("res/noCursor.png"));
+		
+		// BATTLE IMAGES
+		battleBow = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleBow.png"))));
+		battleSpear1 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSpear1.png"))));
+		battleSpear2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSpear2.png"))));
+		battleSpear3 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSpear3.png"))));
+		battleSword = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSword.png"))));
 
 		// WORLD ANIMATIONS
 		playerAnimation = new Animation[4];

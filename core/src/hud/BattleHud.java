@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import battle.Battle;
+import character.Weapon;
+import character.Weapon.Type;
 import gameManager.GameSlagyom;
 import screens.MenuScreen;
 import staticObjects.Item.Level;
@@ -63,7 +66,8 @@ public class BattleHud {
 		barPlayer = new ProgressBar(0.1f, 300, 0.1f, false, MenuScreen.skin);
 		barEnemy = new ProgressBar(0.1f, 300, 0.1f, false, MenuScreen.skin);
 		playerPower = new ProgressBar(this.battle.character.forza, 150, 0.1f, false, MenuScreen.skin);
-
+		currentWeapon = gameSlagyom.loadingImage.battleSpear1;
+		currentWeaponName = new Label ("SPEAR", MenuScreen.skin);
 		/*
 		 * barPlayer.setBounds(this.viewport.getWorldWidth() / 13,
 		 * this.viewport.getWorldHeight() / 1.1f, healthCharacter, 15);
@@ -97,23 +101,61 @@ public class BattleHud {
 		bluePotion.setPosition(893, 20);
 		greenPotion.setPosition(1022, 20);
 		redPotion.setPosition(1153, 20);
+		currentWeapon.setPosition(1250, 30);
+		currentWeaponName.setPosition(1270, 10);
+		currentWeaponName.setFontScale(0.7f);
 		playerPower.setPosition(200, 40);
-
-		// bluePotion.setFontScale((float) 0.8);
+		
 		potionTable.add(bluePotion);
 		potionTable.add(greenPotion);
 		potionTable.add(redPotion);
-		potionTable.add(playerPower);
+		potionTable.add(currentWeapon);
+		potionTable.add(currentWeaponName);
 		stage.addActor(table);
 		stage.addActor(potionTable);
 	}
-
+	
+	ImageButton currentWeapon; 
+	Label currentWeaponName;
 	public void update(float dt) {
 		healthCharacter = (int) this.battle.character.getHealth();
 		barPlayer.setValue(healthCharacter.intValue());
 		healthEnemy = (int) this.battle.enemy.getHealth();
 		barEnemy.setValue(healthEnemy.intValue());
-		playerPower.setValue(this.battle.character.forza);
+		currentWeapon.setPosition(1250, 30);
+		
+		if (battle.character.lanciaBomba) {
+			potionTable.addActor(playerPower);
+			playerPower.setValue(this.battle.character.forza);
+		}
+		else
+			potionTable.removeActor(playerPower);
+		
+		potionTable.removeActor(currentWeapon);
+		if (battle.character.primary_weapon.getType() == Type.Spear) {
+			if (battle.character.primary_weapon.getLevel() == Weapon.Level.lev1) {
+				currentWeapon = gameSlagyom.loadingImage.battleSpear1;
+				currentWeaponName.setText("SPEAR");
+			}
+			else if (battle.character.primary_weapon.getLevel() == Weapon.Level.lev2) {
+				currentWeapon = gameSlagyom.loadingImage.battleSpear2;
+				currentWeaponName.setText("SPEAR");
+			}
+			else {
+				currentWeapon = gameSlagyom.loadingImage.battleSpear3;
+				currentWeaponName.setText("SPEAR");
+			}
+		}
+		
+		else if (battle.character.primary_weapon.getType() == Type.Sword) {
+			currentWeapon = gameSlagyom.loadingImage.battleSword;
+			currentWeaponName.setText("SWORD");
+		}
+		else {
+			currentWeapon = gameSlagyom.loadingImage.battleBow;
+			currentWeaponName.setText("BOW");
+		}
+		potionTable.addActor(currentWeapon);
 
 		bluePotion.setText("x" + String.valueOf(this.battle.character.bag.getNumberOf(Element.POTION, Level.FIRST)));
 		greenPotion.setText("x" + String.valueOf(this.battle.character.bag.getNumberOf(Element.POTION, Level.SECOND)));

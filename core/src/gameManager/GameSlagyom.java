@@ -146,10 +146,14 @@ public class GameSlagyom extends Game {
 			}
 			world.Game.world.player.primary_weapon = new Weapon(prefs.getString("PrimaryWeapon"),
 					prefs.getString("PrimaryWeaponLevel"));
-			if (prefs.getString("SecondaryWeapon") != null){
+			if (!prefs.getString("SecondaryWeapon").equals("")){
 				world.Game.world.player.bag.secondary_weapon = new Weapon(prefs.getString("SecondaryWeapon"),
 						prefs.getString("SecondaryWeaponLevel"));
 			}
+			else {
+				world.Game.world.player.bag.secondary_weapon = null;
+			}
+
 			
 			int numItem = prefs.getInteger("NumItem");
 			numItem--;

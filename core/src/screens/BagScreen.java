@@ -340,6 +340,8 @@ public class BagScreen implements Screen, ControllerListener {
 
 		// END PARCHMENTS TABLE
 		optionsTable.setVisible(false);
+		LoadingImage.leftArrow.setVisible(true);
+		LoadingImage.rightArrow.setVisible(true);	
 		stage.addActor(LoadingImage.rightArrow);
 		stage.addActor(LoadingImage.leftArrow);
 		stage.addActor(potionsTable);

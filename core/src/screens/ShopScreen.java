@@ -359,6 +359,8 @@ public class ShopScreen implements Screen, ControllerListener {
 		stage.addActor(parchmentsTable);
 		stage.addActor(optionsTable);
 		stage.addActor(buyingTable);
+		LoadingImage.leftArrow.setVisible(true);
+		LoadingImage.rightArrow.setVisible(true);
 		stage.addActor(LoadingImage.leftArrow);
 		stage.addActor(LoadingImage.rightArrow);
 		stage.addActor(LoadingImage.close);

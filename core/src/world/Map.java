@@ -2,11 +2,9 @@ package world;
 
 import java.awt.Point;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 import battle.Enemy.Level;
 import staticObjects.EnemyHome;
@@ -67,7 +65,6 @@ public class Map {
 		openFile(path);
 	}
 
-	@SuppressWarnings("resource")
 	public void openFile(String fileName) {
 		BufferedReader br = new BufferedReader(
 				new InputStreamReader(getClass().getClassLoader().getResourceAsStream(fileName)));

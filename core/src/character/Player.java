@@ -30,6 +30,7 @@ public class Player extends DynamicObjects implements ICollidable {
 	public boolean collideCoin = false;
 	public boolean collideItem = false;
 	public String textDialog = "";
+	
 	public Player(String name, boolean male) {
 		super();
 		this.name = name;
@@ -56,7 +57,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		coins = 0;
 
 		velocity = 100;
-
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 		stateTimer = 0;
@@ -116,10 +116,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		potion.picked = true;
 	}
 
-	public void upgradeWeapon(Weapon weapon) {
-		// weapon.upgrade(bag);
-	}
-
 	public void usePotionHealth(Item potion) {
 		switch (potion.getLevel()) {
 		case FIRST:
@@ -148,56 +144,52 @@ public class Player extends DynamicObjects implements ICollidable {
 	}
 
 	public void movesLeft(float dt) {
-
 		if (x > 5) {
 			float velocityX = velocity;
 			x -= (velocityX * dt);
 			if (collide())
 				x += (velocityX * dt);
-
 		}
+		
 		setState(StateDynamicObject.RUNNINGLEFT);
 	}
 
 	public void movesNorthEast(float dt) {
-
 		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
 			y += (velocity * dt);
 			x += (velocity * dt) / 2;
 			if (collide()) {
 				y -= (velocity * dt);
 				x -= (velocity * dt) / 2;
-
 			}
 		}
+		
 		setState(StateDynamicObject.RUNNINGUP);
 	}
 
 	public void movesNorthWest(float dt) {
-
 		if (y < GameConfig.HEIGHT - height - 5 && x > 5) {
 			y += (velocity * dt);
 			x -= (velocity * dt) / 2;
 			if (collide()) {
 				y -= (velocity * dt);
 				x += (velocity * dt) / 2;
-
 			}
 		}
+		
 		setState(StateDynamicObject.RUNNINGUP);
 	}
 
 	public void movesSouthWest(float dt) {
-
 		if (y > 0 - height - 5 && x > 5) {
 			y -= (velocity * dt);
 			x -= (velocity * dt) / 2;
 			if (collide()) {
 				y += (velocity * dt);
 				x += (velocity * dt) / 2;
-
 			}
 		}
+		
 		setState(StateDynamicObject.RUNNINGDOWN);
 	}
 
@@ -209,9 +201,9 @@ public class Player extends DynamicObjects implements ICollidable {
 			if (collide()) {
 				y += (velocity * dt);
 				x -= (velocity * dt) / 2;
-
 			}
 		}
+		
 		setState(StateDynamicObject.RUNNINGDOWN);
 	}
 
@@ -219,12 +211,12 @@ public class Player extends DynamicObjects implements ICollidable {
 
 		if (y < GameConfig.HEIGHT - height - 5) {
 			float velocityY = velocity;
-
 			y += (velocityY * dt);
 			if (collide()) {
 				y -= (velocityY * dt);
 			}
 		}
+		
 		setState(StateDynamicObject.RUNNINGUP);
 	}
 
@@ -239,8 +231,8 @@ public class Player extends DynamicObjects implements ICollidable {
 		setState(StateDynamicObject.RUNNINGDOWN);
 	}
 
-	private void setStateTimer(float f) {
-		stateTimer = f;
+	private void setStateTimer(float dt) {
+		stateTimer = dt;
 	}
 
 	@Override
@@ -369,13 +361,4 @@ public class Player extends DynamicObjects implements ICollidable {
 	public Weapon getWeapon() {
 		return primary_weapon;
 	}
-
-	/*
-	 * public void moves(float dt) { if (getCurrentState() ==
-	 * StateDynamicObject.RUNNINGDOWN) movesDown(dt); else if (getCurrentState()
-	 * == StateDynamicObject.RUNNINGUP) movesUp(dt); else if (getCurrentState()
-	 * == StateDynamicObject.RUNNINGRIGHT) movesRight(dt); else if
-	 * (getCurrentState() == StateDynamicObject.RUNNINGLEFT) movesLeft(dt); }
-	 */
-
 }

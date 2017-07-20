@@ -19,19 +19,19 @@ public class Enemy extends Fighting {
 	};
 
 	public Weapon weapon;
-	public ArrayList<Bomb> bombe = new ArrayList<>();
-	public Pack win_bonus;
+	public ArrayList<Bomb> bombs = new ArrayList<>();
+	public Pack winBonus;
 	public boolean arrowShooted = false;
 	public ArrayList<Weapon> arrowsShooted = new ArrayList<Weapon>();
 
 	public Pack getWin_bonus() {
-		return win_bonus;
+		return winBonus;
 	}
 
 	public Level level;
 
 	public Enemy(Enemy enemy) {
-		win_bonus = enemy.win_bonus;
+		winBonus = enemy.winBonus;
 		x = 700;
 		y = GameConfig.mainY_Battle;
 		weapon = enemy.weapon;
@@ -52,10 +52,10 @@ public class Enemy extends Fighting {
 		doubleJumping = false;
 		velocityY = 0;
 		velocityX = 10;
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
 		if (weapon.getType() == Type.Sword || (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev2)
 				|| (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev3))
 			this.width = 200;
@@ -71,43 +71,43 @@ public class Enemy extends Fighting {
 			name = "Bob";
 			weapon = new Weapon(character.Weapon.Level.lev1);
 			health = 100;
-			win_bonus = new Pack(Level.EASY);
+			winBonus = new Pack(Level.EASY);
 			velocity = 40;
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 			break;
 		case MEDIUM:
 			name = "John";
 			weapon = new Weapon(character.Weapon.Level.lev2);
 			health = 250;
-			win_bonus = new Pack(Level.MEDIUM);
+			winBonus = new Pack(Level.MEDIUM);
 			velocity = 60;
-			bombe.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
 			break;
 		case HARD:
-			name = "Ciccio";
+			name = "Mike";
 			weapon = new Weapon(character.Weapon.Level.lev3);
 			health = 400;
-			win_bonus = new Pack(Level.HARD);
-			bombe.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
-			bombe.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
+			winBonus = new Pack(Level.HARD);
+			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
 			velocity = 80;
 			break;
 		default:
 			break;
 		}
-		win_bonus = new Pack(level);
+		winBonus = new Pack(level);
 		stateTimer = 0;
 		x = 700;
 		y = GameConfig.mainY_Battle;
 
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombe.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
 		if (weapon.getType() == Type.Sword || (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev2)
 				|| (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev3))
 			this.width = 200;
@@ -119,8 +119,8 @@ public class Enemy extends Fighting {
 		return health;
 	}
 
-	private void setStateTimer(float f) {
-		stateTimer = f;
+	private void setStateTimer(float dt) {
+		stateTimer = dt;
 	}
 
 	public void setState(StateDynamicObject state) {
@@ -165,6 +165,7 @@ public class Enemy extends Fighting {
 			fightingTimeCurrent = 0;
 			setState(StateDynamicObject.STANDING);
 		}
+
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {
 			y += velocityY * dt;
@@ -180,14 +181,13 @@ public class Enemy extends Fighting {
 			y = GameConfig.mainY_Battle;
 			velocityY = 0;
 		}
-		Iterator<Bomb> it1 = bombe.iterator();
+		Iterator<Bomb> it1 = bombs.iterator();
 		while (it1.hasNext()) {
 			Bomb ob = (Bomb) it1.next();
-			if (ob.lanciata == true) {
+			if (ob.launched == true) {
 				((Bomb) ob).update(dt);
-				if (ob.morta) {
+				if (ob.dead) {
 					it1.remove();
-					// System.out.println("Bomba enemy eliminata");
 					continue;
 				}
 			}
@@ -243,36 +243,30 @@ public class Enemy extends Fighting {
 	}
 
 	public void lanciaBomb(float dt) {
-		if (left && !bombe.isEmpty()) {
+		if (left && !bombs.isEmpty()) {
 			int velocityy = 200;
+			
 			// calcolo della gittata
 			velocityy = (int) Math.sqrt(((x - Game.world.battle.character.getX()) * GameConfig.gravity)
 					/ ((2 * Math.cos(30 * (Math.PI / 180)) * Math.sin(90 * (Math.PI / 180)))));
-			Iterator<Bomb> it1 = bombe.iterator();
+			Iterator<Bomb> it1 = bombs.iterator();
 			while (it1.hasNext()) {
 				Bomb ob = (Bomb) it1.next();
-				if (!ob.lanciata) {
-					ob.lancia(velocityy, this);
-					ob.id = "Enemy";
-					// System.out.println((2 * velocityy * velocityy *
-					// Math.cos(30 * (Math.PI / 180))
-					// * Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
-					// System.out.println(x -
-					// Game.world.battle.character.getX());
-					// System.out.println("bomba lanciata dal nemico");
+				if (!ob.launched) {
+					ob.launch(velocityy, this);
 					break;
 				}
 			}
-		} else if (right && !bombe.isEmpty()) {
+		} else if (right && !bombs.isEmpty()) {
 			int velocityy = 200;
 			// calcolo della gittata
 			velocityy = (int) Math.sqrt(((Game.world.battle.character.getX() + width / 3 - x) * GameConfig.gravity)
 					/ ((2 * Math.cos(30 * (Math.PI / 180)) * Math.sin(90 * (Math.PI / 180)))));
-			Iterator<Bomb> it1 = bombe.iterator();
+			Iterator<Bomb> it1 = bombs.iterator();
 			while (it1.hasNext()) {
 				Bomb ob = (Bomb) it1.next();
-				if (!ob.lanciata) {
-					ob.lancia(velocityy, this);
+				if (!ob.launched) {
+					ob.launch(velocityy, this);
 					ob.id = "Enemy";
 					// System.out.println("bomba lanciata dal nemico");
 					// System.out.println((2 * velocityy * velocityy *
@@ -459,6 +453,6 @@ public class Enemy extends Fighting {
 	}
 
 	public ArrayList<Bomb> getBombe() {
-		return bombe;
+		return bombs;
 	}
 }

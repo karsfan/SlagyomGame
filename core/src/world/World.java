@@ -39,6 +39,7 @@ public class World {
 
 	private FileReader fileReader;
 	private Scanner input;
+
 	public World(String name, boolean male) {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
@@ -149,14 +150,14 @@ public class World {
 				((Man) ob).update(dt);
 		}
 
-		LinkedList<Item> daEliminare = new LinkedList<Item>();
+		LinkedList<Item> delete = new LinkedList<Item>();
 		Iterator<Item> it2 = getListItems().iterator();
 		while (it2.hasNext()) {
 			Item ob = it2.next();
 			if (ob.isPicked())
-				daEliminare.add(ob);
+				delete.add(ob);
 		}
-		getListItems().removeAll(daEliminare);
+		getListItems().removeAll(delete);
 
 		if (timerItem >= 60) {
 			Item item = new Item();
@@ -179,17 +180,17 @@ public class World {
 	}
 
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
-		boolean creata = false;
+		boolean created = false;
 		Iterator<Enemy> it1 = preEnemyHouse.enemy.iterator();
 		while (it1.hasNext()) {
 			Enemy ob = (Enemy) it1.next();
-			if (!ob.morto) {
-				creata = true;
+			if (!ob.dead) {
+				created = true;
 				battle = new Battle(player, ob);
 				break;
 			}
 		}
-		if (!creata) {
+		if (!created) {
 			player.collideGym = false;
 			player.textDialog = "There aren't enemies in this home";
 		}
@@ -223,17 +224,17 @@ public class World {
 		// deve affronatre in caso non ci sono nemici da affrontare uscirà un
 		// avviso
 		if (enemyHome.getElement() == Element.TEMPLE) {
-			boolean creata = false;
+			boolean created = false;
 			Iterator<Enemy> it1 = enemyHome.enemy.iterator();
 			while (it1.hasNext()) {
 				Enemy ob = (Enemy) it1.next();
-				if (!ob.morto) {
-					creata = true;
+				if (!ob.dead) {
+					created = true;
 					battle = new Battle(player, ob);
 					break;
 				}
 			}
-			if (!creata) {
+			if (!created) {
 				player.collideGym = false;
 				player.textDialog = "There aren't enemies in this home";
 			}
@@ -241,27 +242,26 @@ public class World {
 			// tutti i nemici, se lo sono allora partirà la battaglia con il
 			// boss
 		else if (enemyHome.getElement() == Element.CASTLE) {
-			boolean creata = true;
+			boolean created = true;
 			while (it.hasNext()) {
 				StaticObject ob = (StaticObject) it.next();
 				if (ob instanceof EnemyHome && ob.getElement() == Element.TEMPLE) {
 					Iterator<Enemy> it1 = ((EnemyHome) ob).enemy.iterator();
 					while (it1.hasNext()) {
 						Enemy ob1 = (Enemy) it1.next();
-						if (!ob1.morto) {
-							creata = false;
+						if (!ob1.dead) {
+							created = false;
 							break;
 						}
-						if (!creata)
+						if (!created)
 							break;
 					}
 				}
 			}
-			if (creata) {
-				if (! ((BossHome)enemyHome).getEnemy().morto){
-					battle = new Battle(player, ((BossHome)enemyHome).getEnemy());
-				}
-				else {
+			if (created) {
+				if (!((BossHome) enemyHome).getEnemy().dead) {
+					battle = new Battle(player, ((BossHome) enemyHome).getEnemy());
+				} else {
 					player.collideGym = false;
 					player.textDialog = "You have defeated the village boss, now you expect other challenges";
 					nextLevel();
@@ -269,7 +269,7 @@ public class World {
 
 			} else {
 				player.collideGym = false;
-				PlayScreen.hud.setDialogText("Non ci puoi accedere se prima non hai eliminati tutti i nemici");
+				PlayScreen.hud.setDialogText("You can't enter if you haven't fighted against all the enemies");
 			}
 		}
 	}

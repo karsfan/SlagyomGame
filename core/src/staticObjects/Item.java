@@ -33,7 +33,6 @@ public class Item extends StaticObject {
 			shape = new Rectangle((int) x, (int) y, 15, 15);
 			break;
 		default:
-			System.out.println("Qui");
 			break;
 		}
 
@@ -187,7 +186,7 @@ public class Item extends StaticObject {
 			shape = new Rectangle((int) x, (int) y, 15, 15);
 			break;
 		default:
-			System.out.println("Errore letture Item da File");
+			System.out.println("Error reading from file");
 			break;
 		}
 		picked = false;

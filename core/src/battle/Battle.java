@@ -13,13 +13,13 @@ public class Battle {
 
 	public CharacterBattle character;
 	public Player player;
-	public Fighting enemyOri;
+	public Fighting originalEnemy;
 	public Fighting enemy;
 
 	public Battle(Player player, Enemy enemy) {
 		this.player = player;
 		this.character = new CharacterBattle(player);
-		enemyOri = enemy;
+		originalEnemy = enemy;
 		if (Game.enemy != null) {
 			try {
 				this.enemy = Game.enemy.getConstructor(Enemy.class).newInstance(enemy);
@@ -67,7 +67,7 @@ public class Battle {
 		}
 		if (enemy.health <= 0) {
 			player.health = character.health;
-			enemyOri.morto = true;
+			originalEnemy.dead = true;
 			return true;
 		}
 		if (character.getHealth() <= 0) {

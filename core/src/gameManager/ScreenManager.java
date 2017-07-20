@@ -66,6 +66,7 @@ public class ScreenManager {
 			gameSlagyom.loadingMusic.battleMusic.stop();
 			Controllers.clearListeners();
 			Controllers.addListener(menuScreen);
+			
 		} else if (currentState == State.PLAYING) {
 			gameSlagyom.loadingMusic.battleMusic.stop();
 			gameSlagyom.loadingMusic.mainMusic.stop();
@@ -76,22 +77,26 @@ public class ScreenManager {
 			Controllers.addListener(playScreen);
 			// STOPPING MENU MUSIC AND PLAYING GAME MUSIC
 			Gdx.input.setInputProcessor(null);
+			
 		} else if (currentState == State.MULTIPLAYERMENU) {
 			gameSlagyom.setScreen(multiplayerScreen);
 			Gdx.input.setInputProcessor(multiplayerScreen.stage);
 			Controllers.clearListeners();
 			Controllers.addListener(multiplayerScreen);
+			
 		} else if (currentState == State.OPTIONMENU) {
 			gameSlagyom.setScreen(optionScreen);
 			Gdx.input.setInputProcessor(optionScreen.stage);
 			Controllers.clearListeners();
 			Controllers.addListener(optionScreen);
+			
 		} else if (currentState == State.NEWGAME) {
 			newCharacterScreen = new NewCharacterScreen(gameSlagyom);
 			gameSlagyom.setScreen(newCharacterScreen);
 			Gdx.input.setInputProcessor(newCharacterScreen.stage);
 			Controllers.clearListeners();
 			Controllers.addListener(newCharacterScreen);
+			
 		} else if (currentState == State.WELCOME) {
 			gameSlagyom.prefs = Gdx.app.getPreferences(newCharacterScreen.charName);
 			initializerScreen = new InitializerScreen(gameSlagyom);
@@ -99,6 +104,7 @@ public class ScreenManager {
 			Gdx.input.setInputProcessor(initializerScreen.stage);
 			Controllers.clearListeners();
 			Controllers.addListener(initializerScreen);
+			
 		} else if (currentState == State.BATTLE) {
 			gameSlagyom.setScreen(battlescreen);
 			gameSlagyom.loadingMusic.backgroundSound.pause();
@@ -107,18 +113,21 @@ public class ScreenManager {
 			Controllers.clearListeners();
 			Controllers.addListener(battlescreen);
 			Gdx.input.setInputProcessor(null);
+			
 		} else if (currentState == State.PAUSE) {
 			gameSlagyom.setScreen(pauseScreen);
 			gameSlagyom.loadingMusic.backgroundSound.pause();
 			Gdx.input.setInputProcessor(pauseScreen.stage);
 			Controllers.clearListeners();
 			Controllers.addListener(pauseScreen);
+			
 		} else if (currentState == State.BAG) {
 			bagScreen = new BagScreen(gameSlagyom);
 			gameSlagyom.setScreen(bagScreen);
 			Gdx.input.setInputProcessor(bagScreen.stage);
 			Controllers.clearListeners();
 			Controllers.addListener(bagScreen);
+			
 		} else if (currentState == State.SHOP) {
 			shopScreen = new ShopScreen(gameSlagyom);
 			gameSlagyom.setScreen(shopScreen);

@@ -27,6 +27,7 @@ public class GameSlagyom extends Game {
 	public static boolean modalityMultiplayer;
 	public LoadingImage loadingImage;
 	public LoadingMusic loadingMusic;
+	
 	@Override
 	public void create() {
 		loadingMusic = new LoadingMusic();

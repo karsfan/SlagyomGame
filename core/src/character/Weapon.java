@@ -2,7 +2,6 @@ package character;
 
 import java.util.Random;
 
-
 import staticObjects.Item;
 import staticObjects.StaticObject.Element;
 
@@ -23,7 +22,6 @@ public class Weapon {
 	private float width;
 
 	public Weapon(Level level, Type type) {
-
 		this.level = level;
 		this.type = type;
 		switch (this.type) {
@@ -93,6 +91,7 @@ public class Weapon {
 				break;
 			}
 			break;
+
 		case "Spear":
 			this.type = Type.Spear;
 			switch (level) {
@@ -112,6 +111,7 @@ public class Weapon {
 				break;
 			}
 			break;
+
 		case "Bow":
 			this.type = Type.Bow;
 			switch (level) {
@@ -131,6 +131,7 @@ public class Weapon {
 				break;
 			}
 			break;
+
 		default:
 			break;
 		}
@@ -190,6 +191,7 @@ public class Weapon {
 				break;
 			}
 			break;
+
 		case Bow:
 			switch (level) {
 			case lev1:
@@ -211,6 +213,7 @@ public class Weapon {
 				break;
 			}
 			break;
+
 		case Bomba:
 			switch (level) {
 			case lev1:
@@ -241,7 +244,6 @@ public class Weapon {
 	}
 
 	public boolean upgrade(Bag bag) {
-
 		if (level != Level.lev3) {
 			if (level == Level.lev1) {
 				if (bag.getNumberOf(Element.PARCHMENT, Item.Level.FIRST) >= 10) {

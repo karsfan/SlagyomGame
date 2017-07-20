@@ -18,10 +18,10 @@ public class NetworkBattle extends Battle {
 
 	public NetworkBattle(NetworkPlayer player, Enemy enemy) {
 		super(player);
-		enemyOri = enemy;
+		originalEnemy = enemy;
 		this.enemy = new NetworkEnemy(enemy);
 		this.character = new NetworkCharacterBattle(player);
-		win_bonus = enemy.win_bonus;
+		win_bonus = enemy.winBonus;
 	}
 
 	public NetworkBattle(NetworkPlayer player, NetworkPlayer otherPlayer) {
@@ -31,8 +31,6 @@ public class NetworkBattle extends Battle {
 		enemy = new NetworkCharacterBattle(otherPlayer);
 		character.x = 0;
 		enemy.x = 1320;
-		// System.out.println(character.health);
-		// System.out.println(enemy.health);
 		enemy.currentState = StateDynamicObject.RUNNINGLEFT;
 		Random rand = new Random();
 		int r = rand.nextInt(3);
@@ -96,7 +94,7 @@ public class NetworkBattle extends Battle {
 		}
 		if (enemy instanceof NetworkEnemy) {
 			if (enemy.health <= 0) {
-				enemyOri.morto = true;
+				originalEnemy.dead = true;
 				return true;
 			}
 			if (character.getHealth() <= 0) {
@@ -105,18 +103,14 @@ public class NetworkBattle extends Battle {
 		} else {
 			if (enemy.health <= 0) {
 				player.health = character.health;
-				// otherPlayer.morto = true;
-				// enemy.morto = true;
-				// System.out.println(enemy.health);
 				return true;
 			}
 			if (character.getHealth() <= 0) {
 				player.health = character.health;
-				character.morto = true;
+				character.dead = true;
 				return true;
 			}
 		}
-		// System.out.println(enemy.health);
 		character.update(dt);
 		enemy.update(dt);
 		return false;

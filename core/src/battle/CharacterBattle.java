@@ -117,9 +117,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		Iterator<Bomb> it1 = bag.bombe.iterator();
 		while (it1.hasNext()) {
 			Bomb ob = (Bomb) it1.next();
-			if (ob.lanciata == true) {
+			if (ob.launched == true) {
 				((Bomb) ob).update(dt);
-				if (ob.morta) {
+				if (ob.dead) {
 					soundBomb = true;
 					it1.remove();
 					continue;
@@ -207,6 +207,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			velocityY = 100;
 			velocityX = 10;
 			setState(StateDynamicObject.JUMPING, dt);
+			
 		} else if (jumping && !doubleJumping) {
 			jumping = false;
 			doubleJumping = true;
@@ -265,68 +266,22 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	}
 
 	public void caricaBomba(float dt) {
-		forza += 100 * dt;
+		power += 100 * dt;
 	}
 
-	public void lancia() {
+	public void launch() {
 		Iterator<Bomb> itBomb = bag.bombe.iterator();
 		while (itBomb.hasNext()) {
 			Bomb bomba = (Bomb) itBomb.next();
-			if (!bomba.lanciata) {
-				bomba.lanciata = true;
-				bomba.lancia(forza, this);
+			if (!bomba.launched) {
+				bomba.launched = true;
+				bomba.launch(power, this);
 				bomba.id = "Player";
-				// System.out.println(bomba.lanciata);
 				break;
 			}
 		}
 	}
 
-	// public void useItem(Item item) {
-	// if (item.getElement() == Element.POTION) {
-	// switch (item.getLevel()) {
-	// case FIRST:
-	// if (!GameSlagyom.modalityMultiplayer){
-	// Game.world.battle.character.health += 15;
-	// if(Game.world.battle.character.health > 300)
-	// Game.world.battle.character.health = 300;
-	// }
-	// else{
-	// Client.networkWorld.battle.character.health += 15;
-	// if(Client.networkWorld.battle.character.health > 300)
-	// Client.networkWorld.battle.character.health = 300;
-	// }
-	// break;
-	// case SECOND:
-	// if (!GameSlagyom.modalityMultiplayer){
-	// Game.world.battle.character.health += 25;
-	// if(Game.world.battle.character.health > 300)
-	// Game.world.battle.character.health = 300;
-	// }
-	// else{
-	// Client.networkWorld.battle.character.health += 25;
-	// if(Client.networkWorld.battle.character.health > 300)
-	// Client.networkWorld.battle.character.health = 300;
-	// }
-	// break;
-	// case THIRD:
-	// if (!GameSlagyom.modalityMultiplayer){
-	// Game.world.battle.character.health += 45;
-	// if(Game.world.battle.character.health > 300)
-	// Game.world.battle.character.health = 300;}
-	// else{
-	// Client.networkWorld.battle.character.health += 45;
-	// if(Client.networkWorld.battle.character.health > 300)
-	// Client.networkWorld.battle.character.health = 300;
-	// }
-	// break;
-	// default:
-	// System.out.println("potion non assegnata");
-	// break;
-	// }
-	// removeItem(item.getElement(), item.getLevel());
-	// }
-	// }
 	public void useItem(Item item) {
 		if (item.getElement() == Element.POTION) {
 			switch (item.getLevel()) {
@@ -346,7 +301,6 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 					health = 300;
 				break;
 			default:
-				System.out.println("potion non assegnata");
 				break;
 			}
 			bag.removeItem(item.getElement(), item.getLevel());

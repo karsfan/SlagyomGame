@@ -18,8 +18,6 @@ public class DesktopLauncher {
 		config.height = 480; 
 		config.resizable = false;
         config.addIcon("res/gameIcon.png", FileType.Internal);
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		gd.getDisplayMode().getWidth();
 		new LwjglApplication(new GameSlagyom(), config);
 
 	}

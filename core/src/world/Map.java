@@ -24,6 +24,7 @@ public class Map {
 	public LinkedList<StaticObject> listLightLamps;
 	public LinkedList<StaticObject> listObjectsMiniMap;
 	public boolean bossBeaten = false;
+
 	public Map(String path, boolean villageCurrent, String nameVillage) {
 		this.nameVillage = nameVillage;
 		current = villageCurrent;
@@ -63,14 +64,16 @@ public class Map {
 	public void readMap(String path) {
 		openFile(path);
 	}
-
+	
 	@SuppressWarnings("resource")
 	public void openFile(String fileName) {
 		FileReader fr = null;
 		try {
+			// fr = new FileReader(fileName);
 			fr = new FileReader(fileName);
 			try {
 				Scanner input = new Scanner(System.in);
+//				input = new Scanner(fr);
 				input = new Scanner(fr);
 				String line = input.nextLine();
 				String[] split = line.split(" ");
@@ -174,7 +177,7 @@ public class Map {
 		if (staticObject.getElement() == Element.LAMP)
 			listLightLamps.add(staticObject);
 		if (!staticObject.getElement().equals(Element.GROUND)) {
-			
+
 			listObjectsMiniMap.add(staticObject);
 		}
 	}

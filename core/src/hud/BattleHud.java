@@ -1,6 +1,5 @@
 package hud;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -33,22 +32,27 @@ public class BattleHud {
 	private Label nameCharacterLabel;
 	private Label nameEnemyLabel;
 
-	Integer healthCharacter;
-	Integer healthEnemy;
+	Integer characterHealth;
+	Integer enemyHealth;
+	
 	static TextureAtlas atlasBar;
 	public static Skin skinBar;
-	ProgressBar barPlayer;
-	ProgressBar barEnemy;
-	ProgressBar playerPower;
+	ProgressBar playerBar;
+	ProgressBar enemyBar;
+	ProgressBar playerPowerBar;
 
 	Battle battle;
+	GameSlagyom gameSlagyom;
+	
 	Table table;
 	Table potionTable;
-
+	ImageButton currentWeapon; 
+	Label currentWeaponName;
 	Label bluePotion;
 	Label greenPotion;
 	Label redPotion;
-	GameSlagyom gameSlagyom;
+	
+	@SuppressWarnings("static-access")
 	public BattleHud(GameSlagyom gameSlagyom, Battle battle) {
 		table = new Table();
 		potionTable = new Table();
@@ -57,23 +61,14 @@ public class BattleHud {
 		viewport = new FitViewport(1440, 960);
 		stage = new Stage(viewport, gameSlagyom.batch);
 		this.battle = battle;
-		healthCharacter = (int) this.battle.character.getHealth();
-		healthEnemy = (int) this.battle.enemy.getHealth();
+		characterHealth = (int) this.battle.character.getHealth();
+		enemyHealth = (int) this.battle.enemy.getHealth();
 
-		atlasBar = new TextureAtlas("menu/glassy/glassy-ui.atlas");
-		skinBar = new Skin(Gdx.files.internal("menu/glassy/glassy-ui.json"), atlasBar);
-
-		barPlayer = new ProgressBar(0.1f, 300, 0.1f, false, MenuScreen.skin);
-		barEnemy = new ProgressBar(0.1f, 300, 0.1f, false, MenuScreen.skin);
-		playerPower = new ProgressBar(this.battle.character.forza, 150, 0.1f, false, MenuScreen.skin);
+		playerBar = new ProgressBar(0.1f, 300, 0.1f, false, MenuScreen.skin);
+		enemyBar = new ProgressBar(0.1f, 300, 0.1f, false, MenuScreen.skin);
+		playerPowerBar = new ProgressBar(this.battle.character.power, 150, 0.1f, false, MenuScreen.skin);
 		currentWeapon = gameSlagyom.loadingImage.battleSpear1;
 		currentWeaponName = new Label ("SPEAR", MenuScreen.skin);
-		/*
-		 * barPlayer.setBounds(this.viewport.getWorldWidth() / 13,
-		 * this.viewport.getWorldHeight() / 1.1f, healthCharacter, 15);
-		 * barEnemy.setBounds(this.viewport.getWorldWidth() / 1.2f,
-		 * this.viewport.getWorldHeight() / 1.1f, healthEnemy, 15);
-		 */
 
 		table.top(); // la allinea sopra al centro
 		table.setFillParent(true);
@@ -86,8 +81,8 @@ public class BattleHud {
 		nameEnemyLabel = new Label(this.battle.enemy.getName(), MenuScreen.skin);
 		table.add(nameEnemyLabel).expandX().padLeft(this.viewport.getWorldHeight() / 3);
 		table.row().padTop(15);
-		table.add(barPlayer).expandX();
-		table.add(barEnemy).expandX().padLeft(this.viewport.getWorldHeight() / 3);
+		table.add(playerBar).expandX();
+		table.add(enemyBar).expandX().padLeft(this.viewport.getWorldHeight() / 3);
 
 		potionTable.setLayoutEnabled(false);
 		bluePotion = new Label("x" + String.valueOf(this.battle.character.bag.getNumberOf(Element.POTION, Level.FIRST)),
@@ -104,7 +99,7 @@ public class BattleHud {
 		currentWeapon.setPosition(1250, 30);
 		currentWeaponName.setPosition(1270, 10);
 		currentWeaponName.setFontScale(0.7f);
-		playerPower.setPosition(200, 40);
+		playerPowerBar.setPosition(200, 40);
 		
 		potionTable.add(bluePotion);
 		potionTable.add(greenPotion);
@@ -114,24 +109,24 @@ public class BattleHud {
 		stage.addActor(table);
 		stage.addActor(potionTable);
 	}
-	
-	ImageButton currentWeapon; 
-	Label currentWeaponName;
+
+	@SuppressWarnings("static-access")
 	public void update(float dt) {
-		healthCharacter = (int) this.battle.character.getHealth();
-		barPlayer.setValue(healthCharacter.intValue());
-		healthEnemy = (int) this.battle.enemy.getHealth();
-		barEnemy.setValue(healthEnemy.intValue());
+		characterHealth = (int) this.battle.character.getHealth();
+		playerBar.setValue(characterHealth.intValue());
+		enemyHealth = (int) this.battle.enemy.getHealth();
+		enemyBar.setValue(enemyHealth.intValue());
 		currentWeapon.setPosition(1250, 30);
 		
 		if (battle.character.lanciaBomba) {
-			potionTable.addActor(playerPower);
-			playerPower.setValue(this.battle.character.forza);
+			potionTable.addActor(playerPowerBar);
+			playerPowerBar.setValue(this.battle.character.power);
 		}
 		else
-			potionTable.removeActor(playerPower);
+			potionTable.removeActor(playerPowerBar);
 		
 		potionTable.removeActor(currentWeapon);
+		
 		if (battle.character.primary_weapon.getType() == Type.Spear) {
 			if (battle.character.primary_weapon.getLevel() == Weapon.Level.lev1) {
 				currentWeapon = gameSlagyom.loadingImage.battleSpear1;

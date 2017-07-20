@@ -35,7 +35,7 @@ public class MenuScreen implements Screen, ControllerListener {
 	private OrthographicCamera camera;
 
 	private Texture background;
-	private Texture titleBackground = new Texture("res/title.png");
+	private Texture titleBackground;
 	private Sprite backgroundSprite;
 
 	static TextureAtlas atlas;
@@ -64,6 +64,7 @@ public class MenuScreen implements Screen, ControllerListener {
 		viewport.apply();
 
 		background = new Texture("res/background.png");
+		titleBackground = new Texture("res/title.png");
 		backgroundSprite = new Sprite(background);
 
 		camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);

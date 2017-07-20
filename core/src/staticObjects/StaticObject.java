@@ -95,8 +95,6 @@ public class StaticObject implements ICollidable {
 		case "TABLE":
 			this.element = Element.TABLE;
 			shape = new Rectangle((int) point.getX(), (int) point.getY(), 16, 16);
-			// info = "Questa e' una tabella informativa! Qui troverai
-			// informazioni riguardanti il nemico.";
 			break;
 		default:
 			break;

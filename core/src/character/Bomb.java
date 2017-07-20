@@ -11,14 +11,14 @@ import world.ICollidable;
 
 public class Bomb extends Weapon implements ICollidable {
 
-	public boolean morta = false;
 	public int mainX;
 	public int mainY;
 	public int velocityX;
 	public int velocityY;
 	public int velocity;
 	public String id;
-	public boolean lanciata = false;
+	public boolean dead = false;
+	public boolean launched = false;
 
 	public Bomb(Level level, Type type) {
 		super(level, type);
@@ -43,8 +43,8 @@ public class Bomb extends Weapon implements ICollidable {
 		}
 	}
 
-	public void lancia(int velocity, Fighting fighting) {
-		lanciata = true;
+	public void launch(int velocity, Fighting fighting) {
+		launched = true;
 		
 		mainX = (int) (((int) ((Fighting) fighting).getX())+fighting.width/3);
 		mainY = ((int) ((Fighting) fighting).getY());
@@ -84,14 +84,13 @@ public class Bomb extends Weapon implements ICollidable {
 
 		velocityY -= GameConfig.gravity * dt;
 		if (mainY <= GameConfig.mainY_Battle)
-			morta = true;
+			dead = true;
 		if (collide())
-			morta = true;
+			dead = true;
 	}
 
 	@Override
 	public boolean collide(Object e) {
-		
 		return false;
 	}
 
@@ -104,17 +103,15 @@ public class Bomb extends Weapon implements ICollidable {
 						|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
 								|| enemy.getY() > mainY + getHeight()))) {
 					enemy.decreaseHealth(this);
-					System.out.println("collissione con il nemico");
 					return true;
 				}
+			
 			CharacterBattle player = Game.world.battle.character;
 			if (id != "Player")
 				if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
 						|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
 								|| player.getY() > mainY + getHeight()))) {
 					player.decreaseHealth(this);
-					
-					System.out.println("collissione della bomba con il player");
 					return true;
 				}
 		} else {
@@ -125,16 +122,15 @@ public class Bomb extends Weapon implements ICollidable {
 							|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
 									|| enemy.getY() > mainY + getHeight()))) {
 						((Fighting) enemy).decreaseHealth(this);
-						//System.out.println("collissione con il nemico");
 						return true;
 					}
+				
 				CharacterBattle player = Client.networkWorld.battle.character;
 				if (!(id.equals(String.valueOf(((NetworkCharacterBattle) Client.networkWorld.battle.character).ID))))
 					if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
 							|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
 									|| player.getY() > mainY + getHeight()))) {
 						player.decreaseHealth(this);
-						//System.out.println("collissione della bomba con il player11");
 						return true;
 					}
 			} else {
@@ -144,16 +140,15 @@ public class Bomb extends Weapon implements ICollidable {
 							|| (mainY > enemy.getY() + enemy.getHeight() - enemy.getHeight() / 4
 									|| enemy.getY() > mainY + getHeight()))) {
 						((Fighting) enemy).decreaseHealth(this);
-						//System.out.println("collissione con il nemico");
 						return true;
 					}
+				
 				CharacterBattle player = Client.networkWorld.battle.character;
 				if (id != "Player")
 					if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
 							|| (mainY > player.getY() + player.getHeight() - player.getHeight() / 4
 									|| player.getY() > mainY + getHeight()))) {
 						player.decreaseHealth(this);
-						//System.out.println("collissione della bomba con il player");
 						return true;
 					}
 			}

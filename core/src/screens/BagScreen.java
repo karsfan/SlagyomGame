@@ -140,7 +140,6 @@ public class BagScreen implements Screen, ControllerListener {
 		exit.setVisible(false);
 
 		optionsTable.add(LoadingImage.emptyBagIcon);
-		optionsTable.add(LoadingImage.close);
 		optionsTable.add(LoadingImage.emptyBagIcon);
 		optionsTable.add(use);
 		optionsTable.add(delete);
@@ -344,6 +343,7 @@ public class BagScreen implements Screen, ControllerListener {
 		LoadingImage.rightArrow.setVisible(true);	
 		stage.addActor(LoadingImage.rightArrow);
 		stage.addActor(LoadingImage.leftArrow);
+		stage.addActor(LoadingImage.close);
 		stage.addActor(potionsTable);
 		stage.addActor(bombsTable);
 		stage.addActor(weaponsTable);
@@ -582,9 +582,7 @@ public class BagScreen implements Screen, ControllerListener {
 	@SuppressWarnings("static-access")
 	@Override
 	public void render(float delta) {
-
-//		if (Gdx.input.justTouched())
-//			game.loadingMusic.selectionSound.play();
+		
 		buttonSelected.getLabel().setFontScale(1.0f);
 		optionButtonSelected.getLabel().setFontScale(1.0f);
 		mouseMoved();
@@ -930,13 +928,11 @@ public class BagScreen implements Screen, ControllerListener {
 	@Override
 	public void disconnected(Controller controller) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
 		// TODO Auto-generated method stub
-
 		return false;
 	}
 
@@ -949,6 +945,7 @@ public class BagScreen implements Screen, ControllerListener {
 				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(State.PAUSE);
 			}
+			
 		} else if (buttonCode == 0) {
 			if (!optionsTable.isVisible()) {
 				if (potionsTable.isVisible()) {
@@ -994,7 +991,6 @@ public class BagScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

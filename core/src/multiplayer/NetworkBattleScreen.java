@@ -80,7 +80,7 @@ public class NetworkBattleScreen extends BattleScreen {
 		Iterator<Bomb> bombIterator = player.bag.bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
-			if (searching.lanciata == true) {
+			if (searching.launched == true) {
 				gameslagyom.batch.draw(gameslagyom.loadingImage.bombImage, searching.getMainX(), searching.getMainY(),
 						searching.getWidth() + 20, searching.getHeight() + 20);
 			}
@@ -93,7 +93,7 @@ public class NetworkBattleScreen extends BattleScreen {
 
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
-			if (searching1.lanciata == true) {
+			if (searching1.launched == true) {
 				gameslagyom.batch.draw(gameslagyom.loadingImage.bombImage, searching1.getMainX(), searching1.getMainY(),
 						searching1.getWidth() + 20, searching1.getHeight() + 20);
 			}
@@ -285,19 +285,19 @@ public class NetworkBattleScreen extends BattleScreen {
 			battle.character.lanciaBomba = true;
 		} else {
 			if (battle.character.lanciaBomba) {
-				battle.character.lancia();
+				battle.character.launch();
 				buttonPressed = false;
 				if (battle.enemy instanceof NetworkCharacterBattle) {
 					if (((NetworkCharacterBattle) battle.character).bombaLanciata) {
 						client.writer.println(3 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
-								+ battle.character.getX() + " " + battle.character.forza + " "
+								+ battle.character.getX() + " " + battle.character.power + " "
 								+ ((NetworkCharacterBattle) battle.character).bomb.level + ";"
 								+ ((NetworkCharacterBattle) battle.character).IDOtherPlayer + ";");
 						client.writer.flush();
 					}
 				}
 				battle.character.lanciaBomba = false;
-				battle.character.forza = 50;
+				battle.character.power = 50;
 				((NetworkCharacterBattle) battle.character).bombaLanciata = false;
 			} else if (Gdx.input.isKeyJustPressed(Keys.UP)
 					|| (movesGamePad && directionGamePad == PovDirection.north)) {

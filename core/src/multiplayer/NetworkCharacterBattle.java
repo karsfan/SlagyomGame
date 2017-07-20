@@ -107,9 +107,9 @@ public class NetworkCharacterBattle extends CharacterBattle {
 		Iterator<Bomb> it1 = bag.bombe.iterator();
 		while (it1.hasNext()) {
 			Bomb ob = (Bomb) it1.next();
-			if (ob.lanciata == true) {
+			if (ob.launched == true) {
 				((Bomb) ob).update(dt);
-				if (ob.morta) {
+				if (ob.dead) {
 					it1.remove();
 					// System.out.println("Bomba player eliminata");
 					continue;
@@ -220,14 +220,14 @@ public class NetworkCharacterBattle extends CharacterBattle {
 			setStateTimer(0);
 	}
 
-	public void lancia() {
+	public void launch() {
 		Iterator<Bomb> itBomb = bag.bombe.iterator();
 		while (itBomb.hasNext()) {
 			Bomb bomba = (Bomb) itBomb.next();
-			if (!bomba.lanciata) {
-				bomba.lanciata = true;
+			if (!bomba.launched) {
+				bomba.launched = true;
 				bomb = bomba;
-				bomba.lancia(forza, this);
+				bomba.launch(power, this);
 				bombaLanciata = true;
 				if (Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle)
 					bomba.id = String.valueOf(ID);

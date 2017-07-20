@@ -32,12 +32,12 @@ public class Arrow extends Weapon implements ICollidable {
 		}
 	}
 
-	public void update(float dt){
-		if(left)
-			x-=velocity*dt;
+	public void update(float dt) {
+		if (left)
+			x -= velocity * dt;
 		else
-			x+=velocity*dt;
-		
+			x += velocity * dt;
+
 	}
 
 	@Override
@@ -47,7 +47,6 @@ public class Arrow extends Weapon implements ICollidable {
 				|| (y > ((Fighting) fighting).getY() + ((Fighting) fighting).getHeight()
 						- ((Fighting) fighting).getHeight() / 4 || ((Fighting) fighting).getY() > y + getHeight()))) {
 			((Fighting) fighting).decreaseHealth(this);
-			//tem.out.println("collissione Freccia con il nemico");
 			return true;
 		}
 		return false;

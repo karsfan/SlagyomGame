@@ -1,6 +1,5 @@
 package screens;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.controllers.Controller;
@@ -33,7 +32,7 @@ public class OptionScreen implements Screen, ControllerListener {
 	private Sprite backgroundSprite;
 
 	public boolean activeMusic;
-	public Table mainTable = new Table();
+	public Table mainTable;
 	public TextButton buttonSelected;
 	TextButton musicButton;
 	TextButton fullscreenButton;
@@ -55,15 +54,16 @@ public class OptionScreen implements Screen, ControllerListener {
 		camera.update();
 
 		stage = new Stage(viewport, game.batch);
+
 		// Create Table
+		mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
 
 		// Create buttons
 		musicButton = new TextButton("Music ON", MenuScreen.skin);
 		fullscreenButton = new TextButton("Fullscreen OFF", MenuScreen.skin);
-
-		 returnButton = new TextButton("Return", MenuScreen.skin);
+		returnButton = new TextButton("Return", MenuScreen.skin);
 
 		// Add listeners to buttons
 		musicButton.addListener(new ClickListener() {
@@ -129,18 +129,16 @@ public class OptionScreen implements Screen, ControllerListener {
 	}
 
 	private void mouseMoved() {
-		if (musicButton.isOver()){
-			if(buttonSelected != musicButton)
+		if (musicButton.isOver()) {
+			if (buttonSelected != musicButton)
 				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = musicButton;
-		}
-		else if (fullscreenButton.isOver()){
-			if(buttonSelected != fullscreenButton)
+		} else if (fullscreenButton.isOver()) {
+			if (buttonSelected != fullscreenButton)
 				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = fullscreenButton;
-		}
-		else if (returnButton.isOver()){
-			if(buttonSelected != returnButton)
+		} else if (returnButton.isOver()) {
+			if (buttonSelected != returnButton)
 				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = returnButton;
 		}
@@ -226,8 +224,7 @@ public class OptionScreen implements Screen, ControllerListener {
 				clickFullScreenButton();
 			else if (buttonSelected == returnButton)
 				clickReturnButton();
-		}
-		else if(buttonCode == 1)
+		} else if (buttonCode == 1)
 			clickReturnButton();
 		return false;
 	}

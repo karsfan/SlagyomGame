@@ -85,20 +85,16 @@ public class DynamicObjects implements ICollidable{
 	}
 
 	public void movesLeft(float dt) {
-
 		if (x > 5) {
 			float velocityX = velocity;
 			x -= (velocityX * dt);
 			if (collide(this))
 				x += (velocityX * dt);
-			
-
 		}
 		setState(StateDynamicObject.RUNNINGLEFT);
 	}
 
 	public void movesUp(float dt) {
-
 		if (y < GameConfig.HEIGHT - height - 5) {
 			float velocityY = velocity;
 
@@ -144,14 +140,11 @@ public class DynamicObjects implements ICollidable{
 
 	@Override
 	public boolean collide(Object e) {
-		
 		return false;
-
 	}
 
 	@Override
 	public boolean collide() {
-		
 		return false;
 	}
 

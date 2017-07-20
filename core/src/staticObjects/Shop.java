@@ -45,7 +45,7 @@ public class Shop extends StaticObject {
 		this.element = Element.SHOP;
 		shape = new Rectangle((int) point.getX(), (int) point.getY(), 64, 64);
 	}
-	
+
 	public boolean collideDoor(Object e) {
 		if (this.getElement() == Element.SHOP && e instanceof Player) {
 			if (!((door.x > ((Player) e).getX() + ((Player) e).getWidth() / 2

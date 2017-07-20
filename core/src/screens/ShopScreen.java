@@ -68,13 +68,14 @@ public class ShopScreen implements Screen, ControllerListener {
 	boolean selectionWeapon = false;
 	Weapon weaponSelected;
 	TextButton[] parchments;
-	TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
-	final TextField level1n = new TextField("", MenuScreen.skin);
-	final TextField level2n = new TextField("", MenuScreen.skin);
-	final TextField level3n = new TextField("", MenuScreen.skin);
-	final TextButton lev1 = new TextButton("Lev1  $15", MenuScreen.skin);
-	final TextButton lev2 = new TextButton("Lev2  $60", MenuScreen.skin);
-	final TextButton lev3 = new TextButton("Lev3  $100", MenuScreen.skin);
+	TextButton buyButton;
+	final TextField level1n;
+	final TextField level2n;
+	final TextField level3n;
+	final TextButton lev1;
+	final TextButton lev2;
+	final TextButton lev3;
+
 	// Variables for cash-scaling animation
 	int refreshedCoins;
 	float coinsTimer = 0;
@@ -101,8 +102,8 @@ public class ShopScreen implements Screen, ControllerListener {
 		viewport = new ExtendViewport(854, 480, camera);
 		viewport.apply();
 		stage = new Stage(viewport, game.batch);
-
 		currentCategory = Category.POTIONS;
+
 		// selection = false;
 		buying = false;
 		itemSelected = new Item(null, null);
@@ -110,6 +111,15 @@ public class ShopScreen implements Screen, ControllerListener {
 		buyingTable = new Table();
 		buyingTable.setLayoutEnabled(false);
 		buyingTable.setVisible(false);
+
+		TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
+		level1n = new TextField("", MenuScreen.skin);
+		level2n = new TextField("", MenuScreen.skin);
+		level3n = new TextField("", MenuScreen.skin);
+		lev1 = new TextButton("Lev1  $15", MenuScreen.skin);
+		lev2 = new TextButton("Lev2  $60", MenuScreen.skin);
+		lev3 = new TextButton("Lev3  $100", MenuScreen.skin);
+
 		level1n.setMessageText("0");
 		level1n.setFocusTraversal(true);
 		level1n.setWidth(30);
@@ -176,8 +186,7 @@ public class ShopScreen implements Screen, ControllerListener {
 		level2n.setPosition(482, 198);
 		level3n.setPosition(482, 154);
 		LoadingImage.howMuch.setPosition(0, 0);
-		// optionsTable.add(buyButton);
-		// optionsTable.add(returnButton);
+
 		buyingTable.add(level1n);
 		buyingTable.add(level2n);
 		buyingTable.add(level3n);
@@ -236,6 +245,7 @@ public class ShopScreen implements Screen, ControllerListener {
 		potionsTable.add(potions[0]);
 		potionsTable.add(potions[1]);
 		potionsTable.add(potions[2]);
+
 		// END POTIONS TABLE
 		bombsTable = new Table();
 		bombsTable.setLayoutEnabled(false);
@@ -286,7 +296,7 @@ public class ShopScreen implements Screen, ControllerListener {
 		lev1.setPosition(302, 250);
 		lev2.setPosition(302, 206);
 		lev3.setPosition(302, 163);
-		// leggi nota prima del metdo
+
 		weaponsLabel = new Label("Weapons", MenuScreen.skin);
 		weapons[0] = new TextButton("Sword", MenuScreen.skin);
 		weapons[1] = new TextButton("Spear", MenuScreen.skin);
@@ -813,28 +823,25 @@ public class ShopScreen implements Screen, ControllerListener {
 			}
 		}
 		if (buyingTable.isVisible()) {
-			if (lev1.isOver()){
-				if(buttonLevelSelected != lev1)
+			if (lev1.isOver()) {
+				if (buttonLevelSelected != lev1)
 					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				buttonLevelSelected = lev1;
-			}
-			else if (lev2.isOver()){
-				if(buttonLevelSelected != lev2)
+			} else if (lev2.isOver()) {
+				if (buttonLevelSelected != lev2)
 					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				buttonLevelSelected = lev2;
-			}
-			else if (lev3.isOver()){
-				if(buttonLevelSelected != lev3)
+			} else if (lev3.isOver()) {
+				if (buttonLevelSelected != lev3)
 					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				buttonLevelSelected = lev3;
 			}
-			if (buyButton.isOver()){
-				if(optionButtonSelected != buyButton)
+			if (buyButton.isOver()) {
+				if (optionButtonSelected != buyButton)
 					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				optionButtonSelected = buyButton;
-			}
-			else if (returnButton.isOver()){
-				if(optionButtonSelected != returnButton)
+			} else if (returnButton.isOver()) {
+				if (optionButtonSelected != returnButton)
 					game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 				optionButtonSelected = returnButton;
 			}
@@ -902,10 +909,10 @@ public class ShopScreen implements Screen, ControllerListener {
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
 		if (buttonCode == 1) {
-			
+
 			if (buyingTable.isVisible())
 				clickReturnButton();
-			else{
+			else {
 				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(State.PLAYING);
 			}
@@ -1000,7 +1007,7 @@ public class ShopScreen implements Screen, ControllerListener {
 						buttonSelected = weapons[2];
 					else if (buttonSelected == weapons[1])
 						buttonSelected = weapons[0];
-					else if(buttonSelected == weapons[2])
+					else if (buttonSelected == weapons[2])
 						buttonSelected = weapons[1];
 					buttonLevelSelected = lev1;
 				} else if (bombsTable.isVisible()) {
@@ -1052,7 +1059,7 @@ public class ShopScreen implements Screen, ControllerListener {
 						buttonSelected = weapons[1];
 					else if (buttonSelected == weapons[1])
 						buttonSelected = weapons[2];
-					else if(buttonSelected == weapons[2])
+					else if (buttonSelected == weapons[2])
 						buttonSelected = weapons[0];
 					buttonLevelSelected = lev1;
 				} else if (bombsTable.isVisible()) {

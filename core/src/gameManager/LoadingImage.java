@@ -71,7 +71,7 @@ public class LoadingImage {
 	public static Texture arrowLeft;
 	public static Texture arrowRight;
 	public static Texture bombImage;
-	
+
 	public TextureRegion battleCharacterStand;
 	public TextureRegion battleFemaleCharacterStand;
 	public Animation<TextureRegion>[] battleCharacterAnimationSpearLev1;
@@ -145,17 +145,18 @@ public class LoadingImage {
 	public static ImageButton rightArrow;
 	public static ImageButton close;
 	public static ImageButton howMuch;
-	
-	//BATTLE IMAGE
+
+	// BATTLE IMAGE
 	public static ImageButton battleBow;
 	public static ImageButton battleSpear1;
 	public static ImageButton battleSpear2;
 	public static ImageButton battleSpear3;
 	public static ImageButton battleSword;
+
 	@SuppressWarnings("unchecked")
 	public LoadingImage() {
 		// TILES IMAGES
-		
+
 		title = new Texture("res/title.png");
 		blackBg = new Texture("res/blackBg.png");
 		homeImage = new Texture("res/home.png");
@@ -205,8 +206,7 @@ public class LoadingImage {
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/bombDescription.png"))));
 		emptyDescription = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/noCursor.png"))));
-	
-		
+
 		bluePotion = new ImageButton(
 				new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/bluePotion.png"))));
 		redPotion = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/bag/redPotion.png"))));
@@ -230,12 +230,15 @@ public class LoadingImage {
 		howMuch = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/shop/howMuch.png"))));
 		cursor = new Pixmap(Gdx.files.internal("res/cursor.png"));
 		noCursor = new Pixmap(Gdx.files.internal("res/noCursor.png"));
-		
+
 		// BATTLE IMAGES
 		battleBow = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleBow.png"))));
-		battleSpear1 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSpear1.png"))));
-		battleSpear2 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSpear2.png"))));
-		battleSpear3 = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSpear3.png"))));
+		battleSpear1 = new ImageButton(
+				new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSpear1.png"))));
+		battleSpear2 = new ImageButton(
+				new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSpear2.png"))));
+		battleSpear3 = new ImageButton(
+				new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSpear3.png"))));
 		battleSword = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture("res/battleSword.png"))));
 
 		// WORLD ANIMATIONS
@@ -251,7 +254,7 @@ public class LoadingImage {
 		playerStand = new TextureRegion();
 		battleCharacterStand = new TextureRegion();
 		battleFemaleCharacterStand = new TextureRegion();
-		
+
 		battleCharacterAnimationSpearLev1 = new Animation[4];
 		battleFemaleCharacterAnimationSpearLev1 = new Animation[4];
 		battleCharacterAnimationSpearLev2 = new Animation[4];
@@ -274,7 +277,7 @@ public class LoadingImage {
 		enemyAnimationBowLev2 = new Animation[4];
 		enemyAnimationBowLev3 = new Animation[4];
 		enemyAnimationSword = new Animation[4];
-		
+
 		enemyStand = new TextureRegion();
 		man1Stand = new TextureRegion();
 		woman1Stand = new TextureRegion();
@@ -342,29 +345,29 @@ public class LoadingImage {
 
 		texture = new Texture("Enemy/bow.png");
 		createBattleFrame(texture, enemyAnimationBowLev1, enemyStand);
-		
+
 		texture = new Texture("Enemy/bow2.png");
 		createBattleFrame(texture, enemyAnimationBowLev2, enemyStand);
-		
+
 		texture = new Texture("Enemy/bow3.png");
 		createBattleFrame(texture, enemyAnimationBowLev3, enemyStand);
-		
+
 		texture = new Texture("Enemy/spear2.png");
 		createBattleFrameBig(texture, enemyAnimationSpearLev2, enemyStand, 5);
-		
+
 		texture = new Texture("Enemy/spear3.png");
 		createBattleFrameBig(texture, enemyAnimationSpearLev3, enemyStand, 5);
-		
+
 		texture = new Texture("Enemy/sword.png");
 		createBattleFrameBig(texture, enemyAnimationSword, enemyStand, 5);
-		
+
 		loadLoadingTexture();
 		arrowLeft = new Texture("res/sxArrow.png");
 		arrowRight = new Texture("res/dxArrow.png");
 		bombImage = new Texture("res/bomb30.png");
 		areFighting = new Texture("res/areFighting.png");
 		miniMapPlayerPointer = new Texture("res/multiplayerPointer.png");
-		
+
 	}
 
 	public void loadLoadingTexture() {
@@ -735,7 +738,7 @@ public class LoadingImage {
 			}
 			break;
 		default:
-			if (ob instanceof Enemy){
+			if (ob instanceof Enemy) {
 				if (((Enemy) ob).weapon.getType() == Type.Spear) {
 					if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
 						animation = enemyAnimationSpearLev1;
@@ -753,8 +756,7 @@ public class LoadingImage {
 					else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
 						animation = enemyAnimationBowLev3;
 				}
-			}
-			else
+			} else
 				System.out.println("Errore in getAnimation");
 			break;
 		}

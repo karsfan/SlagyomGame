@@ -20,7 +20,7 @@ public class Woman extends DynamicObjects implements ICollidable {
 	public String info;
 	public boolean collision;
 	public boolean collisionWithCharacter;
-	int passi;
+	int steps;
 	public WomanType type;
 
 	public Woman() {
@@ -118,26 +118,26 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 			changeDirection(getCurrentState());
 		}
-		if (passi < 50) {
-			passi++;
+		if (steps < 50) {
+			steps++;
 			setState(StateDynamicObject.RUNNINGRIGHT, dt);
 		} else {
 			int rand = (int) (Math.random() * 7);
 
 			if (rand == 1) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGLEFT, dt);
 			} else if (rand == 2) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGUP, dt);
 			} else if (rand == 3) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGDOWN, dt);
 			} else if (rand == 4) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.STANDING, dt);
 			} else {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGRIGHT, dt);
 			}
 		}
@@ -155,26 +155,26 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 			changeDirection(getCurrentState());
 		}
-		if (passi < 50) {
-			passi++;
+		if (steps < 50) {
+			steps++;
 			setState(StateDynamicObject.RUNNINGLEFT, dt);
 		} else {
 			int rand = (int) (Math.random() * 7);
 
 			if (rand == 1) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGRIGHT, dt);
 			} else if (rand == 2) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGUP, dt);
 			} else if (rand == 3) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGDOWN, dt);
 			} else if (rand == 4) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGLEFT, dt);
 			} else {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.STANDING, dt);
 			}
 		}
@@ -193,33 +193,32 @@ public class Woman extends DynamicObjects implements ICollidable {
 			changeDirection(getCurrentState());
 		}
 
-		if (passi < 50) {
-			passi++;
+		if (steps < 50) {
+			steps++;
 			setState(StateDynamicObject.RUNNINGUP, dt);
 		} else {
 			int rand = (int) (Math.random() * 7);
 
 			if (rand == 1) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGLEFT, dt);
 			} else if (rand == 2) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGRIGHT, dt);
 			} else if (rand == 3) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGDOWN, dt);
 			} else if (rand == 4) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGUP, dt);
 			} else {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.STANDING, dt);
 			}
 		}
 	}
 
 	public void movesDown(float dt) {
-
 		if (y - velocity * dt > 0) {
 			y -= velocity * dt;
 			if (collide()) {
@@ -230,33 +229,33 @@ public class Woman extends DynamicObjects implements ICollidable {
 
 			changeDirection(getCurrentState());
 		}
-		if (passi < 50) {
-			passi++;
+		if (steps < 50) {
+			steps++;
 			setState(StateDynamicObject.RUNNINGDOWN, dt);
 		} else {
 			int rand = (int) (Math.random() * 7);
 
 			if (rand == 1) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGLEFT, dt);
 			} else if (rand == 2) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGUP, dt);
 			} else if (rand == 3) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGRIGHT, dt);
 			} else if (rand == 4) {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.RUNNINGDOWN, dt);
 			} else {
-				passi = 0;
+				steps = 0;
 				setState(StateDynamicObject.STANDING, dt);
 			}
 		}
 	}
 
-	private void setStateTimer(float f) {
-		stateTimer = f;
+	private void setStateTimer(float dt) {
+		stateTimer = dt;
 	}
 
 	@Override
@@ -324,11 +323,11 @@ public class Woman extends DynamicObjects implements ICollidable {
 		else if (currentState == StateDynamicObject.RUNNINGDOWN)
 			movesDown(dt);
 		else if (currentState == StateDynamicObject.STANDING && !collisionWithCharacter) {
-			if (passi < 50) {
-				passi++;
+			if (steps < 50) {
+				steps++;
 				setState(StateDynamicObject.STANDING, dt);
 			} else {
-				passi = 0;
+				steps = 0;
 				int rand = (int) (Math.random() * 5);
 				if (rand == 1)
 					setState(StateDynamicObject.RUNNINGLEFT, dt);

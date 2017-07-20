@@ -35,10 +35,8 @@ public class ClientHandler extends Thread {
 		while (true) {
 			try {
 				String receivedMessage = reader.readLine();
-				// System.out.println(receivedMessage);
 				if (!receivedMessage.contains(" ")) {
 					if (!client.initialize) {
-						// System.out.println(client.networkWorld.player.name);
 						client.networkWorld.player.ID = Integer.parseInt(receivedMessage);
 						client.initialize = true;
 						client.networkWorld.player.player = true;
@@ -85,7 +83,6 @@ public class ClientHandler extends Thread {
 								}
 							}
 							client.networkWorld.otherPlayers.add(otherPlayer);
-							// System.out.println("Creo un personaggio");
 						}
 					}
 				} else {
@@ -216,8 +213,8 @@ public class ClientHandler extends Thread {
 							else if (message.x == 3)
 								bomb = new Bomb(Level.lev1, Type.Bomba);
 							((NetworkCharacterBattle) client.networkWorld.battle.enemy).bag.add(bomb);
-							((NetworkCharacterBattle) client.networkWorld.battle.enemy).forza = (int) message.y;
-							((NetworkCharacterBattle) client.networkWorld.battle.enemy).lancia();
+							((NetworkCharacterBattle) client.networkWorld.battle.enemy).power = (int) message.y;
+							((NetworkCharacterBattle) client.networkWorld.battle.enemy).launch();
 						}
 					} else if (message.action == 5) {
 						if (client.networkWorld.player.ID == message.IDreceiver) {
@@ -242,7 +239,6 @@ public class ClientHandler extends Thread {
 
 			} catch (IOException e) {
 				client.serverDisconnected = true;
-				// e.printStackTrace();
 				break;
 			}
 

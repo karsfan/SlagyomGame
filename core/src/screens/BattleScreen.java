@@ -106,7 +106,7 @@ public class BattleScreen implements Screen, ControllerListener {
 		Iterator<Bomb> bombIterator = player.bag.bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();
-			if (searching.lanciata == true) {
+			if (searching.launched == true) {
 				gameslagyom.batch.draw(gameslagyom.loadingImage.bombImage, searching.getMainX(), searching.getMainY(),
 						searching.getWidth() + 20, searching.getHeight() + 20);
 			}
@@ -115,7 +115,7 @@ public class BattleScreen implements Screen, ControllerListener {
 
 		while (bombIterator1.hasNext()) {
 			Bomb searching1 = (Bomb) bombIterator1.next();
-			if (searching1.lanciata == true) {
+			if (searching1.launched == true) {
 				gameslagyom.batch.draw(gameslagyom.loadingImage.bombImage, searching1.getMainX(), searching1.getMainY(),
 						searching1.getWidth() + 20, searching1.getHeight() + 20);
 			}
@@ -253,10 +253,10 @@ public class BattleScreen implements Screen, ControllerListener {
 			battle.character.lanciaBomba = true;
 		} else {
 			if (battle.character.lanciaBomba) {
-				battle.character.lancia();
+				battle.character.launch();
 				buttonPressed = false;
 				battle.character.lanciaBomba = false;
-				battle.character.forza = 50;
+				battle.character.power = 50;
 			}
 			if (Gdx.input.isKeyJustPressed(Keys.UP) || (movesGamePad && directionGamePad == PovDirection.north)) {
 				battle.character.jump(dt);

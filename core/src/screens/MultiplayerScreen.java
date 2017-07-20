@@ -45,7 +45,7 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 	TextButton returnButton;
 	TextButton buttonSelected;
 	Server server;
-	public Table mainTable = new Table();
+	Table mainTable;
 	TextField name;
 	TextField address;
 	TextField port;
@@ -68,9 +68,11 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 		stage = new Stage(viewport, game.batch);
 
 		// Create Table
+		mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
 		numberOfPlayer = new TextField("", MenuScreen.skin);
+		
 		// Create buttons
 		name = new TextField("", MenuScreen.skin);
 		name.setMessageText("Name");

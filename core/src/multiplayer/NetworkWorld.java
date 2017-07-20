@@ -48,17 +48,17 @@ public class NetworkWorld {
 	}
 
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
-		boolean creata = false;
+		boolean created = false;
 		Iterator<Enemy> it1 = preEnemyHouse.enemy.iterator();
 		while (it1.hasNext()) {
 			NetworkEnemy ob = (NetworkEnemy) it1.next();
-			if (!ob.morto) {
-				creata = true;
+			if (!ob.dead) {
+				created = true;
 				battle = new NetworkBattle(Client.networkWorld.player, ob);
 				break;
 			}
 		}
-		if (!creata) {
+		if (!created) {
 			battle = null;
 			player.textDialog = "There aren't enemies in this home";
 			player.collideGym = false;
@@ -84,17 +84,17 @@ public class NetworkWorld {
 		// deve affronatre in caso non ci sono nemici da affrontare uscirà un
 		// avviso
 		if (enemyHome.getElement() == Element.TEMPLE) {
-			boolean creata = false;
+			boolean created = false;
 			Iterator<Enemy> it1 = enemyHome.enemy.iterator();
 			while (it1.hasNext()) {
 				Enemy ob = (Enemy) it1.next();
-				if (!ob.morto) {
-					creata = true;
+				if (!ob.dead) {
+					created = true;
 					battle = new NetworkBattle(player, ob);
 					break;
 				}
 			}
-			if (!creata) {
+			if (!created) {
 				player.collideGym = false;
 				player.textDialog = "There aren't enemies in this home";
 			}
@@ -102,23 +102,23 @@ public class NetworkWorld {
 			// tutti i nemici, se lo sono allora partirà la battaglia con il
 			// boss
 		else if (enemyHome.getElement() == Element.CASTLE) {
-			boolean creata = true;
+			boolean created = true;
 			while (it.hasNext()) {
 				StaticObject ob = (StaticObject) it.next();
 				if (ob instanceof EnemyHome && ob.getElement() == Element.TEMPLE) {
 					Iterator<Enemy> it1 = ((EnemyHome) ob).enemy.iterator();
 					while (it1.hasNext()) {
 						Enemy ob1 = it1.next();
-						if (!ob1.morto) {
-							creata = false;
+						if (!ob1.dead) {
+							created = false;
 							battle = new NetworkBattle(player, ob1);
 							break;
 						}
 
 					}
 				}
-				if (creata) {
-					if (!((BossHome)enemyHome).getEnemy().morto) {
+				if (created) {
+					if (!((BossHome)enemyHome).getEnemy().dead) {
 						battle = new Battle(player, ((BossHome)enemyHome).getEnemy());
 					}
 					else {

@@ -66,12 +66,12 @@ public class NetworkEnemy extends Enemy {
 			y = GameConfig.mainY_Battle;
 			velocityY = 0;
 		}
-		Iterator<Bomb> it1 = bombe.iterator();
+		Iterator<Bomb> it1 = bombs.iterator();
 		while (it1.hasNext()) {
 			Bomb ob = (Bomb) it1.next();
-			if (ob.lanciata == true) {
+			if (ob.launched == true) {
 				((Bomb) ob).update(dt);
-				if (ob.morta) {
+				if (ob.dead) {
 					it1.remove();
 					System.out.println("Bomba enemy eliminata");
 					continue;
@@ -112,16 +112,16 @@ public class NetworkEnemy extends Enemy {
 
 	@Override
 	public void lanciaBomb(float dt) {
-		if (left && !bombe.isEmpty()) {
+		if (left && !bombs.isEmpty()) {
 			int velocityy = 200;
 			// calcolo della gittata
 			velocityy = (int) Math.sqrt(((x - Client.networkWorld.battle.character.getX()) * GameConfig.gravity)
 					/ ((2 * Math.cos(30 * (Math.PI / 180)) * Math.sin(90 * (Math.PI / 180)))));
-			Iterator<Bomb> it1 = bombe.iterator();
+			Iterator<Bomb> it1 = bombs.iterator();
 			while (it1.hasNext()) {
 				Bomb ob = (Bomb) it1.next();
-				if (!ob.lanciata) {
-					ob.lancia(velocityy, this);
+				if (!ob.launched) {
+					ob.launch(velocityy, this);
 					ob.id = "Enemy";
 					// System.out.println((2 * velocityy * velocityy *
 					// Math.cos(30 * (Math.PI / 180))
@@ -132,17 +132,17 @@ public class NetworkEnemy extends Enemy {
 					break;
 				}
 			}
-		} else if (right && !bombe.isEmpty()) {
+		} else if (right && !bombs.isEmpty()) {
 			int velocityy = 200;
 			// calcolo della gittata
 			velocityy = (int) Math
 					.sqrt(((Client.networkWorld.battle.character.getX() + width / 3 - x) * GameConfig.gravity)
 							/ ((2 * Math.cos(30 * (Math.PI / 180)) * Math.sin(90 * (Math.PI / 180)))));
-			Iterator<Bomb> it1 = bombe.iterator();
+			Iterator<Bomb> it1 = bombs.iterator();
 			while (it1.hasNext()) {
 				Bomb ob = (Bomb) it1.next();
-				if (!ob.lanciata) {
-					ob.lancia(velocityy, this);
+				if (!ob.launched) {
+					ob.launch(velocityy, this);
 					ob.id = "Enemy";
 					// System.out.println("bomba lanciata dal nemico");
 					// System.out.println((2 * velocityy * velocityy *

@@ -49,9 +49,6 @@ public class Client {
 					+ networkWorld.player.getY() + " " + networkWorld.player.currentState + ";" + "11111" + ";");
 			writer.flush();
 		} else if (networkWorld.player.collideWithOtherPlayer) {// sto
-			// collidendo
-			// con un
-			// giocatore
 			writer.println(1 + " " + networkWorld.player.ID + " " + 0 + " " + 0 + " " + 0 + ";"
 					+ networkWorld.player.IDOtherPlayer + ";");
 			writer.flush();

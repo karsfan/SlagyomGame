@@ -39,7 +39,8 @@ public class PauseScreen implements Screen, ControllerListener {
 	private Texture background;
 	private Sprite backgroundSprite;
 
-	Table mainTable = new Table();
+	Table mainTable;
+	Label pauseLabel;
 	TextButton buttonSelected;
 	TextButton bagButton;
 	TextButton returnButton;
@@ -63,9 +64,11 @@ public class PauseScreen implements Screen, ControllerListener {
 		stage = new Stage(viewport, game.batch);
 
 		// Create Table
+		mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
-		Label pauseLabel = new Label("PAUSE", MenuScreen.skin);
+		pauseLabel = new Label("PAUSE", MenuScreen.skin);
+
 		// Create buttons
 		bagButton = new TextButton("Bag", MenuScreen.skin);
 		returnButton = new TextButton("Return", MenuScreen.skin);
@@ -281,28 +284,24 @@ public class PauseScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
-		if (buttonCode == 1){
+		if (buttonCode == 1) {
 			game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 			game.screenManager.swapScreen(game.screenManager.getPreviousState());
-		}
-		else if (buttonCode == 0) {
+		} else if (buttonCode == 0) {
 			if (buttonSelected == saveGame)
 				clickSaveButton();
-			else if (buttonSelected == bagButton){
+			else if (buttonSelected == bagButton) {
 				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.BAG);
-			}
-			else if (buttonSelected == returnButton){
+			} else if (buttonSelected == returnButton) {
 				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(game.screenManager.getPreviousState());
-			}
-			else if (buttonSelected == menuButton)
+			} else if (buttonSelected == menuButton)
 				game.screenManager.swapScreen(State.MENU);
-			else if (buttonSelected == exitButton){
+			else if (buttonSelected == exitButton) {
 				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				Gdx.app.exit();
-			}
-			else if (buttonSelected == optionsButton){				
+			} else if (buttonSelected == optionsButton) {
 				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 				game.screenManager.swapScreen(gameManager.ScreenManager.State.OPTIONMENU);
 			}
@@ -370,51 +369,4 @@ public class PauseScreen implements Screen, ControllerListener {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	/*
-	 * @Override public void connected(Controller controller) { // TODO
-	 * Auto-generated method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void disconnected(Controller controller) { // TODO
-	 * Auto-generated method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public boolean buttonDown(Controller controller, int
-	 * buttonCode) { // TODO Auto-generated method stub return false; }
-	 * 
-	 * @Override public boolean buttonUp(Controller controller, int buttonCode)
-	 * { // TODO Auto-generated method stub return false; }
-	 * 
-	 * @Override public boolean axisMoved(Controller controller, int axisCode,
-	 * float value) { // TODO Auto-generated method stub return false; }
-	 * 
-	 * @Override public boolean povMoved(Controller controller, int povCode,
-	 * PovDirection value) { if (value == PovDirection.east) { movesGamePad =
-	 * true; directionGamepad = value; return true; } else if (value ==
-	 * PovDirection.north) { movesGamePad = true; directionGamepad = value;
-	 * return true; } else if (value == PovDirection.south) { movesGamePad =
-	 * true; directionGamepad = value; return true; } else if (value ==
-	 * PovDirection.west) { movesGamePad = true; directionGamepad = value;
-	 * return true; } else if (value == PovDirection.northEast || value ==
-	 * PovDirection.northWest || value == PovDirection.southWest || value ==
-	 * PovDirection.southEast) { movesGamePad = true; directionGamepad = value;
-	 * return true; } //stage.keyDown(povCode); movesGamePad = false; return
-	 * false; }
-	 * 
-	 * @Override public boolean xSliderMoved(Controller controller, int
-	 * sliderCode, boolean value) { // TODO Auto-generated method stub return
-	 * false; }
-	 * 
-	 * @Override public boolean ySliderMoved(Controller controller, int
-	 * sliderCode, boolean value) { // TODO Auto-generated method stub return
-	 * false; }
-	 * 
-	 * @Override public boolean accelerometerMoved(Controller controller, int
-	 * accelerometerCode, Vector3 value) { // TODO Auto-generated method stub
-	 * return false; }
-	 */
-
 }

@@ -20,19 +20,6 @@ public class Bag {
 		secondary_weapon = null;
 		items = new ArrayList<Item>();
 		bombe = new ArrayList<Bomb>();
-
-		/*
-		 * bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
-		 * Type.Bomba)); bombe.add(new
-		 * Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		 * bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
-		 * Type.Bomba)); bombe.add(new
-		 * Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		 * bombe.add(new Bomb(it.slagyom.src.World.Weapon.Level.lev1,
-		 * Type.Bomba)); bombe.add(new
-		 * Bomb(it.slagyom.src.World.Weapon.Level.lev1, Type.Bomba));
-		 */
-
 	}
 
 	public void deleteParchments(Level itemLevel) {
@@ -49,7 +36,7 @@ public class Bag {
 				parchmentRemoved--;
 				continue;
 			}
-		} // it controls that the numbers is sufficient to upgrade
+		}
 	}
 
 	public boolean deletePotion(Item potion) {
@@ -144,7 +131,6 @@ public class Bag {
 		}
 	}
 
-	
 	public void removeBomb(character.Weapon.Level level) {
 		Iterator<Bomb> bombIterator = bombe.iterator();
 		while (bombIterator.hasNext()) {

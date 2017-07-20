@@ -34,14 +34,16 @@ public class InitializerScreen implements Screen, ControllerListener {
 
 	private Texture background;
 	private Sprite backgroundSprite;
+	
 	final Label name;
-	TextButton defaultAiButton = new TextButton("Default enemies' A.I.", MenuScreen.skin);
-	TextButton chooseAiButton = new TextButton("Choose enemies' A.I...", MenuScreen.skin);
-	TextButton returnButton = new TextButton("Return", MenuScreen.skin);
+	TextButton defaultAiButton;
+	TextButton chooseAiButton;
+	TextButton returnButton;
 	TextButton continueButton;
 	TextButton buttonSelected;
 	TextField nameAI;
-	public Table mainTable = new Table();
+	
+	public Table mainTable;
 
 	public InitializerScreen(final GameSlagyom game) {
 		this.game = game;
@@ -59,10 +61,15 @@ public class InitializerScreen implements Screen, ControllerListener {
 		stage = new Stage(viewport, game.batch);
 
 		// Create Table
+		mainTable = new Table();
 		mainTable.setFillParent(true);
 		mainTable.top();
 
 		// Create buttons
+		defaultAiButton = new TextButton("Default enemies' A.I.", MenuScreen.skin);
+		chooseAiButton = new TextButton("Choose enemies' A.I...", MenuScreen.skin);
+		returnButton = new TextButton("Return", MenuScreen.skin);
+
 		// Add listeners to buttons
 		defaultAiButton.addListener(new ClickListener() {
 			@Override
@@ -92,8 +99,8 @@ public class InitializerScreen implements Screen, ControllerListener {
 			}
 		});
 		continueButton.setVisible(false);
-		// Add buttons to table
 
+		// Add buttons to table
 		mainTable.add(name).pad(30);
 		mainTable.row();
 		mainTable.add(defaultAiButton).pad(5).padTop(camera.viewportHeight / 5);
@@ -144,10 +151,7 @@ public class InitializerScreen implements Screen, ControllerListener {
 		
 		game.screenManager.playScreen = new PlayScreen(game, game.screenManager.newCharacterScreen.charName,
 				game.screenManager.newCharacterScreen.maleSelected);
-		//game.screenManager.setPlayScreen(game.screenManager.playScreen);
 		game.screenManager.swapScreen(State.PLAYING);
-		//game.setScreen(game.screenManager.playScreen);
-		//game.screenManager.currentState = State.PLAYING;
 		Gdx.input.setInputProcessor(null);
 	}
 
@@ -173,8 +177,6 @@ public class InitializerScreen implements Screen, ControllerListener {
 			game.screenManager.setPlayScreen(new PlayScreen(game, game.screenManager.newCharacterScreen.charName,
 					game.screenManager.newCharacterScreen.maleSelected));
 			game.screenManager.swapScreen(State.PLAYING);
-			//game.setScreen(game.screenManager.playScreen);
-			//game.screenManager.currentState = State.PLAYING;
 		}
 	}
 

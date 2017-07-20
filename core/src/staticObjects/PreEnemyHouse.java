@@ -34,7 +34,6 @@ public class PreEnemyHouse extends StaticObject {
 					}
 				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 						| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {

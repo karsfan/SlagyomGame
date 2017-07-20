@@ -87,7 +87,7 @@ public class ShopScreen implements Screen, ControllerListener {
 	TextButton[] bombs;
 	Label weaponsLabel;
 	TextButton[] weapons;
-
+	
 	TextButton buttonSelected;
 	TextButton optionButtonSelected;
 	TextButton buttonLevelSelected;
@@ -112,7 +112,7 @@ public class ShopScreen implements Screen, ControllerListener {
 		buyingTable.setLayoutEnabled(false);
 		buyingTable.setVisible(false);
 
-		TextButton buyButton = new TextButton("Buy", MenuScreen.skin);
+		buyButton = new TextButton("Buy", MenuScreen.skin);
 		level1n = new TextField("", MenuScreen.skin);
 		level2n = new TextField("", MenuScreen.skin);
 		level3n = new TextField("", MenuScreen.skin);

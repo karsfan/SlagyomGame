@@ -132,11 +132,11 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public void shootArrow() {
 		Weapon arrow = null;
 		if (primary_weapon.getLevel() == Level.lev1)
-			arrow = new Arrow(Level.lev1, Type.Freccia, x, y + width / 2);
+			arrow = new Arrow(Level.lev1, Type.Arrow, x, y + width / 2);
 		else if (primary_weapon.getLevel() == Level.lev2)
-			arrow = new Arrow(Level.lev2, Type.Freccia, x, y + width / 2);
+			arrow = new Arrow(Level.lev2, Type.Arrow, x, y + width / 2);
 		else if (primary_weapon.getLevel() == Level.lev3)
-			arrow = new Arrow(Level.lev3, Type.Freccia, x, y + width / 2);
+			arrow = new Arrow(Level.lev3, Type.Arrow, x, y + width / 2);
 		if (left)
 			((Arrow) arrow).left = true;
 		arrowsShooted.add(arrow);

@@ -198,11 +198,11 @@ public class Enemy extends Fighting {
 	public void shootArrow() {
 		Weapon arrow = null;
 		if (weapon.getLevel() == Weapon.Level.lev1)
-			arrow = new Arrow(Weapon.Level.lev1, Type.Freccia, x, y + width / 2);
+			arrow = new Arrow(Weapon.Level.lev1, Type.Arrow, x, y + width / 2);
 		else if (weapon.getLevel() == Weapon.Level.lev2)
-			arrow = new Arrow(Weapon.Level.lev2, Type.Freccia, x, y + width / 2);
+			arrow = new Arrow(Weapon.Level.lev2, Type.Arrow, x, y + width / 2);
 		else if (weapon.getLevel() == Weapon.Level.lev3)
-			arrow = new Arrow(Weapon.Level.lev3, Type.Freccia, x, y + width / 2);
+			arrow = new Arrow(Weapon.Level.lev3, Type.Arrow, x, y + width / 2);
 		if (left)
 			((Arrow) arrow).left = true;
 		arrowsShooted.add(arrow);

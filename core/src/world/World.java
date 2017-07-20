@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Stack;
 
+import com.badlogic.gdx.Gdx;
+
 import battle.Battle;
 import battle.Enemy;
 import character.DynamicObjects;
@@ -44,8 +46,9 @@ public class World {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
-		maps[0] = new Map(getClass().getResource("/res/map/mapProva.txt").getPath(), true, "Village one");
-		maps[1] = new Map(getClass().getResource("/res/map/village1.txt").getPath(), false, "Village two");
+		System.out.println(Gdx.files.internal("/res/map/mapProva.txt"));
+		maps[0] = new Map("res/map/mapProva.txt", true, "Village one");
+		maps[1] = new Map(getClass().getResource("res/map/village1.txt").getPath(), false, "Village two");
 		player = new Player(name, male);
 		getListDynamicObjects().add(player);
 

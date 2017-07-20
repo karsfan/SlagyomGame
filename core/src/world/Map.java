@@ -161,15 +161,11 @@ public class Map {
 		}
 		staticObject
 				.setPoint(new Point((int) point.x, (int) Math.abs(point.y - (staticObject.shape.getHeight() / 32))));
-		// Tile tile = new Tile(element, point);
-		// tile.setPoint(
-		// new Point((int) tile.shape.getX(), (int) Math.abs(tile.shape.getY() -
-		// (tile.shape.getHeight() / 32))));
+		
 		listStaticObjects.add(staticObject);
 		if (staticObject.getElement() == Element.LAMP)
 			listLightLamps.add(staticObject);
 		if (!staticObject.getElement().equals(Element.GROUND)) {
-
 			listObjectsMiniMap.add(staticObject);
 		}
 	}

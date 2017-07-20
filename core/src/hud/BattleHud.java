@@ -73,7 +73,7 @@ public class BattleHud {
 		table.top(); // la allinea sopra al centro
 		table.setFillParent(true);
 
-		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/BattleHudBg.png")));
+		Drawable hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/battleHudBg.png")));
 		table.setBackground(hudBG);
 
 		nameCharacterLabel = new Label(this.battle.character.name, MenuScreen.skin);

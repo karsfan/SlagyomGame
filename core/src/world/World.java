@@ -1,8 +1,10 @@
 package world;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -44,8 +46,8 @@ public class World {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
-		maps[0] = new Map(getClass().getResource("/res/map/mapProva.txt").getPath(), true, "Village one");
-		maps[1] = new Map(getClass().getResource("/res/map/village1.txt").getPath(), false, "Village two");
+		maps[0] = new Map("res/map/mapProva.txt", true, "Village one");
+		maps[1] = new Map("res/map/village1.txt", false, "Village two");
 		player = new Player(name, male);
 		getListDynamicObjects().add(player);
 
@@ -53,9 +55,9 @@ public class World {
 		womanNames = new Stack<String>();
 		dialogues = new Stack<String>();
 		try {
-			loadFromFile(manNames, getClass().getResource("/res/strings/manNames.txt").getPath());
-			loadFromFile(womanNames, getClass().getResource("/res/strings/womanNames.txt").getPath());
-			loadFromFile(dialogues, getClass().getResource("/res/strings/dialogues.txt").getPath());
+			loadFromFile(manNames, "res/strings/manNames.txt");
+			loadFromFile(womanNames, "res/strings/womanNames.txt");
+			loadFromFile(dialogues, "res/strings/dialogues.txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -79,9 +81,9 @@ public class World {
 		womanNames = new Stack<String>();
 		dialogues = new Stack<String>();
 		try {
-			loadFromFile(manNames, getClass().getResource("/res/strings/manNames.txt").getPath());
-			loadFromFile(womanNames, getClass().getResource("/res/strings/womanNames.txt").getPath());
-			loadFromFile(dialogues, getClass().getResource("/res/strings/dialogues.txt").getPath());
+			loadFromFile(manNames, "res/strings/manNames.txt");
+			loadFromFile(womanNames, "res/strings/womanNames.txt");
+			loadFromFile(dialogues, "res/strings/dialogues.txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -90,20 +92,35 @@ public class World {
 	}
 
 	public void loadFromFile(Stack<String> list, String path) throws IOException {
-		input = new Scanner(System.in);
+//		input = new Scanner(System.in);
+//		try {
+//			fileReader = new FileReader(path);
+//			input = new Scanner(fileReader);
+//			String line = input.nextLine();
+//			while (input.hasNextLine()) {
+//				line = input.nextLine();
+//				list.push(line);
+//			}
+//			input.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+		BufferedReader br = new BufferedReader(
+				new InputStreamReader(getClass().getClassLoader().getResourceAsStream(path)));
+		String line;
 		try {
-			fileReader = new FileReader(path);
-			input = new Scanner(fileReader);
-			String line = input.nextLine();
-			while (input.hasNextLine()) {
-				line = input.nextLine();
-				list.push(line);
+			line = br.readLine();
+			while (line != null) {
+				line = br.readLine();
+				if (line != null) {
+					list.push(line);
+				}
 			}
-			input.close();
+			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public Map getMap() {

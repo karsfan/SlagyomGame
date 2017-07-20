@@ -1,8 +1,10 @@
 package world;
 
 import java.awt.Point;
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -64,39 +66,32 @@ public class Map {
 	public void readMap(String path) {
 		openFile(path);
 	}
-	
+
 	@SuppressWarnings("resource")
 	public void openFile(String fileName) {
-		FileReader fr = null;
+		BufferedReader br = new BufferedReader(
+				new InputStreamReader(getClass().getClassLoader().getResourceAsStream(fileName)));
+		String line;
 		try {
-			// fr = new FileReader(fileName);
-			fr = new FileReader(fileName);
-			try {
-				Scanner input = new Scanner(System.in);
-//				input = new Scanner(fr);
-				input = new Scanner(fr);
-				String line = input.nextLine();
-				String[] split = line.split(" ");
-				GameConfig.WIDTH = Integer.parseInt(split[0]);
-				GameConfig.HEIGHT = Integer.parseInt(split[1]);
-				while (input.hasNextLine()) {
-					line = input.nextLine();
+			line = br.readLine();
+
+			String[] split = line.split(" ");
+			GameConfig.WIDTH = Integer.parseInt(split[0]);
+			GameConfig.HEIGHT = Integer.parseInt(split[1]);
+			while (line != null) {
+				line = br.readLine();
+				if (line != null) {
 					String[] splittata = line.split(" ");
 
 					for (int i = 0; i < splittata.length - 1; i++)
 						addTile(splittata[i], getXY(splittata[i + 1]));
 				}
-				input.close();
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
 			}
-			fr.close();
-		} catch (
-
-		IOException e) {
+			br.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public static Point getXY(String line) {

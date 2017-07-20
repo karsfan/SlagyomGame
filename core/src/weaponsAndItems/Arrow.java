@@ -1,8 +1,6 @@
 package weaponsAndItems;
 
 import battle.Fighting;
-import weaponsAndItems.Weapon.Level;
-import weaponsAndItems.Weapon.Type;
 import world.ICollidable;
 
 public class Arrow extends Weapon implements ICollidable {

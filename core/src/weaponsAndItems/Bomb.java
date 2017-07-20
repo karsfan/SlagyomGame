@@ -5,8 +5,6 @@ import battle.Fighting;
 import gameManager.GameSlagyom;
 import multiplayer.Client;
 import multiplayer.NetworkCharacterBattle;
-import weaponsAndItems.Weapon.Level;
-import weaponsAndItems.Weapon.Type;
 import world.Game;
 import world.GameConfig;
 import world.ICollidable;

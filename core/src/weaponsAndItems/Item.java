@@ -8,7 +8,6 @@ import character.Player;
 import gameManager.GameSlagyom;
 import multiplayer.Client;
 import staticObjects.StaticObject;
-import staticObjects.StaticObject.Element;
 import world.Game;
 import world.GameConfig;
 

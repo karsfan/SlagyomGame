@@ -15,14 +15,14 @@ public class Client {
 	public PrintWriter writer;
 	public ClientHandler clientHandler;
 	GameSlagyom gameSlagyom;
-	boolean initialize = false;
-	public boolean go = false;
-	public boolean canModify = false;
-	public boolean serverDisconnected = false;
-	public boolean sound = false;
-	public boolean text = false;
+	boolean initialize;
+	public boolean go;
+	public boolean canModify;
+	public boolean serverDisconnected;
+	public boolean sound;
+	public boolean text;
 	public String textDiaglog;
-	public boolean soundPotionBattle = false;
+	public boolean soundPotionBattle;
 
 	public Client(String name, GameSlagyom gameSlagyom, String address, int port) {
 		try {
@@ -37,6 +37,13 @@ public class Client {
 		this.gameSlagyom = gameSlagyom;
 		networkWorld = new NetworkWorld(name);
 		clientHandler = new ClientHandler(socket, this);
+		initialize = false;
+		go = false;
+		canModify = false;
+		serverDisconnected = false;
+		sound = false;
+		text = false;
+		soundPotionBattle = false;
 		clientHandler.start();
 	}
 

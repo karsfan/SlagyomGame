@@ -27,11 +27,12 @@ import world.GameConfig;
 
 public class NetworkBattleScreen extends BattleScreen {
 	public Client client;
-	public boolean weapon_primary_comunicated = false;
+	public boolean weapon_primary_comunicated;
 
 	public NetworkBattleScreen(GameSlagyom gameslagyom, Battle battle, Client client) {
 		super(gameslagyom, battle);
 		this.client = client;
+		weapon_primary_comunicated = false;
 	}
 
 	@Override

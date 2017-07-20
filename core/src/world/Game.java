@@ -5,7 +5,6 @@ import gameManager.GameSlagyom;
 
 public class Game {
 
-	// ListenableGraph<Object, DefaultEdge> graph;
 	public static World world;
 	
 	public static Class<? extends Enemy> enemy = null;

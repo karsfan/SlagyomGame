@@ -23,7 +23,6 @@ public class Map {
 	public boolean current;
 	public LinkedList<StaticObject> listLightLamps;
 	public LinkedList<StaticObject> listObjectsMiniMap;
-	public boolean bossBeaten = false;
 
 	public Map(String path, boolean villageCurrent, String nameVillage) {
 		this.nameVillage = nameVillage;

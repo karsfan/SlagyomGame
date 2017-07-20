@@ -23,7 +23,7 @@ import world.GameConfig;
 public class NetworkPlayScreen extends PlayScreen {
 
 	public Client client;
-	boolean youLose = false;
+	boolean youLose;
 
 	@SuppressWarnings("static-access")
 	public NetworkPlayScreen(GameSlagyom gameSlagyom, String name, String address, int port) {
@@ -33,6 +33,7 @@ public class NetworkPlayScreen extends PlayScreen {
 		gamecam.position.x = client.networkWorld.player.getX();
 		gamecam.position.y = client.networkWorld.player.getY();
 		hud = new Hud(gameSlagyom);
+		youLose = false;
 	}
 
 	@SuppressWarnings("static-access")
@@ -143,12 +144,14 @@ public class NetworkPlayScreen extends PlayScreen {
 					movesGamePad = false;
 				}
 				if (client.networkWorld.player.collideGym) {
-					gameSlagyom.screenManager.battlescreen = new NetworkBattleScreen(gameSlagyom, client.networkWorld.battle, client);
+					gameSlagyom.screenManager.battlescreen = new NetworkBattleScreen(gameSlagyom,
+							client.networkWorld.battle, client);
 					gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
 					client.networkWorld.player.collideGym = false;
 					client.networkWorld.player.isFighting = true;
 					movesGamePad = false;
-				}if(!client.networkWorld.player.textDialog.equals("")){
+				}
+				if (!client.networkWorld.player.textDialog.equals("")) {
 					hud.setDialogText(client.networkWorld.player.textDialog);
 					client.networkWorld.player.textDialog = "";
 				}

@@ -43,18 +43,17 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 	final TextField name;
 	public boolean maleSelected;
 
-	Drawable maleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/male.png")));
-	Drawable maleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/maleok.png")));
+	Drawable maleDraw ;
+	Drawable maleokDraw;
 
-	Drawable femaleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/female.png")));
-	Drawable femaleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/femaleok.png")));
+	Drawable femaleDraw ;
+	Drawable femaleokDraw;
 
-	ImageButton male = new ImageButton(new ImageButtonStyle(null, null, maleokDraw, maleDraw, null, maleokDraw));
-	ImageButton female = new ImageButton(
-			new ImageButtonStyle(null, null, femaleokDraw, femaleDraw, null, femaleokDraw));
+	ImageButton male ;
+	ImageButton female;
 
-	Table gender = new Table();
-	public Table mainTable = new Table();
+	Table gender;
+	Table mainTable;
 	TextButton continueButton;
 	TextButton returnButton;
 	TextButton buttonSelected;
@@ -74,9 +73,22 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 
 		stage = new Stage(viewport, game.batch);
 
+		maleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/male.png")));
+		maleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/maleok.png")));
+		
+		femaleDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/female.png")));
+		femaleokDraw = new TextureRegionDrawable(new TextureRegion(new Texture("res/femaleok.png")));
+		
+		male = new ImageButton(new ImageButtonStyle(null, null, maleokDraw, maleDraw, null, maleokDraw));
+		female = new ImageButton(new ImageButtonStyle(null, null, femaleokDraw, femaleDraw, null, femaleokDraw));
+		
 		// Create Table
+		gender = new Table();
+		mainTable = new Table();
+
 		mainTable.setFillParent(true);
 		mainTable.top();
+
 
 		charName = "";
 		maleSelected = true;
@@ -175,14 +187,12 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 	}
 
 	private void mouseMoved() {
-		if (continueButton.isOver()){
-			if(buttonSelected != continueButton)
+		if (continueButton.isOver()) {
+			if (buttonSelected != continueButton)
 				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = continueButton;
-		}
-		else if (returnButton.isOver())
-		{
-			if(buttonSelected != returnButton)
+		} else if (returnButton.isOver()) {
+			if (buttonSelected != returnButton)
 				game.loadingMusic.overMenuSound.play(GameConfig.musicVolume);
 			buttonSelected = returnButton;
 		}
@@ -236,7 +246,7 @@ public class NewCharacterScreen implements Screen, ControllerListener {
 		else if (buttonCode == 0) {
 			if (buttonSelected == continueButton)
 				clickContinueButton();
-			else if (buttonSelected == returnButton){
+			else if (buttonSelected == returnButton) {
 				game.screenManager.swapScreen(State.MENU);
 				game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 			}

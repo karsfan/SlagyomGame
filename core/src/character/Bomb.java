@@ -17,8 +17,8 @@ public class Bomb extends Weapon implements ICollidable {
 	public int velocityY;
 	public int velocity;
 	public String id;
-	public boolean dead = false;
-	public boolean launched = false;
+	public boolean dead;
+	public boolean launched;
 
 	public Bomb(Level level, Type type) {
 		super(level, type);
@@ -41,12 +41,14 @@ public class Bomb extends Weapon implements ICollidable {
 		default:
 			break;
 		}
+		dead = false;
+		launched = false;
 	}
 
 	public void launch(int velocity, Fighting fighting) {
 		launched = true;
-		
-		mainX = (int) (((int) ((Fighting) fighting).getX())+fighting.width/3);
+
+		mainX = (int) (((int) ((Fighting) fighting).getX()) + fighting.width / 3);
 		mainY = ((int) ((Fighting) fighting).getY());
 
 		if (((Fighting) fighting).left)
@@ -105,7 +107,7 @@ public class Bomb extends Weapon implements ICollidable {
 					enemy.decreaseHealth(this);
 					return true;
 				}
-			
+
 			CharacterBattle player = Game.world.battle.character;
 			if (id != "Player")
 				if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
@@ -124,7 +126,7 @@ public class Bomb extends Weapon implements ICollidable {
 						((Fighting) enemy).decreaseHealth(this);
 						return true;
 					}
-				
+
 				CharacterBattle player = Client.networkWorld.battle.character;
 				if (!(id.equals(String.valueOf(((NetworkCharacterBattle) Client.networkWorld.battle.character).ID))))
 					if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())
@@ -142,7 +144,7 @@ public class Bomb extends Weapon implements ICollidable {
 						((Fighting) enemy).decreaseHealth(this);
 						return true;
 					}
-				
+
 				CharacterBattle player = Client.networkWorld.battle.character;
 				if (id != "Player")
 					if (!((mainX > player.getX() + player.getWidth() / 2 || player.getX() > mainX + getWidth())

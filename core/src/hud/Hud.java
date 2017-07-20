@@ -28,20 +28,26 @@ public class Hud {
 	private Label nameLabel;
 	private Label villageLabel;
 
-	public String textDialog = "";
-	public boolean showDialog = true;
-	public Table textTable = new Table();
+	public String textDialog;
+	public boolean showDialog;
+	public Table textTable;
 
-	public boolean isNight = false;
-	public int dayTime = 20;
+	public boolean isNight;
+	public int dayTime;
 
 	public Texture night;
 	private Image splash;
 	private Drawable hudBG;
-	public float timer = 0;
+	public float timer;
 
 	@SuppressWarnings("static-access")
 	public Hud(GameSlagyom gameSlagyom) {
+		showDialog = true;
+		textDialog = "";
+		textTable = new Table();
+		dayTime = 20;
+		timer = 0;
+		isNight = false;
 		this.gameSlagyom = gameSlagyom;
 		spriteBatch = gameSlagyom.batch;
 		viewport = new FitViewport(1920, 1080);
@@ -49,8 +55,7 @@ public class Hud {
 		hudBG = new TextureRegionDrawable(new TextureRegion(new Texture("res/hudBg.png")));
 		night = new Texture("res/night.png");
 		splash = new Image(night);
-		
-		
+
 		Table table = new Table();
 		table.top();
 		table.setFillParent(true);
@@ -68,7 +73,7 @@ public class Hud {
 		table.add(nameLabel).expandX().pad(20);
 		table.add(villageLabel).expandX().pad(20);
 		table.add(coinsLabel).expandX().pad(20);
-		table.row(); 
+		table.row();
 
 		splash.setPosition(0, 0);
 		splash.addAction(Actions.alpha(0f));

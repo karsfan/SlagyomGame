@@ -24,13 +24,13 @@ public class Player extends DynamicObjects implements ICollidable {
 	public Weapon primary_weapon;
 	public int health;
 	public int coins;
-	public boolean collideShop = false;
-	public boolean collideGym = false;
 	public boolean male;
-	public boolean collideCoin = false;
-	public boolean collideItem = false;
-	public String textDialog = "";
-	
+	public boolean collideShop;
+	public boolean collideGym;
+	public boolean collideCoin;
+	public boolean collideItem;
+	public String textDialog;
+
 	public Player(String name, boolean male) {
 		super();
 		this.name = name;
@@ -39,18 +39,22 @@ public class Player extends DynamicObjects implements ICollidable {
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
 		coins = 25;
-		
+
 		velocity = 100;
 		currentState = StateDynamicObject.STANDING;
 		previousState = StateDynamicObject.STANDING;
 		stateTimer = 0;
 		height = 30;
 		width = 30;
+		collideShop = false;
+		collideGym = false;
+		collideCoin = false;
+		collideItem = false;
+		textDialog = "";
 	}
 
 	public Player() {
 		super();
-		// this.name = name;
 		bag = new Bag();
 		primary_weapon = new Weapon(Level.lev1, Type.Spear);
 		health = 300;
@@ -62,6 +66,11 @@ public class Player extends DynamicObjects implements ICollidable {
 		stateTimer = 0;
 		height = 30;
 		width = 30;
+		collideShop = false;
+		collideGym = false;
+		collideCoin = false;
+		collideItem = false;
+		textDialog = "";
 	}
 
 	public boolean positionCharacter() {
@@ -150,7 +159,7 @@ public class Player extends DynamicObjects implements ICollidable {
 			if (collide())
 				x += (velocityX * dt);
 		}
-		
+
 		setState(StateDynamicObject.RUNNINGLEFT);
 	}
 
@@ -163,7 +172,7 @@ public class Player extends DynamicObjects implements ICollidable {
 				x -= (velocity * dt) / 2;
 			}
 		}
-		
+
 		setState(StateDynamicObject.RUNNINGUP);
 	}
 
@@ -176,7 +185,7 @@ public class Player extends DynamicObjects implements ICollidable {
 				x += (velocity * dt) / 2;
 			}
 		}
-		
+
 		setState(StateDynamicObject.RUNNINGUP);
 	}
 
@@ -189,7 +198,7 @@ public class Player extends DynamicObjects implements ICollidable {
 				x += (velocity * dt) / 2;
 			}
 		}
-		
+
 		setState(StateDynamicObject.RUNNINGDOWN);
 	}
 
@@ -203,7 +212,7 @@ public class Player extends DynamicObjects implements ICollidable {
 				x -= (velocity * dt) / 2;
 			}
 		}
-		
+
 		setState(StateDynamicObject.RUNNINGDOWN);
 	}
 
@@ -216,7 +225,7 @@ public class Player extends DynamicObjects implements ICollidable {
 				y -= (velocityY * dt);
 			}
 		}
-		
+
 		setState(StateDynamicObject.RUNNINGUP);
 	}
 
@@ -340,8 +349,7 @@ public class Player extends DynamicObjects implements ICollidable {
 						if (((Item) ob).getElement() == Element.COIN) {
 							coins++;
 							collideCoin = true;
-						}
-						else{
+						} else {
 							bag.add(ob);
 							collideItem = true;
 						}

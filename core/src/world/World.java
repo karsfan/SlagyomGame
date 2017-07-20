@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Stack;
 
-
 import battle.Battle;
 import battle.Enemy;
 import character.DynamicObjects;
@@ -32,16 +31,19 @@ public class World {
 	public Battle battle;
 
 	int level;
-	float timerItem = 0;
+	int numberOfLevels;
+	float timerItem;
 
 	public static Stack<String> dialogues;
 	public static Stack<String> manNames;
 	public static Stack<String> womanNames;
 
 	public World(String name, boolean male) {
+		numberOfLevels = 2;
 		level = 0;
+		timerItem = 0;
 		people = new ArrayList<DynamicObjects>();
-		maps = new Map[2];
+		maps = new Map[numberOfLevels];
 
 		maps[0] = new Map("res/map/mapProva.txt", true, "Village one");
 		maps[1] = new Map("res/map/village1.txt", false, "Village two");
@@ -67,7 +69,7 @@ public class World {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 
-		maps = new Map[2];
+		maps = new Map[numberOfLevels];
 		maps[0] = new Map(path, true, "Village one");
 		maps[1] = new Map(path, false, "Village two");
 		player = new Player(name, male);
@@ -89,20 +91,6 @@ public class World {
 	}
 
 	public void loadFromFile(Stack<String> list, String path) throws IOException {
-//		input = new Scanner(System.in);
-//		try {
-//			fileReader = new FileReader(path);
-//			input = new Scanner(fileReader);
-//			String line = input.nextLine();
-//			while (input.hasNextLine()) {
-//				line = input.nextLine();
-//				list.push(line);
-//			}
-//			input.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		
 		BufferedReader br = new BufferedReader(
 				new InputStreamReader(getClass().getClassLoader().getResourceAsStream(path)));
 		String line;
@@ -277,7 +265,10 @@ public class World {
 					battle = new Battle(player, ((BossHome) enemyHome).getEnemy());
 				} else {
 					player.collideGym = false;
-					player.textDialog = "You have defeated the village boss, now you expect other challenges";
+					if (level < numberOfLevels - 1)
+						player.textDialog = "You have defeated the village boss, now you expect other challenges";
+					else
+						player.textDialog = "You have defeated all enemies. Congratulations!!!";
 					nextLevel();
 				}
 

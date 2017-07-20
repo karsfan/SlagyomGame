@@ -19,10 +19,10 @@ public class Enemy extends Fighting {
 	};
 
 	public Weapon weapon;
-	public ArrayList<Bomb> bombs = new ArrayList<>();
+	public ArrayList<Bomb> bombs;
 	public Pack winBonus;
-	public boolean arrowShooted = false;
-	public ArrayList<Weapon> arrowsShooted = new ArrayList<Weapon>();
+	public boolean arrowShooted;
+	public ArrayList<Weapon> arrowsShooted;
 
 	public Pack getWin_bonus() {
 		return winBonus;
@@ -31,6 +31,9 @@ public class Enemy extends Fighting {
 	public Level level;
 
 	public Enemy(Enemy enemy) {
+		bombs = new ArrayList<>();
+		arrowShooted = false;
+		arrowsShooted = new ArrayList<Weapon>();
 		winBonus = enemy.winBonus;
 		x = 700;
 		y = GameConfig.mainY_Battle;
@@ -61,10 +64,14 @@ public class Enemy extends Fighting {
 			this.width = 200;
 		else
 			this.width = 120;
+
 	}
 
 	public Enemy(Level level) {
 		super();
+		bombs = new ArrayList<>();
+		arrowShooted = false;
+		arrowsShooted = new ArrayList<Weapon>();
 		this.level = level;
 		switch (level) {
 		case EASY:
@@ -245,7 +252,7 @@ public class Enemy extends Fighting {
 	public void launchBomb(float dt) {
 		if (left && !bombs.isEmpty()) {
 			int velocityy = 200;
-			
+
 			// calcolo della gittata
 			velocityy = (int) Math.sqrt(((x - Game.world.battle.character.getX()) * GameConfig.gravity)
 					/ ((2 * Math.cos(30 * (Math.PI / 180)) * Math.sin(90 * (Math.PI / 180)))));

@@ -20,9 +20,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public Bag bag;
 	public Weapon primary_weapon;
 	public boolean male;
-	public boolean arrowShooted = false;
-	public boolean soundBomb = false;
-	public ArrayList<Weapon> arrowsShooted = new ArrayList<Weapon>();
+	public boolean arrowShooted;
+	public boolean soundBomb;
+	public ArrayList<Weapon> arrowsShooted;
 
 	public CharacterBattle(Player player) {
 		super();
@@ -42,6 +42,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			this.width = 120;
 		right = true;
 		velocity = 100;
+		arrowShooted = false;
+		soundBomb = false;
+		arrowsShooted = new ArrayList<Weapon>();
 
 	}
 
@@ -207,7 +210,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 			velocityY = 100;
 			velocityX = 10;
 			setState(StateDynamicObject.JUMPING, dt);
-			
+
 		} else if (jumping && !doubleJumping) {
 			jumping = false;
 			doubleJumping = true;

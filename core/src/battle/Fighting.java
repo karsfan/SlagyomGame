@@ -13,12 +13,12 @@ public class Fighting extends DynamicObjects {
 	public boolean doubleJumping;
 	public float velocityY;
 	public float velocityX;
-	public int power = 50;
-	public boolean booleanLaunchBomb = false;
-	public boolean left = false;
-	public boolean right = true;
+	public int power;
+	public boolean booleanLaunchBomb;
+	public boolean left;
+	public boolean right;
 	public int health;
-	public boolean dead = false;
+	public boolean dead;
 
 	public Fighting() {
 		health = 300;
@@ -35,7 +35,11 @@ public class Fighting extends DynamicObjects {
 		doubleJumping = false;
 		velocityY = 0;
 		velocityX = 10;
-
+		booleanLaunchBomb = false;
+		left = false;
+		right = true;
+		dead = false;
+		power = 50;
 	}
 
 	public void decreaseHealth(Weapon weapon) {

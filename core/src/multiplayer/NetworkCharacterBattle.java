@@ -15,11 +15,11 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	public boolean player = false;
 	public int ID;
 	public int IDOtherPlayer;
-	public boolean fightingLeft = false;
-	public boolean fightingRight = false;
+	public boolean fightingLeft;
+	public boolean fightingRight;
 	public Bomb bomb;
-	public boolean booleanLaunchBomb = false;
-	public boolean weaponChanged = false;
+	public boolean booleanLaunchBomb;
+	public boolean weaponChanged;
 
 	public NetworkCharacterBattle(NetworkPlayer player) {
 		super(player);
@@ -31,29 +31,10 @@ public class NetworkCharacterBattle extends CharacterBattle {
 		bag.add(new Bomb(Level.lev1, Type.Bomb));
 		bag.add(new Bomb(Level.lev1, Type.Bomb));
 		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
-		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		fightingLeft = false;
+		fightingRight = false;
+		booleanLaunchBomb = false;
+		weaponChanged = false;
 	}
 
 	@Override
@@ -61,7 +42,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += dt;
 			if (fightingTimeCurrent >= fightingTime / 2 && primary_weapon.getType() == Type.Bow)
-				if (!arrowShooted){
+				if (!arrowShooted) {
 					shootArrow();
 					arrowShooted = true;
 				}
@@ -72,7 +53,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 			arrowShooted = false;
 			fightingLeft = false;
 			fightingRight = false;
-			//setState(StateDynamicObject.STANDING, dt);
+			// setState(StateDynamicObject.STANDING, dt);
 		}
 		dt = 0.35f;
 		if ((jumping || doubleJumping) && y + velocityY * dt > GameConfig.mainY_Battle) {
@@ -215,7 +196,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 			setStateTimer(getStateTimer() + dt);
 		else
 			setStateTimer(0);
-		if(state == StateDynamicObject.JUMPING)
+		if (state == StateDynamicObject.JUMPING)
 			setStateTimer(0);
 	}
 
@@ -232,7 +213,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 					ob.id = String.valueOf(ID);
 				else
 					ob.id = "Player";
-				
+
 				break;
 			}
 		}
@@ -260,7 +241,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 				System.out.println("potion non assegnata");
 				break;
 			}
-			
+
 		}
 	}
 

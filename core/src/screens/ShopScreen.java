@@ -65,7 +65,7 @@ public class ShopScreen implements Screen, ControllerListener {
 	private Label coins;
 	Label textTable;
 	boolean buying;
-	boolean selectionWeapon = false;
+	boolean selectionWeapon;
 	Weapon weaponSelected;
 	TextButton[] parchments;
 	TextButton buyButton;
@@ -78,8 +78,8 @@ public class ShopScreen implements Screen, ControllerListener {
 
 	// Variables for cash-scaling animation
 	int refreshedCoins;
-	float coinsTimer = 0;
-	boolean scaling = false;
+	float coinsTimer;
+	boolean scaling;
 	public Item itemSelected;
 	Label potionsLabel;
 	TextButton[] potions;
@@ -95,6 +95,9 @@ public class ShopScreen implements Screen, ControllerListener {
 
 	@SuppressWarnings("static-access")
 	public ShopScreen(final GameSlagyom game) {
+		selectionWeapon = false;
+		scaling = false;
+		coinsTimer = 0;
 		this.game = game;
 
 		// SCREEN INITIALIZING

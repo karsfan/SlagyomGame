@@ -15,8 +15,6 @@ public class Woman extends DynamicObjects implements ICollidable {
 	};
 
 	public String name;
-	public int mainX;
-	public int mainY;
 	public String info;
 	public boolean collision;
 	public boolean collisionWithCharacter;
@@ -38,8 +36,6 @@ public class Woman extends DynamicObjects implements ICollidable {
 		while (!positionMan())
 			;
 
-		mainX = 100;
-		mainY = 100;
 		velocity = 80;
 		name = World.womanNames.pop();
 		info = World.dialogues.pop();
@@ -67,8 +63,6 @@ public class Woman extends DynamicObjects implements ICollidable {
 			break;
 		}
 
-		mainX = 100;
-		mainY = 100;
 		velocity = 80;
 		name = World.womanNames.pop();
 		info = World.dialogues.pop();

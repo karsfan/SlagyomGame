@@ -22,7 +22,7 @@ public class NetworkWorld {
 
 	public NetworkWorld(String name) {
 		otherPlayers = new ArrayList<NetworkPlayer>();
-		map = new Map(getClass().getResource("/res/map/village1.txt").getPath(), true, "Village");
+		map = new Map("res/map/village1.txt", true, "Village");
 		player = new NetworkPlayer(name);
 		player.coins = 100;
 	}

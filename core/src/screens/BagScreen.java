@@ -426,19 +426,19 @@ public class BagScreen implements Screen, ControllerListener {
 	protected void clickBombFirst() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb);
-		weaponSelected = new Weapon(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
+		weaponSelected = new Weapon(character.Weapon.Level.lev1, character.Weapon.Type.Bomb);
 	}
 
 	protected void clickBombSecond() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb);
-		weaponSelected = new Weapon(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
+		weaponSelected = new Weapon(character.Weapon.Level.lev2, character.Weapon.Type.Bomb);
 	}
 
 	protected void clickBombThird() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb);
-		weaponSelected = new Weapon(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
+		weaponSelected = new Weapon(character.Weapon.Level.lev3, character.Weapon.Type.Bomb);
 	}
 
 	protected void clickPotionFirst() {

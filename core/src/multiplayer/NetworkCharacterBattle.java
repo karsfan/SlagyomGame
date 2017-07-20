@@ -18,7 +18,7 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	public boolean fightingLeft = false;
 	public boolean fightingRight = false;
 	public Bomb bomb;
-	public boolean bombaLanciata = false;
+	public boolean booleanLaunchBomb = false;
 	public boolean weaponChanged = false;
 
 	public NetworkCharacterBattle(NetworkPlayer player) {
@@ -26,34 +26,34 @@ public class NetworkCharacterBattle extends CharacterBattle {
 		this.player = player.player;
 		this.ID = player.ID;
 		this.IDOtherPlayer = player.IDOtherPlayer;
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
-		bag.add(new Bomb(Level.lev1, Type.Bomba));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
+		bag.add(new Bomb(Level.lev1, Type.Bomb));
 	}
 
 	@Override
@@ -111,7 +111,6 @@ public class NetworkCharacterBattle extends CharacterBattle {
 				((Bomb) ob).update(dt);
 				if (ob.dead) {
 					it1.remove();
-					// System.out.println("Bomba player eliminata");
 					continue;
 				}
 			}
@@ -223,17 +222,17 @@ public class NetworkCharacterBattle extends CharacterBattle {
 	public void launch() {
 		Iterator<Bomb> itBomb = bag.bombe.iterator();
 		while (itBomb.hasNext()) {
-			Bomb bomba = (Bomb) itBomb.next();
-			if (!bomba.launched) {
-				bomba.launched = true;
-				bomb = bomba;
-				bomba.launch(power, this);
-				bombaLanciata = true;
+			Bomb ob = (Bomb) itBomb.next();
+			if (!ob.launched) {
+				ob.launched = true;
+				bomb = ob;
+				ob.launch(power, this);
+				booleanLaunchBomb = true;
 				if (Client.networkWorld.battle.enemy instanceof NetworkCharacterBattle)
-					bomba.id = String.valueOf(ID);
+					ob.id = String.valueOf(ID);
 				else
-					bomba.id = "Player";
-				// System.out.println(bomba.lanciata);
+					ob.id = "Player";
+				
 				break;
 			}
 		}

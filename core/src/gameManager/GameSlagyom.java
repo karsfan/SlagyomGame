@@ -132,17 +132,17 @@ public class GameSlagyom extends Game {
 			}
 
 			for (int i = 0; i < prefs.getInteger("BOMB1"); i++) {
-				Bomb bomb = new Bomb(character.Weapon.Level.lev1, Type.Bomba);
+				Bomb bomb = new Bomb(character.Weapon.Level.lev1, Type.Bomb);
 				world.Game.world.player.bag.add(bomb);
 			}
 
 			for (int i = 0; i < prefs.getInteger("BOMB2"); i++) {
-				Bomb bomb = new Bomb(character.Weapon.Level.lev2, Type.Bomba);
+				Bomb bomb = new Bomb(character.Weapon.Level.lev2, Type.Bomb);
 				world.Game.world.player.bag.add(bomb);
 			}
 
 			for (int i = 0; i < prefs.getInteger("BOMB3"); i++) {
-				Bomb bomb = new Bomb(character.Weapon.Level.lev3, Type.Bomba);
+				Bomb bomb = new Bomb(character.Weapon.Level.lev3, Type.Bomb);
 				world.Game.world.player.bag.add(bomb);
 			}
 			world.Game.world.player.primary_weapon = new Weapon(prefs.getString("PrimaryWeapon"),

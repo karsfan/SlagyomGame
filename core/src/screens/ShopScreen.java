@@ -485,20 +485,20 @@ public class ShopScreen implements Screen, ControllerListener {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 		setBuyingTable();
-		weaponSelected = new Bomb(character.Weapon.Level.lev3, character.Weapon.Type.Bomba);
+		weaponSelected = new Bomb(character.Weapon.Level.lev3, character.Weapon.Type.Bomb);
 	}
 
 	protected void clickBombSecond() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 		setBuyingTable();
-		weaponSelected = new Bomb(character.Weapon.Level.lev2, character.Weapon.Type.Bomba);
+		weaponSelected = new Bomb(character.Weapon.Level.lev2, character.Weapon.Type.Bomb);
 	}
 
 	protected void clickBombFirst() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
-		weaponSelected = new Bomb(character.Weapon.Level.lev1, character.Weapon.Type.Bomba);
+		weaponSelected = new Bomb(character.Weapon.Level.lev1, character.Weapon.Type.Bomb);
 		setBuyingTable();
 	}
 

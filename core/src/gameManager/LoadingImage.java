@@ -104,20 +104,11 @@ public class LoadingImage {
 	public TextureRegion man1Stand;
 	public Animation<TextureRegion>[] man1Animation;
 
-	// private static TextureRegion man2Stand;
-	public Animation<TextureRegion>[] man2Animation;
-
-	// private static TextureRegion man3Stand;
-	public Animation<TextureRegion>[] man3Animation;
-
 	public TextureRegion woman1Stand;
 	public Animation<TextureRegion>[] woman1Animation;
 
 	private TextureRegion woman2Stand;
 	public Animation<TextureRegion>[] woman2Animation;
-
-	// private static TextureRegion woman3Stand;
-	public Animation<TextureRegion>[] woman3Animation;
 
 	public Animation<TextureRegion>[] otherPlayerAnimation;
 	public TextureRegion otherPlayerStand;
@@ -245,11 +236,8 @@ public class LoadingImage {
 		playerAnimation = new Animation[4];
 		otherPlayerAnimation = new Animation[4];
 		man1Animation = new Animation[4];
-		man2Animation = new Animation[4];
-		man3Animation = new Animation[4];
 		woman1Animation = new Animation[4];
 		woman2Animation = new Animation[4];
-		woman3Animation = new Animation[4];
 
 		playerStand = new TextureRegion();
 		battleCharacterStand = new TextureRegion();
@@ -697,7 +685,6 @@ public class LoadingImage {
 				}
 
 			}
-			// animation = enemyAnimation;
 			break;
 		case "Enemy":
 			if (((Enemy) ob).weapon.getType() == Type.Spear) {

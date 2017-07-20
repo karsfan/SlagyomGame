@@ -7,7 +7,7 @@ import staticObjects.StaticObject.Element;
 
 public class Weapon {
 	public enum Type {
-		Sword, Bow, Spear, Freccia, Bomba
+		Sword, Bow, Spear, Freccia, Bomb
 	};
 
 	public enum Level {
@@ -38,7 +38,7 @@ public class Weapon {
 			width = 15;
 			height = 5;
 			break;
-		case Bomba:
+		case Bomb:
 			setWeapon(type, level);
 			break;
 		default:
@@ -214,7 +214,7 @@ public class Weapon {
 			}
 			break;
 
-		case Bomba:
+		case Bomb:
 			switch (level) {
 			case lev1:
 				damage = 8;

@@ -52,10 +52,10 @@ public class Enemy extends Fighting {
 		doubleJumping = false;
 		velocityY = 0;
 		velocityX = 10;
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomb));
 		if (weapon.getType() == Type.Sword || (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev2)
 				|| (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev3))
 			this.width = 200;
@@ -73,9 +73,9 @@ public class Enemy extends Fighting {
 			health = 100;
 			winBonus = new Pack(Level.EASY);
 			velocity = 40;
-			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
+			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
+			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
 			break;
 		case MEDIUM:
 			name = "John";
@@ -83,18 +83,18 @@ public class Enemy extends Fighting {
 			health = 250;
 			winBonus = new Pack(Level.MEDIUM);
 			velocity = 60;
-			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
-			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
-			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomb));
+			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomb));
+			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomb));
 			break;
 		case HARD:
 			name = "Mike";
 			weapon = new Weapon(character.Weapon.Level.lev3);
 			health = 400;
 			winBonus = new Pack(Level.HARD);
-			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
-			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
-			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomba));
+			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomb));
+			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomb));
+			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomb));
 			velocity = 80;
 			break;
 		default:
@@ -105,9 +105,9 @@ public class Enemy extends Fighting {
 		x = 700;
 		y = GameConfig.mainY_Battle;
 
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomba));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
 		if (weapon.getType() == Type.Sword || (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev2)
 				|| (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev3))
 			this.width = 200;
@@ -232,17 +232,17 @@ public class Enemy extends Fighting {
 				fightRight();
 		} else if (Game.world.battle.character.getX() > x && rand < 90) {
 			if (rand > 75 && rand < 80)
-				lanciaBomb(dt);
+				launchBomb(dt);
 			movesRight(dt);
 		} else if (x > Game.world.battle.character.getX() && rand < 90) {
 			if (rand > 75 && rand < 80)
-				lanciaBomb(dt);
+				launchBomb(dt);
 			movesLeft(dt);
 		}
 
 	}
 
-	public void lanciaBomb(float dt) {
+	public void launchBomb(float dt) {
 		if (left && !bombs.isEmpty()) {
 			int velocityy = 200;
 			
@@ -268,12 +268,6 @@ public class Enemy extends Fighting {
 				if (!ob.launched) {
 					ob.launch(velocityy, this);
 					ob.id = "Enemy";
-					// System.out.println("bomba lanciata dal nemico");
-					// System.out.println((2 * velocityy * velocityy *
-					// Math.cos(30 * (Math.PI / 180))
-					// * Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
-					// System.out.println(Game.world.battle.character.getX()+
-					// width/3 - x);
 					break;
 				}
 			}
@@ -305,13 +299,13 @@ public class Enemy extends Fighting {
 
 		} else if (Game.world.battle.character.getX() > x && rand <= 70) {
 			if (rand > 68 && rand <= 70)
-				lanciaBomb(dt);
+				launchBomb(dt);
 			movesRight(dt);
 		}
 
 		else if (x > Game.world.battle.character.getX() && rand <= 70) {
 			if (rand > 68 && rand <= 70)
-				lanciaBomb(dt);
+				launchBomb(dt);
 			movesLeft(dt);
 		}
 	}
@@ -339,11 +333,11 @@ public class Enemy extends Fighting {
 				fightRight();
 		} else if (Game.world.battle.character.getX() > x && rand <= 50) {
 			if (rand == 50)
-				lanciaBomb(dt);
+				launchBomb(dt);
 			movesRight(dt);
 		} else if (x > Game.world.battle.character.getX() && rand <= 50) {
 			if (rand == 50)
-				lanciaBomb(dt);
+				launchBomb(dt);
 			movesLeft(dt);
 		}
 

@@ -94,7 +94,6 @@ public class Item extends StaticObject {
 			}
 			break;
 		default:
-			System.out.println("QUO");
 			break;
 		}
 	}

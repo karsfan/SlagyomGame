@@ -265,18 +265,18 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		health -= weapon.getDamage();
 	}
 
-	public void caricaBomba(float dt) {
+	public void chargeBomb(float dt) {
 		power += 100 * dt;
 	}
 
 	public void launch() {
 		Iterator<Bomb> itBomb = bag.bombe.iterator();
 		while (itBomb.hasNext()) {
-			Bomb bomba = (Bomb) itBomb.next();
-			if (!bomba.launched) {
-				bomba.launched = true;
-				bomba.launch(power, this);
-				bomba.id = "Player";
+			Bomb ob = (Bomb) itBomb.next();
+			if (!ob.launched) {
+				ob.launched = true;
+				ob.launch(power, this);
+				ob.id = "Player";
 				break;
 			}
 		}

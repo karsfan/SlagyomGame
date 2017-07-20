@@ -249,13 +249,13 @@ public class BattleScreen implements Screen, ControllerListener {
 			buttonPressed = false;
 		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE) || (buttonPressed && buttonCodePressed == 5)) {
-			battle.character.caricaBomba(dt);
-			battle.character.lanciaBomba = true;
+			battle.character.chargeBomb(dt);
+			battle.character.booleanLaunchBomb = true;
 		} else {
-			if (battle.character.lanciaBomba) {
+			if (battle.character.booleanLaunchBomb) {
 				battle.character.launch();
 				buttonPressed = false;
-				battle.character.lanciaBomba = false;
+				battle.character.booleanLaunchBomb = false;
 				battle.character.power = 50;
 			}
 			if (Gdx.input.isKeyJustPressed(Keys.UP) || (movesGamePad && directionGamePad == PovDirection.north)) {

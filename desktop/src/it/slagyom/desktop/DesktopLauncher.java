@@ -1,7 +1,5 @@
 package it.slagyom.desktop;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;

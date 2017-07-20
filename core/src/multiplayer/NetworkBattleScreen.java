@@ -281,14 +281,14 @@ public class NetworkBattleScreen extends BattleScreen {
 			}
 		}
 		if (Gdx.input.isKeyPressed(Keys.SPACE) || (buttonPressed && buttonCodePressed == 5)) {
-			battle.character.caricaBomba(dt);
-			battle.character.lanciaBomba = true;
+			battle.character.chargeBomb(dt);
+			battle.character.booleanLaunchBomb = true;
 		} else {
-			if (battle.character.lanciaBomba) {
+			if (battle.character.booleanLaunchBomb) {
 				battle.character.launch();
 				buttonPressed = false;
 				if (battle.enemy instanceof NetworkCharacterBattle) {
-					if (((NetworkCharacterBattle) battle.character).bombaLanciata) {
+					if (((NetworkCharacterBattle) battle.character).booleanLaunchBomb) {
 						client.writer.println(3 + " " + ((NetworkCharacterBattle) battle.character).ID + " "
 								+ battle.character.getX() + " " + battle.character.power + " "
 								+ ((NetworkCharacterBattle) battle.character).bomb.level + ";"
@@ -296,9 +296,9 @@ public class NetworkBattleScreen extends BattleScreen {
 						client.writer.flush();
 					}
 				}
-				battle.character.lanciaBomba = false;
+				battle.character.booleanLaunchBomb = false;
 				battle.character.power = 50;
-				((NetworkCharacterBattle) battle.character).bombaLanciata = false;
+				((NetworkCharacterBattle) battle.character).booleanLaunchBomb = false;
 			} else if (Gdx.input.isKeyJustPressed(Keys.UP)
 					|| (movesGamePad && directionGamePad == PovDirection.north)) {
 				battle.character.jump(dt);

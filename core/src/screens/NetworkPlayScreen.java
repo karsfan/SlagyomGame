@@ -1,4 +1,4 @@
-package multiplayer;
+package screens;
 
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -14,7 +14,8 @@ import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
 import hud.Hud;
-import screens.PlayScreen;
+import multiplayer.Client;
+import multiplayer.NetworkPlayer;
 import staticObjects.Item;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;

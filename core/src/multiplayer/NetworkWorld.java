@@ -16,7 +16,7 @@ import world.Map;
 
 public class NetworkWorld {
 	public NetworkPlayer player;
-	ArrayList<NetworkPlayer> otherPlayers;
+	public ArrayList<NetworkPlayer> otherPlayers;
 	public Map map;
 	public Battle battle;
 

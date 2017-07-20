@@ -1,4 +1,4 @@
-package multiplayer;
+package screens;
 
 import java.util.Iterator;
 
@@ -18,8 +18,10 @@ import character.Weapon.Type;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
-import screens.BattleScreen;
-import screens.MenuScreen;
+import multiplayer.Client;
+import multiplayer.NetworkBattle;
+import multiplayer.NetworkCharacterBattle;
+import multiplayer.NetworkEnemy;
 import staticObjects.Item;
 import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;

@@ -26,7 +26,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
 import gameManager.ScreenManager.State;
-import multiplayer.NetworkPlayScreen;
 import world.GameConfig;
 
 public class PauseScreen implements Screen, ControllerListener {

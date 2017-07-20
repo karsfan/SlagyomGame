@@ -22,7 +22,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import gameManager.GameSlagyom;
 import gameManager.ScreenManager.State;
-import multiplayer.NetworkPlayScreen;
 import multiplayer.Server;
 import multiplayer.ServerThread;
 import world.GameConfig;

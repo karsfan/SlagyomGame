@@ -174,17 +174,17 @@ public class Weapon {
 			case lev1:
 				damage = 8;
 				width = 35;
-				price = 10;
+				price = 15;
 				break;
 			case lev2:
 				damage = 14;
 				width = 39;
-				price = 35;
+				price = 60;
 				break;
 			case lev3:
 				damage = 22;
 				width = 45;
-				price = 70;
+				price = 100;
 				break;
 			default:
 				break;
@@ -196,17 +196,17 @@ public class Weapon {
 			case lev1:
 				damage = 8;
 				width = 15;
-				price = 10;
+				price = 15;
 				break;
 			case lev2:
 				damage = 14;
 				width = 15;
-				price = 40;
+				price = 60;
 				break;
 			case lev3:
 				damage = 21;
 				width = 15;
-				price = 70;
+				price = 100;
 				break;
 			default:
 				break;

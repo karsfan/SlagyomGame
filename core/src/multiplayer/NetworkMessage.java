@@ -1,11 +1,11 @@
 package multiplayer;
 
 import character.DynamicObjects.StateDynamicObject;
-import character.Weapon;
-import character.Weapon.Level;
-import character.Weapon.Type;
-import staticObjects.Item;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Weapon.Level;
+import weaponsAndItems.Weapon.Type;
 
 public class NetworkMessage {
 	int action;

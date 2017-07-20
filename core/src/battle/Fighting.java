@@ -1,7 +1,7 @@
 package battle;
 
 import character.DynamicObjects;
-import character.Weapon;
+import weaponsAndItems.Weapon;
 
 public class Fighting extends DynamicObjects {
 

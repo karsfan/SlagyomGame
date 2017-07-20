@@ -21,15 +21,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import character.Weapon;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenConfig;
 import gameManager.ScreenManager.State;
 import multiplayer.Client;
-import staticObjects.Item;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Item.Level;
 import world.Game;
 import world.GameConfig;
 
@@ -426,19 +426,19 @@ public class BagScreen implements Screen, ControllerListener {
 	protected void clickBombFirst() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb);
-		weaponSelected = new Weapon(character.Weapon.Level.lev1, character.Weapon.Type.Bomb);
+		weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev1, weaponsAndItems.Weapon.Type.Bomb);
 	}
 
 	protected void clickBombSecond() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb);
-		weaponSelected = new Weapon(character.Weapon.Level.lev2, character.Weapon.Type.Bomb);
+		weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev2, weaponsAndItems.Weapon.Type.Bomb);
 	}
 
 	protected void clickBombThird() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb);
-		weaponSelected = new Weapon(character.Weapon.Level.lev3, character.Weapon.Type.Bomb);
+		weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev3, weaponsAndItems.Weapon.Type.Bomb);
 	}
 
 	protected void clickPotionFirst() {
@@ -756,23 +756,23 @@ public class BagScreen implements Screen, ControllerListener {
 	@SuppressWarnings("static-access")
 	public void setTextBomb() {
 		if (!game.modalityMultiplayer) {
-			bombs[0].setText("Bomb lev1   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
-			bombs[1].setText("Bomb lev2   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
-			bombs[2].setText("Bomb lev3   x" + Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
+			bombs[0].setText("Bomb lev1   x" + Game.world.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev1));
+			bombs[1].setText("Bomb lev2   x" + Game.world.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev2));
+			bombs[2].setText("Bomb lev3   x" + Game.world.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev3));
 		} else {
 			bombs[0].setText(
-					"Bomb lev1   x" + Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
+					"Bomb lev1   x" + Client.networkWorld.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev1));
 			bombs[1].setText(
-					"Bomb lev2   x" + Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
+					"Bomb lev2   x" + Client.networkWorld.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev2));
 			bombs[2].setText(
-					"Bomb lev3   x" + Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
+					"Bomb lev3   x" + Client.networkWorld.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev3));
 		}
 	}
 
 	@SuppressWarnings("static-access")
 	public void setPositionBomb() {
 		if (!game.modalityMultiplayer) {
-			if (Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1) <= 0) {
+			if (Game.world.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev1) <= 0) {
 				bombs[0].setVisible(false);
 				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
@@ -782,17 +782,17 @@ public class BagScreen implements Screen, ControllerListener {
 				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
 			}
-			if (Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2) <= 0) {
+			if (Game.world.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev2) <= 0) {
 				bombs[1].setVisible(false);
 				bombs[2].setPosition(ScreenConfig.tableBagX, bombs[1].getY());
 			} else
 				bombs[1].setVisible(true);
-			if (Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3) <= 0)
+			if (Game.world.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev3) <= 0)
 				bombs[2].setVisible(false);
 			else
 				bombs[2].setVisible(true);
 		} else {
-			if (Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev1) <= 0) {
+			if (Client.networkWorld.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev1) <= 0) {
 				bombs[0].setVisible(false);
 				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagFirstY);
 				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
@@ -802,12 +802,12 @@ public class BagScreen implements Screen, ControllerListener {
 				bombs[1].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagSecondY);
 				bombs[2].setPosition(ScreenConfig.tableBagX, ScreenConfig.tableBagThirdY);
 			}
-			if (Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev2) <= 0) {
+			if (Client.networkWorld.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev2) <= 0) {
 				bombs[1].setVisible(false);
 				bombs[2].setPosition(ScreenConfig.tableBagX, bombs[1].getY());
 			} else
 				bombs[1].setVisible(true);
-			if (Client.networkWorld.player.bag.getNumberOfBomb(character.Weapon.Level.lev3) <= 0)
+			if (Client.networkWorld.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev3) <= 0)
 				bombs[2].setVisible(false);
 			else
 				bombs[2].setVisible(true);

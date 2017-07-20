@@ -3,12 +3,12 @@ package multiplayer;
 import java.util.Iterator;
 
 import battle.CharacterBattle;
-import character.Bomb;
-import character.Weapon;
-import character.Weapon.Level;
-import character.Weapon.Type;
-import staticObjects.Item;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Bomb;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Weapon.Level;
+import weaponsAndItems.Weapon.Type;
 import world.GameConfig;
 
 public class NetworkCharacterBattle extends CharacterBattle {

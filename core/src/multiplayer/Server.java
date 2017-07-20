@@ -6,9 +6,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import staticObjects.Item;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
+import weaponsAndItems.Item.Level;
 
 public class Server {
 	public ArrayList<ServerHandler> connected;

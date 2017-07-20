@@ -9,11 +9,11 @@ import java.util.LinkedList;
 import battle.Enemy.Level;
 import staticObjects.EnemyHome;
 import staticObjects.BossHome;
-import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
 
 public class Map {
 	private LinkedList<StaticObject> listStaticObjects;

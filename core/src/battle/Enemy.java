@@ -5,10 +5,10 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 
-import character.Arrow;
-import character.Bomb;
-import character.Weapon;
-import character.Weapon.Type;
+import weaponsAndItems.Arrow;
+import weaponsAndItems.Bomb;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Weapon.Type;
 import world.Game;
 import world.GameConfig;
 
@@ -55,10 +55,10 @@ public class Enemy extends Fighting {
 		doubleJumping = false;
 		velocityY = 0;
 		velocityX = 10;
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
-		bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomb));
+		bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev2, Type.Bomb));
 		if (weapon.getType() == Type.Sword || (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev2)
 				|| (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev3))
 			this.width = 200;
@@ -76,32 +76,32 @@ public class Enemy extends Fighting {
 		switch (level) {
 		case EASY:
 			name = "Bob";
-			weapon = new Weapon(character.Weapon.Level.lev1);
+			weapon = new Weapon(weaponsAndItems.Weapon.Level.lev1);
 			health = 100;
 			winBonus = new Pack(Level.EASY);
 			velocity = 40;
-			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
-			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
-			bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
+			bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb));
+			bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb));
+			bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb));
 			break;
 		case MEDIUM:
 			name = "John";
-			weapon = new Weapon(character.Weapon.Level.lev2);
+			weapon = new Weapon(weaponsAndItems.Weapon.Level.lev2);
 			health = 250;
 			winBonus = new Pack(Level.MEDIUM);
 			velocity = 60;
-			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomb));
-			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomb));
-			bombs.add(new Bomb(character.Weapon.Level.lev2, Type.Bomb));
+			bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev2, Type.Bomb));
+			bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev2, Type.Bomb));
+			bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev2, Type.Bomb));
 			break;
 		case HARD:
 			name = "Mike";
-			weapon = new Weapon(character.Weapon.Level.lev3);
+			weapon = new Weapon(weaponsAndItems.Weapon.Level.lev3);
 			health = 400;
 			winBonus = new Pack(Level.HARD);
-			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomb));
-			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomb));
-			bombs.add(new Bomb(character.Weapon.Level.lev3, Type.Bomb));
+			bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev3, Type.Bomb));
+			bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev3, Type.Bomb));
+			bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev3, Type.Bomb));
 			velocity = 80;
 			break;
 		default:
@@ -112,9 +112,9 @@ public class Enemy extends Fighting {
 		x = 700;
 		y = GameConfig.mainY_Battle;
 
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
-		bombs.add(new Bomb(character.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb));
+		bombs.add(new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb));
 		if (weapon.getType() == Type.Sword || (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev2)
 				|| (weapon.getType() == Type.Spear && weapon.getLevel() == Weapon.Level.lev3))
 			this.width = 200;

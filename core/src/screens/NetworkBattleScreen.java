@@ -10,11 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import battle.Battle;
 import battle.Enemy;
-import character.Arrow;
-import character.Bomb;
 import character.DynamicObjects;
-import character.Weapon;
-import character.Weapon.Type;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
@@ -22,9 +18,13 @@ import multiplayer.Client;
 import multiplayer.NetworkBattle;
 import multiplayer.NetworkCharacterBattle;
 import multiplayer.NetworkEnemy;
-import staticObjects.Item;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Arrow;
+import weaponsAndItems.Bomb;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Item.Level;
+import weaponsAndItems.Weapon.Type;
 import world.GameConfig;
 
 public class NetworkBattleScreen extends BattleScreen {

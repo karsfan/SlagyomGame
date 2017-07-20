@@ -5,9 +5,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import character.Player;
-import character.Weapon;
-import character.Weapon.Level;
-import character.Weapon.Type;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Weapon.Level;
+import weaponsAndItems.Weapon.Type;
 
 public class Shop extends StaticObject {
 

@@ -16,9 +16,9 @@ import gameManager.ScreenManager.State;
 import hud.Hud;
 import multiplayer.Client;
 import multiplayer.NetworkPlayer;
-import staticObjects.Item;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
 import world.GameConfig;
 
 public class NetworkPlayScreen extends PlayScreen {

@@ -7,9 +7,9 @@ import battle.Battle;
 import battle.Enemy;
 import battle.Enemy.Level;
 import battle.Pack;
-import character.Arrow;
-import character.Weapon;
 import character.DynamicObjects.StateDynamicObject;
+import weaponsAndItems.Arrow;
+import weaponsAndItems.Weapon;
 import world.GameConfig;
 
 public class NetworkBattle extends Battle {

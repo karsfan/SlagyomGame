@@ -1,4 +1,4 @@
-package staticObjects;
+package weaponsAndItems;
 
 import java.awt.Rectangle;
 import java.util.Iterator;
@@ -7,6 +7,8 @@ import java.util.Random;
 import character.Player;
 import gameManager.GameSlagyom;
 import multiplayer.Client;
+import staticObjects.StaticObject;
+import staticObjects.StaticObject.Element;
 import world.Game;
 import world.GameConfig;
 

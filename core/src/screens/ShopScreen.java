@@ -23,17 +23,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import character.Bomb;
-import character.Weapon;
-import character.Weapon.Type;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenConfig;
 import gameManager.ScreenManager.State;
 import multiplayer.Client;
-import staticObjects.Item;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Bomb;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Item.Level;
+import weaponsAndItems.Weapon.Type;
 import world.Game;
 import world.GameConfig;
 
@@ -403,21 +403,21 @@ public class ShopScreen implements Screen, ControllerListener {
 		lev1.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Bow);
+				weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev1, Type.Bow);
 				clickBuyButton();
 			}
 		});
 		lev2.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Bow);
+				weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev2, Type.Bow);
 				clickBuyButton();
 			}
 		});
 		lev3.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Bow);
+				weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev3, Type.Bow);
 				clickBuyButton();
 			}
 		});
@@ -432,21 +432,21 @@ public class ShopScreen implements Screen, ControllerListener {
 		lev1.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Spear);
+				weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev1, Type.Spear);
 				clickBuyButton();
 			}
 		});
 		lev2.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Spear);
+				weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev2, Type.Spear);
 				clickBuyButton();
 			}
 		});
 		lev3.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Spear);
+				weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev3, Type.Spear);
 				clickBuyButton();
 			}
 		});
@@ -463,21 +463,21 @@ public class ShopScreen implements Screen, ControllerListener {
 		lev1.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Sword);
+				weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev1, Type.Sword);
 				clickBuyButton();
 			}
 		});
 		lev2.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Sword);
+				weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev2, Type.Sword);
 				clickBuyButton();
 			}
 		});
 		lev3.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Sword);
+				weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev3, Type.Sword);
 				clickBuyButton();
 			}
 		});
@@ -488,20 +488,20 @@ public class ShopScreen implements Screen, ControllerListener {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 		setBuyingTable();
-		weaponSelected = new Bomb(character.Weapon.Level.lev3, character.Weapon.Type.Bomb);
+		weaponSelected = new Bomb(weaponsAndItems.Weapon.Level.lev3, weaponsAndItems.Weapon.Type.Bomb);
 	}
 
 	protected void clickBombSecond() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
 		setBuyingTable();
-		weaponSelected = new Bomb(character.Weapon.Level.lev2, character.Weapon.Type.Bomb);
+		weaponSelected = new Bomb(weaponsAndItems.Weapon.Level.lev2, weaponsAndItems.Weapon.Type.Bomb);
 	}
 
 	protected void clickBombFirst() {
 		game.loadingMusic.selectionSound.play(GameConfig.musicVolume);
 		showInfo(LoadingImage.bomb, LoadingImage.bombDescription);
-		weaponSelected = new Bomb(character.Weapon.Level.lev1, character.Weapon.Type.Bomb);
+		weaponSelected = new Bomb(weaponsAndItems.Weapon.Level.lev1, weaponsAndItems.Weapon.Type.Bomb);
 		setBuyingTable();
 	}
 
@@ -955,27 +955,27 @@ public class ShopScreen implements Screen, ControllerListener {
 					clickReturnButton();
 				if (buttonSelected == weapons[0]) {
 					if (buttonLevelSelected == lev1)
-						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Sword);
+						weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev1, Type.Sword);
 					else if (buttonLevelSelected == lev2)
-						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Sword);
+						weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev2, Type.Sword);
 					else if (buttonLevelSelected == lev3)
-						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Sword);
+						weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev3, Type.Sword);
 					clickBuyButton();
 				} else if (buttonSelected == weapons[1]) {
 					if (buttonLevelSelected == lev1)
-						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Spear);
+						weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev1, Type.Spear);
 					else if (buttonLevelSelected == lev2)
-						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Spear);
+						weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev2, Type.Spear);
 					else if (buttonLevelSelected == lev3)
-						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Spear);
+						weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev3, Type.Spear);
 					clickBuyButton();
 				} else if (buttonSelected == weapons[2]) {
 					if (buttonLevelSelected == lev1)
-						weaponSelected = new Weapon(character.Weapon.Level.lev1, Type.Bow);
+						weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev1, Type.Bow);
 					else if (buttonLevelSelected == lev2)
-						weaponSelected = new Weapon(character.Weapon.Level.lev2, Type.Bow);
+						weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev2, Type.Bow);
 					else if (buttonLevelSelected == lev3)
-						weaponSelected = new Weapon(character.Weapon.Level.lev3, Type.Bow);
+						weaponSelected = new Weapon(weaponsAndItems.Weapon.Level.lev3, Type.Bow);
 					clickBuyButton();
 				}
 			}

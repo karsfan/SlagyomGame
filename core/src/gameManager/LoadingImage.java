@@ -17,15 +17,15 @@ import character.DynamicObjects;
 import character.Woman;
 import character.DynamicObjects.StateDynamicObject;
 import character.Player;
-import character.Weapon.Type;
 import character.Woman.WomanType;
 import multiplayer.NetworkCharacterBattle;
 import multiplayer.NetworkEnemy;
 import multiplayer.NetworkPlayer;
-import staticObjects.Item;
 import staticObjects.StaticObject;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
+import weaponsAndItems.Item.Level;
+import weaponsAndItems.Weapon.Type;
 
 public class LoadingImage {
 	public Texture texture;
@@ -607,18 +607,18 @@ public class LoadingImage {
 		case "CharacterBattle":
 			if (((CharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
 				if (((CharacterBattle) ob).male) {
-					if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = battleCharacterAnimationSpearLev1;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = battleCharacterAnimationSpearLev2;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = battleCharacterAnimationSpearLev3;
 				} else {
-					if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = battleFemaleCharacterAnimationSpearLev1;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = battleFemaleCharacterAnimationSpearLev2;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = battleFemaleCharacterAnimationSpearLev3;
 				}
 
@@ -629,18 +629,18 @@ public class LoadingImage {
 					animation = battleFemaleCharacterAnimationSwordLev1;
 			} else if (((CharacterBattle) ob).primary_weapon.getType() == Type.Bow) {
 				if (((CharacterBattle) ob).male) {
-					if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = battleCharacterAnimationBowLev1;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = battleCharacterAnimationBowLev2;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = battleCharacterAnimationBowLev3;
 				} else {
-					if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = battleFemaleAnimationBowLev1;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = battleFemaleAnimationBowLev2;
-					else if (((CharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((CharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = battleFemaleAnimationBowLev3;
 				}
 			}
@@ -649,38 +649,38 @@ public class LoadingImage {
 			// se sono il player
 			if (((NetworkCharacterBattle) ob).player) {
 				if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
-					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = battleCharacterAnimationSpearLev1;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = battleCharacterAnimationSpearLev2;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = battleCharacterAnimationSpearLev3;
 				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
 					animation = battleCharacterAnimationSwordLev1;
 				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Bow) {
-					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = battleCharacterAnimationBowLev1;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = battleCharacterAnimationBowLev2;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = battleCharacterAnimationBowLev3;
 				}
 			} else {// se sono l'oggetto da diseganre è l'avversario
 				if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
-					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = enemyAnimationSpearLev1;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = enemyAnimationSpearLev2;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = enemyAnimationSpearLev3;
 				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Sword) {
 					animation = enemyAnimationSword;
 				} else if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Bow) {
-					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = enemyAnimationBowLev1;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = enemyAnimationBowLev2;
-					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = enemyAnimationBowLev3;
 				}
 
@@ -688,59 +688,59 @@ public class LoadingImage {
 			break;
 		case "Enemy":
 			if (((Enemy) ob).weapon.getType() == Type.Spear) {
-				if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+				if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 					animation = enemyAnimationSpearLev1;
-				else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+				else if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 					animation = enemyAnimationSpearLev2;
-				else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+				else if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 					animation = enemyAnimationSpearLev3;
 			} else if (((Enemy) ob).weapon.getType() == Type.Sword) {
 				animation = enemyAnimationSword;
 			} else if (((Enemy) ob).weapon.getType() == Type.Bow) {
-				if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+				if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 					animation = enemyAnimationBowLev1;
-				else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+				else if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 					animation = enemyAnimationBowLev2;
-				else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+				else if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 					animation = enemyAnimationBowLev3;
 			}
 			break;
 		case "NetworkEnemy":
 			if (((NetworkEnemy) ob).weapon.getType() == Type.Spear) {
-				if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+				if (((NetworkEnemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 					animation = enemyAnimationSpearLev1;
-				else if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+				else if (((NetworkEnemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 					animation = enemyAnimationSpearLev2;
-				else if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+				else if (((NetworkEnemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 					animation = enemyAnimationSpearLev3;
 			} else if (((NetworkEnemy) ob).weapon.getType() == Type.Sword) {
 				animation = enemyAnimationSword;
 			} else if (((NetworkEnemy) ob).weapon.getType() == Type.Bow) {
-				if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+				if (((NetworkEnemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 					animation = enemyAnimationBowLev1;
-				else if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+				else if (((NetworkEnemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 					animation = enemyAnimationBowLev2;
-				else if (((NetworkEnemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+				else if (((NetworkEnemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 					animation = enemyAnimationBowLev3;
 			}
 			break;
 		default:
 			if (ob instanceof Enemy) {
 				if (((Enemy) ob).weapon.getType() == Type.Spear) {
-					if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = enemyAnimationSpearLev1;
-					else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = enemyAnimationSpearLev2;
-					else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = enemyAnimationSpearLev3;
 				} else if (((Enemy) ob).weapon.getType() == Type.Sword) {
 					animation = enemyAnimationSword;
 				} else if (((Enemy) ob).weapon.getType() == Type.Bow) {
-					if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev1)
+					if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = enemyAnimationBowLev1;
-					else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev2)
+					else if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev2)
 						animation = enemyAnimationBowLev2;
-					else if (((Enemy) ob).weapon.getLevel() == character.Weapon.Level.lev3)
+					else if (((Enemy) ob).weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = enemyAnimationBowLev3;
 				}
 			} else

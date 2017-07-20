@@ -3,9 +3,9 @@ package battle;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 
-import character.Arrow;
 import character.Player;
-import character.Weapon;
+import weaponsAndItems.Arrow;
+import weaponsAndItems.Weapon;
 import world.Game;
 import world.GameConfig;
 

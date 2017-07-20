@@ -4,15 +4,17 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 
-import character.Weapon.Level;
-import character.Weapon.Type;
 import staticObjects.EnemyHome;
 import staticObjects.BossHome;
-import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Bag;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Weapon.Level;
+import weaponsAndItems.Weapon.Type;
 import world.Game;
 import world.GameConfig;
 import world.ICollidable;

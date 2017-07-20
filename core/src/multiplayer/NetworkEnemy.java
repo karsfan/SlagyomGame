@@ -3,8 +3,8 @@ package multiplayer;
 import java.util.Iterator;
 
 import battle.Enemy;
-import character.Bomb;
-import character.Weapon.Type;
+import weaponsAndItems.Bomb;
+import weaponsAndItems.Weapon.Type;
 import world.GameConfig;
 
 public class NetworkEnemy extends Enemy {

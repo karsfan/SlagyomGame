@@ -15,7 +15,7 @@ public class StaticObject implements ICollidable {
 
 	protected Element element;
 	public Rectangle shape;
-	String info = " a";
+	public String info = " a";
 	public StaticObject() {
 		element = null;
 		shape = new Rectangle();

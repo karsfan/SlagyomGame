@@ -3,8 +3,8 @@ package battle;
 import java.util.ArrayList;
 
 import battle.Enemy.Level;
-import staticObjects.Item;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
 
 public class Pack {
 	public ArrayList<Item> items;
@@ -48,31 +48,31 @@ public class Pack {
 		case "POTIONLEV1":
 			for (int i = 0; i < items.size(); i++)
 				if (items.get(i).getElement() == Element.POTION
-						&& items.get(i).getLevel() == staticObjects.Item.Level.FIRST)
+						&& items.get(i).getLevel() == weaponsAndItems.Item.Level.FIRST)
 					number++;
 			break;
 		case "POTIONLEV2":
 			for (int i = 0; i < items.size(); i++)
 				if (items.get(i).getElement() == Element.POTION
-						&& items.get(i).getLevel() == staticObjects.Item.Level.SECOND)
+						&& items.get(i).getLevel() == weaponsAndItems.Item.Level.SECOND)
 					number++;
 			break;
 		case "POTIONLEV3":
 			for (int i = 0; i < items.size(); i++)
 				if (items.get(i).getElement() == Element.POTION
-						&& items.get(i).getLevel() == staticObjects.Item.Level.THIRD)
+						&& items.get(i).getLevel() == weaponsAndItems.Item.Level.THIRD)
 					number++;
 			break;
 		case "PARCHLEV1":
 			for (int i = 0; i < items.size(); i++)
 				if (items.get(i).getElement() == Element.PARCHMENT
-						&& items.get(i).getLevel() == staticObjects.Item.Level.FIRST)
+						&& items.get(i).getLevel() == weaponsAndItems.Item.Level.FIRST)
 					number++;
 			break;
 		case "PARCHLEV2":
 			for (int i = 0; i < items.size(); i++)
 				if (items.get(i).getElement() == Element.PARCHMENT
-						&& items.get(i).getLevel() == staticObjects.Item.Level.SECOND)
+						&& items.get(i).getLevel() == weaponsAndItems.Item.Level.SECOND)
 					number++;
 			break;
 		}

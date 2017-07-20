@@ -18,10 +18,10 @@ import character.Woman;
 import screens.PlayScreen;
 import staticObjects.BossHome;
 import staticObjects.EnemyHome;
-import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
 
 public class World {
 

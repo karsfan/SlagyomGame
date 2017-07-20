@@ -2,18 +2,18 @@ package multiplayer;
 
 import java.util.Iterator;
 
-import character.Bag;
-import character.Weapon;
 import character.Player;
-import character.Weapon.Level;
-import character.Weapon.Type;
 import staticObjects.BossHome;
 import staticObjects.EnemyHome;
-import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.Shop;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Bag;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Weapon.Level;
+import weaponsAndItems.Weapon.Type;
 
 public class NetworkPlayer extends Player {
 

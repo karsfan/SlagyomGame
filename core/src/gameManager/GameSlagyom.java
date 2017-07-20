@@ -7,17 +7,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import character.Bomb;
 import character.DynamicObjects;
 import character.Man;
-import character.Weapon;
-import character.Weapon.Type;
 import character.Woman;
 import gameManager.ScreenManager.State;
 import screens.PlayScreen;
-import staticObjects.Item;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Bomb;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Item.Level;
+import weaponsAndItems.Weapon.Type;
 
 public class GameSlagyom extends Game {
 
@@ -77,9 +77,9 @@ public class GameSlagyom extends Game {
 		prefs.putInteger("POTION3", world.Game.world.player.bag.getNumberOf(Element.POTION, Level.THIRD));
 		prefs.putInteger("PARCHMENT1", world.Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.FIRST));
 		prefs.putInteger("PARCHMENT2", world.Game.world.player.bag.getNumberOf(Element.PARCHMENT, Level.SECOND));
-		prefs.putInteger("BOMB1", world.Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev1));
-		prefs.putInteger("BOMB2", world.Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev2));
-		prefs.putInteger("BOMB3", world.Game.world.player.bag.getNumberOfBomb(character.Weapon.Level.lev3));
+		prefs.putInteger("BOMB1", world.Game.world.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev1));
+		prefs.putInteger("BOMB2", world.Game.world.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev2));
+		prefs.putInteger("BOMB3", world.Game.world.player.bag.getNumberOfBomb(weaponsAndItems.Weapon.Level.lev3));
 		prefs.putString("PrimaryWeapon", world.Game.world.player.primary_weapon.getType().toString());
 		prefs.putString("PrimaryWeaponLevel", world.Game.world.player.primary_weapon.level.toString());
 		if (world.Game.world.player.bag.secondary_weapon != null) {
@@ -132,17 +132,17 @@ public class GameSlagyom extends Game {
 			}
 
 			for (int i = 0; i < prefs.getInteger("BOMB1"); i++) {
-				Bomb bomb = new Bomb(character.Weapon.Level.lev1, Type.Bomb);
+				Bomb bomb = new Bomb(weaponsAndItems.Weapon.Level.lev1, Type.Bomb);
 				world.Game.world.player.bag.add(bomb);
 			}
 
 			for (int i = 0; i < prefs.getInteger("BOMB2"); i++) {
-				Bomb bomb = new Bomb(character.Weapon.Level.lev2, Type.Bomb);
+				Bomb bomb = new Bomb(weaponsAndItems.Weapon.Level.lev2, Type.Bomb);
 				world.Game.world.player.bag.add(bomb);
 			}
 
 			for (int i = 0; i < prefs.getInteger("BOMB3"); i++) {
-				Bomb bomb = new Bomb(character.Weapon.Level.lev3, Type.Bomb);
+				Bomb bomb = new Bomb(weaponsAndItems.Weapon.Level.lev3, Type.Bomb);
 				world.Game.world.player.bag.add(bomb);
 			}
 			world.Game.world.player.primary_weapon = new Weapon(prefs.getString("PrimaryWeapon"),

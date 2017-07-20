@@ -25,9 +25,9 @@ import character.Woman;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import hud.Hud;
-import staticObjects.Item;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
 import world.Game;
 import world.GameConfig;
 

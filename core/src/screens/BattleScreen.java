@@ -21,17 +21,17 @@ import battle.CharacterBattle;
 import battle.Enemy;
 import battle.Fighting;
 import battle.Pack;
-import character.Arrow;
-import character.Bomb;
-import character.Weapon;
-import character.Weapon.Type;
 import gameManager.GameSlagyom;
 import gameManager.LoadingImage;
 import gameManager.ScreenManager.State;
 import hud.BattleHud;
-import staticObjects.Item;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Arrow;
+import weaponsAndItems.Bomb;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Item.Level;
+import weaponsAndItems.Weapon.Type;
 import world.GameConfig;
 
 public class BattleScreen implements Screen, ControllerListener {

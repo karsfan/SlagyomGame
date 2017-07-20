@@ -5,9 +5,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import gameManager.GameSlagyom;
-import staticObjects.Item;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
+import weaponsAndItems.Item.Level;
 
 public class Client {
 	public static NetworkWorld networkWorld;

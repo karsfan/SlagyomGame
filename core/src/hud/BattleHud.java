@@ -16,12 +16,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import battle.Battle;
-import character.Weapon;
-import character.Weapon.Type;
 import gameManager.GameSlagyom;
 import screens.MenuScreen;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Item.Level;
+import weaponsAndItems.Weapon.Type;
 
 public class BattleHud {
 

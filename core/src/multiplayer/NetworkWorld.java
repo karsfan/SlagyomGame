@@ -8,10 +8,10 @@ import battle.Battle;
 import battle.Enemy;
 import staticObjects.BossHome;
 import staticObjects.EnemyHome;
-import staticObjects.Item;
 import staticObjects.PreEnemyHouse;
 import staticObjects.StaticObject;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item;
 import world.Map;
 
 public class NetworkWorld {

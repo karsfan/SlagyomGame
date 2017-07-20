@@ -1,4 +1,4 @@
-package character;
+package weaponsAndItems;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -6,9 +6,8 @@ import java.util.Iterator;
 import battle.Pack;
 import gameManager.GameSlagyom;
 import multiplayer.Client;
-import staticObjects.Item;
-import staticObjects.Item.Level;
 import staticObjects.StaticObject.Element;
+import weaponsAndItems.Item.Level;
 import world.Game;
 
 public class Bag {
@@ -75,7 +74,7 @@ public class Bag {
 		return numberOf;
 	}
 
-	public int getNumberOfBomb(character.Weapon.Level level) {
+	public int getNumberOfBomb(weaponsAndItems.Weapon.Level level) {
 		int numberOf = 0;
 		Iterator<Bomb> bombIterator = bombe.iterator();
 		while (bombIterator.hasNext()) {
@@ -131,7 +130,7 @@ public class Bag {
 		}
 	}
 
-	public void removeBomb(character.Weapon.Level level) {
+	public void removeBomb(weaponsAndItems.Weapon.Level level) {
 		Iterator<Bomb> bombIterator = bombe.iterator();
 		while (bombIterator.hasNext()) {
 			Bomb searching = (Bomb) bombIterator.next();

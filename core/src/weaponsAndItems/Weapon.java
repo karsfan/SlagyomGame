@@ -1,8 +1,7 @@
-package character;
+package weaponsAndItems;
 
 import java.util.Random;
 
-import staticObjects.Item;
 import staticObjects.StaticObject.Element;
 
 public class Weapon {

@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-import character.Bomb;
 import character.DynamicObjects.StateDynamicObject;
-import character.Weapon;
-import character.Weapon.Level;
-import character.Weapon.Type;
-import staticObjects.Item;
 import staticObjects.StaticObject;
+import weaponsAndItems.Bomb;
+import weaponsAndItems.Item;
+import weaponsAndItems.Weapon;
+import weaponsAndItems.Weapon.Level;
+import weaponsAndItems.Weapon.Type;
 import world.GameConfig;
 
 public class ClientHandler extends Thread {

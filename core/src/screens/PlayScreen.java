@@ -452,7 +452,6 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
-		System.out.println("button" + buttonCode);
 		if (buttonCode == 5) {
 			buttonPressed = true;
 			buttonCodePressed = buttonCode;
@@ -462,7 +461,6 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean buttonUp(Controller controller, int buttonCode) {
-		System.out.println("buttonUp" + buttonCode);
 		if (buttonCode == 0 || buttonCode == 1 || buttonCode == 3 || buttonCode == 4 || buttonCode == 7) {
 			buttonCodePressed = buttonCode;
 			buttonPressed = true;
@@ -475,7 +473,6 @@ public class PlayScreen implements Screen, ControllerListener {
 
 	@Override
 	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		System.out.println(axisCode);
 		return false;
 	}
 

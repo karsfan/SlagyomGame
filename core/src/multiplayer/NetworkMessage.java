@@ -130,9 +130,6 @@ public class NetworkMessage {
 				break;
 			}
 		}
-		// System.out.println(message);
-		// System.out.println("Messaggio "+actionString+" "+ID+" "+x+"
-		// "+y+currentState);
 	}
 
 }

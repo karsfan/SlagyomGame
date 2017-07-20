@@ -73,7 +73,6 @@ public class NetworkEnemy extends Enemy {
 				((Bomb) ob).update(dt);
 				if (ob.dead) {
 					it1.remove();
-					System.out.println("Bomba enemy eliminata");
 					continue;
 				}
 			}
@@ -105,13 +104,13 @@ public class NetworkEnemy extends Enemy {
 			movesRight(dt);
 		else if (x > Client.networkWorld.battle.character.getX() && rand < 90) {
 			if (rand > 75 && rand < 80)
-				lanciaBomb(dt);
+				launchBomb(dt);
 			movesLeft(dt);
 		}
 	}
 
 	@Override
-	public void lanciaBomb(float dt) {
+	public void launchBomb(float dt) {
 		if (left && !bombs.isEmpty()) {
 			int velocityy = 200;
 			// calcolo della gittata
@@ -123,12 +122,6 @@ public class NetworkEnemy extends Enemy {
 				if (!ob.launched) {
 					ob.launch(velocityy, this);
 					ob.id = "Enemy";
-					// System.out.println((2 * velocityy * velocityy *
-					// Math.cos(30 * (Math.PI / 180))
-					// * Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
-					// System.out.println(x -
-					// Game.world.battle.character.getX());
-					// System.out.println("bomba lanciata dal nemico");
 					break;
 				}
 			}
@@ -144,12 +137,6 @@ public class NetworkEnemy extends Enemy {
 				if (!ob.launched) {
 					ob.launch(velocityy, this);
 					ob.id = "Enemy";
-					// System.out.println("bomba lanciata dal nemico");
-					// System.out.println((2 * velocityy * velocityy *
-					// Math.cos(30 * (Math.PI / 180))
-					// * Math.sin(90 * (Math.PI / 180))) / GameConfig.gravity);
-					// System.out.println(Game.world.battle.character.getX()+
-					// width/3 - x);
 					break;
 				}
 			}

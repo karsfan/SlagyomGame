@@ -64,16 +64,14 @@ public class Map {
 	public void readMap(String path) {
 		openFile(path);
 	}
-	
+
 	@SuppressWarnings("resource")
 	public void openFile(String fileName) {
 		FileReader fr = null;
 		try {
-			// fr = new FileReader(fileName);
 			fr = new FileReader(fileName);
 			try {
 				Scanner input = new Scanner(System.in);
-//				input = new Scanner(fr);
 				input = new Scanner(fr);
 				String line = input.nextLine();
 				String[] split = line.split(" ");

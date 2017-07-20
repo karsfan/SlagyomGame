@@ -54,8 +54,8 @@ public class Bag {
 	public boolean deleteBomb(Bomb bomb) {
 		Iterator<Bomb> itBomb = bombe.iterator();
 		while (itBomb.hasNext()) {
-			Bomb bomba = (Bomb) itBomb.next();
-			if (bomba == bomb) {
+			Bomb ob = (Bomb) itBomb.next();
+			if (ob == bomb) {
 				itBomb.remove();
 				return true;
 			}

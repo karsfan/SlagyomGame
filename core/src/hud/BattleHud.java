@@ -118,7 +118,7 @@ public class BattleHud {
 		enemyBar.setValue(enemyHealth.intValue());
 		currentWeapon.setPosition(1250, 30);
 		
-		if (battle.character.lanciaBomba) {
+		if (battle.character.booleanLaunchBomb) {
 			potionTable.addActor(playerPowerBar);
 			playerPowerBar.setValue(this.battle.character.power);
 		}

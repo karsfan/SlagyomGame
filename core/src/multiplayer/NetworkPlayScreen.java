@@ -177,7 +177,6 @@ public class NetworkPlayScreen extends PlayScreen {
 	}
 
 	public void sendUpdate() {
-		System.out.println("qui");
 		client.update();
 	}
 

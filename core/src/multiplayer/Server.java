@@ -28,9 +28,9 @@ public class Server {
 	public void start() {
 		for (int i = 0; i < numPlayer; i++) {
 			try {
-				System.out.println("Connection..");
+				//CONNECTION
 				Socket tmpSocket = serverSocket.accept();
-				System.out.println("New connection..");
+				//NEW CONNECTION
 				ServerHandler newConnection = new ServerHandler(tmpSocket, this, i);
 				connected.add(newConnection);
 				newConnection.start();
@@ -39,7 +39,7 @@ public class Server {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("all player are connected");
+		//ALL PLAYER ARE CONNECTED
 		for (int i = 0; i < numPlayer; i++)
 			for (ServerHandler serverHandler : connected) {
 				serverHandler.writer.println(i);

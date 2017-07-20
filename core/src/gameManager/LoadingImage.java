@@ -697,7 +697,6 @@ public class LoadingImage {
 				}
 
 			}
-			// animation = enemyAnimation;
 			break;
 		case "Enemy":
 			if (((Enemy) ob).weapon.getType() == Type.Spear) {

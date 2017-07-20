@@ -29,11 +29,11 @@ public class Shop extends StaticObject {
 		weapons.add(weapon);
 		weapon = new Weapon(Level.lev3, Type.Sword);
 		weapons.add(weapon);
-		weapon = new Weapon(Level.lev1, Type.Bomba);
+		weapon = new Weapon(Level.lev1, Type.Bomb);
 		weapons.add(weapon);
-		weapon = new Weapon(Level.lev2, Type.Bomba);
+		weapon = new Weapon(Level.lev2, Type.Bomb);
 		weapons.add(weapon);
-		weapon = new Weapon(Level.lev3, Type.Bomba);
+		weapon = new Weapon(Level.lev3, Type.Bomb);
 		weapons.add(weapon);
 		weapon = new Weapon(Level.lev1, Type.Bow);
 		weapons.add(weapon);

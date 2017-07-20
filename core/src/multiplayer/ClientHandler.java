@@ -207,11 +207,11 @@ public class ClientHandler extends Thread {
 						if (client.networkWorld.player.ID == message.IDreceiver) {
 							Bomb bomb = null;
 							if (message.x == 1)
-								bomb = new Bomb(Level.lev1, Type.Bomba);
+								bomb = new Bomb(Level.lev1, Type.Bomb);
 							else if (message.x == 2)
-								bomb = new Bomb(Level.lev1, Type.Bomba);
+								bomb = new Bomb(Level.lev1, Type.Bomb);
 							else if (message.x == 3)
-								bomb = new Bomb(Level.lev1, Type.Bomba);
+								bomb = new Bomb(Level.lev1, Type.Bomb);
 							((NetworkCharacterBattle) client.networkWorld.battle.enemy).bag.add(bomb);
 							((NetworkCharacterBattle) client.networkWorld.battle.enemy).power = (int) message.y;
 							((NetworkCharacterBattle) client.networkWorld.battle.enemy).launch();

@@ -73,7 +73,6 @@ public class Map {
 				new InputStreamReader(getClass().getClassLoader().getResourceAsStream(fileName)));
 		String line;
 		try {
-<<<<<<< HEAD
 			line = br.readLine();
 
 			String[] split = line.split(" ");
@@ -82,18 +81,6 @@ public class Map {
 			while (line != null) {
 				line = br.readLine();
 				if (line != null) {
-=======
-			fr = new FileReader(fileName);
-			try {
-				Scanner input = new Scanner(System.in);
-				input = new Scanner(fr);
-				String line = input.nextLine();
-				String[] split = line.split(" ");
-				GameConfig.WIDTH = Integer.parseInt(split[0]);
-				GameConfig.HEIGHT = Integer.parseInt(split[1]);
-				while (input.hasNextLine()) {
-					line = input.nextLine();
->>>>>>> 8d7f90870a81c92858e1570e7b069def5405ebac
 					String[] splittata = line.split(" ");
 
 					for (int i = 0; i < splittata.length - 1; i++)

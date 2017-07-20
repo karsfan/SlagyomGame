@@ -2,16 +2,13 @@ package world;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Scanner;
 import java.util.Stack;
 
-import com.badlogic.gdx.Gdx;
 
 import battle.Battle;
 import battle.Enemy;
@@ -41,21 +38,14 @@ public class World {
 	public static Stack<String> manNames;
 	public static Stack<String> womanNames;
 
-	private FileReader fileReader;
-	private Scanner input;
-
 	public World(String name, boolean male) {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 		maps = new Map[2];
-<<<<<<< HEAD
+
 		maps[0] = new Map("res/map/mapProva.txt", true, "Village one");
 		maps[1] = new Map("res/map/village1.txt", false, "Village two");
-=======
-		System.out.println(Gdx.files.internal("/res/map/mapProva.txt"));
-		maps[0] = new Map("res/map/mapProva.txt", true, "Village one");
-		maps[1] = new Map(getClass().getResource("res/map/village1.txt").getPath(), false, "Village two");
->>>>>>> 8d7f90870a81c92858e1570e7b069def5405ebac
+
 		player = new Player(name, male);
 		getListDynamicObjects().add(player);
 

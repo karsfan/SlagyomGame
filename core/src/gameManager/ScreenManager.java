@@ -45,7 +45,11 @@ public class ScreenManager {
 		currentState = State.MENU;
 		swapScreen(State.MENU);
 	}
-
+	
+	/**
+	 * Method that set the Screen
+	 * @param newState show the new Screen 
+	 */
 	@SuppressWarnings("static-access")
 	public void swapScreen(State newState) {
 		if (currentState == State.PLAYING || currentState == State.BATTLE || currentState == State.MENU)

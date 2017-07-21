@@ -26,7 +26,10 @@ public class NetworkPlayer extends Player {
 	public boolean collisionWithObject = false;
 	public Item itemPicked;
 	public boolean invisible = false;
-
+	/**
+	 * Constructor for initialize a new Player online
+	 * @param name name of Player
+	 */
 	public NetworkPlayer(String name) {
 		super(name, true);
 		this.name = name;

@@ -18,7 +18,11 @@ public class ClientHandler extends Thread {
 	Socket socket;
 	Client client;
 	BufferedReader reader;
-
+	/**
+	 * ClientHandler needs to receive the message of the Server
+	 * @param socket
+	 * @param client
+	 */
 	public ClientHandler(Socket socket, Client client) {
 		this.socket = socket;
 		this.client = client;
@@ -28,7 +32,7 @@ public class ClientHandler extends Thread {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@SuppressWarnings("static-access")
 	@Override
 	public void run() {

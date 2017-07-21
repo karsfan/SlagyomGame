@@ -15,7 +15,11 @@ import world.GameConfig;
 public class NetworkBattle extends Battle {
 	public Pack win_bonus;
 	public NetworkPlayer otherPlayer;
-
+	/**
+	 * Constructor for initialize a new Battle
+	 * @param player Player that plays the battle	
+	 * @param enemy  who fight against the player
+	 */
 	public NetworkBattle(NetworkPlayer player, Enemy enemy) {
 		super(player);
 		originalEnemy = enemy;
@@ -23,7 +27,11 @@ public class NetworkBattle extends Battle {
 		this.character = new NetworkCharacterBattle(player);
 		win_bonus = enemy.winBonus;
 	}
-
+	/**
+	 * Constructor for initialize a Battle between two Players online
+	 * @param player
+	 * @param otherPlayer
+	 */
 	public NetworkBattle(NetworkPlayer player, NetworkPlayer otherPlayer) {
 		super(player);
 		this.otherPlayer = otherPlayer;

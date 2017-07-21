@@ -32,7 +32,11 @@ public class Player extends DynamicObjects implements ICollidable {
 	public boolean collideCoin;
 	public boolean collideItem;
 	public String textDialog;
-
+	/**
+	 * Constructor that receive the name and the gender of the Player
+	 * @param name name of the Player
+	 * @param male true if Player is a man, false if Player is a woman
+	 */
 	public Player(String name, boolean male) {
 		super();
 		this.name = name;
@@ -124,7 +128,10 @@ public class Player extends DynamicObjects implements ICollidable {
 		bag.add(potion);
 		potion.picked = true;
 	}
-
+	/**
+	 * Method that update the health's Player
+	 * @param potion
+	 */
 	public void usePotionHealth(Item potion) {
 		switch (potion.getLevel()) {
 		case FIRST:

@@ -49,7 +49,7 @@ public class Battle {
 	/**
 	 * It handles all the collision and shots
 	 * @param deltatime of the render
-	 * @return  
+	 * @return  true if enemy.health <= 0 or character.health <= 0
 	 */
 	public boolean update(float dt) {
 		Iterator<Weapon> it = character.arrowsShooted.iterator();

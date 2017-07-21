@@ -8,7 +8,10 @@ import weaponsAndItems.Item;
 
 public class Pack {
 	public ArrayList<Item> items;
-
+	/**
+	 * Constructor that receive the enemy's level
+	 * @param level
+	 */
 	public Pack(Level level) {
 		items = new ArrayList<Item>();
 		switch (level) {

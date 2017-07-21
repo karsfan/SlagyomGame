@@ -23,7 +23,10 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public boolean arrowShooted;
 	public boolean soundBomb;
 	public ArrayList<Weapon> arrowsShooted;
-
+ /**
+  *  Constructor of the CharacterBattle that initialize the Player at battle 
+  * @param player 
+  */
 	public CharacterBattle(Player player) {
 		super();
 		stateTimer = 0;
@@ -47,7 +50,9 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 		arrowsShooted = new ArrayList<Weapon>();
 
 	}
-
+	/**
+	 * Swap weapons of CharacterBattle
+	 */
 	public void swapWeapon() {
 		if (bag.secondary_weapon != null) {
 			Weapon temporary = new Weapon(Game.world.player.primary_weapon.getLevel(),
@@ -85,7 +90,7 @@ public class CharacterBattle extends Fighting implements world.ICollidable {
 	public float getWidth() {
 		return width;
 	}
-
+	
 	public void update(float dt) {
 		if (fighting && fightingTimeCurrent < fightingTime) {
 			fightingTimeCurrent += dt;

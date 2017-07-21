@@ -16,7 +16,10 @@ public class PreEnemyHouse extends StaticObject {
 
 	public ArrayList<Enemy> enemy;
 	private Rectangle door;
-
+	/**
+	 * Constructor that initialize a new PreEnemyHouse
+	 * @param levelEnemy Enemy's level
+	 */
 	public PreEnemyHouse(Level levelEnemy) {
 		enemy = new ArrayList<>();
 		element = Element.PREENEMYHOME;
@@ -43,7 +46,11 @@ public class PreEnemyHouse extends StaticObject {
 			}
 		}
 	}
-
+	/**
+	 * Verify if the Object collide with door
+	 * @param e
+	 * @return true if Object collide
+	 */
 	public boolean collideDoor(Object e) {
 		if (e instanceof Player) {
 			if (!((door.x > ((Player) e).getX() + ((Player) e).getWidth() / 2

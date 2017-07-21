@@ -14,7 +14,11 @@ public class Server {
 	public ArrayList<ServerHandler> connected;
 	ServerSocket serverSocket;
 	int numPlayer;
-
+	/**
+	 * Constructor that initialize a new server
+	 * @param port 
+	 * @param numPlayer number of Players that plays in this Server
+	 */
 	public Server(int port, int numPlayer) {
 		this.numPlayer = numPlayer;
 		try {
@@ -75,7 +79,10 @@ public class Server {
 				serverHandler.writer.flush();
 			}
 	}
-
+	/**
+	 * Send the message at all client
+	 * @param message
+	 */
 	public void send(String message) {
 		for (ServerHandler serverHandler : connected) {
 			serverHandler.writer.println(message);
@@ -89,7 +96,11 @@ public class Server {
 //		}
 //		// serverSocket.close();
 //	}
-
+	/**
+	 * Send the message only to one Client
+	 * @param message
+	 * @param iDreceiver Client that receive the message
+	 */
 	public void send(String message, int iDreceiver) {
 		for (ServerHandler serverHandler : connected) {
 			if (serverHandler.ID == iDreceiver) {

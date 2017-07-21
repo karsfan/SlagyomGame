@@ -18,7 +18,10 @@ public class NetworkMessage {
 	Weapon.Level levelWeapon;
 	Item.Level levelItem;
 	Element elementItem;
-
+	/**
+	 * NetworkMessage needs to decode the message of other Clients
+	 * @param message Message to be decoded
+	 */
 	public NetworkMessage(String message) {
 		char[] charMessage = new char[message.length()];
 		message.getChars(0, message.length(), charMessage, 0);

@@ -23,7 +23,13 @@ public class Client {
 	public boolean text;
 	public String textDiaglog;
 	public boolean soundPotionBattle;
-
+	/**
+	 * Constructor the initialize a new Client
+	 * @param name name of Player
+	 * @param gameSlagyom
+	 * @param address address of the Server
+	 * @param port port where you connected
+	 */
 	public Client(String name, GameSlagyom gameSlagyom, String address, int port) {
 		try {
 			if (address.equals(""))
@@ -62,30 +68,7 @@ public class Client {
 		}
 
 	}
-
-	public void sendCollisionItem() {
-		sound = true;
-		Item item = networkWorld.player.itemPicked;
-		if (item.getElement() == Element.POTION && item.getLevel() == Level.FIRST)
-			writer.println(21 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
-					+ networkWorld.player.currentState + ";" + 0 + ";");
-		else if (item.getElement() == Element.POTION && item.getLevel() == Level.SECOND)
-			writer.println(22 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
-					+ networkWorld.player.currentState + ";" + 0 + ";");
-		else if (item.getElement() == Element.POTION && item.getLevel() == Level.THIRD)
-			writer.println(23 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
-					+ networkWorld.player.currentState + ";" + 0 + ";");
-		else if (item.getElement() == Element.PARCHMENT && item.getLevel() == Level.FIRST)
-			writer.println(24 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
-					+ networkWorld.player.currentState + ";" + 0 + ";");
-		else if (item.getElement() == Element.PARCHMENT && item.getLevel() == Level.SECOND)
-			writer.println(25 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
-					+ networkWorld.player.currentState + ";" + 0 + ";");
-		else if (item.getElement() == Element.COIN)
-			writer.println(26 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
-					+ networkWorld.player.currentState + ";" + 0 + ";");
-		writer.flush();
-	}
+	
 
 	public void movesLeft(float dt) {
 		networkWorld.player.movesLeft(dt);
@@ -140,7 +123,32 @@ public class Client {
 			writer.flush();
 		}
 	}
-
+	/**
+	 * Send a String where indicate the collision with Item
+	 */
+	public void sendCollisionItem() {
+		sound = true;
+		Item item = networkWorld.player.itemPicked;
+		if (item.getElement() == Element.POTION && item.getLevel() == Level.FIRST)
+			writer.println(21 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
+		else if (item.getElement() == Element.POTION && item.getLevel() == Level.SECOND)
+			writer.println(22 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
+		else if (item.getElement() == Element.POTION && item.getLevel() == Level.THIRD)
+			writer.println(23 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
+		else if (item.getElement() == Element.PARCHMENT && item.getLevel() == Level.FIRST)
+			writer.println(24 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
+		else if (item.getElement() == Element.PARCHMENT && item.getLevel() == Level.SECOND)
+			writer.println(25 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
+		else if (item.getElement() == Element.COIN)
+			writer.println(26 + " " + networkWorld.player.ID + " " + item.getX() + " " + item.getY() + " "
+					+ networkWorld.player.currentState + ";" + 0 + ";");
+		writer.flush();
+	}
 	public void update() {
 		writer.println(4 + " " + networkWorld.player.ID + " " + networkWorld.player.health + " " + 0 + " " + 0 + ";" + 0
 				+ ";");

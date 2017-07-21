@@ -19,7 +19,10 @@ public class NetworkWorld {
 	public ArrayList<NetworkPlayer> otherPlayers;
 	public Map map;
 	public Battle battle;
-
+	/**
+	 * Constructor for initialize a new World online
+	 * @param name Player's name
+	 */
 	public NetworkWorld(String name) {
 		otherPlayers = new ArrayList<NetworkPlayer>();
 		map = new Map("res/map/village1.txt", true, "Village");
@@ -46,7 +49,10 @@ public class NetworkWorld {
 	public LinkedList<StaticObject> getListObjectsMiniMap() {
 		return map.getListObjectsMiniMap();
 	}
-
+	/**
+	 * Create a new Battle if there are other enemy in the house
+	 * @param preEnemyHouse
+	 */
 	public void createBattle(PreEnemyHouse preEnemyHouse) {
 		boolean created = false;
 		Iterator<Enemy> it1 = preEnemyHouse.enemy.iterator();
@@ -65,7 +71,10 @@ public class NetworkWorld {
 		}
 
 	}
-
+	/**
+	 * Create a new Battle between two Players
+	 * @param iDOtherPlayer
+	 */
 	public void createBattle(int iDOtherPlayer) {
 		Iterator<NetworkPlayer> otherP = otherPlayers.iterator();
 		while (otherP.hasNext()) {
@@ -77,7 +86,10 @@ public class NetworkWorld {
 		}
 
 	}
-
+	/**
+	 * Create a new Battle if there are other enemy in the house
+	 * @param enemyHome
+	 */
 	public void createBattle(EnemyHome enemyHome) {
 		Iterator<StaticObject> it = getListTile().iterator();
 		// se si tratta di un tempio controllo tra la lista dei nemici quali

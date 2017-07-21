@@ -15,7 +15,11 @@ import world.Game;
 public class EnemyHome extends StaticObject {
 	public ArrayList<Enemy> enemy;
 	public Rectangle door;
-
+	/**
+	 * Constructor that initialize a new EnemyHome
+	 * @param levelEnemy Enemy's level
+	 * @param type type of EnemyHome
+	 */
 	public EnemyHome(Level levelEnemy, Element type) {
 		element = type;
 		enemy = new ArrayList<Enemy>();

@@ -23,7 +23,13 @@ public class Map {
 	public boolean current;
 	public LinkedList<StaticObject> listLightLamps;
 	public LinkedList<StaticObject> listObjectsMiniMap;
-
+	
+	/**
+	 * Constructor that initialize a new Map
+	 * @param path path of file to read
+	 * @param villageCurrent true if this is the current village
+	 * @param nameVillage name of village
+	 */
 	public Map(String path, boolean villageCurrent, String nameVillage) {
 		this.nameVillage = nameVillage;
 		current = villageCurrent;

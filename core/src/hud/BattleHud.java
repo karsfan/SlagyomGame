@@ -51,7 +51,11 @@ public class BattleHud {
 	Label bluePotion;
 	Label greenPotion;
 	Label redPotion;
-	
+	/**
+	 * Constructore that receive a GameSlagyom and a Battle 
+	 * @param gameSlagyom
+	 * @param battle
+	 */
 	@SuppressWarnings("static-access")
 	public BattleHud(GameSlagyom gameSlagyom, Battle battle) {
 		table = new Table();
@@ -109,7 +113,10 @@ public class BattleHud {
 		stage.addActor(table);
 		stage.addActor(potionTable);
 	}
-
+	/**
+	 * It handles the changes of battle
+	 * @param dt
+	 */
 	@SuppressWarnings("static-access")
 	public void update(float dt) {
 		characterHealth = (int) this.battle.character.getHealth();

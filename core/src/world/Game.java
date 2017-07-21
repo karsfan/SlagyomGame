@@ -8,7 +8,11 @@ public class Game {
 	public static World world;
 	
 	public static Class<? extends Enemy> enemy = null;
-
+	/**
+	 * Constructor fo initialize a new Game
+	 * @param name Player's name
+	 * @param male Player's gender
+	 */
 	public Game(String name, boolean male) {
 
 		world = new World(name, male);
@@ -23,11 +27,22 @@ public class Game {
 	}
 
 	
-	// constructor for loadGame
+	/**
+	 * Constructor for load a Game
+	 * @param path path of the Map
+	 * @param name Player's name
+	 * @param male Player's gender
+	 */
 	public Game(String path, String name, boolean male) {
 		world = new World(path, name, male);
 	}
-
+	/**
+	 * Constructor for create a new Game with enemy's level external
+	 * @param text name of the class that extends Enemy
+	 * @param game2
+	 * @param charName player's name
+	 * @param male gender's name
+	 */
 	@SuppressWarnings("unchecked")
 	public Game(String text, GameSlagyom game2, String charName, boolean male) {
 		try {

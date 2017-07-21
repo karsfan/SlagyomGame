@@ -38,6 +38,13 @@ public class World {
 	public static Stack<String> manNames;
 	public static Stack<String> womanNames;
 
+	/**
+	 * Constructor for initialize new World
+	 * 
+	 * @param name Player's name
+	 *            
+	 * @param male Player's gender
+	 */
 	public World(String name, boolean male) {
 		numberOfLevels = 2;
 		level = 0;
@@ -204,7 +211,7 @@ public class World {
 
 	public void nextLevel() {
 
-		if (level < 1) {
+		if (level < numberOfLevels - 1) {
 			level++;
 			people = new ArrayList<DynamicObjects>();
 			getMap().setCurrent(false);

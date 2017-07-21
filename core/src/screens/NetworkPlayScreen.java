@@ -169,6 +169,7 @@ public class NetworkPlayScreen extends PlayScreen {
 					client);
 			gameSlagyom.screenManager.swapScreen(gameManager.ScreenManager.State.BATTLE);
 			client.networkWorld.player.readyToFight = false;
+			movesGamePad = false;
 			client.networkWorld.player.isFighting = true;
 		}
 		if (client.sound) {

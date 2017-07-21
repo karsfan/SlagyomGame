@@ -76,6 +76,7 @@ public class World {
 		level = 0;
 		people = new ArrayList<DynamicObjects>();
 
+		numberOfLevels = 2;
 		maps = new Map[numberOfLevels];
 		maps[0] = new Map(path, true, "Village one");
 		maps[1] = new Map(path, false, "Village two");

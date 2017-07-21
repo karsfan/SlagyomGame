@@ -527,15 +527,11 @@ public class LoadingImage {
 				region = (TextureRegion) getAnimation(ob)[0].getKeyFrame(stateTimer, true);
 			break;
 		default:
-			// getFrameStand(ob).setRegion(getAnimation(ob)[0].getKeyFrame(0,
-			// true));
 			if (((Fighting) ob).left)
 				region = (TextureRegion) getAnimation(ob)[1].getKeyFrame(stateTimer, true);
 			else
 				region = (TextureRegion) getAnimation(ob)[0].getKeyFrame(stateTimer, true);
 			break;
-		// region = getFrameStand(ob);
-		// break;
 		}
 		return region;
 	}
@@ -646,7 +642,6 @@ public class LoadingImage {
 			}
 			break;
 		case "NetworkCharacterBattle":
-			// se sono il player
 			if (((NetworkCharacterBattle) ob).player) {
 				if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
 					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
@@ -665,7 +660,7 @@ public class LoadingImage {
 					else if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev3)
 						animation = battleCharacterAnimationBowLev3;
 				}
-			} else {// se sono l'oggetto da diseganre è l'avversario
+			} else {
 				if (((NetworkCharacterBattle) ob).primary_weapon.getType() == Type.Spear) {
 					if (((NetworkCharacterBattle) ob).primary_weapon.getLevel() == weaponsAndItems.Weapon.Level.lev1)
 						animation = enemyAnimationSpearLev1;

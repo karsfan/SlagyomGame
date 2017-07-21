@@ -19,7 +19,11 @@ public class Weapon {
 	Type type;
 	float height;
 	private float width;
-
+	/**
+	 * Constructor of Weapon
+	 * @param level 
+	 * @param type 
+	 */
 	public Weapon(Level level, Type type) {
 		this.level = level;
 		this.type = type;
@@ -44,7 +48,10 @@ public class Weapon {
 			break;
 		}
 	}
-
+	/**
+	 * Constructor of weapon 
+	 * @param level
+	 */
 	public Weapon(Level level) {
 		this.level = level;
 		Random rand = new Random();
@@ -68,7 +75,11 @@ public class Weapon {
 		}
 	}
 
-	// constructor per inizializzare leggendo da file il salvataggio
+	/**
+	 * Constructor that inizialize a weapon reading from a saved-game
+	 * @param type (es. "lev1")
+	 * @param level
+	 */
 	public Weapon(String type, String level) {
 		switch (type) {
 		case "Sword":

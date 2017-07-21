@@ -29,6 +29,9 @@ public class GameSlagyom extends Game {
 	public LoadingMusic loadingMusic;
 	
 	@Override
+	/**
+	 * Initialize the game
+	 */
 	public void create() {
 		loadingMusic = new LoadingMusic();
 		loadingImage = new LoadingImage();
@@ -36,7 +39,9 @@ public class GameSlagyom extends Game {
 		modalityMultiplayer = false;
 		screenManager = new ScreenManager(this);
 	}
-
+	/**
+	 * It save the game on a Prefs file
+	 */
 	public void saveGame() {
 		prefs.clear();
 		Iterator<Item> item = world.Game.world.getListItems().iterator();
@@ -94,6 +99,10 @@ public class GameSlagyom extends Game {
 		prefs.flush();
 	}
 
+	/**
+	 * Load the game from a given path
+	 * @param path of the saved game
+	 */
 	@SuppressWarnings("static-access")
 	public void loadGame(String path) {
 		prefs = Gdx.app.getPreferences(path);

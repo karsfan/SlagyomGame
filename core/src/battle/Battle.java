@@ -15,7 +15,12 @@ public class Battle {
 	public Player player;
 	public Fighting originalEnemy;
 	public Fighting enemy;
-
+	
+	/**
+	 * Constructor of the battle in the classic mode
+	 * @param player who plays the battle
+	 * @param enemy who fight against the player
+	 */
 	public Battle(Player player, Enemy enemy) {
 		this.player = player;
 		this.character = new CharacterBattle(player);
@@ -32,11 +37,20 @@ public class Battle {
 			this.enemy = new Enemy(enemy);
 	}
 
-	// constructor for online
+	/**
+	 * Constructor for multiplayer game
+	 * @param player who plays the battle
+	 */
 	public Battle(Player player) {
 		this.player = player;
 	}
-
+	
+	
+	/**
+	 * It handles all the collision and shots
+	 * @param deltatime of the render
+	 * @return  
+	 */
 	public boolean update(float dt) {
 		Iterator<Weapon> it = character.arrowsShooted.iterator();
 		while (it.hasNext()) {

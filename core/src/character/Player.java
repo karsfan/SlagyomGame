@@ -117,13 +117,11 @@ public class Player extends DynamicObjects implements ICollidable {
 
 	public void pickParchment(Item parchment) {
 		bag.add(parchment);
-		// eliminata dalla mappa
 		parchment.picked = true;
 	}
 
 	public void pickPotion(Item potion) {
 		bag.add(potion);
-		// eliminata dalla mappa
 		potion.picked = true;
 	}
 

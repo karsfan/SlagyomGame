@@ -29,7 +29,11 @@ public class Enemy extends Fighting {
 	}
 
 	public Level level;
-
+	
+	/**
+	 * Constructor of an Enemy 
+	 * @param enemy
+	 */
 	public Enemy(Enemy enemy) {
 		bombs = new ArrayList<>();
 		arrowShooted = false;
@@ -66,7 +70,11 @@ public class Enemy extends Fighting {
 			this.width = 120;
 
 	}
-
+	
+	/**
+	 * Constructor of enemy that receive the enemy's level
+	 * @param level
+	 */
 	public Enemy(Level level) {
 		super();
 		bombs = new ArrayList<>();

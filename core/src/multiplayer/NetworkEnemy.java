@@ -213,7 +213,7 @@ public class NetworkEnemy extends Enemy {
 			return true;
 		return false;
 	}
-
+	@Override
 	public void fightRight() {
 		right = true;
 		left = false;
@@ -226,7 +226,7 @@ public class NetworkEnemy extends Enemy {
 		fighting = true;
 
 	}
-
+	@Override
 	public void fightLeft() {
 		right = false;
 		left = true;

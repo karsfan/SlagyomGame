@@ -309,6 +309,8 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 			else if (buttonSelected == playButton) {
 				if (continueButton.isVisible())
 					buttonSelected = continueButton;
+				else
+					buttonSelected = startServerButton;
 			} else if (buttonSelected == continueButton)
 				buttonSelected = returnButton;
 			else if (buttonSelected == playButton)
@@ -324,6 +326,8 @@ public class MultiplayerScreen implements Screen, ControllerListener {
 				buttonSelected = playButton;
 			else if (buttonSelected == playButton)
 				buttonSelected = returnButton;
+			else if(buttonSelected == continueButton)
+				buttonSelected = playButton;
 			else if(buttonSelected == returnButton && continueButton.isVisible())
 				buttonSelected = continueButton;
 			else if (buttonSelected == returnButton)

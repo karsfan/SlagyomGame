@@ -165,59 +165,6 @@ public class Player extends DynamicObjects implements ICollidable {
 		setState(StateDynamicObject.RUNNINGLEFT);
 	}
 
-	public void movesNorthEast(float dt) {
-		if (y < GameConfig.HEIGHT - height - 5 && x < GameConfig.WIDTH - width / 2) {
-			y += (velocity * dt);
-			x += (velocity * dt) / 2;
-			if (collide()) {
-				y -= (velocity * dt);
-				x -= (velocity * dt) / 2;
-			}
-		}
-
-		setState(StateDynamicObject.RUNNINGUP);
-	}
-
-	public void movesNorthWest(float dt) {
-		if (y < GameConfig.HEIGHT - height - 5 && x > 5) {
-			y += (velocity * dt);
-			x -= (velocity * dt) / 2;
-			if (collide()) {
-				y -= (velocity * dt);
-				x += (velocity * dt) / 2;
-			}
-		}
-
-		setState(StateDynamicObject.RUNNINGUP);
-	}
-
-	public void movesSouthWest(float dt) {
-		if (y > 0 - height - 5 && x > 5) {
-			y -= (velocity * dt);
-			x -= (velocity * dt) / 2;
-			if (collide()) {
-				y += (velocity * dt);
-				x += (velocity * dt) / 2;
-			}
-		}
-
-		setState(StateDynamicObject.RUNNINGDOWN);
-	}
-
-	public void movesSouthEast(float dt) {
-
-		if (y > 0 && x < GameConfig.WIDTH - width / 2) {
-			y -= (velocity * dt);
-			x += (velocity * dt) / 2;
-			if (collide()) {
-				y += (velocity * dt);
-				x -= (velocity * dt) / 2;
-			}
-		}
-
-		setState(StateDynamicObject.RUNNINGDOWN);
-	}
-
 	public void movesUp(float dt) {
 
 		if (y < GameConfig.HEIGHT - height - 5) {

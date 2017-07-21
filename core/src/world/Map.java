@@ -46,6 +46,8 @@ public class Map {
 	public Map() {
 		listStaticObjects = new LinkedList<StaticObject>();
 		listItems = new LinkedList<Item>();
+		listLightLamps = new LinkedList<StaticObject>();
+		listObjectsMiniMap = new LinkedList<StaticObject>();
 	}
 
 	public LinkedList<Item> getListItems() {
@@ -189,6 +191,8 @@ public class Map {
 		current = bool;
 		listStaticObjects = new LinkedList<StaticObject>();
 		listItems = new LinkedList<Item>();
+		listLightLamps = new LinkedList<StaticObject>();
+		listObjectsMiniMap = new LinkedList<StaticObject>();
 		readMap(path);
 		setMapPath(path);
 	}

@@ -945,7 +945,7 @@ public class ShopScreen implements Screen, ControllerListener {
 						clickWeaponSword();
 					else if (buttonSelected == weapons[1])
 						clickWeaponSpear();
-					else if (buttonLevelSelected == weapons[2])
+					else if (buttonSelected == weapons[2])
 						clickWeaponBow();
 				}
 			} else if (buyingTable.isVisible()) {

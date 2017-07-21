@@ -24,11 +24,11 @@ public class Client {
 	public String textDiaglog;
 	public boolean soundPotionBattle;
 	/**
-	 * Constructor the initialize a new Client
-	 * @param name name of Player
+	 * Constructor that initialize a new Client
+	 * @param name name of the Player
 	 * @param gameSlagyom
 	 * @param address address of the Server
-	 * @param port port where you connected
+	 * @param port port where the Client is connected
 	 */
 	public Client(String name, GameSlagyom gameSlagyom, String address, int port) {
 		try {

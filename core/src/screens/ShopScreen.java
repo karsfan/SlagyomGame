@@ -531,15 +531,19 @@ public class ShopScreen implements Screen, ControllerListener {
 		if (currentCategory == Category.POTIONS) {
 			currentCategory = Category.BOMBS;
 			buttonSelected = bombs[0];
+			buttonLevelSelected = null;
 		} else if (currentCategory == Category.BOMBS) {
 			currentCategory = Category.PARCHMENTS;
 			buttonSelected = parchments[0];
+			buttonLevelSelected = null;
 		} else if (currentCategory == Category.PARCHMENTS) {
 			currentCategory = Category.WEAPONS;
 			buttonSelected = weapons[0];
+			buttonLevelSelected = null;
 		} else if (currentCategory == Category.WEAPONS) {
 			currentCategory = Category.POTIONS;
 			buttonSelected = potions[0];
+			buttonLevelSelected = lev1;
 		}
 		buying = false;
 	}
@@ -549,15 +553,19 @@ public class ShopScreen implements Screen, ControllerListener {
 		if (currentCategory == Category.POTIONS) {
 			currentCategory = Category.WEAPONS;
 			buttonSelected = weapons[0];
+			buttonLevelSelected = null;
 		} else if (currentCategory == Category.WEAPONS) {
 			currentCategory = Category.PARCHMENTS;
 			buttonSelected = parchments[0];
+			buttonLevelSelected = lev1;
 		} else if (currentCategory == Category.PARCHMENTS) {
 			currentCategory = Category.BOMBS;
 			buttonSelected = bombs[0];
+			buttonLevelSelected = null;
 		} else if (currentCategory == Category.BOMBS) {
 			currentCategory = Category.POTIONS;
 			buttonSelected = potions[0];
+			buttonLevelSelected = null;
 		}
 		buying = false;
 	}
@@ -949,9 +957,9 @@ public class ShopScreen implements Screen, ControllerListener {
 						clickWeaponBow();
 				}
 			} else if (buyingTable.isVisible()) {
-				if (optionButtonSelected == buyButton)
+				if (optionButtonSelected == buyButton && !weaponsTable.isVisible())
 					clickBuyButton();
-				else if (optionButtonSelected == returnButton)
+				else if (optionButtonSelected == returnButton && !weaponsTable.isVisible())
 					clickReturnButton();
 				if (buttonSelected == weapons[0]) {
 					if (buttonLevelSelected == lev1)

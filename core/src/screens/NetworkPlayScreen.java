@@ -45,7 +45,9 @@ public class NetworkPlayScreen extends PlayScreen {
 		gameSlagyom.batch.setProjectionMatrix(gamecam.combined);
 
 		gameSlagyom.batch.begin();
+		
 		if (!client.go) {
+			loadingTimer += delta;
 			gameSlagyom.batch.draw(gameSlagyom.loadingImage.blackBg, gamecam.position.x - gamePort.getWorldWidth() / 2,
 					gamecam.position.y - gamePort.getWorldHeight() / 2);
 			gameSlagyom.batch.draw(gameSlagyom.loadingImage.loadingAnimation.getKeyFrame(loadingTimer, true),
